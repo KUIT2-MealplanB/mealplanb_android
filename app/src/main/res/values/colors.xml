@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="color_bg">#F8F9FC</color>
+    <color name="color_point">#7C5CF8</color>
+    <color name="color_sub1">#FFD3FA</color>
+    <color name="color_sub2">#220435</color>
+    <color name="color_subtitle_tv">#8D8D8D</color>
+    <color name="BG">#F8F9FC</color>
+    <color name="POINT">#7C5CF8</color>
+    <color name="SUB_PINK">#FFD3FA</color>
+    <color name="SUB_PURPLE">#220435</color>
+</resources>
