@@ -10,6 +10,14 @@ class AddMealListAdapter(var mealList: ArrayList<Meal>) : RecyclerView.Adapter<A
         fun bind(myMeal : Meal) {
             binding.itemMeallistTitleTv.text = myMeal.meal_name
             binding.itemMeallistSubtitleTv.text = myMeal.meal_weight.toString() + "g · " + myMeal.meal_cal.toString() + "kcal"
+
+            binding.itemMeallistDelbtnTv.setOnClickListener {
+                val position = adapterPosition
+                if(position != RecyclerView.NO_POSITION) {
+                    mealList.removeAt(position)
+                    notifyItemRemoved(position)
+                }
+            }
         }
     }
 

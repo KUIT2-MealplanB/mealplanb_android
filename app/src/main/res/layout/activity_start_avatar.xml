@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".StartAvatarActivity">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/start_avatar_cv"
+        android:layout_width="match_parent"
+        android:layout_height="130dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <ImageView
+            android:id="@+id/start_avatar_back_iv"
+            android:layout_width="11dp"
+            android:layout_height="19dp"
+            android:src="@drawable/back_ic"
+            android:layout_marginStart="19dp"
+            android:layout_marginTop="45dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="아바타"
+            android:fontFamily="@font/pretendard_bold"
+            android:textSize="20dp"
+            android:layout_marginStart="170dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/start_avatar_back_iv"
+            app:layout_constraintBottom_toBottomOf="@id/start_avatar_back_iv"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:orientation="horizontal"
+            app:layout_constraintTop_toBottomOf="@id/start_avatar_back_iv">
+
+            <View
+                android:id="@+id/start_avatar_bar1"
+                android:layout_width="110dp"
+                android:layout_height="6dp"
+                android:background="@drawable/bar_purple"
+                android:layout_marginTop="40dp"
+                app:layout_constraintTop_toBottomOf="@id/start_avatar_back_iv"
+                app:layout_constraintStart_toStartOf="@id/start_avatar_back_iv"/>
+
+            <View
+                android:id="@+id/start_avatar_bar2"
+                android:layout_width="110dp"
+                android:layout_height="6dp"
+                android:background="@drawable/bar_purple"
+                android:layout_marginTop="40dp"
+                android:layout_marginStart="8dp"
+                app:layout_constraintStart_toEndOf="@id/start_avatar_bar1"
+                app:layout_constraintTop_toBottomOf="@id/start_avatar_back_iv" />
+
+            <View
+                android:layout_width="110dp"
+                android:layout_height="6dp"
+                android:background="@drawable/bar_purple"
+                android:layout_marginTop="40dp"
+                android:layout_marginStart="8dp"
+                app:layout_constraintStart_toEndOf="@id/start_avatar_bar2"
+                app:layout_constraintTop_toBottomOf="@id/start_avatar_back_iv" />
+
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/start_avatar_title1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="아바타 색을 골라주세요 :)"
+        android:fontFamily="@font/pretendard_bold"
+        android:textSize="24dp"
+        android:layout_marginStart="19dp"
+        android:layout_marginTop="15dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/start_avatar_cv"/>
+
+    <TextView
+        android:id="@+id/start_avatar_subtitle1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="현재 선택한 설정은 언제든지 환경설정에서 편집할 수 있어요."
+        android:fontFamily="@font/pretendard_medium"
+        android:textColor="#8D8D8D"
+        android:textSize="12dp"
+        android:layout_marginTop="15dp"
+        app:layout_constraintStart_toStartOf="@id/start_avatar_title1"
+        app:layout_constraintTop_toBottomOf="@id/start_avatar_title1"/>
+
+    <EditText
+        android:id="@+id/start_avatar_et"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="@drawable/search_engine"
+        android:hint="닉네임"
+        android:layout_margin="20dp"
+        app:layout_constraintTop_toBottomOf="@id/start_avatar_subtitle1"
+        app:layout_constraintStart_toStartOf="@id/start_avatar_subtitle1"/>
+
+    <ImageView
+        android:id="@+id/start_avatar_avatar_iv"
+        android:layout_width="360dp"
+        android:layout_height="222dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/start_avatar_subtitle1"
+        android:layout_marginTop="25dp"
+        android:src="@drawable/avartar_basic_purple_img"/>
+
+    <ImageView
+        android:id="@+id/start_avatar_shadow_iv"
+        android:layout_width="165dp"
+        android:layout_height="80dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/start_avatar_subtitle1"
+        android:layout_marginTop="180dp"
+        android:src="@drawable/character_shadow_img"/>
+
+    <LinearLayout
+        android:id="@+id/start_avatar_color_circle_ll"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:orientation="horizontal"
+        android:layout_marginTop="62dp"
+        app:layout_constraintTop_toBottomOf="@id/start_avatar_shadow_iv">
+
+        <ImageView
+            android:id="@+id/start_avatar_pick_circle_iv"
+            android:layout_width="44dp"
+            android:layout_height="44dp"
+            android:layout_marginEnd="16dp"
+            android:src="@drawable/pick_color_circle_img" />
+
+        <ImageView
+            android:id="@+id/start_avatar_white_circle_iv"
+            android:layout_width="44dp"
+            android:layout_height="44dp"
+            android:layout_marginEnd="16dp"
+            android:src="@drawable/white_color_circle_img" />
+
+        <ImageView
+            android:id="@+id/start_avatar_purple_circle_iv"
+            android:layout_width="44dp"
+            android:layout_height="44dp"
+            android:layout_marginEnd="16dp"
+            android:src="@drawable/purple_color_circle_img" />
+
+        <ImageView
+            android:id="@+id/start_avatar_black_circle_iv"
+            android:layout_width="44dp"
+            android:layout_height="44dp"
+            android:layout_marginEnd="16dp"
+            android:src="@drawable/black_color_circle_img" />
+
+        <ImageView
+            android:id="@+id/start_avatar_gray_circle_iv"
+            android:layout_width="44dp"
+            android:layout_height="44dp"
+            android:src="@drawable/gray_color_circle_img" />
+    </LinearLayout>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/start_avatar_complete_cv"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        app:cardBackgroundColor="#7C5CF8"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="다음"
+                android:textColor="@color/white"
+                android:textSize="20dp"
+                android:fontFamily="@font/pretendard_medium"
+                android:layout_centerInParent="true"/>
+
+        </RelativeLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

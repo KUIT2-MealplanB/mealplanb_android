@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="6dp"
+        android:layout_marginBottom="20dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="241dp"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:background="@drawable/btn_menu_recommand_system"
+            app:cardCornerRadius="8dp">
+
+            <LinearLayout
+                android:id="@+id/item_menu_recomm_system_amount_title_ll"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/item_menu_recomm_system_amount_title_bold_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:maxWidth="250dp"
+                    android:text="약 7조각"
+                    android:fontFamily="@font/pretendard_extrabold"
+                    android:textColor="@color/white"
+                    android:textSize="16sp"/>
+
+                <TextView
+                    android:id="@+id/item_menu_recomm_system_amount_title_regular_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:maxWidth="250dp"
+                    android:text=" 드세요."
+                    android:fontFamily="@font/pretendard_regular"
+                    android:textColor="@color/white"
+                    android:textSize="16sp" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/item_menu_recomm_system_amount_remain_title_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/item_menu_recomm_system_amount_title_ll"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginTop="13dp"
+                android:text="오늘 남은 칼로리"
+                android:textSize="12sp"
+                android:textColor="@color/mono_gray2"
+                android:fontFamily="@font/pretendard_medium"/>
+
+            <TextView
+                android:id="@+id/item_menu_recomm_system_amount_remain_content_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="@id/item_menu_recomm_system_amount_remain_title_tv"
+                app:layout_constraintBottom_toBottomOf="@id/item_menu_recomm_system_amount_remain_title_tv"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:text="300kcal"
+                android:textSize="12sp"
+                android:textColor="@color/mono_gray2"
+                android:fontFamily="@font/pretendard_medium"/>
+
+            <TextView
+                android:id="@+id/item_menu_recomm_system_amount_menu_title_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/item_menu_recomm_system_amount_remain_title_tv"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginTop="12dp"
+                android:text="고추바사삭 1마리"
+                android:textSize="12sp"
+                android:textColor="@color/mono_gray2"
+                android:fontFamily="@font/pretendard_medium"/>
+
+            <TextView
+                android:id="@+id/item_menu_recomm_system_amount_menu_content_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="@id/item_menu_recomm_system_amount_menu_title_tv"
+                app:layout_constraintBottom_toBottomOf="@id/item_menu_recomm_system_amount_menu_title_tv"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:text="2844kcal"
+                android:textSize="12sp"
+                android:textColor="@color/mono_gray2"
+                android:fontFamily="@font/pretendard_medium"/>
+
+            <TextView
+                android:id="@+id/item_menu_recomm_system_amount_total_title_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/item_menu_recomm_system_amount_menu_title_tv"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginTop="13dp"
+                android:text="고추바사삭 조각"
+                android:textSize="12sp"
+                android:textColor="@color/mono_gray2"
+                android:fontFamily="@font/pretendard_medium"/>
+
+            <TextView
+                android:id="@+id/item_menu_recomm_system_amount_total_content_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="@id/item_menu_recomm_system_amount_total_title_tv"
+                app:layout_constraintBottom_toBottomOf="@id/item_menu_recomm_system_amount_total_title_tv"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:text="14개"
+                android:textSize="12sp"
+                android:textColor="@color/mono_gray2"
+                android:fontFamily="@font/pretendard_medium"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

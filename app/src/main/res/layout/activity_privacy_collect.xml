@@ -1,0 +1,358 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".PrivacyCollectActivity">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/privacy_cv"
+        android:layout_width="match_parent"
+        android:layout_height="130dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <ImageView
+            android:id="@+id/privacy_back_iv"
+            android:layout_width="11dp"
+            android:layout_height="19dp"
+            android:src="@drawable/back_ic"
+            android:layout_marginStart="19dp"
+            android:layout_marginTop="45dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="개인 목표"
+            android:fontFamily="@font/pretendard_bold"
+            android:textSize="20dp"
+            android:layout_marginStart="170dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/privacy_back_iv"
+            app:layout_constraintBottom_toBottomOf="@id/privacy_back_iv"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:orientation="horizontal"
+            app:layout_constraintTop_toBottomOf="@id/privacy_back_iv">
+
+            <View
+                android:id="@+id/privacy_bar1"
+                android:layout_width="110dp"
+                android:layout_height="6dp"
+                android:background="@drawable/bar_purple"
+                android:layout_marginTop="40dp"
+                app:layout_constraintTop_toBottomOf="@id/privacy_back_iv"
+                app:layout_constraintStart_toStartOf="@id/privacy_back_iv"/>
+
+            <View
+                android:id="@+id/privacy_bar2"
+                android:layout_width="110dp"
+                android:layout_height="6dp"
+                android:background="@drawable/bar_gray"
+                android:layout_marginTop="40dp"
+                android:layout_marginStart="8dp"
+                app:layout_constraintStart_toEndOf="@id/privacy_bar1"
+                app:layout_constraintTop_toBottomOf="@id/privacy_back_iv" />
+
+            <View
+                android:layout_width="110dp"
+                android:layout_height="6dp"
+                android:background="@drawable/bar_gray"
+                android:layout_marginTop="40dp"
+                android:layout_marginStart="8dp"
+                app:layout_constraintStart_toEndOf="@id/privacy_bar2"
+                app:layout_constraintTop_toBottomOf="@id/privacy_back_iv" />
+
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/privacy_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="신체 정보를 알려주세요."
+        android:fontFamily="@font/pretendard_bold"
+        android:textSize="24dp"
+        android:layout_marginStart="19dp"
+        android:layout_marginTop="15dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/privacy_cv"/>
+
+    <TextView
+        android:id="@+id/privacy_subtitle1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="성별"
+        android:fontFamily="@font/pretendard_medium"
+        android:textColor="#8D8D8D"
+        android:textSize="16dp"
+        android:layout_marginTop="25dp"
+        app:layout_constraintStart_toStartOf="@id/privacy_title"
+        app:layout_constraintTop_toBottomOf="@id/privacy_title"/>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/privacy_woman_cv"
+        android:layout_width="83dp"
+        android:layout_height="54dp"
+        app:cardBackgroundColor="#EAEBFE"
+        app:cardCornerRadius="12dp"
+        app:strokeWidth="0dp"
+        android:layout_marginStart="19dp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/privacy_subtitle1">
+
+        <TextView
+            android:id="@+id/privacy_woman_tv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="여자"
+            android:fontFamily="@font/pretendard_bold"
+            android:textColor="#101010"
+            android:gravity="center" />
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/privacy_man_cv"
+        android:layout_width="83dp"
+        android:layout_height="54dp"
+        app:cardBackgroundColor="#EAEBFE"
+        app:cardCornerRadius="12dp"
+        app:strokeWidth="0dp"
+        android:layout_marginStart="10dp"
+        app:layout_constraintStart_toEndOf="@id/privacy_woman_cv"
+        app:layout_constraintTop_toTopOf="@id/privacy_woman_cv"
+        app:layout_constraintBottom_toBottomOf="@id/privacy_woman_cv">
+
+        <TextView
+            android:id="@+id/privacy_man_tv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="남자"
+            android:fontFamily="@font/pretendard_bold"
+            android:textColor="#101010"
+            android:gravity="center" />
+    </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:id="@+id/privacy_subtitle2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="나이"
+        android:fontFamily="@font/pretendard_medium"
+        android:textColor="#8D8D8D"
+        android:textSize="16dp"
+        android:layout_marginTop="25dp"
+        app:layout_constraintStart_toStartOf="@id/privacy_title"
+        app:layout_constraintTop_toBottomOf="@id/privacy_woman_cv"/>
+
+    <RelativeLayout
+        android:id="@+id/privacy_age"
+        android:layout_width="153dp"
+        android:layout_height="54dp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintStart_toStartOf="@id/privacy_subtitle2"
+        app:layout_constraintTop_toBottomOf="@id/privacy_subtitle2">
+
+        <EditText
+            android:id="@+id/privacy_age_et"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:hint="0"
+            android:inputType="number"
+            android:textSize="16dp"
+            android:paddingStart="20dp"
+            android:textColorHint="#101010"
+            android:fontFamily="@font/pretendard_bold"
+            android:background="@drawable/et_privacy"
+            android:padding="10dp" />
+
+        <TextView
+            android:id="@+id/privacy_age_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:padding="10dp"
+            android:text="세"
+            android:textColor="#101010"
+            android:textSize="16dp"
+            android:fontFamily="@font/pretendard_bold"/>
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/privacy_subtitle3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="키"
+        android:fontFamily="@font/pretendard_medium"
+        android:textColor="#8D8D8D"
+        android:textSize="16dp"
+        android:layout_marginStart="150dp"
+        app:layout_constraintStart_toEndOf="@id/privacy_subtitle2"
+        app:layout_constraintTop_toTopOf="@id/privacy_subtitle2"
+        app:layout_constraintBottom_toBottomOf="@id/privacy_subtitle2"/>
+
+    <RelativeLayout
+        android:layout_width="153dp"
+        android:layout_height="54dp"
+        app:layout_constraintStart_toStartOf="@id/privacy_subtitle3"
+        app:layout_constraintTop_toTopOf="@id/privacy_age"
+        app:layout_constraintBottom_toBottomOf="@id/privacy_age">
+
+        <EditText
+            android:id="@+id/privacy_height_et"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:hint="0"
+            android:inputType="number"
+            android:textSize="16dp"
+            android:paddingStart="20dp"
+            android:textColorHint="#101010"
+            android:fontFamily="@font/pretendard_bold"
+            android:background="@drawable/et_privacy"
+            android:padding="10dp" />
+
+        <TextView
+            android:id="@+id/privacy_height_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:padding="10dp"
+            android:text="cm"
+            android:textColor="#101010"
+            android:textSize="16dp"
+            android:fontFamily="@font/pretendard_bold"/>
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/privacy_subtitle4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="시작 체중"
+        android:fontFamily="@font/pretendard_medium"
+        android:textColor="#8D8D8D"
+        android:textSize="16dp"
+        android:layout_marginTop="25dp"
+        app:layout_constraintTop_toBottomOf="@id/privacy_age"
+        app:layout_constraintStart_toStartOf="@id/privacy_subtitle2"/>
+
+    <RelativeLayout
+        android:id="@+id/privacy_weight"
+        android:layout_width="153dp"
+        android:layout_height="54dp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintStart_toStartOf="@id/privacy_subtitle4"
+        app:layout_constraintTop_toBottomOf="@id/privacy_subtitle4">
+
+        <EditText
+            android:id="@+id/privacy_start_weight_et"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:hint="0.00"
+            android:inputType="numberDecimal"
+            android:textSize="16dp"
+            android:paddingStart="20dp"
+            android:textColorHint="#101010"
+            android:fontFamily="@font/pretendard_bold"
+            android:background="@drawable/et_privacy"
+            android:padding="10dp" />
+
+        <TextView
+            android:id="@+id/privacy_start_weight_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:padding="10dp"
+            android:text="kg"
+            android:textColor="#101010"
+            android:textSize="16dp"
+            android:fontFamily="@font/pretendard_bold"/>
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/privacy_subtitle5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="목표 체중"
+        android:fontFamily="@font/pretendard_medium"
+        android:textColor="#8D8D8D"
+        android:textSize="16dp"
+        app:layout_constraintStart_toStartOf="@id/privacy_subtitle3"
+        app:layout_constraintTop_toTopOf="@id/privacy_subtitle4"
+        app:layout_constraintBottom_toBottomOf="@id/privacy_subtitle4"/>
+
+    <RelativeLayout
+        android:layout_width="153dp"
+        android:layout_height="54dp"
+        app:layout_constraintStart_toStartOf="@id/privacy_subtitle5"
+        app:layout_constraintTop_toTopOf="@id/privacy_weight"
+        app:layout_constraintBottom_toBottomOf="@id/privacy_weight">
+
+        <EditText
+            android:id="@+id/privacy_want_weight_et"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:hint="0.00"
+            android:inputType="numberDecimal"
+            android:textSize="16dp"
+            android:paddingStart="20dp"
+            android:textColorHint="#101010"
+            android:fontFamily="@font/pretendard_bold"
+            android:background="@drawable/et_privacy"
+            android:padding="10dp" />
+
+        <TextView
+            android:id="@+id/privacy_want_weight_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:padding="10dp"
+            android:text="kg"
+            android:textColor="#101010"
+            android:textSize="16dp"
+            android:fontFamily="@font/pretendard_bold"/>
+
+    </RelativeLayout>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/privacy_complete_cv"
+        android:layout_marginTop="35dp"
+        app:cardElevation="0dp"
+        android:layout_width="320dp"
+        android:layout_height="48dp"
+        app:cardCornerRadius="20dp"
+        app:cardBackgroundColor="#D7D7D7"
+        android:layout_marginBottom="30dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="다음"
+            android:textSize="20dp"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:fontFamily="@font/pretendard_bold"/>
+
+    </com.google.android.material.card.MaterialCardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

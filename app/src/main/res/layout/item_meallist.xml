@@ -24,9 +24,10 @@
         app:layout_constraintTop_toBottomOf="@id/item_meallist_title_tv"
         app:layout_constraintStart_toStartOf="@id/item_meallist_title_tv"
         android:text="100g · 365kcal"
-        android:textColor="@color/color_subtitle_tv"/>
+        android:textColor="@color/mono_gray4"/>
 
     <TextView
+        android:id="@+id/item_meallist_delbtn_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="@id/item_meallist_title_tv"

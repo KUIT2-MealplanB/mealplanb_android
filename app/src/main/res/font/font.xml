@@ -3,5 +3,5 @@
 <font
     android:fontStyle="normal"
     android:fontWeight="400"
-    android:font="@font/pretendardblack"/>
+    android:font="@font/pretendard_black"/>
 </font-family>

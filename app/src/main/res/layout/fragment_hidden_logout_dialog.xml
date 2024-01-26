@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".HiddenLogoutDialogFragment"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="312dp"
+        android:layout_height="169dp"
+        android:background="@drawable/btn"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="로그아웃 하시겠습니까?"
+            android:fontFamily="@font/pretendard_semibold"
+            android:textSize="20dp"
+            android:layout_marginBottom="35dp"
+            android:layout_marginTop="44dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:gravity="center"
+            android:layout_marginBottom="18dp"
+            android:orientation="horizontal">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/hidden_logout_cancle_btn"
+                android:layout_width="132dp"
+                android:layout_height="48dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:background="@drawable/edit_engine"
+                android:text="취소"
+                android:textSize="16dp"
+                android:textColor="@color/mono_gray4"
+                android:fontFamily="@font/pretendard_bold"/>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/hidden_logout_logout_btn"
+                android:layout_width="132dp"
+                android:layout_height="48dp"
+                app:layout_constraintStart_toEndOf="@id/hidden_logout_cancle_btn"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:background="@drawable/free_input_btn"
+                android:text="로그아웃"
+                android:textSize="16dp"
+                android:textColor="@color/white"
+                android:fontFamily="@font/pretendard_bold"
+                android:layout_marginStart="8dp" />
+        </LinearLayout>
+    </LinearLayout>
+</FrameLayout>

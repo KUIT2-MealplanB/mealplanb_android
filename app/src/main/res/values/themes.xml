@@ -6,4 +6,10 @@
     </style>
 
     <style name="Theme.MealPlanB" parent="Base.Theme.MealPlanB" />
+
+    <style name="BottomSheetDialogTheme" parent="Theme.Design.BottomSheetDialog">
+        <item name="android:background">@color/transparent_black</item>
+    </style>
+
+
 </resources>

@@ -13,6 +13,27 @@
         android:theme="@style/Theme.MealPlanB"
         tools:targetApi="31">
         <activity
+            android:name=".HiddenPageActivity"
+            android:exported="false" />
+        <activity
+            android:name=".StartAvatarActivity"
+            android:exported="false" />
+        <activity
+            android:name=".RecommendCategoryActivity"
+            android:exported="false" />
+        <activity
+            android:name=".MainActivity"
+            android:exported="false" />
+        <activity
+            android:name=".MenuRecommendActivity"
+            android:exported="false" />
+        <activity
+            android:name=".NutrientdetailActivity"
+            android:exported="false" />
+        <activity
+            android:name=".AvatarMotifActivity"
+            android:exported="false" />
+        <activity
             android:name=".SearchMealActivity"
             android:exported="false" />
         <activity
@@ -22,7 +43,7 @@
             android:name=".FoodDetailActivity"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".PrivacyCollectActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

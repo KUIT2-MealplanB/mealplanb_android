@@ -1,0 +1,426 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/some_id"
+    android:clipToOutline="true"
+    android:background="#F9F9F9"
+    tools:context=".FoodDetailFragment">
+
+    <ImageView
+        android:id="@+id/detail_food_cancel_iv"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="52dp"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:src="@drawable/cancel_ic" />
+
+    <LinearLayout
+        android:id="@+id/detail_food_favorite_cv"
+        android:layout_width="138dp"
+        android:layout_height="32dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/detail_food_favorite_iv"
+        android:layout_marginTop="46dp"
+        android:elevation="10dp"
+        app:layout_constraintBottom_toTopOf="@id/detail_food_favorite_iv"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:visibility="invisible"
+        android:background="@drawable/detail_food_speech_bubble">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="즐겨찾기에 추가되었어요"
+            android:textSize="12dp"
+            android:fontFamily="@font/pretendard_regular"
+            android:textColor="@color/mono_gray4"/>
+
+
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/detail_food_favorite_iv"
+        android:layout_width="22.5dp"
+        android:layout_height="21.5dp"
+        android:src="@drawable/star_ic"
+        app:layout_constraintTop_toBottomOf="@id/detail_food_favorite_cv"
+        android:layout_marginEnd="28.5dp"
+        android:layout_marginTop="12dp"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+
+    <TextView
+        android:id="@+id/detail_food_name_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:maxLines="1"
+        android:textSize="24dp"
+        android:text="크림파스타"
+        android:layout_marginStart="22dp"
+        android:layout_marginTop="38dp"
+        android:fontFamily="@font/pretendard_bold"
+        app:layout_constraintTop_toBottomOf="@id/detail_food_cancel_iv"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/detail_food_name_equal_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:maxLines="1"
+        android:textSize="24dp"
+        android:layout_marginTop="38dp"
+        android:text=" 는(은)"
+        android:fontFamily="@font/pretendard_bold"
+        app:layout_constraintStart_toEndOf="@id/detail_food_name_tv"
+        app:layout_constraintTop_toBottomOf="@id/detail_food_cancel_iv" />
+
+    <TextView
+        android:id="@+id/detail_food_kcal_num_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:maxLines="1"
+        android:textSize="24dp"
+        android:text="362"
+        android:layout_marginStart="22dp"
+        android:textColor="@color/point"
+        android:fontFamily="@font/pretendard_bold"
+        app:layout_constraintTop_toBottomOf="@id/detail_food_name_tv"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/detail_food_kcal_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:maxLines="1"
+        android:textSize="24dp"
+        android:text="kcal"
+        android:textColor="@color/point"
+        android:fontFamily="@font/pretendard_bold"
+        app:layout_constraintStart_toEndOf="@id/detail_food_kcal_num_tv"
+        app:layout_constraintTop_toBottomOf="@id/detail_food_name_tv" />
+
+    <TextView
+        android:id="@+id/detail_food_is_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:maxLines="1"
+        android:textSize="24dp"
+        android:text=" 이에요"
+        android:fontFamily="@font/pretendard_bold"
+        app:layout_constraintStart_toEndOf="@id/detail_food_kcal_tv"
+        app:layout_constraintTop_toBottomOf="@id/detail_food_name_tv" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/detail_food_sacc_cv"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/detail_food_kcal_tv"
+        android:layout_marginTop="42dp"
+        android:layout_marginStart="26dp"
+        android:elevation="10dp"
+        android:backgroundTint="@color/sub_pink"
+        android:layout_width="88dp"
+        app:cardCornerRadius="20dp"
+        android:layout_height="72dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/detail_food_sacc_id_tv"
+                android:textSize="12dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginTop="12dp"
+                android:fontFamily="@font/pretendard_semibold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:text="순탄수"
+                />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/detail_food_sacc_id_tv"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:layout_marginTop="4dp">
+
+                <TextView
+                    android:id="@+id/detail_food_sacc_size_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="500"
+                    android:textSize="16dp"
+                    android:fontFamily="@font/pretendard_bold"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="g"
+                    android:textSize="16dp"
+                    android:fontFamily="@font/pretendard_bold"/>
+
+            </LinearLayout>
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/detail_food_protein_cv"
+        android:layout_width="88dp"
+        app:cardCornerRadius="20dp"
+        android:layout_height="72dp"
+        app:layout_constraintStart_toEndOf="@id/detail_food_sacc_cv"
+        app:layout_constraintTop_toBottomOf="@id/detail_food_is_tv"
+        app:layout_constraintEnd_toStartOf="@id/detail_food_fat_cv"
+        android:layout_marginTop="42dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/detail_food_protein_id_tv"
+                android:textSize="12dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginTop="12dp"
+                android:fontFamily="@font/pretendard_semibold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:text="단백질"
+                />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/detail_food_protein_id_tv"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:layout_marginTop="4dp">
+
+                <TextView
+                    android:id="@+id/detail_food_protein_size_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="500"
+                    android:textSize="16dp"
+                    android:fontFamily="@font/pretendard_bold"/>
+
+                <TextView
+                    android:id="@+id/detail_food_protein_g_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="g"
+                    android:textSize="16dp"
+                    android:fontFamily="@font/pretendard_bold"/>
+
+            </LinearLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/detail_food_fat_cv"
+        android:layout_width="88dp"
+        app:cardCornerRadius="20dp"
+        android:layout_height="72dp"
+        app:cardBackgroundColor="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/detail_food_is_tv"
+        android:layout_marginTop="42dp"
+        android:layout_marginEnd="26dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/detail_food_fat_id_tv"
+                android:textSize="12dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginTop="12dp"
+                android:fontFamily="@font/pretendard_semibold"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:textColor="@color/white"
+                app:layout_constraintStart_toStartOf="parent"
+                android:text="지방"
+                />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/detail_food_fat_id_tv"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:layout_marginTop="4dp">
+
+                <TextView
+                    android:id="@+id/detail_food_fat_size_tv"
+                    android:textColor="@color/white"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="500"
+                    android:textSize="16dp"
+                    android:fontFamily="@font/pretendard_bold"/>
+
+                <TextView
+                    android:textColor="@color/white"
+                    android:id="@+id/fat_g_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="g"
+                    android:textSize="16dp"
+                    android:fontFamily="@font/pretendard_bold"/>
+
+            </LinearLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:id="@+id/detail_food_mount_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20dp"
+        android:text="양 조절"
+        android:fontFamily="@font/pretendard_bold"
+        android:layout_marginTop="52dp"
+        android:layout_marginStart="22dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/detail_food_sacc_cv"/>
+
+    <TextView
+        android:id="@+id/detail_food_mount_guide_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="12dp"
+        android:layout_marginStart="11dp"
+        android:layout_marginTop="62dp"
+        android:text="1인분 기준 100g입니다."
+        android:fontFamily="@font/pretendard_regular"
+        app:layout_constraintTop_toBottomOf="@id/detail_food_protein_cv"
+        app:layout_constraintStart_toEndOf="@id/detail_food_mount_tv"/>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/detail_food_gram_control_bar_cv"
+        android:layout_width="319dp"
+        android:layout_height="68dp"
+        app:cardCornerRadius="83dp"
+        android:layout_marginTop="21dp"
+        app:cardElevation="0dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/detail_food_mount_tv">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/detail_food_minus_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginStart="29dp"
+                android:textSize="20dp"
+                android:text="-"
+                android:fontFamily="@font/pretendard_bold"
+                />
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center">
+
+                <EditText
+                    android:id="@+id/detail_food_meal_weight_et"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="20dp"
+                    android:inputType="number"
+                    android:focusable="false"
+                    android:text="100"
+                    android:fontFamily="@font/pretendard_bold" />
+
+
+                <TextView
+                    android:id="@+id/detail_food_meal_weight_gram_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="20dp"
+                    android:text="g"
+                    android:fontFamily="@font/pretendard_bold"
+                    />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+
+            <TextView
+                android:id="@+id/detail_food_plus_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginEnd="29dp"
+                android:textSize="20dp"
+                android:text="+"
+                android:fontFamily="@font/pretendard_bold"
+                />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/detail_food_add_cv"
+        app:cardElevation="0dp"
+        android:layout_width="320dp"
+        android:layout_height="48dp"
+        app:cardCornerRadius="20dp"
+        android:backgroundTint="@color/point"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="72dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="추가하기"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:fontFamily="@font/pretendard_bold"/>
+
+    </androidx.cardview.widget.CardView>
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -4,6 +4,9 @@ import java.io.Serializable
 
 data class Meal(
     val meal_name : String,
-    val meal_weight : Int,
-    val meal_cal : Int
+    var meal_weight : Double,
+    var meal_cal : Double,
+    var sacc_gram : Double,
+    var protein_gram : Double,
+    var fat_gram : Double
 ) : Serializable

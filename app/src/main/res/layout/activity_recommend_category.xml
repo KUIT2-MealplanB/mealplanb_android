@@ -1,0 +1,345 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".RecommendCategoryActivity">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/recommend_cv"
+        android:layout_width="match_parent"
+        android:layout_height="130dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <ImageView
+            android:id="@+id/recommend_back_iv"
+            android:layout_width="11dp"
+            android:layout_height="19dp"
+            android:src="@drawable/back_ic"
+            android:layout_marginStart="19dp"
+            android:layout_marginTop="45dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="식단 추천"
+            android:fontFamily="@font/pretendard_bold"
+            android:textSize="20dp"
+            android:layout_marginStart="170dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/recommend_back_iv"
+            app:layout_constraintBottom_toBottomOf="@id/recommend_back_iv"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:orientation="horizontal"
+            app:layout_constraintTop_toBottomOf="@id/recommend_back_iv">
+
+            <View
+                android:id="@+id/recommend_bar1"
+                android:layout_width="110dp"
+                android:layout_height="6dp"
+                android:background="@drawable/bar_purple"
+                android:layout_marginTop="40dp"
+                app:layout_constraintTop_toBottomOf="@id/recommend_back_iv"
+                app:layout_constraintStart_toStartOf="@id/recommend_back_iv"/>
+
+            <View
+                android:id="@+id/recommend_bar2"
+                android:layout_width="110dp"
+                android:layout_height="6dp"
+                android:background="@drawable/bar_purple"
+                android:layout_marginTop="40dp"
+                android:layout_marginStart="8dp"
+                app:layout_constraintStart_toEndOf="@id/recommend_bar1"
+                app:layout_constraintTop_toBottomOf="@id/recommend_back_iv" />
+
+            <View
+                android:layout_width="110dp"
+                android:layout_height="6dp"
+                android:background="@drawable/bar_gray"
+                android:layout_marginTop="40dp"
+                android:layout_marginStart="8dp"
+                app:layout_constraintStart_toEndOf="@id/recommend_bar2"
+                app:layout_constraintTop_toBottomOf="@id/recommend_back_iv" />
+
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@id/recommend_cv"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/recommend_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="어떤 카테고리로\n식단을 추천해드릴까요?"
+                android:fontFamily="@font/pretendard_bold"
+                android:textSize="24dp"
+                android:layout_marginStart="19dp"
+                android:layout_marginTop="15dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
+
+            <TextView
+                android:id="@+id/recommend_subtitle1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="선택한 식단은 나중에 바꿀 수 있어요."
+                android:fontFamily="@font/pretendard_medium"
+                android:textColor="#8D8D8D"
+                android:textSize="12dp"
+                android:layout_marginTop="15dp"
+                app:layout_constraintStart_toStartOf="@id/recommend_title"
+                app:layout_constraintTop_toBottomOf="@id/recommend_title"/>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/recommend_category1_cv"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                app:cardCornerRadius="10dp"
+                app:cardBackgroundColor="#FFFFFF"
+                android:layout_marginTop="15dp"
+                app:layout_constraintTop_toBottomOf="@id/recommend_subtitle1">
+
+                <TextView
+                    android:id="@+id/recommend_category1_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="일반 식단"
+                    android:fontFamily="@font/pretendard_bold"
+                    android:textSize="20dp"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginTop="30dp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="탄단지 균형을 유지하고\n칼로리를 제한해요"
+                    android:fontFamily="@font/pretendard_medium"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginTop="75dp"/>
+
+                <ImageView
+                    android:layout_width="178dp"
+                    android:layout_height="144dp"
+                    android:src="@drawable/category1_ic"
+                    android:layout_marginLeft="210dp"
+                    android:layout_marginTop="10dp"/>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/recommend_category2_cv"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                app:cardCornerRadius="10dp"
+                app:cardBackgroundColor="#FFFFFF"
+                android:layout_marginTop="15dp"
+                app:layout_constraintTop_toBottomOf="@id/recommend_category1_cv">
+
+                <TextView
+                    android:id="@+id/recommend_category2_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="운동 식단"
+                    android:fontFamily="@font/pretendard_bold"
+                    android:textSize="20dp"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginTop="30dp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="단백질 섭취량을 늘려\n근육 성장에 집중해요"
+                    android:fontFamily="@font/pretendard_medium"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginTop="75dp"/>
+
+                <ImageView
+                    android:layout_width="178dp"
+                    android:layout_height="144dp"
+                    android:src="@drawable/category2_ic"
+                    android:layout_marginLeft="210dp"
+                    android:layout_marginTop="10dp"/>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/recommend_category3_cv"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                app:cardCornerRadius="10dp"
+                app:cardBackgroundColor="#FFFFFF"
+                android:layout_marginTop="15dp"
+                app:layout_constraintTop_toBottomOf="@id/recommend_category2_cv">
+
+                <TextView
+                    android:id="@+id/recommend_category3_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="키토 식단"
+                    android:fontFamily="@font/pretendard_bold"
+                    android:textSize="20dp"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginTop="30dp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="탄수화물을 제한하고\n 건강한 지방을 섭취해요"
+                    android:fontFamily="@font/pretendard_medium"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginTop="75dp"/>
+
+                <ImageView
+                    android:layout_width="178dp"
+                    android:layout_height="144dp"
+                    android:src="@drawable/category3_ic"
+                    android:layout_marginLeft="210dp"
+                    android:layout_marginTop="10dp"/>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/recommend_category4_cv"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                app:cardCornerRadius="10dp"
+                app:cardBackgroundColor="#FFFFFF"
+                android:layout_marginTop="15dp"
+                app:layout_constraintTop_toBottomOf="@id/recommend_category3_cv">
+
+                <TextView
+                    android:id="@+id/recommend_category4_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="비건 식단"
+                    android:fontFamily="@font/pretendard_bold"
+                    android:textSize="20dp"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginTop="30dp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="동물성 음식을 피하고\n채식 위주의 식단을 지향해요"
+                    android:fontFamily="@font/pretendard_medium"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginTop="75dp"/>
+
+                <ImageView
+                    android:layout_width="178dp"
+                    android:layout_height="144dp"
+                    android:src="@drawable/category4_ic"
+                    android:layout_marginLeft="210dp"
+                    android:layout_marginTop="10dp"/>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/recommend_category5_cv"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                app:cardCornerRadius="10dp"
+                app:cardBackgroundColor="#FFFFFF"
+                android:layout_marginTop="15dp"
+                app:layout_constraintTop_toBottomOf="@id/recommend_category4_cv">
+
+                <TextView
+                    android:id="@+id/recommend_category5_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="당뇨 식단"
+                    android:fontFamily="@font/pretendard_bold"
+                    android:textSize="20dp"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginTop="30dp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="탄수화물을 제한하고\n건강한 지방을 섭취해요"
+                    android:fontFamily="@font/pretendard_medium"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginTop="75dp"/>
+
+                <ImageView
+                    android:layout_width="178dp"
+                    android:layout_height="144dp"
+                    android:src="@drawable/category5_ic"
+                    android:layout_marginLeft="210dp"
+                    android:layout_marginTop="10dp"/>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                app:layout_constraintTop_toBottomOf="@id/recommend_category5_cv"
+                android:layout_marginTop="10dp"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="90dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:background="@color/white">
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/privacy_complete_cv"
+            android:layout_marginTop="35dp"
+            app:cardElevation="0dp"
+            android:layout_width="320dp"
+            android:layout_height="48dp"
+            app:cardCornerRadius="20dp"
+            android:layout_marginBottom="20dp"
+            app:cardBackgroundColor="#D7D7D7"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="다음"
+                android:textSize="20dp"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:fontFamily="@font/pretendard_bold"/>
+
+        </com.google.android.material.card.MaterialCardView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

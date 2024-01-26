@@ -1,0 +1,616 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F9F9F9"
+    tools:context=".MainActivity">
+
+    <ImageView
+        android:id="@+id/main_arrow_left_iv"
+        android:layout_width="7dp"
+        android:layout_height="14dp"
+        app:layout_constraintTop_toTopOf="@id/main_date_tv"
+        app:layout_constraintBottom_toBottomOf="@id/main_date_tv"
+        app:layout_constraintEnd_toStartOf="@id/main_date_tv"
+        android:layout_marginEnd="16dp"
+        android:src="@drawable/arrow_left_small_gray_ic"/>
+
+    <TextView
+        android:id="@+id/main_date_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="43dp"
+        android:text="11. 11. 토"
+        android:textSize="16sp"
+        android:textColor="@color/mono_gray5"
+        android:fontFamily="@font/pretendard_medium"/>
+
+    <ImageView
+        android:id="@+id/main_arrow_right_iv"
+        android:layout_width="7dp"
+        android:layout_height="14dp"
+        app:layout_constraintTop_toTopOf="@id/main_date_tv"
+        app:layout_constraintBottom_toBottomOf="@id/main_date_tv"
+        app:layout_constraintStart_toEndOf="@id/main_date_tv"
+        android:layout_marginStart="16dp"
+        android:src="@drawable/arrow_right_small_gray_ic"/>
+
+    <ImageView
+        android:id="@+id/main_menu_iv"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="14dp"
+        android:layout_marginEnd="15dp"
+        android:src="@drawable/menu_ic"/>
+
+    <ImageView
+        android:id="@+id/main_alarm_iv"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        app:layout_constraintTop_toTopOf="@id/main_menu_iv"
+        app:layout_constraintBottom_toBottomOf="@id/main_menu_iv"
+        app:layout_constraintEnd_toStartOf="@id/main_menu_iv"
+        android:layout_marginEnd="10dp"
+        android:src="@drawable/alarm_ic"/>
+
+    <ScrollView
+        android:nestedScrollingEnabled="false"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@id/main_alarm_iv"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginTop="1dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/main_title_nickname_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/main_title_content1_tv"
+                android:text="꿀꿀"
+                android:textSize="20sp"
+                android:layout_marginTop="1dp"
+                android:textColor="@color/mono_black"
+                android:fontFamily="@font/pretendard_bold"
+                android:layout_marginStart="20dp"/>
+
+
+            <TextView
+                android:id="@+id/main_title_content1_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toEndOf="@id/main_title_nickname_tv"
+                android:layout_marginTop="1dp"
+                android:layout_marginStart="1dp"
+                android:text="님의 1일차"
+                android:textSize="20sp"
+                android:textColor="@color/mono_black"
+                android:fontFamily="@font/pretendard_bold"/>
+
+            <TextView
+                android:id="@+id/main_title_content2_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/main_title_content1_tv"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginStart="20dp"
+                android:text="오늘은"
+                android:textSize="20sp"
+                android:textColor="@color/mono_black"
+                android:fontFamily="@font/pretendard_bold"/>
+
+            <TextView
+                android:id="@+id/main_title_cal_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="@id/main_title_content2_tv"
+                app:layout_constraintBottom_toBottomOf="@id/main_title_content2_tv"
+                app:layout_constraintStart_toEndOf="@id/main_title_content2_tv"
+                android:layout_marginStart="5dp"
+                android:text="284kcal"
+                android:textSize="20sp"
+                android:textColor="@color/point"
+                android:fontFamily="@font/pretendard_bold"/>
+
+            <TextView
+                android:id="@+id/main_title_content3_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="@id/main_title_cal_tv"
+                app:layout_constraintBottom_toBottomOf="@id/main_title_cal_tv"
+                app:layout_constraintStart_toEndOf="@id/main_title_cal_tv"
+                android:layout_marginStart="5dp"
+                android:text="남았어요"
+                android:textSize="20sp"
+                android:textColor="@color/mono_black"
+                android:fontFamily="@font/pretendard_bold"/>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/main_character_bg_cv"
+                android:layout_width="140dp"
+                android:layout_height="118dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginTop="124dp"
+                android:backgroundTint="@color/sub_pink"
+                app:cardCornerRadius="100dp"
+                app:cardElevation="0dp">
+
+            </androidx.cardview.widget.CardView>
+
+            <ImageView
+                android:id="@+id/main_shadow_iv"
+                android:layout_width="165dp"
+                android:layout_height="25dp"
+                android:src="@drawable/character_shadow_img"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginTop="249dp"/>
+
+            <LinearLayout
+                android:id="@+id/main_change_btn"
+                android:layout_width="88dp"
+                android:layout_height="32dp"
+                android:background="@drawable/ballon_button"
+                app:layout_constraintTop_toTopOf="@id/main_shadow_iv"
+                app:layout_constraintBottom_toBottomOf="@id/main_shadow_iv"
+                app:layout_constraintStart_toEndOf="@id/main_shadow_iv"
+                android:elevation="5dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="12dp"
+                    android:text="눌러보세요!"
+                    android:textColor="#8D8D8D"
+                    android:layout_marginStart="14dp"
+                    android:layout_marginTop="6dp"
+                    />
+
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/main_character_iv"
+                android:layout_width="330dp"
+                android:layout_height="239dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginTop="63dp"
+                android:src="@drawable/avartar_basic_purple_img"/>
+
+            <com.example.mealplanb.CustomCircularProgress
+                android:id="@+id/main_progressbg_pb"
+                android:layout_width="318dp"
+                android:layout_height="318dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginTop="59dp"
+                app:progress_color="@color/white"
+                app:progress="100"
+                app:text="1736"
+                app:textColor="@color/black"/>
+
+            <com.example.mealplanb.CustomCircularProgress
+                android:id="@+id/main_progress_pb"
+                android:layout_width="318dp"
+                android:layout_height="318dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginTop="59dp"
+                app:progress_color="@color/point"
+                app:progress="60"
+                app:text="1458"
+                app:textColor="@color/bg"/>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/main_contentlist_cv">
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/main_sacc_cv"
+                    android:layout_width="88dp"
+                    android:layout_height="72dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:backgroundTint="@color/sub_pink"
+                    app:cardCornerRadius="20dp"
+                    android:layout_marginBottom="20dp">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <TextView
+                            android:id="@+id/main_sacc_id_tv"
+                            android:textSize="12dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintTop_toTopOf="parent"
+                            android:layout_marginTop="12dp"
+                            android:fontFamily="@font/pretendard_semibold"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            android:text="순탄수"
+                            android:textColor="@color/mono_gray5"/>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/main_sacc_id_tv"
+                            android:orientation="horizontal"
+                            android:gravity="center"
+                            android:layout_marginTop="4dp">
+
+                            <TextView
+                                android:id="@+id/main_sacc_size_tv"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="100"
+                                android:textSize="16dp"
+                                android:textColor="@color/black"
+                                android:fontFamily="@font/pretendard_bold"/>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="g"
+                                android:textSize="16dp"
+                                android:textColor="@color/black"
+                                android:fontFamily="@font/pretendard_bold"/>
+
+                            <TextView
+                                android:id="@+id/main_sacc_total_tv"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="/500g"
+                                android:textSize="12sp"
+                                android:textColor="@color/mono_gray4"
+                                android:fontFamily="@font/pretendard_medium"/>
+
+                        </LinearLayout>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/main_protein_cv"
+                    android:layout_width="88dp"
+                    app:cardCornerRadius="20dp"
+                    android:layout_height="72dp"
+                    app:layout_constraintStart_toEndOf="@id/main_sacc_cv"
+                    app:layout_constraintTop_toTopOf="@id/main_sacc_cv"
+                    app:layout_constraintBottom_toBottomOf="@id/main_sacc_cv"
+                    android:layout_marginStart="20dp">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <TextView
+                            android:id="@+id/main_protein_id_tv"
+                            android:textSize="12dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintTop_toTopOf="parent"
+                            android:layout_marginTop="12dp"
+                            android:fontFamily="@font/pretendard_semibold"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            android:text="단백질"
+                            android:textColor="@color/mono_gray5"/>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/main_protein_id_tv"
+                            android:orientation="horizontal"
+                            android:gravity="center"
+                            android:layout_marginTop="4dp">
+
+                            <TextView
+                                android:id="@+id/main_protein_size_tv"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="200"
+                                android:textSize="16dp"
+                                android:textColor="@color/black"
+                                android:fontFamily="@font/pretendard_bold"/>
+
+                            <TextView
+                                android:id="@+id/main_protein_g_tv"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="g"
+                                android:textSize="16dp"
+                                android:textColor="@color/black"
+                                android:fontFamily="@font/pretendard_bold"/>
+
+                            <TextView
+                                android:id="@+id/main_protein_total_tv"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="/500g"
+                                android:textSize="12sp"
+                                android:textColor="@color/mono_gray4"
+                                android:fontFamily="@font/pretendard_medium"/>
+
+                        </LinearLayout>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/main_fat_cv"
+                    android:layout_width="88dp"
+                    app:cardCornerRadius="20dp"
+                    android:layout_height="72dp"
+                    app:cardBackgroundColor="@color/black"
+                    app:layout_constraintStart_toEndOf="@id/main_protein_cv"
+                    app:layout_constraintTop_toTopOf="@id/main_protein_cv"
+                    app:layout_constraintBottom_toBottomOf="@id/main_protein_cv"
+                    android:layout_marginStart="20dp">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <TextView
+                            android:id="@+id/main_fat_id_tv"
+                            android:textSize="12dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintTop_toTopOf="parent"
+                            android:layout_marginTop="12dp"
+                            android:fontFamily="@font/pretendard_semibold"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            android:textColor="@color/mono_gray3"
+                            app:layout_constraintStart_toStartOf="parent"
+                            android:text="지방"/>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/main_fat_id_tv"
+                            android:orientation="horizontal"
+                            android:gravity="center"
+                            android:layout_marginTop="4dp">
+
+                            <TextView
+                                android:id="@+id/main_fat_size_tv"
+                                android:textColor="@color/white"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="300"
+                                android:textSize="16dp"
+                                android:fontFamily="@font/pretendard_bold"/>
+
+                            <TextView
+                                android:textColor="@color/white"
+                                android:id="@+id/fat_g_tv"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="g"
+                                android:textSize="16dp"
+                                android:fontFamily="@font/pretendard_bold"/>
+
+                            <TextView
+                                android:id="@+id/main_fat_total_tv"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="/500g"
+                                android:textSize="12sp"
+                                android:textColor="@color/mono_gray4"
+                                android:fontFamily="@font/pretendard_medium"/>
+
+                        </LinearLayout>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </androidx.cardview.widget.CardView>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/main_contentlist_cv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginTop="401dp"
+                app:cardCornerRadius="20dp"
+                android:backgroundTint="@color/white">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="24dp"
+                    android:paddingBottom="12dp">
+
+                    <TextView
+                        android:id="@+id/main_daymeal_title_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/pretendard_semibold"
+                        android:text="오늘의 끼니"
+                        android:textColor="@color/black"
+                        android:textSize="16sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:layout_marginStart="24dp"/>
+
+                    <HorizontalScrollView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toBottomOf="@id/main_daymeal_title_tv"
+                        app:layout_constraintStart_toStartOf="parent"
+                        android:layout_marginTop="16dp"
+                        android:fillViewport="true">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <androidx.constraintlayout.widget.ConstraintLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent">
+
+                                <androidx.recyclerview.widget.RecyclerView
+                                    android:id="@+id/main_meallist_rv"
+                                    android:layout_width="wrap_content"
+                                    android:overScrollMode="always"
+                                    android:nestedScrollingEnabled="false"
+                                    android:layout_height="match_parent"
+                                    app:layout_constraintTop_toTopOf="parent"
+                                    app:layout_constraintStart_toStartOf="parent"/>
+
+                                <androidx.cardview.widget.CardView
+                                    android:id="@+id/main_daymeal_add_cv"
+                                    android:layout_width="124dp"
+                                    android:layout_height="156dp"
+                                    android:backgroundTint="@color/bg"
+                                    app:cardCornerRadius="20dp"
+                                    app:layout_constraintStart_toEndOf="@id/main_meallist_rv"
+                                    app:layout_constraintTop_toTopOf="@id/main_meallist_rv"
+                                    app:layout_constraintBottom_toBottomOf="@id/main_meallist_rv"
+                                    android:layout_marginStart="24dp">
+
+                                    <androidx.constraintlayout.widget.ConstraintLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent">
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginStart="16dp"
+                                            android:layout_marginTop="12dp"
+                                            android:fontFamily="@font/pretendard_bold"
+                                            android:text="추가하기"
+                                            android:textColor="@color/mono_gray2"
+                                            android:textSize="20sp"
+                                            app:layout_constraintStart_toStartOf="parent"
+                                            app:layout_constraintTop_toTopOf="parent" />
+
+                                        <androidx.cardview.widget.CardView
+                                            android:layout_width="92dp"
+                                            android:layout_height="92dp"
+                                            android:layout_marginBottom="16dp"
+                                            android:backgroundTint="@color/bg"
+                                            app:cardCornerRadius="10dp"
+                                            app:cardElevation="0dp"
+                                            app:layout_constraintBottom_toBottomOf="parent"
+                                            app:layout_constraintEnd_toEndOf="parent"
+                                            app:layout_constraintStart_toStartOf="parent">
+
+                                            <androidx.constraintlayout.widget.ConstraintLayout
+                                                android:layout_width="match_parent"
+                                                android:layout_height="match_parent">
+
+                                                <ImageView
+                                                    android:layout_width="14dp"
+                                                    android:layout_height="14dp"
+                                                    android:src="@drawable/plus_addmeal_ic"
+                                                    android:visibility="visible"
+                                                    app:layout_constraintBottom_toBottomOf="parent"
+                                                    app:layout_constraintEnd_toEndOf="parent"
+                                                    app:layout_constraintStart_toStartOf="parent"
+                                                    app:layout_constraintTop_toTopOf="parent" />
+
+                                            </androidx.constraintlayout.widget.ConstraintLayout>
+
+                                        </androidx.cardview.widget.CardView>
+
+                                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                                </androidx.cardview.widget.CardView>
+
+                            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                        </LinearLayout>
+
+                    </HorizontalScrollView>
+
+                    <TextView
+                        android:id="@+id/main_dayweight_title_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="204dp"
+                        android:fontFamily="@font/pretendard_semibold"
+                        android:text="오늘의 체중"
+                        android:textColor="@color/black"
+                        android:textSize="16sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/main_daymeal_title_tv"
+                        android:layout_marginStart="24dp"/>
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/main_dayweight_content_cv"
+                        android:layout_width="320dp"
+                        android:layout_height="123dp"
+                        android:layout_marginTop="16dp"
+                        android:backgroundTint="@color/point"
+                        app:cardCornerRadius="20dp"
+                        app:cardElevation="0dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/main_dayweight_title_tv">
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:id="@+id/main_scale_cv"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="14dp"
+                                android:fontFamily="@font/pretendard_bold"
+                                android:text="55.8kg"
+                                android:textColor="@color/white"
+                                android:textSize="20sp"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    </androidx.cardview.widget.CardView>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.cardview.widget.CardView>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
