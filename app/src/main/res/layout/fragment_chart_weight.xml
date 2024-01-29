@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ChartWeightFragment">
+
+    <TextView
+        android:id="@+id/chart_weight_goal_title_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="53dp"
+        android:layout_marginStart="24dp"
+        android:text="이렇게 목표하고있어요"
+        android:textSize="16sp"
+        android:textColor="@color/mono_gray4"
+        android:fontFamily="@font/pretendard_medium"/>
+
+    <TextView
+        android:id="@+id/chart_weight_goal_diet_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/chart_weight_goal_title_tv"
+        app:layout_constraintStart_toStartOf="@id/chart_weight_goal_title_tv"
+        android:text="키토식단"
+        android:textSize="20sp"
+        android:textColor="@color/point"
+        android:fontFamily="@font/pretendard_bold"/>
+
+    <TextView
+        android:id="@+id/chart_weight_goal_content1_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@id/chart_weight_goal_diet_tv"
+        app:layout_constraintStart_toEndOf="@id/chart_weight_goal_diet_tv"
+        android:text="으로 "
+        android:textSize="16sp"
+        android:textColor="@color/mono_black"
+        android:fontFamily="@font/pretendard_medium"/>
+
+    <TextView
+        android:id="@+id/chart_weight_goal_weight_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/chart_weight_goal_title_tv"
+        app:layout_constraintStart_toEndOf="@id/chart_weight_goal_content1_tv"
+        android:text="5kg 감량"
+        android:textSize="20sp"
+        android:textColor="@color/point"
+        android:fontFamily="@font/pretendard_bold"/>
+
+    <TextView
+        android:id="@+id/chart_weight_goal_content2_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@id/chart_weight_goal_diet_tv"
+        app:layout_constraintStart_toEndOf="@id/chart_weight_goal_weight_tv"
+        android:text="할거에요"
+        android:textSize="16sp"
+        android:textColor="@color/mono_black"
+        android:fontFamily="@font/pretendard_medium"/>
+
+    <LinearLayout
+        android:id="@+id/chart_weight_goal_modify_ll"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginEnd="19dp"
+        android:layout_marginTop="43dp"
+        android:padding="10dp"
+        app:cardCornerRadius="10dp"
+        android:gravity="center"
+        android:background="@drawable/chart_fragment_btn">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="목표\n수정"
+            android:fontFamily="@font/pretendard_medium"
+            android:textColor="@color/white"
+            android:textSize="16sp"/>
+
+    </LinearLayout>
+    
+    <LinearLayout
+        android:id="@+id/chart_weight_btn_ll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="159dp"
+        android:gravity="center">
+
+        <LinearLayout
+            android:id="@+id/chart_weight_btncal_ll"
+            android:layout_width="148dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:paddingVertical="4dp"
+            app:cardCornerRadius="10dp"
+            android:gravity="center"
+            android:background="@drawable/chart_fragment_btn_disabled">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="칼로리"
+                android:fontFamily="@font/pretendard_medium"
+                android:textColor="@color/white"
+                android:textSize="14sp"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/chart_weight_btnweight_ll"
+            android:layout_width="148dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:paddingVertical="4dp"
+            android:layout_marginStart="16dp"
+            app:cardCornerRadius="10dp"
+            android:gravity="center"
+            android:background="@drawable/chart_fragment_btn">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="체중"
+                android:fontFamily="@font/pretendard_medium"
+                android:textColor="@color/white"
+                android:textSize="14sp"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+    
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/chart_weight_area_vp"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@id/chart_weight_btn_ll"
+        app:layout_constraintBottom_toTopOf="@id/chart_weight_tab"/>
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/chart_weight_tab"
+        android:layout_width="312dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/chart_background_tab"
+        app:tabBackground="@drawable/chart_tab_selector"
+        app:tabIndicatorHeight="0dp"
+        app:tabRippleColor="@android:color/transparent"
+        app:tabTextAppearance="@style/ChartTabTextAppearance"
+        app:tabTextColor="@color/mono_gray2"
+        app:tabSelectedTextColor="@color/point"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

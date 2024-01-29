@@ -40,7 +40,7 @@ class MainActivity : AppCompatActivity(), OnBackPressedListener {
                     return@setOnItemSelectedListener true
                 }
                 R.id.menu_stats -> {
-                    supportFragmentManager.beginTransaction().replace(R.id.main_frm, StatFragment()).commit()
+                    supportFragmentManager.beginTransaction().replace(R.id.main_frm, ChartWeightFragment()).commit()
                     return@setOnItemSelectedListener true
                 }
                 else -> {
