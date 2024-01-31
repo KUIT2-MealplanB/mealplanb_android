@@ -48,6 +48,7 @@ dependencies {
     implementation("com.google.code.gson:gson:2.8.8") //app 모듈의 build.gradle에 추가
     implementation ("com.google.android.material:material:1.4.0") //bottomsheetdialog
     implementation ("jp.wasabeef:blurry:4.0.0") // 블러 처리
+    implementation("com.github.PhilJay:MPAndroidChart:3.1.0") //chart 라이브러리
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
 }
