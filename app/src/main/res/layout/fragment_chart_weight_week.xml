@@ -1,14 +1,107 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ChartWeightWeekFragment">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ChartWeightDayFragment">
 
-    <!-- TODO: Update blank fragment layout -->
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:id="@+id/chart_weight_week_date_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:text="10.16 ~ 10.23"
+        android:textSize="12sp"
+        android:textColor="@color/mono_gray4"
+        android:fontFamily="@font/pretendard_regular"/>
 
-</FrameLayout>
+    <TextView
+        android:id="@+id/chart_weight_week_title_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/chart_weight_week_date_tv"
+        app:layout_constraintStart_toStartOf="parent"
+        android:text="감량한 체중 "
+        android:textSize="24sp"
+        android:textColor="@color/mono_black"
+        android:fontFamily="@font/pretendard_medium"/>
+
+    <TextView
+        android:id="@+id/chart_weight_week_weight_diff_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="@id/chart_weight_week_title_tv"
+        app:layout_constraintBottom_toBottomOf="@id/chart_weight_week_title_tv"
+        app:layout_constraintStart_toEndOf="@id/chart_weight_week_title_tv"
+        android:text="0.8kg"
+        android:textSize="20sp"
+        android:textColor="@color/point"
+        android:fontFamily="@font/pretendard_bold"/>
+
+    <TextView
+        android:id="@+id/chart_weight_week_weight_before_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/chart_weight_week_title_tv"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="12dp"
+        android:text="60kg"
+        android:textSize="12sp"
+        android:textColor="@color/mono_gray4"
+        android:fontFamily="@font/pretendard_regular"/>
+
+    <TextView
+        android:id="@+id/chart_weight_week_weight_after_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/chart_weight_week_title_tv"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="12dp"
+        android:text="55kg"
+        android:textSize="12sp"
+        android:textColor="@color/mono_gray4"
+        android:fontFamily="@font/pretendard_regular"/>
+
+    <View
+        android:id="@+id/chart_weight_week_weight_bar"
+        android:layout_width="match_parent"
+        android:layout_height="16dp"
+        app:layout_constraintTop_toBottomOf="@id/chart_weight_week_weight_before_tv"
+        android:layout_marginTop="4dp"
+        android:background="@drawable/chart_bar_width"
+        android:backgroundTint="@color/white"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="16dp"
+        app:layout_constraintTop_toBottomOf="@id/chart_weight_week_weight_before_tv"
+        android:layout_marginTop="4dp"
+        android:orientation="horizontal">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="16dp"
+            android:layout_weight="1"
+            android:background="@drawable/chart_bar_width"
+            android:backgroundTint="@color/sub_pink"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="16dp"
+            android:layout_weight="1"
+            android:background="@drawable/chart_bar_width"
+            android:backgroundTint="@color/white"/>
+
+    </LinearLayout>
+
+    <com.github.mikephil.charting.charts.LineChart
+        android:id="@+id/chart_weight_week_linechart"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@id/chart_weight_week_weight_bar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginTop="36dp"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:text="1.30"
+        android:text="01.30(수)"
         android:textSize="12sp"
         android:textColor="@color/mono_gray4"
         android:fontFamily="@font/pretendard_regular"/>

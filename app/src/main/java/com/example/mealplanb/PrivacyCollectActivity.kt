@@ -1,5 +1,6 @@
 package com.example.mealplanb
 
+import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.text.Editable
@@ -18,6 +19,11 @@ class PrivacyCollectActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityPrivacyCollectBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        binding.developerBtn.setOnClickListener {
+            val intent = Intent(this@PrivacyCollectActivity, MainActivity::class.java)
+            startActivity(intent)
+        }
 
         with(binding) {
             //입력값 들어왔을 때 색 변환
@@ -123,6 +129,14 @@ class PrivacyCollectActivity : AppCompatActivity() {
             //다음 버튼
             privacyCompleteCv.setOnClickListener {
                 if(checkConditions()) {
+                    val startWeight = privacyStartWeightEt.text.toString().toFloat()
+                    val wantWeight = privacyWantWeightEt.text.toString().toFloat()
+                    val sharedPref = getSharedPreferences("myPref", Context.MODE_PRIVATE)
+                    val editor = sharedPref.edit()
+                    editor.putFloat("startWeight", startWeight)
+                    editor.putFloat("wantWeight", wantWeight)
+                    editor.commit()
+
                     val intent = Intent(this@PrivacyCollectActivity, RecommendCategoryActivity::class.java)
                     startActivity(intent)
                 }else{
@@ -138,8 +152,8 @@ class PrivacyCollectActivity : AppCompatActivity() {
             if ((womanSelected || manSelected) &&
                 privacyAgeEt.text.toString().toIntOrNull() ?: 0 > 0 &&
                 privacyHeightEt.text.toString().toIntOrNull() ?: 0 > 0 &&
-                privacyStartWeightEt.text.toString().toIntOrNull() ?: 0 > 0 &&
-                privacyWantWeightEt.text.toString().toIntOrNull() ?: 0 > 0) {
+                privacyStartWeightEt.text.toString().toFloatOrNull() ?: 0.0f > 0.0f &&
+                privacyWantWeightEt.text.toString().toFloatOrNull() ?: 0.0f > 0.0f) {
 
                 privacyCompleteCv.setCardBackgroundColor(Color.parseColor("#7C5CF8"))
                 return true

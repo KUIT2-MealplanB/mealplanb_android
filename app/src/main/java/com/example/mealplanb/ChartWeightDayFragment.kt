@@ -13,6 +13,9 @@ import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.formatter.ValueFormatter
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Locale
 
 class ChartWeightDayFragment : Fragment() {
     lateinit var binding : FragmentChartWeightDayBinding
@@ -31,14 +34,19 @@ class ChartWeightDayFragment : Fragment() {
 
         val maxWeight = 60f
         val minWeight = 50f
+
+        val thisdateList = getthisDateList()
+        val dateList = getDateList()
+        binding.chartWeightDayDateTv.text = thisdateList[6]
+
         dataList = arrayListOf(
-            ChartCommitData("1.24",60),
-            ChartCommitData("1.25",55),
-            ChartCommitData("1.26",58),
-            ChartCommitData("1.27",57),
-            ChartCommitData("1.28",54),
-            ChartCommitData("1.29",56),
-            ChartCommitData("1.30",55)
+            ChartCommitData(dateList[0],60),
+            ChartCommitData(dateList[1],55),
+            ChartCommitData(dateList[2],58),
+            ChartCommitData(dateList[3],57),
+            ChartCommitData(dateList[4],54),
+            ChartCommitData(dateList[5],56),
+            ChartCommitData(dateList[6],55)
         )
 
         for(i in dataList.indices) { //indices : dataList의 최소 index ~ 최대 index
@@ -46,11 +54,6 @@ class ChartWeightDayFragment : Fragment() {
         }
 
         val lineDataSet = LineDataSet(chartEntry,"chartEntry")
-//        lineDataSet.color = resources.getColor(R.color.point)
-//
-//        binding.chartWeightDayLinechart.data = LineData(lineDataSet)
-//
-//        binding.chartWeightDayLinechart.xAxis.position = XAxis.XAxisPosition.BOTTOM
         lineDataSet.apply {
             color = resources.getColor(R.color.point,null)
             circleRadius = 0f
@@ -106,6 +109,38 @@ class ChartWeightDayFragment : Fragment() {
             dataTextList.add(dataList[i].date)
         }
         return dataTextList
+    }
+
+    private fun getDateList(): List<String> {
+        val dateList = mutableListOf<String>()
+        val calendar = Calendar.getInstance()
+
+        for (i in 0 until 7) {
+            val dateFormat = SimpleDateFormat("MM.dd", Locale.getDefault())
+            dateList.add(dateFormat.format(calendar.time))
+            calendar.add(Calendar.DAY_OF_YEAR, -1) // 1일씩 이전 날짜로 이동
+        }
+
+        // 리스트를 역순으로 정렬하여 최신 날짜가 맨 앞에 오도록 함
+        dateList.reverse()
+
+        return dateList
+    }
+
+    private fun getthisDateList(): List<String> {
+        val thisdateList = mutableListOf<String>()
+        val calendar = Calendar.getInstance()
+
+        for (i in 0 until 7) {
+            val dateFormat = SimpleDateFormat("MM.dd(EEE)", Locale.getDefault())
+            thisdateList.add(dateFormat.format(calendar.time))
+            calendar.add(Calendar.DAY_OF_YEAR, -1) // 1일씩 이전 날짜로 이동
+        }
+
+        // 리스트를 역순으로 정렬하여 최신 날짜가 맨 앞에 오도록 함
+        thisdateList.reverse()
+
+        return thisdateList
     }
 
     class XAxisCustomFormatter(val xAxisData : List<String>) : ValueFormatter() {

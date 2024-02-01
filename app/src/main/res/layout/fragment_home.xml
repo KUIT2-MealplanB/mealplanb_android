@@ -590,16 +590,62 @@
                             android:layout_height="match_parent">
 
                             <TextView
+                                android:id="@+id/main_weight_tv"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="14dp"
                                 android:fontFamily="@font/pretendard_bold"
-                                android:text="55.8kg"
+                                android:text="55.8"
                                 android:textColor="@color/white"
                                 android:textSize="20sp"
+                                android:layout_marginEnd="25dp"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toTopOf="parent" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="14dp"
+                                android:fontFamily="@font/pretendard_bold"
+                                android:text="kg"
+                                android:textColor="@color/white"
+                                android:textSize="20sp"
+                                app:layout_constraintStart_toEndOf="@id/main_weight_tv"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <ImageView
+                                android:layout_width="250dp"
+                                android:layout_height="250dp"
+                                android:src="@drawable/white_semi_circle"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@id/main_weight_tv"
+                                android:layout_marginTop="12dp"/>
+
+                            <ImageView
+                                android:id="@+id/main_weight_iv1"
+                                android:layout_width="92dp"
+                                android:layout_height="150dp"
+                                android:src="@drawable/weight_ic"
+                                android:layout_marginTop="80dp"
+                                android:layout_marginEnd="100dp"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:layout_constraintBottom_toBottomOf="parent"/>
+
+                            <ImageView
+                                android:id="@+id/main_weight_iv2"
+                                android:layout_width="92dp"
+                                android:layout_height="150dp"
+                                android:src="@drawable/weight2_ic"
+                                android:layout_marginTop="80dp"
+                                android:layout_marginStart="100dp"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:layout_constraintBottom_toBottomOf="parent"/>
 
                         </androidx.constraintlayout.widget.ConstraintLayout>
 

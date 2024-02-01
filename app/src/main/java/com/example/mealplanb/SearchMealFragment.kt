@@ -257,7 +257,6 @@ class SearchMealFragment : Fragment() {
             //Toast.makeText(this, "free input", Toast.LENGTH_SHORT).show()
             val bottomSheetFragment = SeachMealFreeInputFragment()
             bottomSheetFragment.show(requireActivity().supportFragmentManager, bottomSheetFragment.tag)
-            requireActivity().supportFragmentManager.beginTransaction().replace(R.id.main_frm, FoodDetailFragment()).commit()
         }
 
         binding.searchMealOutIv.setOnClickListener {

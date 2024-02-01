@@ -87,9 +87,20 @@ class AddMealListFragment : Fragment() {
             }
 
             val editor = sharedPreferences.edit()
-            val json = MealMainInfo(true,1,tot_cal,R.drawable.item_hamburger_img)
-            var newJson = gson.toJson(json)
-            editor.putString("MealMainInfo",newJson)
+
+            // 이미지 리스트를 생성하고 랜덤하게 하나를 선택
+            val imageList = listOf(R.drawable.item_hamburger_img,
+                R.drawable.item_salad_img,
+                R.drawable.item_rice_img,
+                R.drawable.item_meal_img,
+                R.drawable.item_egg_img,
+                R.drawable.item_pudding_img,
+                R.drawable.item_sugar_img)
+            val randomImage = imageList.random()
+
+            val json = MealMainInfo(true, 1, tot_cal, randomImage)
+            val newJson = gson.toJson(json)
+            editor.putString("MealMainInfo", newJson)
             editor.apply()
 //            intent.putExtra("MealMainInfo",MealMainInfo(true,1,tot_cal,R.drawable.item_hamburger_img))
             requireActivity().supportFragmentManager.beginTransaction().replace(R.id.main_frm, HomeFragment()).commit()

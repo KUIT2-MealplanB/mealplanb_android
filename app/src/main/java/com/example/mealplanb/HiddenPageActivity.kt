@@ -1,8 +1,10 @@
 package com.example.mealplanb
 
+import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Button
 import androidx.appcompat.app.AlertDialog
@@ -48,6 +50,14 @@ class HiddenPageActivity : AppCompatActivity() {
                 binding.hiddenDarkLl.visibility = View.INVISIBLE
                 customDialog.dismiss() // 다이얼로그를 닫음
             }
+        }
+
+        // 목표 설정 레이아웃을 누르면 페이지 전환
+        binding.hiddenGoalLl.setOnClickListener{
+            Shared.source = "HiddenPageActivity"
+            val intent = Intent(this,MainActivity::class.java)
+            intent.putExtra("source", "HiddenPageActivity")
+            startActivity(intent)
         }
 
         setContentView(binding.root)

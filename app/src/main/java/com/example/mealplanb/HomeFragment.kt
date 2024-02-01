@@ -1,4 +1,5 @@
 package com.example.mealplanb
+import android.animation.ObjectAnimator
 import android.app.DatePickerDialog
 import android.content.Context
 import android.content.Intent
@@ -11,6 +12,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.DatePicker
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -160,6 +162,30 @@ class HomeFragment : Fragment(), DatePickerDialog.OnDateSetListener {
         binding.mainMenuIv.setOnClickListener {
             val intent = Intent(requireContext(), HiddenPageActivity::class.java)
             startActivity(intent)
+        }
+
+        //오늘의 체중 정보
+        val sharedPref = activity?.getSharedPreferences("myPref", Context.MODE_PRIVATE)
+        val todayweight = sharedPref?.getFloat("startWeight",0.0f)
+        binding.mainWeightTv.text="$todayweight"
+
+        //오늘의 무게 클릭했을 때 돌아가는 애니메이션 -> 원 모양 이미지 하나를 받아오면 중심을 기준으로 돌리면 될듯
+        binding.mainDayweightContentCv.setOnClickListener {
+            val imageView1 = it.findViewById<ImageView>(R.id.main_weight_iv1)
+            imageView1.pivotX = imageView1.width.toFloat()
+            imageView1.pivotY = imageView1.height.toFloat()
+            ObjectAnimator.ofFloat(imageView1, "rotation", 0f, -180f).apply {
+                duration = 2000
+                start()
+            }
+
+            val imageView2 = it.findViewById<ImageView>(R.id.main_weight_iv2)
+            imageView2.pivotX = 0f
+            imageView2.pivotY = imageView2.height.toFloat()
+            ObjectAnimator.ofFloat(imageView2, "rotation", 0f, -180f).apply {
+                duration = 2000
+                start()
+            }
         }
 
         return binding.root

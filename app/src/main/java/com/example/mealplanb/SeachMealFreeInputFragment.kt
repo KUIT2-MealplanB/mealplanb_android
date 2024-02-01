@@ -1,6 +1,7 @@
 package com.example.mealplanb
 
 import android.app.Dialog
+import android.content.Context
 import android.content.Context.MODE_PRIVATE
 import android.content.Intent
 import android.graphics.Color
@@ -88,15 +89,13 @@ class SeachMealFreeInputFragment : BottomSheetDialogFragment() {
                                 fat_gram = fat.toDouble()
                             )
 
-                            // 데이터를 첨부
-                            val sharedPreferences = requireActivity().getSharedPreferences("MySharedPrefs", MODE_PRIVATE)
-                            var gson = Gson()
+                            val sharedPreferences = requireActivity().getSharedPreferences("MySharedPrefs", Context.MODE_PRIVATE)
+                            val gson = Gson()
                             val editor = sharedPreferences.edit()
-                            val newJson = gson.toJson(meal)
+                            var newJson = gson.toJson(meal)
                             editor.putString("Key",newJson)
                             editor.apply()
-
-//                            childFragmentManager.beginTransaction().replace(R.id.main_frm, FoodDetailFragment()).addToBackStack(null).commit()
+                            requireActivity().supportFragmentManager.beginTransaction().replace(R.id.main_frm, FoodDetailFragment()).commit()
 
                             bottomSheetDialog.dismiss()
                             // 데이터를 첨부할 Intent 생성
