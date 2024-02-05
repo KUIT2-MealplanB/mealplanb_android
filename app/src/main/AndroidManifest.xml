@@ -13,8 +13,15 @@
         android:theme="@style/Theme.MealPlanB"
         tools:targetApi="31">
         <activity
+            android:name=".LoginPageActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.login.LoginActivity"
+            android:exported="false"
+            android:label="@string/title_activity_login" />
+        <activity
             android:name=".PrivacyCollectActivity"
-            android:exported="false"/>
+            android:exported="false" />
         <activity
             android:name=".HiddenPageActivity"
             android:exported="false" />

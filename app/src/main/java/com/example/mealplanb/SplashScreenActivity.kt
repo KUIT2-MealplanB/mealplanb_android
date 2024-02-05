@@ -16,7 +16,7 @@ class SplashScreenActivity : AppCompatActivity() {
 
         //스플래시 화면 3초동안 보이게 설정, 이 후 privacy로 넘어감
         Handler().postDelayed({
-            val intent = Intent(this, PrivacyCollectActivity::class.java)
+            val intent = Intent(this, LoginPageActivity::class.java)
             startActivity(intent)
             finish()
         }, 3000) //3000ms=3초
