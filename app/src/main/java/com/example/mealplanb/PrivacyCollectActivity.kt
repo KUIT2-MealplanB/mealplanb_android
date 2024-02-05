@@ -7,7 +7,9 @@ import android.text.Editable
 import android.text.TextWatcher
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
 import android.widget.Toast
+import android.view.View
 import com.example.mealplanb.databinding.ActivityPrivacyCollectBinding
 
 class PrivacyCollectActivity : AppCompatActivity() {
@@ -20,6 +22,7 @@ class PrivacyCollectActivity : AppCompatActivity() {
         binding = ActivityPrivacyCollectBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        //개발자 버튼
         binding.developerBtn.setOnClickListener {
             val intent = Intent(this@PrivacyCollectActivity, MainActivity::class.java)
             startActivity(intent)

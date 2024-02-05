@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#7C5CF8">
+
+    <ImageView
+        android:id="@+id/logo_face_iv"
+        android:layout_width="115dp"
+        android:layout_height="120dp"
+        android:src="@drawable/logo_ic"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="100dp"/>
+
+    <ImageView
+        android:layout_width="220dp"
+        android:layout_height="70dp"
+        android:src="@drawable/meal_text"
+        app:layout_constraintTop_toBottomOf="@id/logo_face_iv"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="10dp"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <ImageView
+        android:id="@+id/logo_eye1_iv"
+        android:layout_width="7dp"
+        android:layout_height="7dp"
+        android:src="@drawable/eye_ic"
+        app:layout_constraintStart_toStartOf="@id/logo_face_iv"
+        app:layout_constraintTop_toTopOf="@id/logo_face_iv"
+        app:layout_constraintEnd_toEndOf="@id/logo_face_iv"
+        app:layout_constraintBottom_toBottomOf="@id/logo_face_iv"
+        android:layout_marginBottom="60dp"/>
+
+    <ImageView
+        android:id="@+id/logo_eye2_iv"
+        android:layout_width="7dp"
+        android:layout_height="7dp"
+        android:src="@drawable/eye_ic"
+        app:layout_constraintStart_toStartOf="@id/logo_eye1_iv"
+        app:layout_constraintTop_toTopOf="@id/logo_eye1_iv"
+        app:layout_constraintBottom_toBottomOf="@id/logo_eye1_iv"
+        android:layout_marginStart="18dp" />
+
+    <ImageView
+        android:layout_width="16dp"
+        android:layout_height="11dp"
+        android:src="@drawable/tongue_ic"
+        app:layout_constraintEnd_toEndOf="@id/logo_mouth_iv"
+        app:layout_constraintTop_toTopOf="@id/logo_mouth_iv"
+        android:layout_marginEnd="5dp"
+        android:layout_marginTop="3dp" />
+
+    <ImageView
+        android:id="@+id/logo_mouth_iv"
+        android:layout_width="43dp"
+        android:layout_height="20dp"
+        android:src="@drawable/mouth_ic"
+        app:layout_constraintStart_toStartOf="@id/logo_eye1_iv"
+        app:layout_constraintTop_toBottomOf="@id/logo_eye1_iv"
+        app:layout_constraintEnd_toEndOf="@id/logo_eye2_iv"
+        android:layout_marginTop="3dp"/>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
