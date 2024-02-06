@@ -7,8 +7,6 @@
     android:background="@color/bg"
     tools:context=".HiddenPageActivity">
 
-
-
     <ImageView
         android:id="@+id/hidden_back_iv"
         android:layout_width="22dp"
@@ -292,10 +290,5 @@
         android:orientation="horizontal"
         android:visibility="invisible"
         android:background="@color/transparent_black"/>
-
-
-
-
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

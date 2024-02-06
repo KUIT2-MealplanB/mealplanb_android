@@ -42,10 +42,13 @@ class HiddenPageActivity : AppCompatActivity() {
             val confirmButton = customDialog.findViewById<Button>(R.id.hidden_logout_logout_btn)
             val cancelButton = customDialog.findViewById<Button>(R.id.hidden_logout_cancle_btn)
 
+            //Logout 버튼 -> login 화면으로 넘어감
             confirmButton.setOnClickListener {
                 binding.hiddenDarkLl.visibility = View.INVISIBLE
-                finish()
+                val intent = Intent(this, LoginPageActivity::class.java)
+                startActivity(intent)
             }
+
             cancelButton.setOnClickListener {
                 binding.hiddenDarkLl.visibility = View.INVISIBLE
                 customDialog.dismiss() // 다이얼로그를 닫음
