@@ -10,6 +10,8 @@ import android.os.Bundle
 import android.os.Handler
 import android.widget.Toast
 import android.view.View
+import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.InputMethodManager
 import com.example.mealplanb.databinding.ActivityPrivacyCollectBinding
 
 class PrivacyCollectActivity : AppCompatActivity() {
@@ -101,6 +103,49 @@ class PrivacyCollectActivity : AppCompatActivity() {
                 override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
                 override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
             })
+
+            //키보드 이동
+            binding.privacyAgeEt.setOnEditorActionListener { _, actionId, _ ->
+                if(actionId == EditorInfo.IME_ACTION_NEXT){
+                    binding.privacyHeightEt.requestFocus()
+                    binding.privacyStartWeightEt.isFocusable=false
+                    binding.privacyWantWeightEt.isFocusable=false
+                    binding.privacyCompleteCv.isFocusable=false
+                    return@setOnEditorActionListener true
+                }
+                false
+            }
+
+            binding.privacyHeightEt.setOnEditorActionListener { _, actionId, _ ->
+                if(actionId == EditorInfo.IME_ACTION_NEXT){
+                    binding.privacyStartWeightEt.isFocusable=true
+                    binding.privacyStartWeightEt.requestFocus()
+                    binding.privacyWantWeightEt.isFocusable=false
+                    binding.privacyCompleteCv.isFocusable=false
+                    return@setOnEditorActionListener true
+                }
+                false
+            }
+
+            binding.privacyStartWeightEt.setOnEditorActionListener { _, actionId, _ ->
+                if(actionId == EditorInfo.IME_ACTION_NEXT){
+                    binding.privacyWantWeightEt.isFocusable=true
+                    binding.privacyWantWeightEt.requestFocus()
+                    binding.privacyCompleteCv.isFocusable=false
+                    return@setOnEditorActionListener true
+                }
+                false
+            }
+
+            binding.privacyWantWeightEt.setOnEditorActionListener { _, actionId, _ ->
+                if(actionId == EditorInfo.IME_ACTION_DONE){
+                    val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                    imm.hideSoftInputFromWindow(binding.privacyWantWeightEt.windowToken, 0)
+                    return@setOnEditorActionListener true
+                }
+                false
+            }
+
 
             //여자 버튼
             privacyWomanCv.setOnClickListener {

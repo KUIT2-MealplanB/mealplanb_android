@@ -30,6 +30,7 @@ class GoalMotifFragment : Fragment() {
 
         // startWeight와 wantWeight 가져오기
         val sharedPref = activity?.getSharedPreferences("myPref", Context.MODE_PRIVATE)
+        val editor = sharedPref?.edit()
         val startWeight = sharedPref?.getFloat("startWeight", 0.0f)
         val wantWeight = sharedPref?.getFloat("wantWeight", 0.0f)
 
@@ -67,7 +68,26 @@ class GoalMotifFragment : Fragment() {
         }
 
 
+        //뒤로가기 버튼
         binding.goalMotifCancelIv.setOnClickListener {
+
+            // startWeightEt와 wantWeightEt의 값을 읽어서 SharedPreference에 저장
+            val startWeightInput = binding.goalMotifStartWeightEt.text.toString().toFloatOrNull()
+            val wantWeightInput = binding.goalMotifWantWeightEt.text.toString().toFloatOrNull()
+
+            val sharedPref = activity?.getSharedPreferences("myPref", Context.MODE_PRIVATE)
+            val editor = sharedPref?.edit()
+
+            if (startWeightInput != null) {
+                editor?.putFloat("startWeight", startWeightInput)
+            }
+
+            if (wantWeightInput != null) {
+                editor?.putFloat("wantWeight", wantWeightInput)
+            }
+
+            editor?.apply()
+
             val source = activity?.intent?.getStringExtra("source") ?: arguments?.getString("source")
 
             when (source) {
