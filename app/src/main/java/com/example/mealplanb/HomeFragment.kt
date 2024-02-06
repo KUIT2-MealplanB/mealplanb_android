@@ -11,6 +11,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import android.widget.DatePicker
 import android.widget.ImageView
 import android.widget.Toast
@@ -169,23 +170,12 @@ class HomeFragment : Fragment(), DatePickerDialog.OnDateSetListener {
         val todayweight = sharedPref?.getFloat("startWeight",0.0f)
         binding.mainWeightTv.text="$todayweight"
 
-        //오늘의 무게 클릭했을 때 돌아가는 애니메이션 -> 원 모양 이미지 하나를 받아오면 중심을 기준으로 돌리면 될듯
+        //오늘의 무게 클릭했을 때 돌아가는 애니메이션
         binding.mainDayweightContentCv.setOnClickListener {
-            val imageView1 = it.findViewById<ImageView>(R.id.main_weight_iv1)
-            imageView1.pivotX = imageView1.width.toFloat()
-            imageView1.pivotY = imageView1.height.toFloat()
-            ObjectAnimator.ofFloat(imageView1, "rotation", 0f, -180f).apply {
-                duration = 2000
-                start()
-            }
-
-            val imageView2 = it.findViewById<ImageView>(R.id.main_weight_iv2)
-            imageView2.pivotX = 0f
-            imageView2.pivotY = imageView2.height.toFloat()
-            ObjectAnimator.ofFloat(imageView2, "rotation", 0f, -180f).apply {
-                duration = 2000
-                start()
-            }
+            val rotateAnim = AnimationUtils.loadAnimation(requireContext(), R.anim.rotate_180)
+            val rotateAnimOp = AnimationUtils.loadAnimation(requireContext(), R.anim.rotate_180_opposite)
+            binding.todayWeightIv1.startAnimation(rotateAnim)
+            binding.todayWeightIv2.startAnimation(rotateAnimOp)
         }
 
         return binding.root
