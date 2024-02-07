@@ -73,6 +73,7 @@ class MenuRecommendCheatdayFragment : Fragment() {
     ): View? {
         binding = FragmentMenuRecommendCheatdayBinding.inflate(layoutInflater)
 
+
         return binding.root
     }
 
@@ -194,6 +195,11 @@ class MenuRecommendCheatdayFragment : Fragment() {
             editor.putString("MealMainInfo",newJson)
             editor.apply()
 
+            // 클릭 시 WhatMenuFragment로 교체
+//            val selectFragment = MenuRecommendSelectFragment()
+//            requireActivity().supportFragmentManager.beginTransaction()
+//                .replace(R.id.menu_recomm_button_cv, selectFragment)
+//                .commit()
             menuRecommendFragment?.addWhatMenuFragmentItems(
                 MenuRecommItem.UserItem("이 음식", "으로 먹을래요", 2),
                 MenuRecommItem.SystemUpdateMenuItem(meal_name!!,7)
