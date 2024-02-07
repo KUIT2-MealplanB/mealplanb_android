@@ -50,7 +50,7 @@ class ChartKcalDayFragment : Fragment() {
         binding.chartKcalDayRv.layoutManager = stackLayoutManager
 
         // Example data for the chart items (you can replace this with your actual data)
-        val chartItems =  listOf<StackChartItem>(
+        val chartItems = listOf<StackChartItem>(
             StackChartItem(300, 1100, 200),
             StackChartItem(1500, 100, 500),
             StackChartItem(500, 400, 300),
@@ -106,5 +106,4 @@ class ChartKcalDayFragment : Fragment() {
 
         return thisdateList
     }
-
 }
