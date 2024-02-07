@@ -77,6 +77,7 @@ class MenuRecommendCheatdayFragment : Fragment() {
     ): View? {
         binding = FragmentMenuRecommendCheatdayBinding.inflate(layoutInflater)
 
+
         return binding.root
     }
 
