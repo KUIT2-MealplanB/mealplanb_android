@@ -89,10 +89,8 @@ class MenuRecommendFragment : Fragment(), OnFragmentInteractionListener, AddToRe
         return binding.root
     }
     fun addInitFragmentItems(vararg items: MenuRecommItem) {
-
         Log.d("logcat",menuRecommItems.size.toString()+"!")
         menuRecommItems.addAll(items)
-        scrollToLastItem(binding.menuRecommChatRv)
         Log.d("logcat",menuRecommItems.size.toString()+"!")
         adapter.notifyDataSetChanged()
 
@@ -144,11 +142,7 @@ class MenuRecommendFragment : Fragment(), OnFragmentInteractionListener, AddToRe
 
         adapter = MenuRecommendAdapter(requireContext(), menuRecommItems)
 
-        Handler().postDelayed(
-            { binding.menuRecommChatRv.scrollToPosition(adapter.getItemCount() - 1) },
-            100
-        )
-
+        Handler().postDelayed({ binding.menuRecommChatRv.scrollToPosition(adapter.getItemCount() - 1) }, 100)
     }
 
 }
