@@ -157,12 +157,12 @@ class StartAvatarActivity : AppCompatActivity() {
         })
 
         //nickname ET 눌렀을 때
-        binding.startAvatarEt.setOnEditorActionListener { _, actionId, event ->
-            if (actionId == EditorInfo.IME_ACTION_DONE ||
+        binding.startAvatarEt.setOnEditorActionListener { v, actionId, event ->
+            if(actionId == EditorInfo.IME_ACTION_DONE ||
                 actionId == EditorInfo.IME_ACTION_NEXT ||
                 actionId == EditorInfo.IME_ACTION_GO ||
-                (event != null && event.action == KeyEvent.ACTION_DOWN && event.keyCode == KeyEvent.KEYCODE_ENTER)
-            ) {
+                event?.keyCode == KeyEvent.KEYCODE_ENTER
+            ){
                 // EditText에 입력된 텍스트 가져오기
                 val nickNameValue = binding.startAvatarEt.text.toString()
 
@@ -172,10 +172,6 @@ class StartAvatarActivity : AppCompatActivity() {
                 // 포커스를 다른 뷰로 이동시켜서 커서를 감추기
                 binding.startAvatarEt.clearFocus()
 
-                // Hide the keyboard
-                val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-                imm.hideSoftInputFromWindow(binding.startAvatarEt.windowToken, 0)
-
                 // SharedPreferences.Editor 객체를 얻어서 값을 저장
                 val editor = sharedPref.edit()
                 editor.putString("nickname", nickNameValue)
@@ -184,12 +180,14 @@ class StartAvatarActivity : AppCompatActivity() {
                 Toast.makeText(this, "nickNameValue apply", Toast.LENGTH_SHORT).show()
 
                 // true를 반환하면 이벤트가 소비됨을 나타냅니다.
+                // 키보드 숨기기
+                val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                imm.hideSoftInputFromWindow(v.windowToken, 0)
+
                 return@setOnEditorActionListener true
             }
-            // Return false if the action is not consumed
             false
         }
-
 
     }
 

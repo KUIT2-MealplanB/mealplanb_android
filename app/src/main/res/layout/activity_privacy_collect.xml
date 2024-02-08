@@ -184,7 +184,8 @@
             android:textColorHint="#101010"
             android:fontFamily="@font/pretendard_bold"
             android:background="@drawable/et_privacy"
-            android:padding="10dp" />
+            android:padding="10dp"
+            android:imeOptions="actionNext"/>
 
         <TextView
             android:id="@+id/privacy_age_tv"
@@ -231,7 +232,8 @@
             android:textColorHint="#101010"
             android:fontFamily="@font/pretendard_bold"
             android:background="@drawable/et_privacy"
-            android:padding="10dp" />
+            android:padding="10dp"
+            android:imeOptions="actionNext"/>
 
         <TextView
             android:id="@+id/privacy_height_tv"
@@ -278,7 +280,8 @@
             android:textColorHint="#101010"
             android:fontFamily="@font/pretendard_bold"
             android:background="@drawable/et_privacy"
-            android:padding="10dp" />
+            android:padding="10dp"
+            android:imeOptions="actionNext"/>
 
         <TextView
             android:id="@+id/privacy_start_weight_tv"
@@ -324,7 +327,8 @@
             android:textColorHint="#101010"
             android:fontFamily="@font/pretendard_bold"
             android:background="@drawable/et_privacy"
-            android:padding="10dp" />
+            android:padding="10dp"
+            android:imeOptions="actionDone"/>
 
         <TextView
             android:id="@+id/privacy_want_weight_tv"
@@ -344,11 +348,13 @@
         android:id="@+id/privacy_complete_cv"
         android:layout_marginTop="35dp"
         app:cardElevation="0dp"
-        android:layout_width="320dp"
+        android:layout_width="0dp"
         android:layout_height="48dp"
         app:cardCornerRadius="20dp"
         app:cardBackgroundColor="#D7D7D7"
         android:layout_marginBottom="30dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent">

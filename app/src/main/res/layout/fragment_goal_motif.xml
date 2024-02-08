@@ -4,14 +4,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="#7C5CF8"
+    android:background="@color/bg"
     tools:context=".GoalMotifFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="160dp"
-        android:orientation="horizontal"
-        android:background="@drawable/rectangle_radius_under">
+        android:layout_height="130dp"
+        android:orientation="horizontal">
 
         <LinearLayout
             android:layout_width="0dp"
@@ -53,7 +52,7 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="200dp">
+        android:layout_marginTop="160dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -66,7 +65,7 @@
                 android:text="목표 체중"
                 android:textSize="20dp"
                 android:fontFamily="@font/pretendard_bold"
-                android:textColor="@color/white"
+                android:textColor="#101010"
                 android:layout_marginStart="25dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"/>
@@ -90,19 +89,39 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="시작 체중"
-                        android:textColor="@color/white"
+                        android:textColor="#8D8D8D"
+                        android:fontFamily="@font/pretendard_medium"
                         android:textSize="16dp"/>
 
-                    <EditText
-                        android:id="@+id/goal_motif_start_weight_et"
-                        android:layout_marginTop="5dp"
-                        android:layout_width="match_parent"
-                        android:layout_height="54dp"
-                        android:hint="0.0"
-                        android:textColorHint="#101010"
-                        android:fontFamily="@font/pretendard_bold"
-                        android:paddingStart="20dp"
-                        android:background="@drawable/et_privacy"/>
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <EditText
+                            android:id="@+id/goal_motif_start_weight_et"
+                            android:layout_marginTop="5dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="54dp"
+                            android:hint="0.0"
+                            android:textColorHint="#101010"
+                            android:fontFamily="@font/pretendard_bold"
+                            android:paddingStart="20dp"
+                            android:background="@drawable/et_privacy"
+                            android:imeOptions="actionDone"
+                            android:inputType="numberDecimal"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
+                            android:padding="10dp"
+                            android:text="kg"
+                            android:textColor="#101010"
+                            android:textSize="16dp"
+                            android:fontFamily="@font/pretendard_bold"/>
+
+                    </RelativeLayout>
 
                 </LinearLayout>
 
@@ -116,19 +135,39 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="목표 체중"
-                        android:textColor="@color/white"
+                        android:textColor="#8D8D8D"
+                        android:fontFamily="@font/pretendard_medium"
                         android:textSize="16dp"/>
 
-                    <EditText
-                        android:id="@+id/goal_motif_want_weight_et"
-                        android:layout_marginTop="5dp"
-                        android:layout_width="match_parent"
-                        android:layout_height="54dp"
-                        android:hint="0.0"
-                        android:textColorHint="#101010"
-                        android:fontFamily="@font/pretendard_bold"
-                        android:paddingStart="20dp"
-                        android:background="@drawable/et_privacy"/>
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <EditText
+                            android:id="@+id/goal_motif_want_weight_et"
+                            android:layout_marginTop="5dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="54dp"
+                            android:hint="0.0"
+                            android:textColorHint="#101010"
+                            android:fontFamily="@font/pretendard_bold"
+                            android:paddingStart="20dp"
+                            android:background="@drawable/et_privacy"
+                            android:inputType="numberDecimal"
+                            android:imeOptions="actionDone"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
+                            android:padding="10dp"
+                            android:text="kg"
+                            android:textColor="#101010"
+                            android:textSize="16dp"
+                            android:fontFamily="@font/pretendard_bold"/>
+
+                    </RelativeLayout>
 
                 </LinearLayout>
 
@@ -147,8 +186,9 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="권장 카로리 계산: "
-                    android:textColor="@color/white"
+                    android:text="권장 칼로리 계산: "
+                    android:textColor="#8D8D8D"
+                    android:fontFamily="@font/pretendard_medium"
                     android:textSize="16dp"/>
 
                 <TextView
@@ -156,14 +196,16 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="16dp"
-                    android:textColor="@color/white"
+                    android:textColor="#8D8D8D"
+                    android:fontFamily="@font/pretendard_medium"
                     android:text="1,500"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="kcal"
-                    android:textColor="@color/white"/>
+                    android:textColor="#8D8D8D"
+                    android:fontFamily="@font/pretendard_medium"/>
 
             </LinearLayout>
 
@@ -179,8 +221,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="목표 탄단지 비율"
-                    android:textColor="@color/white"
-                    android:fontFamily="@font/pretendard_medium"
+                    android:textColor="#101010"
+                    android:fontFamily="@font/pretendard_bold"
                     android:layout_marginTop="35dp"
                     android:layout_marginStart="25dp"
                     android:textSize="20dp"/>
@@ -192,7 +234,8 @@
                     android:layout_width="110dp"
                     android:layout_height="30dp"
                     android:spinnerMode="dropdown"
-                    android:background="@drawable/spinner_background"/>
+                    android:background="@drawable/spinner_background"
+                    android:focusable="false"/>
 
             </LinearLayout>
 
@@ -215,7 +258,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="탄수화물"
-                        android:textColor="@color/white"
+                        android:textColor="#8D8D8D"
+                        android:fontFamily="@font/pretendard_medium"
                         android:textSize="16dp"/>
 
                     <RelativeLayout
@@ -231,7 +275,8 @@
                             android:textColorHint="#101010"
                             android:fontFamily="@font/pretendard_bold"
                             android:paddingStart="20dp"
-                            android:background="@drawable/et_privacy"/>
+                            android:background="@drawable/et_privacy"
+                            android:focusable="false"/>
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -257,7 +302,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="지방"
-                        android:textColor="@color/white"
+                        android:textColor="#8D8D8D"
+                        android:fontFamily="@font/pretendard_medium"
                         android:textSize="16dp"/>
 
                     <RelativeLayout
@@ -273,7 +319,8 @@
                             android:textColorHint="#101010"
                             android:fontFamily="@font/pretendard_bold"
                             android:paddingStart="20dp"
-                            android:background="@drawable/et_privacy"/>
+                            android:background="@drawable/et_privacy"
+                            android:focusable="false"/>
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -293,6 +340,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/goal_motif_ll4"
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
                 android:orientation="horizontal"
@@ -309,7 +357,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="단백질"
-                        android:textColor="@color/white"
+                        android:textColor="#8D8D8D"
+                        android:fontFamily="@font/pretendard_medium"
                         android:textSize="16dp"/>
 
                     <RelativeLayout
@@ -325,7 +374,8 @@
                             android:textColorHint="#101010"
                             android:fontFamily="@font/pretendard_bold"
                             android:paddingStart="20dp"
-                            android:background="@drawable/et_privacy"/>
+                            android:background="@drawable/et_privacy"
+                            android:focusable="false"/>
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -351,8 +401,9 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="지방"
-                        android:textColor="@color/white"
+                        android:text="목표 칼로리"
+                        android:textColor="#8D8D8D"
+                        android:fontFamily="@font/pretendard_medium"
                         android:textSize="16dp"/>
 
                     <RelativeLayout
@@ -368,7 +419,8 @@
                             android:textColorHint="#101010"
                             android:fontFamily="@font/pretendard_bold"
                             android:paddingStart="20dp"
-                            android:background="@drawable/et_privacy"/>
+                            android:background="@drawable/et_privacy"
+                            android:focusable="false"/>
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -386,6 +438,34 @@
                 </LinearLayout>
 
             </LinearLayout>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/goal_motif_complete_cv"
+                android:layout_marginTop="10dp"
+                app:cardElevation="0dp"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                app:cardCornerRadius="20dp"
+                app:cardBackgroundColor="#7C5CF8"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/goal_motif_ll4"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:focusable="false">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="목표 변경 완료"
+                    android:textSize="20dp"
+                    android:gravity="center"
+                    android:textColor="@color/white"
+                    android:fontFamily="@font/pretendard_bold"/>
+
+            </com.google.android.material.card.MaterialCardView>
+
         </androidx.constraintlayout.widget.ConstraintLayout>
+
     </ScrollView>
 </FrameLayout>
