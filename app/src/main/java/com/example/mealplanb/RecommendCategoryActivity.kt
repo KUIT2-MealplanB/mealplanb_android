@@ -39,7 +39,7 @@ class RecommendCategoryActivity : AppCompatActivity() {
         binding.privacyCompleteCv.setOnClickListener {
             if (selectedCategory != null) {
                 // 카테고리 번호를 SharedPreferences에 저장
-                val sharedPref = getSharedPreferences("myPref", Context.MODE_PRIVATE)
+                val sharedPref = getSharedPreferences("myPreferences", Context.MODE_PRIVATE)
                 val editor = sharedPref.edit()
                 editor.putInt("selectedCategory", selectedCategoryNumber)
                 editor.apply()

@@ -28,7 +28,7 @@ class SearchCategoryAdapter(var mealList: ArrayList<Meal>, val onClick: (Meal)->
 
                     // SharedPreferences에서 데이터 삭제
                     val sharedPreferences =
-                        itemView.context.getSharedPreferences("MySharedPrefs", Context.MODE_PRIVATE)
+                        itemView.context.getSharedPreferences("myPreferences", Context.MODE_PRIVATE)
                     val editor = sharedPreferences.edit()
                     val gson = Gson()
 

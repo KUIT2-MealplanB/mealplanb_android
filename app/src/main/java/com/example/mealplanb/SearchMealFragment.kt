@@ -73,7 +73,7 @@ class SearchMealFragment : Fragment() {
             binding.searchMealInputEt.setHintTextColor(Color.parseColor("#7C5CF8"))
 
             // SharedPreferences에서 oftenFoodList 데이터 읽어오기
-            val sharedPreferences = requireActivity().getSharedPreferences("MySharedPrefs", Context.MODE_PRIVATE)
+            val sharedPreferences = requireActivity().getSharedPreferences("myPreferences", Context.MODE_PRIVATE)
             val gson = Gson()
             val json = sharedPreferences.getString("oftenFoodList", null)
 
@@ -130,7 +130,7 @@ class SearchMealFragment : Fragment() {
             binding.searchMealInputEt.setHintTextColor(Color.parseColor("#7C5CF8"))
 
             // SharedPreferences에서 oftenFoodList 데이터 읽어오기
-            val sharedPreferences = requireActivity().getSharedPreferences("MySharedPrefs", Context.MODE_PRIVATE)
+            val sharedPreferences = requireActivity().getSharedPreferences("myPreferences", Context.MODE_PRIVATE)
             val gson = Gson()
             val json = sharedPreferences.getString("myMadeList", null)
 
@@ -176,7 +176,7 @@ class SearchMealFragment : Fragment() {
 
         // RecyclerView 설정
         adapter = SearchMealAdapter(items) { item->
-            val sharedPreferences = requireActivity().getSharedPreferences("MySharedPrefs", Context.MODE_PRIVATE)
+            val sharedPreferences = requireActivity().getSharedPreferences("myPreferences", Context.MODE_PRIVATE)
             val gson = Gson()
             val editor = sharedPreferences.edit()
             var newJson = gson.toJson(item)
@@ -191,7 +191,7 @@ class SearchMealFragment : Fragment() {
         binding.searchMealAllRv.adapter = adapter
 
         oftenadapter = SearchCategoryAdapter(mealList) { item->
-            val sharedPreferences = requireActivity().getSharedPreferences("MySharedPrefs", Context.MODE_PRIVATE)
+            val sharedPreferences = requireActivity().getSharedPreferences("myPreferences", Context.MODE_PRIVATE)
             val gson = Gson()
             val editor = sharedPreferences.edit()
             var newJson = gson.toJson(item)

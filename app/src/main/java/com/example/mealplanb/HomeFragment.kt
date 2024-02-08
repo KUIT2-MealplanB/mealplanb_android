@@ -3,8 +3,6 @@ import android.animation.ObjectAnimator
 import android.app.DatePickerDialog
 import android.content.Context
 import android.content.Intent
-import android.opengl.Visibility
-import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -16,9 +14,7 @@ import android.widget.ImageView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.mealplanb.databinding.ActivityMainBinding
 import com.example.mealplanb.databinding.FragmentHomeBinding
-import com.example.mealplanb.databinding.FragmentMenuRecommendHowMenuBinding
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import java.util.Calendar
@@ -48,17 +44,20 @@ class HomeFragment : Fragment(), DatePickerDialog.OnDateSetListener {
         // SharedPreferences에서 값 가져오기
         val nickname = sharedPref.getString("nickname", "꿀꿀")
         val avatarImageID = sharedPref.getInt("avatar",3)
-        val recommendMenu = sharedPref.getString("recommendMenu", null)
-//        val recommendMenuCal = sharedPref.getInt("recommendMenuCal",0)
 
-//        val gson = Gson()
-//        val json = sharedPref.getString("MealMainInfo",null)
-//        val data: MealMainInfo = gson.fromJson(json, object : TypeToken<MealMainInfo>() {}.type) ?: MealMainInfo(false,-1,0.0,0)
+        val gson = Gson()
+        var json = sharedPref.getString("dayMealList",null)
+        dayMealList = gson.fromJson(json,object : TypeToken<ArrayList<MealMainInfo>>() {}.type) ?: arrayListOf(
+            MealMainInfo(false,1,0.0,0)
+        )
 
-//        Log.d("logcat",data.total_cal.toString()+"!")
-//        if(data.meal_active) {
-//            dayMealList.set(data.meal_no-1,MealMainInfo(data.meal_active,data.meal_no,data.total_cal,data.meal_img))
-//        }
+        binding.mainMeallistRv.layoutManager = LinearLayoutManager(requireContext(),LinearLayoutManager.HORIZONTAL,false)
+        adapter = DayMealAdapter(dayMealList,requireContext())
+        binding.mainMeallistRv.adapter = adapter
+
+//        binding.mainMeallistRv.isNestedScrollingEnabled = false
+//        binding.mainMeallistRv.overScrollMode = View.OVER_SCROLL_ALWAYS
+//        binding.mainMeallistSv.isFillViewport = true
 
         // 가져온 값 사용
         binding.mainTitleNicknameTv.text = nickname
@@ -69,13 +68,46 @@ class HomeFragment : Fragment(), DatePickerDialog.OnDateSetListener {
             4 -> binding.mainCharacterIv.setImageResource(R.drawable.avartar_basic_black_img)
             5 -> binding.mainCharacterIv.setImageResource(R.drawable.avartar_basic_gray_img)
         }
-//        if(recommendMenu != null) {
-//            dayMealList.set(0,MealMainInfo(true,1,recommendMenuCal.toDouble(),R.drawable.item_hamburger_img))
-//        }
-//        binding.mainMeallistRv.layoutManager = LinearLayoutManager(requireContext(),LinearLayoutManager.HORIZONTAL,false)
-//        adapter = DayMealAdapter(dayMealList,requireContext())
-//        binding.mainMeallistRv.adapter = adapter
-//        setProgress()
+
+        //끼니 slot 추가
+        binding.mainDaymealAddCv.setOnClickListener {
+            if(dayMealList.size < 10) {
+                dayMealList.add(MealMainInfo(false,dayMealList.size+1,0.0,R.drawable.item_hamburger_img))
+                var newItemIdx = dayMealList.size-1
+                adapter?.notifyItemInserted(newItemIdx)
+
+                val editor = sharedPref.edit()
+                val newJson = gson.toJson(dayMealList)
+                editor.putString("dayMealList",newJson)
+                editor.apply()
+            }
+            else {
+                Toast.makeText(requireContext(),"더 이상 추가할 수 없습니다!",Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        calToday.time = Date()
+        setHomeData()
+
+        //날짜 설정
+        binding.mainDateTv.setOnClickListener {
+            val year = cal.get(Calendar.YEAR)
+            val month = cal.get(Calendar.MONTH)
+            val dayOfMonth = cal.get(Calendar.DAY_OF_MONTH)
+
+            val datePickerDialog = DatePickerDialog(requireContext(),this,year,month,dayOfMonth)
+            datePickerDialog.show()
+        }
+        //전 날로 이동
+        binding.mainArrowLeftIv.setOnClickListener {
+            cal.add(Calendar.DAY_OF_MONTH,-1)
+            setHomeData()
+        }
+        //다음 날로 이동
+        binding.mainArrowRightIv.setOnClickListener {
+            cal.add(Calendar.DAY_OF_MONTH,1)
+            setHomeData()
+        }
     }
 
     override fun onCreateView(
@@ -90,82 +122,32 @@ class HomeFragment : Fragment(), DatePickerDialog.OnDateSetListener {
 
         //binding.mainCharacterIv.bringToFront()
 
-        val sharedPreferences = requireActivity().getSharedPreferences("MySharedPrefs", AppCompatActivity.MODE_PRIVATE)
-        val gson = Gson()
-        val json = sharedPreferences.getString("MealMainInfo",null)
-        val data: MealMainInfo = gson.fromJson(json, object : TypeToken<MealMainInfo>() {}.type) ?: MealMainInfo(false,-1,0.0,0)
+//        val sharedPreferences = requireActivity().getSharedPreferences("MySharedPrefs", AppCompatActivity.MODE_PRIVATE)
+//        val gson = Gson()
+//        val json = sharedPreferences.getString("MealMainInfo",null)
+//        val data: MealMainInfo = gson.fromJson(json, object : TypeToken<MealMainInfo>() {}.type) ?: MealMainInfo(false,-1,0.0,0)
+//
+//        if(data.meal_active) {
+//            dayMealList.set(data.meal_no-1,MealMainInfo(data.meal_active,data.meal_no,data.total_cal,data.meal_img))
+//        }
+//
+//        binding.mainMeallistRv.layoutManager = LinearLayoutManager(requireContext(),LinearLayoutManager.HORIZONTAL,false)
+//        adapter = DayMealAdapter(dayMealList,requireContext())
+//        binding.mainMeallistRv.adapter = adapter
 
-//        val data= if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-//            intent.getSerializableExtra("MealMainInfo",MealMainInfo::class.java)
-//        } else {
-//            intent.getSerializableExtra("MealMainInfo") as MealMainInfo
-//        } ?: MealMainInfo(false,-1,-1.0,0)
-
-        if(data.meal_active) {
-            dayMealList.set(data.meal_no-1,MealMainInfo(data.meal_active,data.meal_no,data.total_cal,data.meal_img))
-        }
-
-        binding.mainMeallistRv.layoutManager = LinearLayoutManager(requireContext(),LinearLayoutManager.HORIZONTAL,false)
-        adapter = DayMealAdapter(dayMealList,requireContext())
-        binding.mainMeallistRv.adapter = adapter
-
-        //닉네임 초기값 설정
-        binding.mainTitleNicknameTv.text = "꿀꿀"
-
-        calToday.time = Date()
-        setDayText()
-        setProgress()
-        setNutData()
-
-        binding.mainDaymealAddCv.setOnClickListener {
-            if(dayMealList.size < 10) {
-                dayMealList.add(MealMainInfo(false,dayMealList.size+1,0.0,R.drawable.item_hamburger_img))
-                //adapter.notifyItemInserted(dayMealList.size)
-                var newItemIdx = dayMealList.size-1
-                adapter?.notifyItemInserted(newItemIdx)
-            }
-            else {
-                Toast.makeText(requireContext(),"더 이상 추가할 수 없습니다!",Toast.LENGTH_SHORT).show()
-            }
-        }
-        binding.mainDateTv.setOnClickListener {
-            val year = cal.get(Calendar.YEAR)
-            val month = cal.get(Calendar.MONTH)
-            val dayOfMonth = cal.get(Calendar.DAY_OF_MONTH)
-
-            val datePickerDialog = DatePickerDialog(requireContext(),this,year,month,dayOfMonth)
-            datePickerDialog.show()
-        }
-        binding.mainArrowLeftIv.setOnClickListener {
-            cal.add(Calendar.DAY_OF_MONTH,-1)
-            setDayText()
-            setProgress()
-            setNutData()
-        }
-        binding.mainArrowRightIv.setOnClickListener {
-            cal.add(Calendar.DAY_OF_MONTH,1)
-            setDayText()
-            setProgress()
-            setNutData()
-        }
-
+        //캐릭터 tab하면 상세 영양소 페이지로 연결
         binding.mainCharacterIv.setOnClickListener{
             val intent = Intent(requireContext(), NutrientdetailActivity::class.java)
             startActivity(intent)
         }
-
-//        binding.mainScaleCv.setOnClickListener {
-//            val intent = Intent(requireActivity(), MenuRecommendActivity::class.java)
-//            startActivity(intent)
-//        }
-
+        //햄버거 아이콘 tab하면 히든 페이지로 연결
         binding.mainMenuIv.setOnClickListener {
             val intent = Intent(requireContext(), HiddenPageActivity::class.java)
             startActivity(intent)
         }
 
         //오늘의 체중 정보
-        val sharedPref = activity?.getSharedPreferences("myPref", Context.MODE_PRIVATE)
+        val sharedPref = activity?.getSharedPreferences("myPreferences", Context.MODE_PRIVATE)
         val todayweight = sharedPref?.getFloat("startWeight",0.0f)
         binding.mainWeightTv.text="$todayweight"
 
@@ -205,13 +187,20 @@ class HomeFragment : Fragment(), DatePickerDialog.OnDateSetListener {
         cal2.set(Calendar.SECOND,0)
         cal2.set(Calendar.MILLISECOND,0)
 
-        setDayText()
+        setHomeData()
+
         val dayDiff = TimeUnit.MILLISECONDS.toDays(cal1.timeInMillis - cal2.timeInMillis)
         if(dayDiff >= 0) {
             binding.mainTitleContent1Tv.text = "님의 " + (dayDiff + 1).toString() + "일차"
         } else {
             binding.mainTitleContent1Tv.text = "님의 0일차"
         }
+    }
+
+    fun setHomeData() {
+        setDayText()
+        setProgress()
+        setNutData()
     }
 
     fun setDayText() {
@@ -228,9 +217,6 @@ class HomeFragment : Fragment(), DatePickerDialog.OnDateSetListener {
             else -> ""
         }
         binding.mainDateTv.text = selectedMonth.toString() + ". " + selectedDay.toString() + ". " + dayOfWeek
-
-        setProgress()
-        setNutData()
     }
 
     fun setNutData() {

@@ -131,7 +131,7 @@ class PrivacyCollectActivity : AppCompatActivity() {
                 if(checkConditions()) {
                     val startWeight = privacyStartWeightEt.text.toString().toFloat()
                     val wantWeight = privacyWantWeightEt.text.toString().toFloat()
-                    val sharedPref = getSharedPreferences("myPref", Context.MODE_PRIVATE)
+                    val sharedPref = getSharedPreferences("myPreferences", Context.MODE_PRIVATE)
                     val editor = sharedPref.edit()
                     editor.putFloat("startWeight", startWeight)
                     editor.putFloat("wantWeight", wantWeight)

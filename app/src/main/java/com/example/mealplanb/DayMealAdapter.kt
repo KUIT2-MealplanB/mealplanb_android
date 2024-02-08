@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mealplanb.databinding.ItemDaymealBinding
+import com.google.gson.Gson
 
 class DayMealAdapter(var dayMealList: ArrayList<MealMainInfo>, private val context: Context) : RecyclerView.Adapter<DayMealAdapter.ViewHolder>() {
     private val numList : ArrayList<String> = arrayListOf("첫","두","세","네","다섯","여섯","일곱","여덟","아홉","열")
@@ -20,16 +21,17 @@ class DayMealAdapter(var dayMealList: ArrayList<MealMainInfo>, private val conte
             binding.daymealCalTv.text = myMealMainInfo.total_cal.toString() + "kcal"
 
             if(dayMealList[position].meal_active) {
-                binding.daymealPlusbtnTv.visibility = View.INVISIBLE
+                binding.daymealPlusbtnTv.visibility = View.GONE
                 binding.daymealMealIv.visibility = View.VISIBLE
                 binding.daymealCalTv.visibility = View.VISIBLE
             } else {
                 binding.daymealPlusbtnTv.visibility = View.VISIBLE
-                binding.daymealMealIv.visibility = View.INVISIBLE
-                binding.daymealCalTv.visibility = View.INVISIBLE
+                binding.daymealMealIv.visibility = View.GONE
+                binding.daymealCalTv.visibility = View.GONE
             }
 
             binding.daymealMealinfoCv.setOnClickListener {
+                updateSharedPreferences(context,myMealMainInfo.meal_no)
                 (context as? AppCompatActivity)?.supportFragmentManager?.beginTransaction()?.replace(R.id.main_frm, SearchMealFragment())?.commit()
             }
         }
@@ -49,9 +51,16 @@ class DayMealAdapter(var dayMealList: ArrayList<MealMainInfo>, private val conte
     fun totCal() : Int {
         var sum = 0
         for(item in dayMealList) {
-            Log.d("logcat",item.total_cal.toString()+"끼니")
+//            Log.d("logcat",item.total_cal.toString()+"끼니")
             sum += item.total_cal.toInt()
         }
         return sum
+    }
+
+    private fun updateSharedPreferences(context: Context, index: Int) {
+        val sharedPreferences = context.getSharedPreferences("myPreferences", Context.MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
+        editor.putInt("selectedMealNum", index)
+        editor.apply()
     }
 }

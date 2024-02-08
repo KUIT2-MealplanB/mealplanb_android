@@ -29,7 +29,7 @@ class GoalMotifFragment : Fragment() {
         binding = FragmentGoalMotifBinding.inflate(layoutInflater)
 
         // startWeight와 wantWeight 가져오기
-        val sharedPref = activity?.getSharedPreferences("myPref", Context.MODE_PRIVATE)
+        val sharedPref = activity?.getSharedPreferences("myPreferences", Context.MODE_PRIVATE)
         val startWeight = sharedPref?.getFloat("startWeight", 0.0f)
         val wantWeight = sharedPref?.getFloat("wantWeight", 0.0f)
 

@@ -62,7 +62,7 @@ class MenuRecommendFragment : Fragment(), OnFragmentInteractionListener, AddToRe
 
         binding.menuRecommTogle.setOnCheckedChangeListener { _, isChecked ->
             if(isChecked) {
-                val sharedPreferences = requireActivity().getSharedPreferences("MySharedPrefs",MODE_PRIVATE)
+                val sharedPreferences = requireActivity().getSharedPreferences("myPreferences",MODE_PRIVATE)
                 var gson = Gson()
                 var json = sharedPreferences.getString("recommendList",null)
                 recomList = gson.fromJson(json, object : TypeToken<ArrayList<RecommendMenu>>() {}.type) ?: arrayListOf<RecommendMenu>()
@@ -107,7 +107,7 @@ class MenuRecommendFragment : Fragment(), OnFragmentInteractionListener, AddToRe
     }
 
     override fun addItemToRecyclerView(item: RecommendMenu) {
-        val sharedPreferences = requireActivity().getSharedPreferences("MySharedPrefs",MODE_PRIVATE)
+        val sharedPreferences = requireActivity().getSharedPreferences("myPreferences",MODE_PRIVATE)
         var gson = Gson()
         var json = sharedPreferences.getString("recommendList",null)
         var recomList = gson.fromJson(json, object : TypeToken<ArrayList<RecommendMenu>>() {}.type) ?: arrayListOf<RecommendMenu>()

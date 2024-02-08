@@ -32,7 +32,7 @@ class AddMealListFragment : Fragment() {
 //                Meal("크림스프", 150, 180, 7, 0, 1),
 //                Meal("샐러드", 50, 80,4, 1, 0)))
 
-        val sharedPreferences = requireActivity().getSharedPreferences("MySharedPrefs", MODE_PRIVATE)
+        val sharedPreferences = requireActivity().getSharedPreferences("myPreferences", MODE_PRIVATE)
         val gson = Gson()
         var json = sharedPreferences.getString("addFoodList",null)
         addFoodList = gson.fromJson(json, object : TypeToken<ArrayList<Meal>>() {}.type) ?: arrayListOf()
@@ -77,9 +77,6 @@ class AddMealListFragment : Fragment() {
             requireActivity().supportFragmentManager.beginTransaction().replace(R.id.main_frm, SearchMealFragment()).commit()
         }
         binding.addmeallistEndCv.setOnClickListener {
-//            val intent = Intent(applicationContext,MainActivity::class.java)
-            val sharedPreferences = requireActivity().getSharedPreferences("MySharedPrefs", MODE_PRIVATE)
-            val gson = Gson()
             var tot_cal = 0.0
 
             for(i in mealList) {
@@ -98,11 +95,22 @@ class AddMealListFragment : Fragment() {
                 R.drawable.item_sugar_img)
             val randomImage = imageList.random()
 
-            val json = MealMainInfo(true, 1, tot_cal, randomImage)
-            val newJson = gson.toJson(json)
-            editor.putString("MealMainInfo", newJson)
+//            val json = MealMainInfo(true, 1, tot_cal, randomImage)
+//            val newJson = gson.toJson(json)
+//            editor.putString("MealMainInfo", newJson)
+//            editor.apply()
+
+            //home 화면에 표시될 끼니 정보 갱신
+            var json = sharedPreferences.getString("dayMealList",null)
+            var dayMealList = gson.fromJson(json,object : TypeToken<ArrayList<MealMainInfo>>() {}.type) ?: arrayListOf(
+                MealMainInfo(false,1,0.0,0)
+            )
+            val selecedMealNum = sharedPreferences.getInt("selectedMealNum",1)
+            dayMealList.set(selecedMealNum-1, MealMainInfo(true,selecedMealNum,tot_cal,randomImage))
+            val newJson = gson.toJson(dayMealList)
+            editor.putString("dayMealList",newJson)
             editor.apply()
-//            intent.putExtra("MealMainInfo",MealMainInfo(true,1,tot_cal,R.drawable.item_hamburger_img))
+
             requireActivity().supportFragmentManager.beginTransaction().replace(R.id.main_frm, HomeFragment()).commit()
         }
         binding.addmeallistBackmenuCl.setOnClickListener {

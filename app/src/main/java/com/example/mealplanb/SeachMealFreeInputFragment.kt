@@ -89,7 +89,7 @@ class SeachMealFreeInputFragment : BottomSheetDialogFragment() {
                                 fat_gram = fat.toDouble()
                             )
 
-                            val sharedPreferences = requireActivity().getSharedPreferences("MySharedPrefs", Context.MODE_PRIVATE)
+                            val sharedPreferences = requireActivity().getSharedPreferences("myPreferences", Context.MODE_PRIVATE)
                             val gson = Gson()
                             val editor = sharedPreferences.edit()
                             var newJson = gson.toJson(meal)

@@ -55,7 +55,7 @@ class FoodDetailFragment : Fragment() {
         binding.detailFoodFatSizeTv.text = food.fatSize.toInt().toString()
         binding.detailFoodKcalNumTv.text = food.kcal.toInt().toString()
 
-        val sharedPreferences = requireActivity().getSharedPreferences("MySharedPrefs", MODE_PRIVATE)
+        val sharedPreferences = requireActivity().getSharedPreferences("myPreferences", MODE_PRIVATE)
         var gson = Gson()
         var json = sharedPreferences.getString("Key", null)
         val data1 = gson.fromJson(json, object : TypeToken<Meal>() {}.type) ?: Meal("null",0.0,0.0, 0.0,0.0,0.0)
@@ -100,7 +100,20 @@ class FoodDetailFragment : Fragment() {
         binding.detailFoodAddCv.setOnClickListener {
             var json = sharedPreferences.getString("addFoodList", null)
             val addFoodList = gson.fromJson(json, object : TypeToken<ArrayList<Meal>>() {}.type) ?: arrayListOf<Meal>()
-            addFoodList.add(meal)
+            var checkItemFlag = false
+            for(item in addFoodList) {
+                if(item.meal_name == meal.meal_name) {
+                    checkItemFlag = true
+                    item.meal_weight += meal.meal_weight
+                    item.meal_cal += meal.meal_cal
+                    item.sacc_gram += meal.sacc_gram
+                    item.protein_gram += meal.protein_gram
+                    item.fat_gram += meal.fat_gram
+                }
+            }
+            if(!checkItemFlag) {
+                addFoodList.add(meal)
+            }
             val editor = sharedPreferences.edit()
             var newJson = gson.toJson(addFoodList)
             editor.putString("addFoodList",newJson)
