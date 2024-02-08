@@ -17,7 +17,7 @@
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/main_navigation"
         android:layout_width="match_parent"
-        android:layout_height="54dp"
+        android:layout_height="60dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -25,7 +25,7 @@
         app:itemBackground="@color/white"
         app:itemActiveIndicatorStyle="@null"
         android:outlineSpotShadowColor="@color/black"
-        app:itemIconSize="34dp"
+        app:itemIconSize="44dp"
         app:menu="@menu/main_menu_bottom"
         app:labelVisibilityMode="unlabeled"/>
 
