@@ -31,6 +31,11 @@ class DayMealAdapter(var dayMealList: ArrayList<MealMainInfo>, private val conte
                 binding.daymealCalTv.visibility = View.GONE
             }
 
+            binding.daymealMealinfoCv.setOnLongClickListener {
+                binding.daymealMealdelIv.visibility = View.VISIBLE
+                true
+            }
+
             binding.daymealMealinfoCv.setOnClickListener {
                 updateSharedPreferences(context,myMealMainInfo.meal_no)
                 val sharedPreferences = context.getSharedPreferences("myPreferences", Context.MODE_PRIVATE)
@@ -42,6 +47,24 @@ class DayMealAdapter(var dayMealList: ArrayList<MealMainInfo>, private val conte
                     (context as? AppCompatActivity)?.supportFragmentManager?.beginTransaction()?.replace(R.id.main_frm, AddMealListFragment())?.commit()
                 } else {
                     (context as? AppCompatActivity)?.supportFragmentManager?.beginTransaction()?.replace(R.id.main_frm, SearchMealFragment())?.commit()
+                }
+            }
+
+            binding.daymealMealdelIv.setOnClickListener {
+                val position = adapterPosition
+                if (position != RecyclerView.NO_POSITION) {
+                    // Remove item from the list
+                    dayMealList.removeAt(position)
+                    // Notify RecyclerView
+                    notifyItemRemoved(position)
+
+                    // Update SharedPreferences
+                    val sharedPref = context.getSharedPreferences("myPreferences", Context.MODE_PRIVATE)
+                    val gson = Gson()
+                    val editor = sharedPref.edit()
+                    val newJson = gson.toJson(dayMealList)
+                    editor.putString("dayMealList",newJson)
+                    editor.apply()
                 }
             }
         }
