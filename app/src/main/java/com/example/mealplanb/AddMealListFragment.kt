@@ -34,8 +34,16 @@ class AddMealListFragment : Fragment() {
 
         val sharedPreferences = requireActivity().getSharedPreferences("myPreferences", MODE_PRIVATE)
         val gson = Gson()
-        var json = sharedPreferences.getString("addFoodList",null)
+        val selectedMealNum = sharedPreferences.getInt("selectedMealNum",1)
+        val foodListID = "addFoodList" + selectedMealNum.toString()
+        var json = sharedPreferences.getString(foodListID,null)
+        var foodListEmptyFlag : Boolean
         addFoodList = gson.fromJson(json, object : TypeToken<ArrayList<Meal>>() {}.type) ?: arrayListOf()
+        if(addFoodList.size > 0) {
+            foodListEmptyFlag = false
+        } else {
+            foodListEmptyFlag = true
+        }
 
         for(item in addFoodList) {
             mealList.add(
@@ -72,7 +80,7 @@ class AddMealListFragment : Fragment() {
         binding.addmeallistAddmoreCv.setOnClickListener {
             val editor = sharedPreferences.edit()
             val newJson = gson.toJson(addFoodList)
-            editor.putString("addFoodList",newJson)
+            editor.putString(foodListID,newJson)
             editor.apply()
             requireActivity().supportFragmentManager.beginTransaction().replace(R.id.main_frm, SearchMealFragment()).commit()
         }
@@ -105,8 +113,7 @@ class AddMealListFragment : Fragment() {
             var dayMealList = gson.fromJson(json,object : TypeToken<ArrayList<MealMainInfo>>() {}.type) ?: arrayListOf(
                 MealMainInfo(false,1,0.0,0)
             )
-            val selecedMealNum = sharedPreferences.getInt("selectedMealNum",1)
-            dayMealList.set(selecedMealNum-1, MealMainInfo(true,selecedMealNum,tot_cal,randomImage))
+            dayMealList.set(selectedMealNum-1, MealMainInfo(true,selectedMealNum,tot_cal,randomImage))
             val newJson = gson.toJson(dayMealList)
             editor.putString("dayMealList",newJson)
             editor.apply()
@@ -114,7 +121,11 @@ class AddMealListFragment : Fragment() {
             requireActivity().supportFragmentManager.beginTransaction().replace(R.id.main_frm, HomeFragment()).commit()
         }
         binding.addmeallistBackmenuCl.setOnClickListener {
-            requireActivity().supportFragmentManager.beginTransaction().replace(R.id.main_frm, FoodDetailFragment()).commit()
+            if(foodListEmptyFlag) {
+                requireActivity().supportFragmentManager.beginTransaction().replace(R.id.main_frm, SearchMealFragment()).commit()
+            } else {
+                requireActivity().supportFragmentManager.beginTransaction().replace(R.id.main_frm, HomeFragment()).commit()
+            }
         }
 
         return binding.root

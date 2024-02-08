@@ -98,7 +98,9 @@ class FoodDetailFragment : Fragment() {
         }
 
         binding.detailFoodAddCv.setOnClickListener {
-            var json = sharedPreferences.getString("addFoodList", null)
+            val selectedMealNum = sharedPreferences.getInt("selectedMealNum",1)
+            val foodListID = "addFoodList" + selectedMealNum.toString()
+            var json = sharedPreferences.getString(foodListID, null)
             val addFoodList = gson.fromJson(json, object : TypeToken<ArrayList<Meal>>() {}.type) ?: arrayListOf<Meal>()
             var checkItemFlag = false
             for(item in addFoodList) {
@@ -116,7 +118,7 @@ class FoodDetailFragment : Fragment() {
             }
             val editor = sharedPreferences.edit()
             var newJson = gson.toJson(addFoodList)
-            editor.putString("addFoodList",newJson)
+            editor.putString(foodListID,newJson)
             editor.apply()
             requireActivity().supportFragmentManager.beginTransaction().replace(R.id.main_frm, AddMealListFragment()).commit()
         }

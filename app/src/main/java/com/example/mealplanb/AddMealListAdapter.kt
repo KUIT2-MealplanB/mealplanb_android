@@ -51,9 +51,11 @@ class AddMealListAdapter(var mealList: ArrayList<Meal>) : RecyclerView.Adapter<A
     private fun updateSharedPreferences(context: Context) {
         val sharedPreferences = context.getSharedPreferences("myPreferences", Context.MODE_PRIVATE)
         val gson = Gson()
+        val selectedMealNum = sharedPreferences.getInt("selectedMealNum",1)
+        val foodListID = "addFoodList" + selectedMealNum.toString()
         val newJson = gson.toJson(mealList)
         val editor = sharedPreferences.edit()
-        editor.putString("addFoodList", newJson)
+        editor.putString(foodListID, newJson)
         editor.apply()
     }
 }

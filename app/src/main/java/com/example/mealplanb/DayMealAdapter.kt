@@ -11,6 +11,7 @@ import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mealplanb.databinding.ItemDaymealBinding
 import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 
 class DayMealAdapter(var dayMealList: ArrayList<MealMainInfo>, private val context: Context) : RecyclerView.Adapter<DayMealAdapter.ViewHolder>() {
     private val numList : ArrayList<String> = arrayListOf("첫","두","세","네","다섯","여섯","일곱","여덟","아홉","열")
@@ -32,7 +33,16 @@ class DayMealAdapter(var dayMealList: ArrayList<MealMainInfo>, private val conte
 
             binding.daymealMealinfoCv.setOnClickListener {
                 updateSharedPreferences(context,myMealMainInfo.meal_no)
-                (context as? AppCompatActivity)?.supportFragmentManager?.beginTransaction()?.replace(R.id.main_frm, SearchMealFragment())?.commit()
+                val sharedPreferences = context.getSharedPreferences("myPreferences", Context.MODE_PRIVATE)
+                val gson = Gson()
+                val foodListID = "addFoodList" + myMealMainInfo.meal_no.toString()
+                var json = sharedPreferences.getString(foodListID,null)
+                var addFoodList : ArrayList<Meal> = gson.fromJson(json, object : TypeToken<ArrayList<Meal>>() {}.type) ?: arrayListOf()
+                if (addFoodList.size > 0) {
+                    (context as? AppCompatActivity)?.supportFragmentManager?.beginTransaction()?.replace(R.id.main_frm, AddMealListFragment())?.commit()
+                } else {
+                    (context as? AppCompatActivity)?.supportFragmentManager?.beginTransaction()?.replace(R.id.main_frm, SearchMealFragment())?.commit()
+                }
             }
         }
     }
