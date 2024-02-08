@@ -185,7 +185,8 @@
             android:fontFamily="@font/pretendard_bold"
             android:background="@drawable/et_privacy"
             android:padding="10dp"
-            android:imeOptions="actionNext"/>
+            android:imeOptions="actionNext"
+            android:singleLine="true"/>
 
         <TextView
             android:id="@+id/privacy_age_tv"
@@ -233,7 +234,8 @@
             android:fontFamily="@font/pretendard_bold"
             android:background="@drawable/et_privacy"
             android:padding="10dp"
-            android:imeOptions="actionNext"/>
+            android:imeOptions="actionNext"
+            android:singleLine="true"/>
 
         <TextView
             android:id="@+id/privacy_height_tv"
@@ -281,7 +283,8 @@
             android:fontFamily="@font/pretendard_bold"
             android:background="@drawable/et_privacy"
             android:padding="10dp"
-            android:imeOptions="actionNext"/>
+            android:imeOptions="actionNext"
+            android:singleLine="true"/>
 
         <TextView
             android:id="@+id/privacy_start_weight_tv"
@@ -328,7 +331,8 @@
             android:fontFamily="@font/pretendard_bold"
             android:background="@drawable/et_privacy"
             android:padding="10dp"
-            android:imeOptions="actionDone"/>
+            android:imeOptions="actionDone"
+            android:singleLine="true"/>
 
         <TextView
             android:id="@+id/privacy_want_weight_tv"

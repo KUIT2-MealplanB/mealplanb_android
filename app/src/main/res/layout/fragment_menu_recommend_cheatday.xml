@@ -7,6 +7,7 @@
     tools:context=".MenuRecommendCheatdayFragment">
 
     <LinearLayout
+        android:visibility="invisible"
         android:id="@+id/menu_recomm_cheatday_button_lv"
         android:layout_width="match_parent"
         android:layout_height="156dp"
@@ -144,6 +145,134 @@
                 />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/menu_recomm_cheat_category_lv"
+        android:layout_width="match_parent"
+        android:layout_height="170dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:orientation="vertical"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:gravity="center|top">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:gravity="center"
+            android:layout_marginBottom="8dp"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="74dp"
+                android:layout_height="74dp">
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/menu_recomm_cheat_category_back_cv"
+                    android:layout_gravity="center"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+
+                    android:layout_marginStart="9dp"
+                    app:cardCornerRadius="100dp">
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/back_arrow_ic"
+                        android:layout_gravity="center"/>
+
+                </androidx.cardview.widget.CardView>
+            </LinearLayout>
+
+
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/menu_recomm_cheat_category_chicken_btn"
+                android:layout_width="74dp"
+                android:layout_height="74dp"
+                android:background="@drawable/btn"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:text="치킨"
+                android:fontFamily="@font/pretendard_regular"
+                android:textSize="12sp"/>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/menu_recomm_cheat_category_pizza_btn"
+                android:layout_width="74dp"
+                android:layout_height="74dp"
+                android:background="@drawable/btn"
+                android:text="피자"
+                android:fontFamily="@font/pretendard_regular"
+                android:textSize="12sp"/>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/menu_recomm_cheat_category_burger_btn"
+                android:layout_width="74dp"
+                android:layout_height="74dp"
+                android:background="@drawable/btn"
+                android:layout_marginStart="8dp"
+                android:text="버거"
+                android:fontFamily="@font/pretendard_regular"
+                android:textSize="12sp"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/menu_recomm_cheat_category_noodle_btn"
+                android:layout_width="74dp"
+                android:layout_height="74dp"
+                android:background="@drawable/btn"
+                android:text="면류"
+                android:fontFamily="@font/pretendard_regular"
+                android:textSize="12sp"/>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/menu_recomm_cheat_category_snackbar_btn"
+                android:layout_width="74dp"
+                android:layout_height="74dp"
+                android:background="@drawable/btn"
+                android:layout_marginEnd="8dp"
+                android:layout_margin="8dp"
+                android:text="분식"
+                android:fontFamily="@font/pretendard_regular"
+                android:textSize="12sp"/>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/menu_recomm_cheat_category_pork_btn"
+                android:layout_width="74dp"
+                android:layout_height="74dp"
+                android:background="@drawable/btn"
+                android:text="족발/보쌈"
+                android:fontFamily="@font/pretendard_regular"
+                android:textSize="12sp"/>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/menu_recomm_cheat_category_dessert_btn"
+                android:layout_width="74dp"
+                android:layout_height="74dp"
+                android:background="@drawable/btn"
+                android:layout_marginStart="8dp"
+                android:text="디저트"
+                android:fontFamily="@font/pretendard_regular"
+                android:textSize="12sp"/>
+
+
+
+        </LinearLayout>
 
 
 
