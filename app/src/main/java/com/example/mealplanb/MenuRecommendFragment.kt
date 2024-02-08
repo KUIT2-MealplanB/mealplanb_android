@@ -1,8 +1,8 @@
 package com.example.mealplanb
 
 import android.content.Context.MODE_PRIVATE
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -56,6 +56,9 @@ class MenuRecommendFragment : Fragment(), OnFragmentInteractionListener, AddToRe
         binding.menuRecommChatRv.layoutManager = LinearLayoutManager(requireContext())
         binding.menuRecommChatRv.adapter = adapter
 
+        // 추가된 아이템으로 스크롤
+        scrollToLastItem(binding.menuRecommChatRv)
+
         // 예시 데이터 생성
         menuRecommItems.add(MenuRecommItem.DateItem(1, 5, "목", 0))
         menuRecommItems.add(MenuRecommItem.SystemItem("어떻게 식단", "을 추천해드릴까요?", 1))
@@ -86,20 +89,25 @@ class MenuRecommendFragment : Fragment(), OnFragmentInteractionListener, AddToRe
         return binding.root
     }
     fun addInitFragmentItems(vararg items: MenuRecommItem) {
+
         Log.d("logcat",menuRecommItems.size.toString()+"!")
         menuRecommItems.addAll(items)
+        scrollToLastItem(binding.menuRecommChatRv)
         Log.d("logcat",menuRecommItems.size.toString()+"!")
-        adapter.notifyDataSetChanged()
+        //adapter.notifyDataSetChanged()
+
     }
 
     fun addWhatMenuFragmentItems(vararg items: MenuRecommItem) {
         menuRecommItems.addAll(items)
-        adapter.notifyDataSetChanged()
+        scrollToLastItem(binding.menuRecommChatRv)
+        //adapter.notifyDataSetChanged()
     }
 
     fun addCheatMenuFragmentItems(vararg items: MenuRecommItem) {
         menuRecommItems.addAll(items)
-        adapter.notifyDataSetChanged()
+        scrollToLastItem(binding.menuRecommChatRv)
+        //adapter.notifyDataSetChanged()
     }
 
     override fun onExitRequested() {
@@ -121,11 +129,22 @@ class MenuRecommendFragment : Fragment(), OnFragmentInteractionListener, AddToRe
 
         recommListAdapter = RecommendedListAdapter(recomList,cal)
 
-        binding.menuRecommRecommedListRv.layoutManager = LinearLayoutManager(requireContext(),
-            LinearLayoutManager.VERTICAL,false)
+        binding.menuRecommRecommedListRv.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+
         binding.menuRecommRecommedListRv.adapter = recommListAdapter
 
+        binding.menuRecommRecommedListRv.scrollToPosition(menuRecommItems.size)
+
         recommListAdapter.notifyDataSetChanged()
+
+        }
+
+    //리스트의 가장 마지막을 보여주도록 스크롤을 이동하는 함수
+    private fun scrollToLastItem(view: View) {
+
+        adapter = MenuRecommendAdapter(requireContext(), menuRecommItems)
+
+        Handler().postDelayed({ binding.menuRecommChatRv.scrollToPosition(adapter.getItemCount() - 1) }, 100)
     }
 
 }
