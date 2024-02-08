@@ -94,8 +94,6 @@ class MenuRecommendFragment : Fragment(), OnFragmentInteractionListener, AddToRe
         menuRecommItems.addAll(items)
         scrollToLastItem(binding.menuRecommChatRv)
         Log.d("logcat",menuRecommItems.size.toString()+"!")
-        //adapter.notifyDataSetChanged()
-
         adapter.notifyDataSetChanged()
 
     }
@@ -104,15 +102,12 @@ class MenuRecommendFragment : Fragment(), OnFragmentInteractionListener, AddToRe
         menuRecommItems.addAll(items)
         scrollToLastItem(binding.menuRecommChatRv)
         adapter.notifyDataSetChanged()
-        //adapter.notifyDataSetChanged()
     }
 
     fun addCheatMenuFragmentItems(vararg items: MenuRecommItem) {
         menuRecommItems.addAll(items)
         scrollToLastItem(binding.menuRecommChatRv)
         adapter.notifyDataSetChanged()
-        scrollToLastItem(binding.menuRecommChatRv)
-        //adapter.notifyDataSetChanged()
     }
 
     override fun onExitRequested() {
