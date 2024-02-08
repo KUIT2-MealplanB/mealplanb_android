@@ -8,11 +8,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isInvisible
 import com.example.mealplanb.databinding.FragmentMenuRecommendCheatdayBinding
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.gson.Gson
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.util.Calendar
 import java.util.Date
 
@@ -207,7 +209,16 @@ class MenuRecommendCheatdayFragment : Fragment() {
 
             CoroutineScope(Dispatchers.Main).launch {
                 delay(5000)
-                requireActivity().supportFragmentManager.beginTransaction().replace(R.id.main_frm, HomeFragment()).commit()
+                withContext(Dispatchers.Main) {
+                    val transaction = requireActivity().supportFragmentManager.beginTransaction()
+                    transaction.replace(R.id.main_frm, HomeFragment())
+                    transaction.commit()
+
+                    // 아이콘 변경 코드
+                    val bottomNavigationView = requireActivity().findViewById<BottomNavigationView>(R.id.main_navigation)
+                    bottomNavigationView.menu.findItem(R.id.menu_mypage).setIcon(R.drawable.navi_mypage_active_ic)
+                    bottomNavigationView.menu.findItem(R.id.menu_food).setIcon(R.drawable.navi_food_inactive_ic)
+                }
             }
         }
 
