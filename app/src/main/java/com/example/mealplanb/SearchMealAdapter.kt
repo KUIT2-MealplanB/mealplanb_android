@@ -2,15 +2,15 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mealplanb.Meal
-import com.example.mealplanb.databinding.ItemMymealBinding
+import com.example.mealplanb.databinding.ItemMeallistBinding
 
 class SearchMealAdapter(var items: ArrayList<Meal>, val onClick: (Meal)->(Unit)) : RecyclerView.Adapter<SearchMealAdapter.ViewHolder>() {
 
     // 뷰홀더 클래스
-    inner class ViewHolder(var binding: ItemMymealBinding) : RecyclerView.ViewHolder(binding.root){
+    inner class ViewHolder(var binding: ItemMeallistBinding) : RecyclerView.ViewHolder(binding.root){
         fun bind(myMeal: Meal) {
-            binding.mymealNameTv.text = myMeal.meal_name
-            binding.mymealDetailsTv.text = myMeal.meal_weight.toInt().toString() + "g · " + myMeal.meal_cal.toInt().toString() + "kcal"
+            binding.itemMeallistTitleTv.text = myMeal.meal_name
+            binding.itemMeallistSubtitleTv.text = myMeal.meal_weight.toInt().toString() + "g · " + myMeal.meal_cal.toInt().toString() + "kcal"
 
             binding.root.setOnClickListener {
                 onClick(myMeal)
@@ -19,7 +19,7 @@ class SearchMealAdapter(var items: ArrayList<Meal>, val onClick: (Meal)->(Unit))
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding = ItemMymealBinding.inflate(LayoutInflater.from(parent.context),parent,false)
+        val binding = ItemMeallistBinding.inflate(LayoutInflater.from(parent.context),parent,false)
         return ViewHolder(binding)
     }
 
