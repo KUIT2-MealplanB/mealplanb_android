@@ -2,6 +2,7 @@ package com.example.mealplanb
 
 import SearchCategoryAdapter
 import SearchMealAdapter
+import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Color
 import android.os.Bundle
@@ -13,6 +14,9 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
+import android.widget.EditText
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.Fragment
 import com.example.mealplanb.databinding.FragmentSearchMealBinding
 import com.google.gson.Gson
@@ -48,6 +52,7 @@ class SearchMealFragment : Fragment() {
 
     var lastClickedButton: String? = null // '자주 먹는', '내가 만든' 버튼 중 어떤 것이 눌렸는지 저장하는 변수 추가
 
+    @SuppressLint("ResourceAsColor")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -61,12 +66,36 @@ class SearchMealFragment : Fragment() {
         binding.searchMealAllRv.visibility = View.GONE
         binding.searchMealMyRv.visibility=View.GONE
 
+        //뒤로 가기 '<'버튼을 눌렀을 때
+        binding.searchMealBackIv.setOnClickListener {
+            binding.searchMealAllRv.visibility=View.GONE
+            binding.searchMealMyRv.visibility=View.GONE
+            binding.searchMealMyLl.visibility=View.VISIBLE
+
+            //검색창 hint
+            binding.searchMealInputEt.hint = "식사 이름을 입력해주세요."
+            binding.searchMealInputEt.setHintTextColor(Color.GRAY)
+
+            // 호출 시점에 hideKeyboard 함수를 호출하여 키보드를 숨깁니다.
+            hideKeyboard()
+
+            //검색 커서 깜빡임 제어
+            binding.searchMealInputEt.clearFocus()
+
+            //뒤로 가기 버튼 없어지기
+            binding.searchMealBackIv.visibility = View.INVISIBLE
+        }
+
         //자주먹는 버튼을 눌렀을 때
         binding.searchMealBtnOftenLl.setOnClickListener{
+
             //없어지고 보이고
             binding.searchMealMyLl.visibility=View.GONE
             binding.searchMealAllRv.visibility=View.GONE
             binding.searchMealMyRv.visibility=View.VISIBLE
+
+            //뒤로 가기 버튼 등장
+            binding.searchMealBackIv.visibility = View.VISIBLE
 
             //검색창 hint
             binding.searchMealInputEt.hint = "자주 먹는 식사"
@@ -120,6 +149,10 @@ class SearchMealFragment : Fragment() {
 
         //내가만든 버튼을 눌렀을 때
         binding.searchMealBtnMadeLl.setOnClickListener{
+
+            //뒤로 가기 버튼 등장
+            binding.searchMealBackIv.visibility = View.VISIBLE
+
             //없어지고 보이고
             binding.searchMealMyLl.visibility=View.GONE
             binding.searchMealAllRv.visibility=View.GONE
@@ -213,6 +246,7 @@ class SearchMealFragment : Fragment() {
 
         // 검색창에 텍스트가 변경될 때마다 실행될 리스너 설정
         binding.searchMealInputEt.addTextChangedListener(object : TextWatcher {
+
             override fun afterTextChanged(s: Editable?) {
                 filterList(s.toString())
             }
@@ -226,6 +260,10 @@ class SearchMealFragment : Fragment() {
 
         //검색창 누르면 linearlayout 숨기기, recyclerview 보이기 + 반대
         binding.searchMealInputEt.setOnFocusChangeListener { _, hasFocus ->
+
+            //뒤로 가기 버튼 등장
+            binding.searchMealBackIv.visibility = View.VISIBLE
+
             if (hasFocus) {
                 binding.searchMealMyLl.visibility = View.GONE
                 //binding.searchMealFreeInputLl.visibility = View.GONE
@@ -300,6 +338,16 @@ class SearchMealFragment : Fragment() {
         // 임시 리스트로 어댑터를 업데이트
         adapter.updateList(tempList)
         oftenadapter.updateList(oftenTempList)
+    }
+
+    // 키보드를 숨기는 함수
+    fun hideKeyboard() {
+        val inputMethodManager = requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        val currentFocusView = view?.findFocus()
+
+        if (currentFocusView != null) {
+            inputMethodManager.hideSoftInputFromWindow(currentFocusView.windowToken, 0)
+        }
     }
 
     override fun onAttach(context: Context) {
