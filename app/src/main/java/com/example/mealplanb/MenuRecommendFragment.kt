@@ -142,11 +142,7 @@ class MenuRecommendFragment : Fragment(), OnFragmentInteractionListener, AddToRe
 
         adapter = MenuRecommendAdapter(requireContext(), menuRecommItems)
 
-        Handler().postDelayed(
-            { binding.menuRecommChatRv.scrollToPosition(adapter.getItemCount() - 1) },
-            100
-        )
-
+        Handler().postDelayed({ binding.menuRecommChatRv.scrollToPosition(adapter.getItemCount() - 1) }, 100)
     }
 
 }
