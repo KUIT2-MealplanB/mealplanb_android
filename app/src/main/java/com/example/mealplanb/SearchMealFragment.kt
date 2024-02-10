@@ -306,6 +306,9 @@ class SearchMealFragment : Fragment() {
             bottomSheetFragment.show(requireActivity().supportFragmentManager, bottomSheetFragment.tag)
         }
 
+//        binding.searchMealOutIv.setOnClickListener {
+//            requireActivity().supportFragmentManager.beginTransaction().replace(R.id.main_frm, HomeFragment()).commit()
+//        }
         return binding.root
     }
 
