@@ -241,7 +241,7 @@ class MenuRecommendCheatdayFragment : Fragment() {
         // 다른 초기화 작업 등을 수행할 수 있음
     }
 
-    // 변수 업데이트 함수ㅇㅇㅇ
+    // 변수 업데이트 함수ㅇㅇ ㅇ
     private fun updateVariables(item: Meal) {
         meal_name = item.meal_name
         sacc_gram = item.sacc_gram
