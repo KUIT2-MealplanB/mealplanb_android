@@ -6,7 +6,6 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Color
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import android.text.Editable
 import android.text.TextWatcher
@@ -15,8 +14,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
-import android.widget.EditText
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.Fragment
 import com.example.mealplanb.databinding.FragmentSearchMealBinding
 import com.google.gson.Gson
@@ -66,24 +63,9 @@ class SearchMealFragment : Fragment() {
         binding.searchMealAllRv.visibility = View.GONE
         binding.searchMealMyRv.visibility=View.GONE
 
-        //뒤로 가기 '<'버튼을 눌렀을 때
-        binding.searchMealBackIv.setOnClickListener {
-            binding.searchMealAllRv.visibility=View.GONE
-            binding.searchMealMyRv.visibility=View.GONE
-            binding.searchMealMyLl.visibility=View.VISIBLE
-
-            //검색창 hint
-            binding.searchMealInputEt.hint = "식사 이름을 입력해주세요."
-            binding.searchMealInputEt.setHintTextColor(Color.GRAY)
-
-            // 호출 시점에 hideKeyboard 함수를 호출하여 키보드를 숨깁니다.
-            hideKeyboard()
-
-            //검색 커서 깜빡임 제어
-            binding.searchMealInputEt.clearFocus()
-
-            //뒤로 가기 버튼 없어지기
-            binding.searchMealBackIv.visibility = View.INVISIBLE
+        //'X'버튼 눌렀을 때
+        binding.searchMealInitOutIv.setOnClickListener {
+            requireActivity().supportFragmentManager.beginTransaction().replace(R.id.main_frm, HomeFragment()).commit()
         }
 
         //자주먹는 버튼을 눌렀을 때
@@ -91,11 +73,11 @@ class SearchMealFragment : Fragment() {
 
             //없어지고 보이고
             binding.searchMealMyLl.visibility=View.GONE
-            binding.searchMealAllRv.visibility=View.GONE
-            binding.searchMealMyRv.visibility=View.VISIBLE
+            binding.searchMealAllRv.visibility = View.GONE
+            binding.searchMealMyRv.visibility = View.VISIBLE
 
             //뒤로 가기 버튼 등장
-            binding.searchMealBackIv.visibility = View.VISIBLE
+            binding.searchMealOutIv.visibility = View.VISIBLE
 
             //검색창 hint
             binding.searchMealInputEt.hint = "자주 먹는 식사"
@@ -112,23 +94,6 @@ class SearchMealFragment : Fragment() {
 
             Log.d("logcat",oftenFoodList.size.toString())
 
-            // mealList에 oftenFoodList의 데이터를 추가
-//            oftenFoodList?.let {
-//                //Toast.makeText(this, "add data", Toast.LENGTH_SHORT).show()
-//                for (Meal in oftenFoodList) {
-//                    mealList.add(
-//                        Meal(
-//                            Meal.meal_name,
-//                            Meal.meal_weight.toDouble(),
-//                            Meal.meal_cal.toDouble(),
-//                            Meal.sacc_gram.toDouble(),
-//                            Meal.protein_gram.toDouble(),
-//                            Meal.fat_gram.toDouble()
-//                        )
-//                    )
-//                }
-//            }
-
             oftenadapter = SearchCategoryAdapter(oftenFoodList) { item->
                 val editor = sharedPreferences.edit()
                 var newJson = gson.toJson(item)
@@ -139,24 +104,48 @@ class SearchMealFragment : Fragment() {
                 binding.searchMealInputEt.clearFocus()
             }
 
+
             //즐겨찾기에 추가한 데이터를 관리하는 리사이클러뷰
             binding.searchMealMyRv.adapter = oftenadapter
             binding.searchMealMyRv.layoutManager = LinearLayoutManager(requireContext())
 
             // 버튼이 눌린 것을 저장
             lastClickedButton = "btnOften"
+
+            //'X'버튼 눌리면
+            binding.searchMealOutIv.setOnClickListener {
+                binding.searchMealAllRv.visibility = View.GONE
+                binding.searchMealMyRv.visibility = View.GONE
+                binding.searchMealMyLl.visibility = View.VISIBLE
+
+                //검색창 hint
+                binding.searchMealInputEt.hint = "식사 이름을 입력해주세요."
+                binding.searchMealInputEt.setHintTextColor(Color.GRAY)
+
+                // 호출 시점에 hideKeyboard 함수를 호출하여 키보드를 숨깁니다.
+                hideKeyboard()
+
+                //검색 커서 깜빡임 제어
+                binding.searchMealInputEt.clearFocus()
+
+                lastClickedButton = " "
+
+            }
         }
 
         //내가만든 버튼을 눌렀을 때
         binding.searchMealBtnMadeLl.setOnClickListener{
 
+            // 버튼이 눌린 것을 저장
+            lastClickedButton = "btnMade"
+
             //뒤로 가기 버튼 등장
-            binding.searchMealBackIv.visibility = View.VISIBLE
+            binding.searchMealOutIv.visibility = View.VISIBLE
+            binding.searchMealAllRv.visibility = View.GONE
+            binding.searchMealMyRv.visibility = View.VISIBLE
 
             //없어지고 보이고
             binding.searchMealMyLl.visibility=View.GONE
-            binding.searchMealAllRv.visibility=View.GONE
-            binding.searchMealMyRv.visibility=View.VISIBLE
 
             //검색창 hint
             binding.searchMealInputEt.hint = "내가 만든 식사"
@@ -173,22 +162,6 @@ class SearchMealFragment : Fragment() {
 
             Log.d("logcat",myMadeList.size.toString())
 
-//            myMadeList?.let {
-//                //Toast.makeText(this, "add data", Toast.LENGTH_SHORT).show()
-//                for (Meal in myMadeList) {
-//                    mealList.add(
-//                        Meal(
-//                            Meal.meal_name,
-//                            Meal.meal_weight.toDouble(),
-//                            Meal.meal_cal.toDouble(),
-//                            Meal.sacc_gram.toDouble(),
-//                            Meal.protein_gram.toDouble(),
-//                            Meal.fat_gram.toDouble()
-//                        )
-//                    )
-//                }
-//            }
-
             oftenadapter = SearchCategoryAdapter(myMadeList) { item->
                 val editor = sharedPreferences.edit()
                 var newJson = gson.toJson(item)
@@ -203,9 +176,42 @@ class SearchMealFragment : Fragment() {
             binding.searchMealMyRv.adapter = oftenadapter
             binding.searchMealMyRv.layoutManager = LinearLayoutManager(requireContext())
 
-            // 버튼이 눌린 것을 저장
-            lastClickedButton = "btnMade"
+            //'X'버튼 눌리면
+            binding.searchMealOutIv.setOnClickListener {
+                binding.searchMealAllRv.visibility = View.GONE
+                binding.searchMealMyRv.visibility = View.GONE
+                binding.searchMealMyLl.visibility = View.VISIBLE
+
+                //검색창 hint
+                binding.searchMealInputEt.hint = "식사 이름을 입력해주세요."
+                binding.searchMealInputEt.setHintTextColor(Color.GRAY)
+
+                // 호출 시점에 hideKeyboard 함수를 호출하여 키보드를 숨깁니다.
+                hideKeyboard()
+
+                //검색 커서 깜빡임 제어
+                binding.searchMealInputEt.clearFocus()
+
+                lastClickedButton = " "
+
+            }
         }
+
+        oftenadapter = SearchCategoryAdapter(mealList) { item->
+            val sharedPreferences = requireActivity().getSharedPreferences("myPreferences", Context.MODE_PRIVATE)
+            val gson = Gson()
+            val editor = sharedPreferences.edit()
+            var newJson = gson.toJson(item)
+            editor.putString("Key",newJson)
+            editor.apply()
+            requireActivity().supportFragmentManager.beginTransaction().replace(R.id.main_frm, FoodDetailFragment()).commit()
+            requireActivity().overridePendingTransition(androidx.appcompat.R.anim.abc_slide_in_bottom, androidx.appcompat.R.anim.abc_slide_out_top)
+            binding.searchMealInputEt.clearFocus()
+        }
+
+        //즐겨찾기에 추가한 데이터를 관리하는 리사이클러뷰
+        binding.searchMealMyRv.adapter = oftenadapter
+        binding.searchMealMyRv.layoutManager = LinearLayoutManager(requireContext())
 
         // RecyclerView 설정
         adapter = SearchMealAdapter(items) { item->
@@ -223,21 +229,7 @@ class SearchMealFragment : Fragment() {
         binding.searchMealAllRv.layoutManager = LinearLayoutManager(requireContext())
         binding.searchMealAllRv.adapter = adapter
 
-        oftenadapter = SearchCategoryAdapter(mealList) { item->
-            val sharedPreferences = requireActivity().getSharedPreferences("myPreferences", Context.MODE_PRIVATE)
-            val gson = Gson()
-            val editor = sharedPreferences.edit()
-            var newJson = gson.toJson(item)
-            editor.putString("Key",newJson)
-            editor.apply()
-            requireActivity().supportFragmentManager.beginTransaction().replace(R.id.main_frm, FoodDetailFragment()).commit()
-            requireActivity().overridePendingTransition(androidx.appcompat.R.anim.abc_slide_in_bottom, androidx.appcompat.R.anim.abc_slide_out_top)
-            binding.searchMealInputEt.clearFocus()
-        }
 
-        //즐겨찾기에 추가한 데이터를 관리하는 리사이클러뷰
-        binding.searchMealMyRv.adapter = oftenadapter
-        binding.searchMealMyRv.layoutManager = LinearLayoutManager(requireContext())
 
         Log.d("logcat",oftenadapter.itemCount.toString()+"!"+mealList.size.toString())
 
@@ -261,22 +253,34 @@ class SearchMealFragment : Fragment() {
         //검색창 누르면 linearlayout 숨기기, recyclerview 보이기 + 반대
         binding.searchMealInputEt.setOnFocusChangeListener { _, hasFocus ->
 
-            //뒤로 가기 버튼 등장
-            binding.searchMealBackIv.visibility = View.VISIBLE
+            binding.searchMealOutIv.visibility = View.VISIBLE
 
             if (hasFocus) {
                 binding.searchMealMyLl.visibility = View.GONE
-                //binding.searchMealFreeInputLl.visibility = View.GONE
+                binding.searchMealOutIv.setOnClickListener {
+                    binding.searchMealAllRv.visibility = View.GONE
+                    binding.searchMealMyRv.visibility = View.GONE
+                    binding.searchMealMyLl.visibility = View.VISIBLE
+
+                    //검색창 hint
+                    binding.searchMealInputEt.hint = "식사 이름을 입력해주세요."
+                    binding.searchMealInputEt.setHintTextColor(Color.GRAY)
+
+                    // 호출 시점에 hideKeyboard 함수를 호출하여 키보드를 숨깁니다.
+                    hideKeyboard()
+
+                    //검색 커서 깜빡임 제어
+                    binding.searchMealInputEt.clearFocus()
+
+                }
 
                 // 마지막으로 눌린 버튼에 따라 보여줄 뷰를 결정
                 when (lastClickedButton) {
                     "btnOften" -> {
-                        binding.searchMealAllRv.visibility = View.GONE
-                        binding.searchMealMyRv.visibility = View.VISIBLE
+
                     }
                     "btnMade" -> {
-                        binding.searchMealAllRv.visibility = View.GONE
-                        binding.searchMealMyRv.visibility = View.VISIBLE
+
                     }
                     else -> {
                         binding.searchMealAllRv.visibility = View.VISIBLE
@@ -287,6 +291,11 @@ class SearchMealFragment : Fragment() {
                 binding.searchMealMyLl.visibility = View.VISIBLE
                 binding.searchMealAllRv.visibility = View.GONE
                 binding.searchMealMyRv.visibility = View.GONE
+
+                binding.searchMealOutIv.setOnClickListener {
+                    requireActivity().supportFragmentManager.beginTransaction().replace(R.id.main_frm, HomeFragment()).commit()
+                }
+
             }
         }
 
@@ -297,9 +306,9 @@ class SearchMealFragment : Fragment() {
             bottomSheetFragment.show(requireActivity().supportFragmentManager, bottomSheetFragment.tag)
         }
 
-        binding.searchMealOutIv.setOnClickListener {
-            requireActivity().supportFragmentManager.beginTransaction().replace(R.id.main_frm, HomeFragment()).commit()
-        }
+//        binding.searchMealOutIv.setOnClickListener {
+//            requireActivity().supportFragmentManager.beginTransaction().replace(R.id.main_frm, HomeFragment()).commit()
+//        }
         return binding.root
     }
 
