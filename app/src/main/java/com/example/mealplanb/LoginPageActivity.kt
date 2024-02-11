@@ -63,7 +63,7 @@ class LoginPageActivity : AppCompatActivity() {
         }
 
         binding.loginAccountMakeTv.setOnClickListener {
-            val intent = Intent(this, PrivacyCollectActivity::class.java)
+            val intent = Intent(this, JoinMemberActivity::class.java)
             startActivity(intent)
         }
     }
