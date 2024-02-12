@@ -2,14 +2,16 @@ package com.example.mealplanb.local
 
 import com.example.mealplanb.ApplicationClass
 
-fun getJwt() : String {
-
+fun getJwt() : String? {
+    return ApplicationClass.mSharedPreferences.getString("token",null)
 }
 
 
-fun removeJwt()
+fun removeJwt() {
+    ApplicationClass.mSharedPreferences.edit().clear().apply()
+}
 
 
-fun saveJwt() {
-    ApplicationClass.mSharedPreferences.edit().putString()
+fun saveJwt(token: String) {
+    ApplicationClass.mSharedPreferences.edit().putString("token",token).apply()
 }
