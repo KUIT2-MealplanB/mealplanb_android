@@ -8,27 +8,25 @@
     tools:context=".SearchMealFragment">
 
     <ImageView
+        android:id="@+id/search_meal_init_out_iv"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:src="@drawable/cancel_ic"
+        android:layout_marginTop="47dp"
+        android:layout_marginStart="29dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageView
         android:id="@+id/search_meal_out_iv"
         android:layout_width="24dp"
         android:layout_height="24dp"
         android:src="@drawable/cancel_ic"
         android:layout_marginTop="47dp"
-        android:layout_marginStart="20dp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginEnd="25dp" />
-
-    <ImageView
-        android:id="@+id/search_meal_back_iv"
-        android:layout_width="12dp"
-        android:layout_height="24dp"
-        android:src="@drawable/back_ic"
-        android:layout_marginTop="47dp"
         android:layout_marginStart="29dp"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         android:visibility="invisible"
-        />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/search_meal_title_tv"

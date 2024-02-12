@@ -14,8 +14,10 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.example.mealplanb.databinding.ActivityStartAvatarBinding
+import com.example.mealplanb.remote.AuthService
+import com.example.mealplanb.remote.SignupView
 
-class StartAvatarActivity : AppCompatActivity() {
+class StartAvatarActivity : AppCompatActivity(), SignupView {
     private lateinit var binding : ActivityStartAvatarBinding
     private var avatarImageID : Int = 3
     private var isFirstClick = true
@@ -133,6 +135,10 @@ class StartAvatarActivity : AppCompatActivity() {
             } else { // 두 번째 클릭인 경우
                 if(binding.startAvatarEt.text.isNotEmpty()) { // EditText에 값이 입력되었는지 확인
 
+                    val authService = AuthService()
+                    authService.setSignupView(this)
+//                    authService.signup() //엄청 많은 파라미터들 넣어야함
+
                     val editor = sharedPref.edit()
                     editor.putInt("avatar",avatarImageID)
                     editor.apply()
@@ -189,6 +195,18 @@ class StartAvatarActivity : AppCompatActivity() {
             false
         }
 
+    }
+
+    override fun SignupLoading() {
+        //회원가입 로딩 로직은 딱히 없음
+    }
+
+    override fun SignupSuccess() {
+        Toast.makeText(this,"회원가입에 성공했습니다.",Toast.LENGTH_SHORT).show()
+    }
+
+    override fun SignupFailure(code: Int, msg: String) {
+        Toast.makeText(this,msg,Toast.LENGTH_SHORT).show()
     }
 
 }
