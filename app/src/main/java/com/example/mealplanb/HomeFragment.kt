@@ -160,6 +160,11 @@ class HomeFragment : Fragment(), DatePickerDialog.OnDateSetListener {
             binding.todayWeightIv2.startAnimation(rotateAnimOp)
         }
 
+        binding.mainAlarmIv.setOnClickListener {
+            val intent = Intent(requireContext(), AlarmActivity::class.java)
+            startActivity(intent)
+        }
+
         return binding.root
     }
 
