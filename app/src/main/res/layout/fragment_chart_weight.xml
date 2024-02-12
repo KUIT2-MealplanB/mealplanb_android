@@ -63,7 +63,18 @@
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@id/chart_weight_goal_title_tv"
             app:layout_constraintStart_toEndOf="@id/chart_weight_goal_content1_tv"
-            android:text="5kg 감량"
+            android:text="5"
+            android:textSize="20sp"
+            android:textColor="@color/point"
+            android:fontFamily="@font/pretendard_bold"/>
+
+        <TextView
+            android:id="@+id/chart_weight_goal_weight_tv2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/chart_weight_goal_title_tv"
+            app:layout_constraintStart_toEndOf="@id/chart_weight_goal_weight_tv"
+            android:text="kg 감량"
             android:textSize="20sp"
             android:textColor="@color/point"
             android:fontFamily="@font/pretendard_bold"/>
@@ -73,7 +84,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="@id/chart_weight_goal_diet_tv"
-            app:layout_constraintStart_toEndOf="@id/chart_weight_goal_weight_tv"
+            app:layout_constraintStart_toEndOf="@id/chart_weight_goal_weight_tv2"
             android:text="할거에요"
             android:textSize="16sp"
             android:textColor="@color/mono_black"

@@ -1,5 +1,6 @@
 package com.example.mealplanb
 
+import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -13,11 +14,23 @@ import com.google.android.material.tabs.TabLayoutMediator
 class ChartWeightFragment : Fragment() {
     lateinit var binding : FragmentChartWeightBinding
     private val items = arrayOf<String>("일간","주간","월간")
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
+
     ): View? {
         binding = FragmentChartWeightBinding.inflate(layoutInflater)
+
+        //목표 체중 설정
+        val sharedPref = activity?.getSharedPreferences("myPref", Context.MODE_PRIVATE)
+        val diffWeight = sharedPref?.getFloat("diffWeight", 0.0f) ?: 0.0f
+        binding.chartWeightGoalWeightTv.text = diffWeight.toString()
+
+        // 목표 식단 설정
+        val selectedDiet = sharedPref?.getString("selectedDiet", "키토 식단") ?: "Default Diet"
+        binding.chartWeightGoalDietTv.text = selectedDiet.toString()
+
 
         //체중 버튼을 누르면
         binding.chartWeightBtnweightLl.setOnClickListener {
@@ -73,4 +86,5 @@ class ChartWeightFragment : Fragment() {
             tab.text = items[position]
         }.attach()
     }
+
 }
