@@ -163,6 +163,11 @@ class HomeFragment : Fragment(), DatePickerDialog.OnDateSetListener, SignupView 
         authService.weightcheck()
 
 
+        binding.mainAlarmIv.setOnClickListener {
+            val intent = Intent(requireContext(), AlarmActivity::class.java)
+            startActivity(intent)
+        }
+
         return binding.root
     }
 
