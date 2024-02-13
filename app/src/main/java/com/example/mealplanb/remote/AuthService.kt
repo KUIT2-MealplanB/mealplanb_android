@@ -10,6 +10,8 @@ import com.example.mealplanb.ApplicationClass.Companion.mSharedPreferences
 import com.example.mealplanb.MainActivity
 import com.example.mealplanb.local.getJwt
 import com.example.mealplanb.local.saveJwt
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -42,8 +44,17 @@ class AuthService(private val context: Context) {
 
                 } else {
                     // 서버에서는 응답을 했지만, 로그인 실패와 같은 이유로 성공적인 응답이 아닌 경우, Toast 메시지
-                    Toast.makeText(context, "로그인 실패", Toast.LENGTH_SHORT).show()
-                    Log.d("로그인 실패 정보",response.body().toString())
+                    val gson = Gson()
+                    val type = object : TypeToken<BaseResponse<LoginResponse>>() {}.type
+                    val errorResponse: BaseResponse<LoginResponse>? = gson.fromJson(response.errorBody()?.charStream(), type)
+                    Log.d("로그인 실패 정보", errorResponse.toString())
+
+                    if(errorResponse?.code.toString() == "5006"){
+                        Toast.makeText(context, "존재하지 않는 이메일입니다.", Toast.LENGTH_SHORT).show()
+                    }else{
+                        Toast.makeText(context, "비밀번호가 일치하지 않습니다.", Toast.LENGTH_SHORT).show()
+                    }
+                    Log.d("로그인 실패 코드",errorResponse?.code.toString())
                 }
             }
 
