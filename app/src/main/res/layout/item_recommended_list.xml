@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingBottom="23dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_margin="6dp">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/btn_menu_recommand_system"
+            android:layout_margin="3dp">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/item_recomm_list_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:maxWidth="250dp"
+                    android:layout_gravity="center"
+                    android:text="2023.12.4 월요일"
+                    android:fontFamily="@font/pretendard_medium"
+                    android:textColor="@color/white"
+                    android:textSize="16sp"/>
+                
+                <androidx.cardview.widget.CardView
+                    android:layout_width="209dp"
+                    android:layout_height="32dp"
+                    android:layout_marginTop="12dp"
+                    app:cardCornerRadius="100dp">
+
+                    <TextView
+                        android:id="@+id/item_recomm_list_menu"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:maxWidth="250dp"
+                        android:layout_gravity="center"
+                        android:text="첫 끼 : 연어초밥"
+                        android:fontFamily="@font/pretendard_bold"
+                        android:textColor="@color/point"
+                        android:textSize="20sp"/>
+
+                </androidx.cardview.widget.CardView>
+
+                <LinearLayout
+                    android:layout_width="209dp"
+                    android:layout_height="68dp"
+                    android:layout_marginTop="8dp">
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:layout_marginHorizontal="3dp"
+                        app:cardCornerRadius="20dp"
+                        app:cardBackgroundColor="@color/point_light">
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                android:layout_marginTop="8dp"
+                                android:text="탄"
+                                android:textSize="16sp"
+                                android:textColor="@color/white"
+                                android:fontFamily="@font/pretendard_medium"/>
+
+                            <TextView
+                                android:id="@+id/item_recomm_list_sacc"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                android:layout_marginBottom="10dp"
+                                android:text="550g"
+                                android:textSize="16sp"
+                                android:textColor="@color/white"
+                                android:fontFamily="@font/pretendard_bold"/>
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    </androidx.cardview.widget.CardView>
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:layout_marginHorizontal="3dp"
+                        app:cardCornerRadius="20dp"
+                        app:cardBackgroundColor="@color/point_light">
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                android:layout_marginTop="8dp"
+                                android:text="단"
+                                android:textSize="16sp"
+                                android:textColor="@color/white"
+                                android:fontFamily="@font/pretendard_medium"/>
+
+                            <TextView
+                                android:id="@+id/item_recomm_list_protein"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                android:layout_marginBottom="10dp"
+                                android:text="550g"
+                                android:textSize="16sp"
+                                android:textColor="@color/white"
+                                android:fontFamily="@font/pretendard_bold"/>
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    </androidx.cardview.widget.CardView>
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:layout_marginHorizontal="3dp"
+                        app:cardCornerRadius="20dp"
+                        app:cardBackgroundColor="@color/point_light">
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                android:layout_marginTop="8dp"
+                                android:text="지"
+                                android:textSize="16sp"
+                                android:textColor="@color/white"
+                                android:fontFamily="@font/pretendard_medium"/>
+
+                            <TextView
+                                android:id="@+id/item_recomm_list_fat"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                android:layout_marginBottom="10dp"
+                                android:text="550g"
+                                android:textSize="16sp"
+                                android:textColor="@color/white"
+                                android:fontFamily="@font/pretendard_bold"/>
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    </androidx.cardview.widget.CardView>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

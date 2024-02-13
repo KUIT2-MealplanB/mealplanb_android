@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="82dp"
+
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <TextView
+        android:id="@+id/item_meallist_title_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="23dp"
+        android:text="크림파스타"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:fontFamily="@font/pretendard_bold"/>
+
+    <TextView
+        android:id="@+id/item_meallist_subtitle_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/item_meallist_title_tv"
+        app:layout_constraintStart_toStartOf="@id/item_meallist_title_tv"
+        android:text="100g · 365kcal"
+        android:textColor="@color/mono_gray4"/>
+
+    <TextView
+        android:id="@+id/item_meallist_delbtn_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="@id/item_meallist_title_tv"
+        app:layout_constraintBottom_toBottomOf="@id/item_meallist_subtitle_tv"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginEnd="32dp"
+        android:text="+"
+        android:textColor="@color/black"
+        android:textSize="16sp"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/mono_gray2"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
