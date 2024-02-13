@@ -39,6 +39,13 @@ class JoinMemberActivity : AppCompatActivity() {
                         if(binding.joinMemberPwEt.text.toString() != binding.joinMemberPwCheckEt.text.toString()) {
                             binding.joinMemberPwIncorrectTv.visibility = View.VISIBLE
                         } else {
+                            val sharedPreferences = getSharedPreferences("myPreferences", Context.MODE_PRIVATE)
+                            val editor = sharedPreferences.edit()
+                            editor.putString("userID",binding.joinMemberIdEt.text.toString())
+                            editor.putString("userPW",binding.joinMemberPwEt.text.toString())
+                            editor.putString("userEmail",binding.joinMemberEmailEt.text.toString())
+                            editor.apply()
+
                             val intent = Intent(this@JoinMemberActivity, PrivacyCollectActivity::class.java)
                             startActivity(intent)
                         }

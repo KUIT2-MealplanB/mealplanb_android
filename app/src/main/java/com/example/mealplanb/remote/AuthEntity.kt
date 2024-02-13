@@ -6,7 +6,6 @@ data class SignupRequest(
     //키 값 지정
     @SerializedName("email") val email : String,
     @SerializedName("password") val password : String,
-    @SerializedName("provider") val provider : String,
     @SerializedName("sex") val sex : String,
     @SerializedName("age") val age : Int,
     @SerializedName("height") val height : Int,

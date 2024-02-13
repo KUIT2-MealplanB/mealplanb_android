@@ -38,10 +38,20 @@ class RecommendCategoryActivity : AppCompatActivity() {
         //다음 버튼
         binding.privacyCompleteCv.setOnClickListener {
             if (selectedCategory != null) {
+                var selectedCategoryString : String
+                when(selectedCategoryNumber) {
+                    1 -> selectedCategoryString = "일반"
+                    2 -> selectedCategoryString = "운동"
+                    3 -> selectedCategoryString = "키토"
+                    4 -> selectedCategoryString = "비건"
+                    else -> selectedCategoryString = "당뇨"
+                }
+
                 // 카테고리 번호를 SharedPreferences에 저장
                 val sharedPref = getSharedPreferences("myPreferences", Context.MODE_PRIVATE)
                 val editor = sharedPref.edit()
                 editor.putInt("selectedCategory", selectedCategoryNumber)
+                editor.putString("userSelectedCategory",selectedCategoryString)
                 editor.apply()
 
                 val intent = Intent(this, StartAvatarActivity::class.java)

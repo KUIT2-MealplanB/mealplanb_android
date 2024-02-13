@@ -16,6 +16,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mealplanb.databinding.FragmentHomeBinding
+import com.example.mealplanb.local.getJwt
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import java.util.Calendar
@@ -135,6 +136,9 @@ class HomeFragment : Fragment(), DatePickerDialog.OnDateSetListener {
 //        binding.mainMeallistRv.layoutManager = LinearLayoutManager(requireContext(),LinearLayoutManager.HORIZONTAL,false)
 //        adapter = DayMealAdapter(dayMealList,requireContext())
 //        binding.mainMeallistRv.adapter = adapter
+
+//        val token = getJwt()
+//        token?.let { Log.d("logcat", it) }
 
         //캐릭터 tab하면 상세 영양소 페이지로 연결
         binding.mainCharacterIv.setOnClickListener{
