@@ -47,6 +47,8 @@ dependencies {
     implementation("androidx.annotation:annotation:1.6.0")
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.6.2")
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2")
+    implementation("androidx.navigation:navigation-fragment-ktx:2.7.7")
+    implementation("androidx.navigation:navigation-ui-ktx:2.7.7")
     testImplementation("junit:junit:4.13.2")
     implementation("com.google.code.gson:gson:2.8.8") //app 모듈의 build.gradle에 추가
     implementation ("com.google.android.material:material:1.4.0") //bottomsheetdialog

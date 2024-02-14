@@ -179,11 +179,20 @@ class PrivacyCollectActivity : AppCompatActivity() {
                 if(checkConditions()) {
                     val startWeight = privacyStartWeightEt.text.toString().toFloat()
                     val wantWeight = privacyWantWeightEt.text.toString().toFloat()
+                    val age = privacyAgeEt.text.toString().toInt()
+                    val height = privacyHeightEt.text.toString().toInt()
                     val sharedPref = getSharedPreferences("myPreferences", Context.MODE_PRIVATE)
                     val editor = sharedPref.edit()
+                    if (manSelected) {
+                        editor.putString("userSex","M")
+                    } else {
+                        editor.putString("userSex","F")
+                    }
+                    editor.putInt("userAge",age)
+                    editor.putInt("userHeight",height)
                     editor.putFloat("startWeight", startWeight)
                     editor.putFloat("wantWeight", wantWeight)
-                    editor.commit()
+                    editor.apply()
 
                     val intent = Intent(this@PrivacyCollectActivity, RecommendCategoryActivity::class.java)
                     startActivity(intent)

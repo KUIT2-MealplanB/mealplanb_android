@@ -191,7 +191,7 @@ class MenuRecommendCheatdayFragment : Fragment() {
             editor.putInt("recommendMenuFat",fat_gram.toInt())
 
             val gson = Gson()
-            var newJson = gson.toJson(MealMainInfo(true,1, meal_cal,R.drawable.item_hamburger_img))
+            var newJson = gson.toJson(MealMainInfo(true,1, meal_cal,R.drawable.item_hamburger_img, "", 0.0))
             editor.putString("MealMainInfo",newJson)
             editor.apply()
 

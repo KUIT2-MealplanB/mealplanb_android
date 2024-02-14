@@ -10,6 +10,7 @@ import android.text.TextWatcher
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import com.example.mealplanb.databinding.ActivityLoginPageBinding
+import com.example.mealplanb.databinding.ActivityPrivacyCollectBinding
 
 class LoginPageActivity : AppCompatActivity() {
     lateinit var binding : ActivityLoginPageBinding
@@ -63,7 +64,7 @@ class LoginPageActivity : AppCompatActivity() {
         }
 
         binding.loginAccountMakeTv.setOnClickListener {
-            val intent = Intent(this, PrivacyCollectActivity::class.java)
+            val intent = Intent(this, JoinMemberActivity::class.java)
             startActivity(intent)
         }
     }

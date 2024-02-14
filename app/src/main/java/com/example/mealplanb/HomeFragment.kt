@@ -16,13 +16,22 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mealplanb.databinding.FragmentHomeBinding
+import com.example.mealplanb.local.getJwt
+import com.example.mealplanb.remote.AuthService
+import com.example.mealplanb.remote.SignupView
+import com.example.mealplanb.remote.WeightCheckResponse
 import com.google.gson.Gson
+import com.google.gson.JsonParser
 import com.google.gson.reflect.TypeToken
+import java.text.ParseException
+import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
+import java.util.Locale
 import java.util.concurrent.TimeUnit
+import kotlin.math.log
 
-class HomeFragment : Fragment(), DatePickerDialog.OnDateSetListener {
+class HomeFragment : Fragment(), DatePickerDialog.OnDateSetListener, SignupView {
     lateinit var binding : FragmentHomeBinding
     lateinit var dayMealList : ArrayList<MealMainInfo>
     private var adapter : DayMealAdapter? = null
@@ -37,6 +46,14 @@ class HomeFragment : Fragment(), DatePickerDialog.OnDateSetListener {
     private var proteinToday : Int? = null
     private var fatToday : Int? = null
 
+    //API 데이터 확인
+    private var weight_check_date : String? = null
+    private var weight_check_kg : Float? = null
+
+    // 날짜와 체중 데이터를 저장할 맵
+    private val weightDataMap: MutableMap<String, Float> = mutableMapOf()
+
+
     override fun onResume() {
         super.onResume()
 
@@ -49,7 +66,7 @@ class HomeFragment : Fragment(), DatePickerDialog.OnDateSetListener {
         val gson = Gson()
         var json = sharedPref.getString("dayMealList",null)
         dayMealList = gson.fromJson(json,object : TypeToken<ArrayList<MealMainInfo>>() {}.type) ?: arrayListOf(
-            MealMainInfo(false,1,0.0,0)
+            MealMainInfo(false,1,0.0,0,"", 0.0)
         )
 
         binding.mainMeallistRv.layoutManager = LinearLayoutManager(requireContext(),LinearLayoutManager.HORIZONTAL,false)
@@ -73,7 +90,7 @@ class HomeFragment : Fragment(), DatePickerDialog.OnDateSetListener {
         //끼니 slot 추가
         binding.mainDaymealAddCv.setOnClickListener {
             if(dayMealList.size < 10) {
-                dayMealList.add(MealMainInfo(false,dayMealList.size+1,0.0,R.drawable.item_hamburger_img))
+                dayMealList.add(MealMainInfo(false,dayMealList.size+1,0.0,R.drawable.item_hamburger_img,"", 0.0))
                 var newItemIdx = dayMealList.size-1
                 adapter?.notifyItemInserted(newItemIdx)
 
@@ -98,6 +115,7 @@ class HomeFragment : Fragment(), DatePickerDialog.OnDateSetListener {
 
             val datePickerDialog = DatePickerDialog(requireContext(),this,year,month,dayOfMonth)
             datePickerDialog.show()
+
         }
         //전 날로 이동
         binding.mainArrowLeftIv.setOnClickListener {
@@ -119,22 +137,7 @@ class HomeFragment : Fragment(), DatePickerDialog.OnDateSetListener {
         dayMealList = arrayListOf()
         dayMealList.addAll(
             arrayListOf(
-                MealMainInfo(false,1,0.0,R.drawable.item_hamburger_img)))
-
-        //binding.mainCharacterIv.bringToFront()
-
-//        val sharedPreferences = requireActivity().getSharedPreferences("MySharedPrefs", AppCompatActivity.MODE_PRIVATE)
-//        val gson = Gson()
-//        val json = sharedPreferences.getString("MealMainInfo",null)
-//        val data: MealMainInfo = gson.fromJson(json, object : TypeToken<MealMainInfo>() {}.type) ?: MealMainInfo(false,-1,0.0,0)
-//
-//        if(data.meal_active) {
-//            dayMealList.set(data.meal_no-1,MealMainInfo(data.meal_active,data.meal_no,data.total_cal,data.meal_img))
-//        }
-//
-//        binding.mainMeallistRv.layoutManager = LinearLayoutManager(requireContext(),LinearLayoutManager.HORIZONTAL,false)
-//        adapter = DayMealAdapter(dayMealList,requireContext())
-//        binding.mainMeallistRv.adapter = adapter
+                MealMainInfo(false,1,0.0,R.drawable.item_hamburger_img,"", 0.0)))
 
         //캐릭터 tab하면 상세 영양소 페이지로 연결
         binding.mainCharacterIv.setOnClickListener{
@@ -147,10 +150,10 @@ class HomeFragment : Fragment(), DatePickerDialog.OnDateSetListener {
             startActivity(intent)
         }
 
-        //오늘의 체중 정보
-        val sharedPref = activity?.getSharedPreferences("myPreferences", Context.MODE_PRIVATE)
-        val todayweight = sharedPref?.getFloat("startWeight",0.0f)
-        binding.mainWeightTv.text="$todayweight"
+//        //오늘의 체중 정보
+//        val sharedPref = activity?.getSharedPreferences("myPreferences", Context.MODE_PRIVATE)
+//        val todayweight = sharedPref?.getFloat("startWeight",0.0f)
+//        binding.mainWeightTv.text="$todayweight"
 
         //오늘의 무게 클릭했을 때 돌아가는 애니메이션
         binding.mainDayweightContentCv.setOnClickListener {
@@ -160,10 +163,11 @@ class HomeFragment : Fragment(), DatePickerDialog.OnDateSetListener {
             binding.todayWeightIv2.startAnimation(rotateAnimOp)
         }
 
-        binding.mainAlarmIv.setOnClickListener {
-            val intent = Intent(requireContext(), AlarmActivity::class.java)
-            startActivity(intent)
-        }
+        //API관련
+        val authService = AuthService()
+        authService.setSignupView(this)
+        authService.weightcheck()
+
 
         return binding.root
     }
@@ -193,12 +197,14 @@ class HomeFragment : Fragment(), DatePickerDialog.OnDateSetListener {
     }
 
     fun setHomeData() {
-        setDayText()
+        binding.mainDateTv.text = setDayText()
         setProgress()
         setNutData()
+        // 체중 UI 업데이트
+        updateWeightOnSelectedDate()
     }
 
-    fun setDayText() {
+    fun setDayText(): String {
         val selectedMonth = cal.get(Calendar.MONTH) + 1
         val selectedDay = cal.get(Calendar.DAY_OF_MONTH)
         val dayOfWeek = when(cal.get(Calendar.DAY_OF_WEEK)) {
@@ -211,7 +217,7 @@ class HomeFragment : Fragment(), DatePickerDialog.OnDateSetListener {
             Calendar.SATURDAY -> "토"
             else -> ""
         }
-        binding.mainDateTv.text = selectedMonth.toString() + ". " + selectedDay.toString() + ". " + dayOfWeek
+        return "${String.format("%02d", selectedMonth)}. ${String.format("%02d", selectedDay)}. $dayOfWeek"
     }
 
     fun setNutData() {
@@ -257,5 +263,47 @@ class HomeFragment : Fragment(), DatePickerDialog.OnDateSetListener {
         editor.putInt("goalCal",goalCal!!)
         editor.putInt("nowCal",nowCal!!)
         editor.apply()
+    }
+
+    override fun SignupLoading() {
+    }
+
+    override fun SignupSuccess() {
+    }
+
+    override fun WeightcheckSuccess(weight: Float, date: String) {
+
+        // 날짜와 체중을 맵에 저장
+        weightDataMap[setDayText()] = weight
+        Log.d("받은 weight", weight.toString())
+        Log.d("받은 날짜", setDayText())
+
+    }
+
+    // 선택한 날짜에 대한 체중 정보를 UI에 업데이트하는 함수
+    private fun updateWeightOnSelectedDate() {
+        // UI에 표시할 날짜를 가져옴
+        val selectDay = setDayText()
+        Log.d("선택한 날짜", selectDay)
+
+        // 선택한 날짜에 해당하는 체중을 맵에서 찾음
+        val weightForSelectedDate = weightDataMap[selectDay]
+        Log.d("찾은 weight", weightForSelectedDate.toString())
+
+        // 찾은 체중이 null이 아니라면 UI에 업데이트
+        weightForSelectedDate?.let {
+            binding.mainWeightTv.text = it.toString()
+        } ?: run {
+            // null이면 toast 메시지 표시
+            Toast.makeText(requireContext(), "데이터가 없습니다.", Toast.LENGTH_SHORT).show()
+
+            // 오늘의 체중 정보를 가져와서 UI에 표시
+            val sharedPref = activity?.getSharedPreferences("myPreferences", Context.MODE_PRIVATE)
+            val todayWeight = sharedPref?.getFloat("startWeight", 0.0f)
+            binding.mainWeightTv.text = todayWeight.toString()
+        }
+    }
+    override fun SignupFailure(code: Int, msg: String) {
+        Toast.makeText(requireContext(),"weight정보를 받아오는데 실패했습니다.",Toast.LENGTH_SHORT).show()
     }
 }
