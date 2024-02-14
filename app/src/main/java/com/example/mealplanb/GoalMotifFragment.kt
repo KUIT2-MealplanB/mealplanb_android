@@ -78,7 +78,7 @@ class GoalMotifFragment : Fragment() {
                 // 선택된 값에 대한 처리
 
                 // 변경된 카테고리 번호를 SharedPreferences에 저장
-                val sharedPref = activity?.getSharedPreferences("myPref", Context.MODE_PRIVATE)
+                val sharedPref = activity?.getSharedPreferences("myPreferences", Context.MODE_PRIVATE)
                 val editor = sharedPref?.edit()
                 editor?.putInt("selectedCategory", position+1)
                 editor?.apply()
@@ -97,7 +97,7 @@ class GoalMotifFragment : Fragment() {
             val startWeightInput = binding.goalMotifStartWeightEt.text.toString().toFloatOrNull()
             val wantWeightInput = binding.goalMotifWantWeightEt.text.toString().toFloatOrNull()
 
-            val sharedPref = activity?.getSharedPreferences("myPref", Context.MODE_PRIVATE)
+            val sharedPref = activity?.getSharedPreferences("myPreferences", Context.MODE_PRIVATE)
             val editor = sharedPref?.edit()
 
             if (startWeightInput != null) {
