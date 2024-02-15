@@ -300,7 +300,7 @@ class HomeFragment : Fragment(), DatePickerDialog.OnDateSetListener, SignupView 
             binding.mainWeightTv.text = it.toString()
         } ?: run {
             // null이면 toast 메시지 표시
-            Toast.makeText(requireContext(), "데이터가 없습니다.", Toast.LENGTH_SHORT).show()
+            //Toast.makeText(requireContext(), "데이터가 없습니다.", Toast.LENGTH_SHORT).show()
 
             //null 값일때 default 값으로 넣기
             binding.mainWeightTv.text = 0.0f.toString()
