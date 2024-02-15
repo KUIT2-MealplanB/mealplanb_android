@@ -1,11 +1,8 @@
 package com.example.mealplanb.remote
 
-import com.example.mealplanb.ApplicationClass
-import com.example.mealplanb.local.getJwt
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.GET
-import retrofit2.http.Headers
 import retrofit2.http.POST
 
 interface RetroInterface {
@@ -17,5 +14,9 @@ interface RetroInterface {
 
     //Weight
     @GET("weight")
-    fun weightcheck(): Call<BaseResponse<WeightCheckResponse>>
+    fun weightcheck(): Call<BaseResponse<Weight>>
+    @POST("weight")
+    fun weightpost(
+        @Body request : Weight
+    ):Call<BaseResponse<Weight>>
 }

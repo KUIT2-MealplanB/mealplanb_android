@@ -54,13 +54,13 @@ class AuthService {
     fun weightcheck(){
         signupView.SignupLoading()
 
-        authService.weightcheck().enqueue(object : Callback<BaseResponse<WeightCheckResponse>> {
+        authService.weightcheck().enqueue(object : Callback<BaseResponse<Weight>> {
             override fun onResponse(
-                call: Call<BaseResponse<WeightCheckResponse>>,
-                response: Response<BaseResponse<WeightCheckResponse>>
+                call: Call<BaseResponse<Weight>>,
+                response: Response<BaseResponse<Weight>>
             ) {
                 val resp = response.body()
-                Log.d("User Profile response",resp.toString())
+                Log.d("weight get response",resp.toString())
                 when (resp?.code) {
                     1000 -> {
                         // 성공 시 원하는 처리
@@ -71,22 +71,49 @@ class AuthService {
 
                         // HomeFragment의 SignupSuccess로 정보 전달
                         signupView.WeightcheckSuccess(weight as Float, date)
-                        Log.d("User Profile Success", "User Profile Success")
+                        Log.d("weight get  Success", "weight get Success")
                     }
 
                     else -> if (resp != null) {
-                        Log.d("User Profile error", "User Profile error")
+                        Log.d("weight get  error", "weight get error")
                     }else{
-                        Log.d("User Profile null", "User Profile null")
+                        Log.d("weight get  null", "weight get null")
                     }
                 }
             }
 
-            override fun onFailure(call: Call<BaseResponse<WeightCheckResponse>>, t: Throwable) {
-                Log.d("User Profile Failed", t.toString())
+            override fun onFailure(call: Call<BaseResponse<Weight>>, t: Throwable) {
+                Log.d("weight get Failed", t.toString())
             }
 
         })
 
+    }
+
+    fun weightpost(weight: Float, date: String){
+        signupView.SignupLoading()
+        val request = Weight(weight, date)
+        authService.weightpost(request).enqueue(object : Callback<BaseResponse<Weight>>{
+            override fun onResponse(
+                call: Call<BaseResponse<Weight>>,
+                response: Response<BaseResponse<Weight>>
+            ) {
+                val resp = response.body()
+                when(resp?.code) {
+                    1000 -> Log.d("weight post success",resp.toString()) //아직 layout이 구현안되어 있어서 Homefragment에 대신 구현
+                    else -> if (resp != null) {
+                        signupView.SignupFailure(resp.code,resp.message)
+                    }else{
+                        Log.d("weight post null",resp.toString())
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<BaseResponse<Weight>>, t: Throwable) {
+                Log.d("weight post Failed", t.toString())
+            }
+
+
+        })
     }
 }

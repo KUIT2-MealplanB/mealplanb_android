@@ -1,9 +1,7 @@
 package com.example.mealplanb
-import android.animation.ObjectAnimator
 import android.app.DatePickerDialog
 import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -11,17 +9,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import android.widget.DatePicker
-import android.widget.ImageView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mealplanb.databinding.FragmentHomeBinding
-import com.example.mealplanb.local.getJwt
 import com.example.mealplanb.remote.AuthService
 import com.example.mealplanb.remote.SignupView
-import com.example.mealplanb.remote.WeightCheckResponse
 import com.google.gson.Gson
-import com.google.gson.JsonParser
 import com.google.gson.reflect.TypeToken
 import java.text.ParseException
 import java.text.SimpleDateFormat
@@ -29,7 +23,6 @@ import java.util.Calendar
 import java.util.Date
 import java.util.Locale
 import java.util.concurrent.TimeUnit
-import kotlin.math.log
 
 class HomeFragment : Fragment(), DatePickerDialog.OnDateSetListener, SignupView {
     lateinit var binding : FragmentHomeBinding
@@ -150,10 +143,10 @@ class HomeFragment : Fragment(), DatePickerDialog.OnDateSetListener, SignupView 
             startActivity(intent)
         }
 
-//        //오늘의 체중 정보
-//        val sharedPref = activity?.getSharedPreferences("myPreferences", Context.MODE_PRIVATE)
-//        val todayweight = sharedPref?.getFloat("startWeight",0.0f)
-//        binding.mainWeightTv.text="$todayweight"
+        //오늘의 체중 정보
+        val sharedPref = activity?.getSharedPreferences("myPreferences", Context.MODE_PRIVATE)
+        val todayweight = sharedPref?.getFloat("startWeight",0.0f)
+        //binding.mainWeightTv.text="$todayweight"
 
         //오늘의 무게 클릭했을 때 돌아가는 애니메이션
         binding.mainDayweightContentCv.setOnClickListener {
@@ -166,6 +159,7 @@ class HomeFragment : Fragment(), DatePickerDialog.OnDateSetListener, SignupView 
         //API관련
         val authService = AuthService()
         authService.setSignupView(this)
+        authService.weightpost(32.5F, "2024-01-09")
         authService.weightcheck()
 
 
@@ -273,8 +267,19 @@ class HomeFragment : Fragment(), DatePickerDialog.OnDateSetListener, SignupView 
 
     override fun WeightcheckSuccess(weight: Float, date: String) {
 
+        // 오늘 날짜 날짜를 가져옴
+        val Today = setDayText()
+
+        //입력받은 날짜 형식 바꿔주기
+        val convertedDate = convertDateFormat(date)
+
+        //받은 날짜가 오늘이면
+        if(Today == convertedDate){
+            binding.mainWeightTv.text = date
+        }
+
         // 날짜와 체중을 맵에 저장
-        weightDataMap[setDayText()] = weight
+        weightDataMap[convertedDate] = weight
         Log.d("받은 weight", weight.toString())
         Log.d("받은 날짜", setDayText())
 
@@ -295,13 +300,26 @@ class HomeFragment : Fragment(), DatePickerDialog.OnDateSetListener, SignupView 
             binding.mainWeightTv.text = it.toString()
         } ?: run {
             // null이면 toast 메시지 표시
-            Toast.makeText(requireContext(), "데이터가 없습니다.", Toast.LENGTH_SHORT).show()
+            //Toast.makeText(requireContext(), "데이터가 없습니다.", Toast.LENGTH_SHORT).show()
 
             // 오늘의 체중 정보를 가져와서 UI에 표시
             val sharedPref = activity?.getSharedPreferences("myPreferences", Context.MODE_PRIVATE)
             val todayWeight = sharedPref?.getFloat("startWeight", 0.0f)
             binding.mainWeightTv.text = todayWeight.toString()
         }
+    }
+    fun convertDateFormat(inputDate: String): String {
+        val inputDateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+        val outputDateFormat = SimpleDateFormat("MM. dd. EEE", Locale.getDefault())
+
+        try {
+            val date = inputDateFormat.parse(inputDate)
+            return outputDateFormat.format(date)
+        } catch (e: ParseException) {
+            e.printStackTrace()
+        }
+
+        return ""
     }
     override fun SignupFailure(code: Int, msg: String) {
         Toast.makeText(requireContext(),"weight정보를 받아오는데 실패했습니다.",Toast.LENGTH_SHORT).show()

@@ -20,7 +20,7 @@ data class SignupResponse(
     @SerializedName("jwt") val jwt : String,
 )
 
-data class WeightCheckResponse(
+data class Weight(
     @SerializedName("weight") val weight : Float,
     @SerializedName("date") val date : String,
 )
