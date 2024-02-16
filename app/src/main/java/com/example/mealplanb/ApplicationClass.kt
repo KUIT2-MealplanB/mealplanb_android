@@ -19,8 +19,6 @@ class ApplicationClass : Application() {
         const val PROD_URL : String = "" //배포용 URL
 
         const val BASE_URL : String = DEV_URL // 상황에 따라 DEV와 PROD로 바뀐는 작업용 URL
-
-//        lateinit var retrofit : Retrofit
         lateinit var mSharedPreferences : SharedPreferences
 
         val client: OkHttpClient = OkHttpClient.Builder()
@@ -39,7 +37,6 @@ class ApplicationClass : Application() {
 
     override fun onCreate() {
         super.onCreate()
-
         mSharedPreferences = applicationContext.getSharedPreferences("My App Spf",Context.MODE_PRIVATE)
         Log.d("Signup Response","sharedpreference 초기화 확인")
     }

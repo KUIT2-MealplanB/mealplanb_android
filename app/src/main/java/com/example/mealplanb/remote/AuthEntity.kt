@@ -20,3 +20,18 @@ data class SignupResponse(
     @SerializedName("member_id") val member_id : Int,
     @SerializedName("jwt") val jwt : String,
 )
+
+data class LoginRequest(
+    @SerializedName("email") val email : String,
+    @SerializedName("password") val password : String
+)
+
+data class LoginResponse(
+    @SerializedName("memberId") val memberId : Int,
+    @SerializedName("jwt") val jwt : String
+)
+
+data class Weight(
+    @SerializedName("weight") val weight : Float,
+    @SerializedName("date") val date : String,
+)

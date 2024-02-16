@@ -10,9 +10,12 @@ import android.text.TextWatcher
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import com.example.mealplanb.databinding.ActivityLoginPageBinding
+import com.example.mealplanb.databinding.ActivityPrivacyCollectBinding
+import com.example.mealplanb.remote.AuthService
 
 class LoginPageActivity : AppCompatActivity() {
     lateinit var binding : ActivityLoginPageBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginPageBinding.inflate(layoutInflater)
@@ -31,9 +34,17 @@ class LoginPageActivity : AppCompatActivity() {
                 if(binding.loginIdEt.text.toString().trim().isNotEmpty() && binding.loginPasswordEt.text.toString().trim().isNotEmpty()) {
                     binding.loginCompleteCv.setCardBackgroundColor(Color.parseColor("#7C5CF8"))
                     binding.loginCompleteCv.setOnClickListener {
-                        val intent = Intent(this@LoginPageActivity, MainActivity::class.java)
-                        startActivity(intent)
-                        finish()
+
+                        //api 연동
+                        val email = binding.loginIdEt.text.toString()
+                        val pw = binding.loginPasswordEt.text.toString()
+                        val authService = AuthService(this@LoginPageActivity)
+                        authService.login(email,pw)
+
+                        //mainactivity로 넘어감
+//                        val intent = Intent(this@LoginPageActivity, MainActivity::class.java)
+//                        startActivity(intent)
+//                        finish()
                     }
                 } else {
                     binding.loginCompleteCv.setCardBackgroundColor(Color.parseColor("#D7D7D7"))

@@ -193,12 +193,12 @@ class MenuRecommendCheatdayFragment : Fragment() {
 
             val gson = Gson()
 //            var newJson = gson.toJson(MealMainInfo(true,1,items[randomMenuIdx].meal_cal,R.drawable.item_hamburger_img))
-//            var newJson = gson.toJson(MealMainInfo(true,1, meal_cal,R.drawable.item_hamburger_img)) new!!!
+//            var newJson = gson.toJson(MealMainInfo(true,1, meal_cal,R.drawable.item_hamburger_img, "", 0.0)) new!!!
 //            editor.putString("MealMainInfo",newJson)
 //            editor.apply()
             var json = sharedPref.getString("dayMealList",null)
             var dayMealList = gson.fromJson(json,object : TypeToken<ArrayList<MealMainInfo>>() {}.type) ?: arrayListOf(
-                MealMainInfo(false,1,0.0,0)
+                MealMainInfo(true,1, meal_cal,R.drawable.item_hamburger_img, "", 0.0)
             )
             var mealEmptyFlag = false
             var addMealNum : Int
@@ -206,7 +206,7 @@ class MenuRecommendCheatdayFragment : Fragment() {
                 if(!dayMealList[i].meal_active) {
                     mealEmptyFlag = true
                     addMealNum = i+1
-                    dayMealList.set(addMealNum-1, MealMainInfo(true,addMealNum,meal_cal,R.drawable.item_hamburger_img))
+                    dayMealList.set(addMealNum-1, MealMainInfo(true,addMealNum,meal_cal,R.drawable.item_hamburger_img,"",0.0))
                     cal.time = Date()
                     menuRecommendFragment?.addItemToRecyclerView(
                         RecommendMenu(cal,numList[addMealNum-1] + " 끼 : " + meal_name,
@@ -223,7 +223,7 @@ class MenuRecommendCheatdayFragment : Fragment() {
             if(!mealEmptyFlag) {
                 if(dayMealList.size < 10) {
                     addMealNum = dayMealList.size+1
-                    dayMealList.add(MealMainInfo(true,addMealNum,meal_cal,R.drawable.item_hamburger_img))
+                    dayMealList.add(MealMainInfo(true,addMealNum,meal_cal,R.drawable.item_hamburger_img,"",0.0))
                     cal.time = Date()
                     menuRecommendFragment?.addItemToRecyclerView(
                         RecommendMenu(cal,numList[addMealNum-1] + " 끼 : " + meal_name,

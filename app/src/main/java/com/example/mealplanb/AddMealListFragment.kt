@@ -111,9 +111,9 @@ class AddMealListFragment : Fragment() {
             //home 화면에 표시될 끼니 정보 갱신
             var json = sharedPreferences.getString("dayMealList",null)
             var dayMealList = gson.fromJson(json,object : TypeToken<ArrayList<MealMainInfo>>() {}.type) ?: arrayListOf(
-                MealMainInfo(false,1,0.0,0)
+                MealMainInfo(false,1,0.0,0, "", 0.0)
             )
-            dayMealList.set(selectedMealNum-1, MealMainInfo(true,selectedMealNum,tot_cal,randomImage))
+            dayMealList.set(selectedMealNum-1, MealMainInfo(true,selectedMealNum,tot_cal,randomImage,"", 0.0))
             val newJson = gson.toJson(dayMealList)
             editor.putString("dayMealList",newJson)
             editor.apply()

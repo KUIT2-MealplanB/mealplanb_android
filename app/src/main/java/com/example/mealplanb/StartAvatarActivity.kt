@@ -165,7 +165,7 @@ class StartAvatarActivity : AppCompatActivity(), SignupView {
 
                     Log.d("logcat",userEmail+userPW+userSex+userAge.toString()+userHeight.toString()+userStartWeight.toString()+userWantWeight.toString()+userSelectedCategory+userAvatar+userNickname)
 
-                    val authService = AuthService()
+                    val authService = AuthService(this@StartAvatarActivity)
                     authService.setSignupView(this)
                     authService.signup(userEmail!!,userPW!!,userSex!!,userAge,userHeight,userStartWeight,userWantWeight,userSelectedCategory!!,userAvatar!!,userNickname!!)
 
@@ -240,6 +240,10 @@ class StartAvatarActivity : AppCompatActivity(), SignupView {
 
     override fun SignupFailure(code: Int, msg: String) {
         Toast.makeText(this,msg,Toast.LENGTH_SHORT).show()
+    }
+
+    override fun WeightcheckSuccess(weight: Float, date: String) {
+        TODO("Not yet implemented")
     }
 
 }
