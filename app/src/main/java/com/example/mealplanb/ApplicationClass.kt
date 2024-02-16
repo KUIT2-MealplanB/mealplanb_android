@@ -13,7 +13,7 @@ import java.util.concurrent.TimeUnit
 class ApplicationClass : Application(){
 
     companion object{
-        const val X_ACCESS_TOKEN : String = "x-access-token"
+        //const val X_ACCESS_TOKEN : String = "x-access-token"
         const val DEV_URL : String = "https://www.kuit2mealplanb.shop" // 개발용
         const val PROD_URL : String = "" // 배포용
 
@@ -29,13 +29,12 @@ class ApplicationClass : Application(){
         val retrofit: Retrofit = Retrofit.Builder()
             .baseUrl(BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
-   //         .client(client)
+            .client(client)
             .build()
     }
 
     override fun onCreate() {
         super.onCreate()
         mSharedPreferences = applicationContext.getSharedPreferences("My App Spf", Context.MODE_PRIVATE)
-        Log.d("Signup Response","sharedpreference 초기화 확인")
     }
 }

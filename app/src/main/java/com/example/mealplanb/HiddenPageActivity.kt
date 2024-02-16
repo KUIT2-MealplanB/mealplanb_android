@@ -9,6 +9,7 @@ import android.view.View
 import android.widget.Button
 import androidx.appcompat.app.AlertDialog
 import com.example.mealplanb.databinding.ActivityHiddenPageBinding
+import com.example.mealplanb.remote.AuthService
 
 class HiddenPageActivity : AppCompatActivity() {
     private lateinit var binding : ActivityHiddenPageBinding
@@ -42,11 +43,10 @@ class HiddenPageActivity : AppCompatActivity() {
             val confirmButton = customDialog.findViewById<Button>(R.id.hidden_logout_logout_btn)
             val cancelButton = customDialog.findViewById<Button>(R.id.hidden_logout_cancle_btn)
 
-            //Logout 버튼 -> login 화면으로 넘어감
+            //Logout 버튼 -> login 화면으로 넘어감(api 연동)
             confirmButton.setOnClickListener {
-                binding.hiddenDarkLl.visibility = View.INVISIBLE
-                val intent = Intent(this, LoginPageActivity::class.java)
-                startActivity(intent)
+                val authService = AuthService(this)
+                authService.logout()
             }
 
             cancelButton.setOnClickListener {
