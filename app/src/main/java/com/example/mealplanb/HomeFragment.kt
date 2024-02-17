@@ -160,6 +160,7 @@ class HomeFragment : Fragment(), DatePickerDialog.OnDateSetListener, SignupView 
         val authService = AuthService(requireContext())
         authService.setSignupView(this)
         authService.weightpost(32.5F, "2024-01-09")
+        authService.weightpatch(32.5F, "2024-01-010")
         authService.weightcheck()
 
 

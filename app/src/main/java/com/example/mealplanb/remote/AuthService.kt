@@ -172,4 +172,31 @@ class AuthService(private val context: Context) {
 
         })
     }
+
+    fun weightpatch(weight: Float, date: String){
+        signupView.SignupLoading()
+        val request = Weight(weight, date)
+        authService.weightpatch(request).enqueue(object : Callback<BaseResponse<Weight>>{
+            override fun onResponse(
+                call: Call<BaseResponse<Weight>>,
+                response: Response<BaseResponse<Weight>>
+            ) {
+                val resp = response.body()
+                when(resp?.code) {
+                    1000 -> Log.d("weight patch success",resp.toString()) //아직 layout이 구현안되어 있어서 Homefragment에 대신 구현
+                    else -> if (resp != null) {
+                        signupView.SignupFailure(resp.code,resp.message)
+                    }else{
+                        Log.d("weight patch null",resp.toString())
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<BaseResponse<Weight>>, t: Throwable) {
+                Log.d("weight patch Failed", t.toString())
+            }
+
+
+        })
+    }
 }
