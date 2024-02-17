@@ -157,7 +157,7 @@ class HomeFragment : Fragment(), DatePickerDialog.OnDateSetListener, SignupView 
         }
 
         //API관련
-        val authService = AuthService(requireContext())
+        val authService = AuthService()
         authService.setSignupView(this)
         authService.weightpost(32.5F, "2024-01-09")
         authService.weightpatch(32.5F, "2024-01-010")
@@ -308,8 +308,10 @@ class HomeFragment : Fragment(), DatePickerDialog.OnDateSetListener, SignupView 
             // null이면 toast 메시지 표시
             //Toast.makeText(requireContext(), "데이터가 없습니다.", Toast.LENGTH_SHORT).show()
 
-            //null 값일때 default 값으로 넣기
-            binding.mainWeightTv.text = 0.0f.toString()
+            // 오늘의 체중 정보를 가져와서 UI에 표시
+            val sharedPref = activity?.getSharedPreferences("myPreferences", Context.MODE_PRIVATE)
+            val todayWeight = sharedPref?.getFloat("startWeight", 0.0f)
+            binding.mainWeightTv.text = todayWeight.toString()
         }
     }
     fun convertDateFormat(inputDate: String): String {

@@ -65,7 +65,7 @@ class MenuRecommendFragment : Fragment(), OnFragmentInteractionListener, AddToRe
 
         binding.menuRecommTogle.setOnCheckedChangeListener { _, isChecked ->
             if(isChecked) {
-                val sharedPreferences = requireActivity().getSharedPreferences("myPreferences",MODE_PRIVATE)
+                val sharedPreferences = requireActivity().getSharedPreferences("MySharedPrefs",MODE_PRIVATE)
                 var gson = Gson()
                 var json = sharedPreferences.getString("recommendList",null)
                 recomList = gson.fromJson(json, object : TypeToken<ArrayList<RecommendMenu>>() {}.type) ?: arrayListOf<RecommendMenu>()
@@ -113,7 +113,7 @@ class MenuRecommendFragment : Fragment(), OnFragmentInteractionListener, AddToRe
     }
 
     override fun addItemToRecyclerView(item: RecommendMenu) {
-        val sharedPreferences = requireActivity().getSharedPreferences("myPreferences",MODE_PRIVATE)
+        val sharedPreferences = requireActivity().getSharedPreferences("MySharedPrefs",MODE_PRIVATE)
         var gson = Gson()
         var json = sharedPreferences.getString("recommendList",null)
         var recomList = gson.fromJson(json, object : TypeToken<ArrayList<RecommendMenu>>() {}.type) ?: arrayListOf<RecommendMenu>()
@@ -135,7 +135,7 @@ class MenuRecommendFragment : Fragment(), OnFragmentInteractionListener, AddToRe
 
         recommListAdapter.notifyDataSetChanged()
 
-    }
+        }
 
     //리스트의 가장 마지막을 보여주도록 스크롤을 이동하는 함수
     private fun scrollToLastItem(view: View) {

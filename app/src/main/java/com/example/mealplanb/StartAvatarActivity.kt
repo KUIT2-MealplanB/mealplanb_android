@@ -171,9 +171,9 @@ class StartAvatarActivity : AppCompatActivity(), SignupView {
 
                     val token = getJwt()
                     if(token == null) {
-                        Log.d("Signup Response","getJwt 사용 실패..")
+                        Log.d("Signup Response startactivity","getJwt 사용 실패..")
                     } else {
-                        Log.d("Signup Response",token+" 토큰 불러와짐!")
+                        Log.d("Signup Response startactivity",token+" 토큰 불러와짐!")
                     }
 
                     val intent = Intent(this, MainActivity::class.java)

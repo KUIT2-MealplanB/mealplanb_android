@@ -16,7 +16,7 @@ class AlarmAdapter(private val alarms : List<AlarmData>) : RecyclerView.Adapter<
     }
 
     override fun getItemCount():Int{
-        return alarms.size
+       return alarms.size
     }
 
     override fun onBindViewHolder(holder: AlarmViewHolder, position: Int) {

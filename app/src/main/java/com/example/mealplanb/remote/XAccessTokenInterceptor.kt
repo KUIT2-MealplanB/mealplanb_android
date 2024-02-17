@@ -1,7 +1,7 @@
 package com.example.mealplanb.remote
 
-//import com.example.mealplanb.ApplicationClass.Companion.X_ACCESS_TOKEN
 import android.util.Log
+//import com.example.mealplanb.ApplicationClass.Companion.X_ACCESS_TOKEN
 import com.example.mealplanb.local.getJwt
 import okhttp3.Interceptor
 import okhttp3.Request

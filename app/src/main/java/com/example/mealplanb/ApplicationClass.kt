@@ -4,21 +4,25 @@ import android.app.Application
 import android.content.Context
 import android.content.SharedPreferences
 import android.util.Log
+import com.example.mealplanb.remote.AuthService
 import com.example.mealplanb.remote.XAccessTokenInterceptor
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 import kotlin.coroutines.coroutineContext
+import kotlin.math.log
 
 class ApplicationClass : Application() {
 
     companion object {
-        const val X_ACCESS_TOKEN : String = "x-access-token"
+        //const val X_ACCESS_TOKEN : String = " X_ACCESS_TOKEN"
         const val DEV_URL : String = "https://www.kuit2mealplanb.shop" //개발용 URL
         const val PROD_URL : String = "" //배포용 URL
 
         const val BASE_URL : String = DEV_URL // 상황에 따라 DEV와 PROD로 바뀐는 작업용 URL
+
+        //        lateinit var retrofit : Retrofit
         lateinit var mSharedPreferences : SharedPreferences
 
         val client: OkHttpClient = OkHttpClient.Builder()

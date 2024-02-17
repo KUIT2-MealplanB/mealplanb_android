@@ -8,7 +8,6 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
-import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
 import com.example.mealplanb.databinding.ActivityJoinMemberBinding
 

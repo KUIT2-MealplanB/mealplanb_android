@@ -7,15 +7,11 @@ import retrofit2.http.PATCH
 import retrofit2.http.POST
 
 interface RetroInterface {
-    @POST("user/signup")
+    //API 내용 정의 해주어야 함
+    @POST("user/signup") //요청 방식
     fun signup(
-        @Body request: SignupRequest //내부에 포함할 데이터
-    ) : Call<BaseResponse<SignupResponse>> //반환할 데이터
-
-    @POST("user/login")
-    fun login(
-        @Body request: LoginRequest
-    ): Call<BaseResponse<LoginResponse>>
+        @Body request: SignupRequest    //내부에 포함할 데이터
+    ): Call<BaseResponse<SignupResponse>>   //반환할 데이터
 
     //Weight
     @GET("weight")

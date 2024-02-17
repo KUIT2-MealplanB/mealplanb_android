@@ -16,9 +16,6 @@
         android:theme="@style/Theme.MealPlanB"
         tools:targetApi="31">
         <activity
-            android:name=".AlarmActivity"
-            android:exported="false" />
-        <activity
             android:name=".PrivacyCollectActivity2"
             android:exported="false" />
         <activity

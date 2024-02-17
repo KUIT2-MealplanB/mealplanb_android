@@ -7,11 +7,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isInvisible
-import android.widget.Toast
 import com.example.mealplanb.databinding.FragmentMenuRecommendCheatdayBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -22,8 +20,6 @@ import java.util.Date
 
 class MenuRecommendCheatdayFragment : Fragment() {
     lateinit var binding: FragmentMenuRecommendCheatdayBinding
-    var cal = Calendar.getInstance()
-    private val numList : ArrayList<String> = arrayListOf("첫","두","세","네","다섯","여섯","일곱","여덟","아홉","열")
 
     private var meal_name: String = "크림파스타"
     private var fat_gram: Double = 15.0
@@ -85,6 +81,8 @@ class MenuRecommendCheatdayFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val menuRecommendFragment = parentFragmentManager.findFragmentById(R.id.main_frm) as? MenuRecommendFragment
+
+        var cal = Calendar.getInstance()
 
         //뒤로 가는 아이콘 클릭시
         binding.menuRecommCheatCategoryBackCv.setOnClickListener {
@@ -193,53 +191,9 @@ class MenuRecommendCheatdayFragment : Fragment() {
             editor.putInt("recommendMenuFat",fat_gram.toInt())
 
             val gson = Gson()
-//            var newJson = gson.toJson(MealMainInfo(true,1,items[randomMenuIdx].meal_cal,R.drawable.item_hamburger_img))
-//            var newJson = gson.toJson(MealMainInfo(true,1, meal_cal,R.drawable.item_hamburger_img, "", 0.0)) new!!!
-//            editor.putString("MealMainInfo",newJson)
-//            editor.apply()
-            var json = sharedPref.getString("dayMealList",null)
-            var dayMealList = gson.fromJson(json,object : TypeToken<ArrayList<MealMainInfo>>() {}.type) ?: arrayListOf(
-                MealMainInfo(true,1, meal_cal,R.drawable.item_hamburger_img, "", 0.0)
-            )
-            var mealEmptyFlag = false
-            var addMealNum : Int
-            for(i in 0 until dayMealList.size) {
-                if(!dayMealList[i].meal_active) {
-                    mealEmptyFlag = true
-                    addMealNum = i+1
-                    dayMealList.set(addMealNum-1, MealMainInfo(true,addMealNum,meal_cal,R.drawable.item_hamburger_img,"",0.0))
-                    cal.time = Date()
-                    menuRecommendFragment?.addItemToRecyclerView(
-                        RecommendMenu(cal,numList[addMealNum-1] + " 끼 : " + meal_name,
-                            sacc_gram.toInt(),
-                            protein_gram.toInt(),
-                            fat_gram.toInt()))
-                    val newJson = gson.toJson(dayMealList)
-                    val editor = sharedPref.edit()
-                    editor.putString("dayMealList",newJson)
-                    editor.apply()
-                    break
-                }
-            }
-            if(!mealEmptyFlag) {
-                if(dayMealList.size < 10) {
-                    addMealNum = dayMealList.size+1
-                    dayMealList.add(MealMainInfo(true,addMealNum,meal_cal,R.drawable.item_hamburger_img,"",0.0))
-                    cal.time = Date()
-                    menuRecommendFragment?.addItemToRecyclerView(
-                        RecommendMenu(cal,numList[addMealNum-1] + " 끼 : " + meal_name,
-                            sacc_gram.toInt(),
-                            protein_gram.toInt(),
-                            fat_gram.toInt()))
-                    val newJson = gson.toJson(dayMealList)
-                    val editor = sharedPref.edit()
-                    editor.putString("dayMealList",newJson)
-                    editor.apply()
-                }
-                else {
-                    Toast.makeText(requireContext(),"더 이상 메뉴를 추가할 수 없습니다! 잠시 후 홈으로 이동됩니다.",Toast.LENGTH_SHORT).show()
-                }
-            }
+            var newJson = gson.toJson(MealMainInfo(true,1, meal_cal,R.drawable.item_hamburger_img, "", 0.0))
+            editor.putString("MealMainInfo",newJson)
+            editor.apply()
 
             // 클릭 시 WhatMenuFragment로 교체
 //            val selectFragment = MenuRecommendSelectFragment()
@@ -250,16 +204,15 @@ class MenuRecommendCheatdayFragment : Fragment() {
                 MenuRecommItem.UserItem("이 음식", "으로 먹을래요", 2),
                 MenuRecommItem.SystemUpdateMenuItem(meal_name!!,7)
             )
-//            cal.time = Date()
-//            menuRecommendFragment?.addItemToRecyclerView(
-//                RecommendMenu(cal,"첫 끼 : " + items[randomMenuIdx].meal_name,
-//                    items[randomMenuIdx].sacc_gram.toInt(),
-//                    items[randomMenuIdx].protein_gram.toInt(),
-//                    items[randomMenuIdx].fat_gram.toInt()))
+            cal.time = Date()
+            menuRecommendFragment?.addItemToRecyclerView(
+                RecommendMenu(cal,"첫 끼 : " + meal_name,
+                    sacc_gram.toInt(),
+                    protein_gram.toInt(),
+                    fat_gram.toInt()))
             val selectFragment = activity?.findViewById<View>(R.id.menu_recomm_button_cv)
             selectFragment?.visibility = View.GONE
 
-            //5초의 delay 후 home으로 이동
             CoroutineScope(Dispatchers.Main).launch {
                 delay(5000)
                 withContext(Dispatchers.Main) {

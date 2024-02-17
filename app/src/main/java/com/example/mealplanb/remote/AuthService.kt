@@ -1,23 +1,15 @@
 package com.example.mealplanb.remote
 
-
-import android.content.Context
-import android.content.Intent
 import android.util.Log
-import android.widget.Toast
 import com.example.mealplanb.ApplicationClass
-import com.example.mealplanb.ApplicationClass.Companion.mSharedPreferences
-import com.example.mealplanb.MainActivity
 import com.example.mealplanb.local.getJwt
 import com.example.mealplanb.local.saveJwt
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 //retrofit에 service를 요청하고 응답받는 역할을 하는 class
-class AuthService(private val context: Context) {
+class AuthService {
     private val authService = ApplicationClass.retrofit.create(RetroInterface::class.java)
 
     private lateinit var signupView : SignupView
@@ -26,11 +18,10 @@ class AuthService(private val context: Context) {
         this.signupView = signupView
     }
 
-    fun signup(email: String, password: String, sex: String, age: Int,
-               height: Int, initial_weight: Float, target_weight: Float, diet_type: String,
-               avatar_color: String, nickname: String) {
+    fun signup(email: String, password: String, sex: String, age: Int, height: Int, initial_weight: Float, target_weight: Float, diet_type: String, avatar_color: String, nickname: String) {
         signupView.SignupLoading()
-        val request = SignupRequest(email,password,sex,age,height,initial_weight,target_weight,diet_type,avatar_color,nickname)
+        val request = SignupRequest(email,password,sex,age,height,initial_weight,
+            target_weight,diet_type,avatar_color,nickname)
         authService.signup(request).enqueue(object : Callback<BaseResponse<SignupResponse>>{ //enqueue가 Call에서 사용하는 방식
             override fun onResponse(
                 call: Call<BaseResponse<SignupResponse>>,
@@ -59,53 +50,6 @@ class AuthService(private val context: Context) {
         })
     }
 
-    fun login(email: String,pw: String){
-        val request = LoginRequest(email,pw)
-        authService.login(request).enqueue(object: Callback<BaseResponse<LoginResponse>>{
-            override fun onResponse(
-                call: Call<BaseResponse<LoginResponse>>,
-                response: Response<BaseResponse<LoginResponse>>
-            ) {
-                Log.d("Login response",response.toString())
-                if(response.isSuccessful) { // response의 성공 여부를 확인
-                    Toast.makeText(context, "로그인 성공", Toast.LENGTH_SHORT).show()
-                    Log.d("로그인 정보",response.body().toString())
-
-                    //token 저장
-                    val token = response.body()?.result?.jwt.toString()
-                    saveJwt(token)
-//                    val token2 = getJwt() ?: ""
-//                    Log.d("getJwt 확인",token2)
-
-                    // 성공적으로 로그인이 되었을 경우, 다른 액티비티로 이동
-                    val intent = Intent(context, MainActivity::class.java)
-                    context.startActivity(intent)
-
-                } else {
-                    // 서버에서는 응답을 했지만, 로그인 실패와 같은 이유로 성공적인 응답이 아닌 경우, Toast 메시지
-                    val gson = Gson()
-                    val type = object : TypeToken<BaseResponse<LoginResponse>>() {}.type
-                    val errorResponse: BaseResponse<LoginResponse>? = gson.fromJson(response.errorBody()?.charStream(), type)
-                    Log.d("로그인 실패 정보", errorResponse.toString())
-
-                    if(errorResponse?.code.toString() == "5006"){
-                        Toast.makeText(context, "존재하지 않는 이메일입니다.", Toast.LENGTH_SHORT).show()
-                    }else{
-                        Toast.makeText(context, "비밀번호가 일치하지 않습니다.", Toast.LENGTH_SHORT).show()
-                    }
-                    Log.d("로그인 실패 코드",errorResponse?.code.toString())
-                }
-            }
-
-            override fun onFailure(call: Call<BaseResponse<LoginResponse>>, t: Throwable) {
-                Log.d("Login Failed",t.toString())
-                // 로그인 요청 자체가 실패한 경우, Toast 메시지
-                Toast.makeText(context, "로그인 오류", Toast.LENGTH_SHORT).show()
-            }
-
-        })
-    }
-
     //weight
     fun weightcheck(){
         signupView.SignupLoading()
@@ -127,13 +71,13 @@ class AuthService(private val context: Context) {
 
                         // HomeFragment의 SignupSuccess로 정보 전달
                         signupView.WeightcheckSuccess(weight as Float, date)
-                        Log.d("weight get Success", "User Profile Success")
+                        Log.d("weight get  Success", "weight get Success")
                     }
 
                     else -> if (resp != null) {
-                        Log.d("weight get error", "User Profile error")
+                        Log.d("weight get  error", "weight get error")
                     }else{
-                        Log.d("weight get null", "User Profile null")
+                        Log.d("weight get  null", "weight get null")
                     }
                 }
             }

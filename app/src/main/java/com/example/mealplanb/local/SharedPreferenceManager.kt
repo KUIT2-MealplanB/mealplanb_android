@@ -15,9 +15,9 @@ fun removeJwt() {
 
 fun saveJwt(token: String) {
     if(ApplicationClass.mSharedPreferences == null) {
-        Log.d("Signup response","sharedpreference 빔")
+        Log.d("Signup response SharedPreference","sharedpreference 빔")
     } else {
-        Log.d("Signup Response","Sharedpreference 안 빔")
+        Log.d("Signup Response SharedPreference","Sharedpreference 안 빔")
     }
 
     ApplicationClass.mSharedPreferences?.edit()?.putString("token",token)?.apply()
