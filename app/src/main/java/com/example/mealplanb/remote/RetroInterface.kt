@@ -4,6 +4,7 @@ import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.Header
+import retrofit2.http.PATCH
 import retrofit2.http.POST
 
 interface RetroInterface {
@@ -23,6 +24,11 @@ interface RetroInterface {
     //아바타 정보 조회
     @GET("user/avatar")
     fun avatarcheck(): Call<BaseResponse<AvatarCheckResponse>>
+    //아바타 정보 수정
+    @PATCH("user/avatar")
+    fun avatarupdate(
+        @Body request: AvatarData
+    ):Call<BaseResponse<AvatarUpdateResponse>>
 
     //Weight
     @GET("weight")

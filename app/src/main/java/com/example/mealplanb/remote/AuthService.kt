@@ -113,7 +113,7 @@ class AuthService(private val context: Context) {
     }
 
     //avatar
-    // 아바타 정보 조회 메서드
+    // 아바타 정보 조회 + UI 반영 메서드
     fun checkAvatarInfo() {
         authService.avatarcheck().enqueue(object : Callback<BaseResponse<AvatarCheckResponse>> {
             override fun onResponse(call: Call<BaseResponse<AvatarCheckResponse>>, response: Response<BaseResponse<AvatarCheckResponse>>) {
@@ -156,6 +156,25 @@ class AuthService(private val context: Context) {
 
             override fun onFailure(call: Call<BaseResponse<AvatarCheckResponse>>, t: Throwable) {
                 Log.e("아바타 정보 서버 오류", "API call failed. Message: ${t.message}")
+            }
+        })
+    }
+
+    //아바타 정보 수정
+    fun updateAvatarInfo(nickname: String, avatarColor: String) {
+        val avatarData = AvatarData(nickname, avatarColor)
+        authService.avatarupdate(avatarData).enqueue(object : Callback<BaseResponse<AvatarUpdateResponse>> {
+            override fun onResponse(call: Call<BaseResponse<AvatarUpdateResponse>>, response: Response<BaseResponse<AvatarUpdateResponse>>) {
+                if (response.isSuccessful) {
+                    val avatarInfo = response.body()?.result
+                    Log.d("아바타 정보 수정", "Member ID: ${avatarInfo?.member_id}, Nickname: ${avatarInfo?.nickname}, Avatar color: ${avatarInfo?.avatar_color}")
+                } else {
+                    Log.e("아바타 정보 수정 오류", "Request not successful. Message: ${response.message()}")
+                }
+            }
+
+            override fun onFailure(call: Call<BaseResponse<AvatarUpdateResponse>>, t: Throwable) {
+                Log.e("아바타 정보 수정 서버 오류", "API call failed. Message: ${t.message}")
             }
         })
     }

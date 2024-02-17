@@ -39,6 +39,17 @@ data class AvatarCheckResponse(
     @SerializedName("nickname") val nickname: String
 )
 
+data class AvatarData(
+    @SerializedName("nickname") val nickname : String,
+    @SerializedName("avatar_color") val avatar_color: String
+)
+
+data class AvatarUpdateResponse(
+    @SerializedName("member_id") val member_id: Int,
+    @SerializedName("nickname") val nickname: String,
+    @SerializedName("avatar_color") val avatar_color: String
+)
+
 data class Weight(
     @SerializedName("weight") val weight : Float,
     @SerializedName("date") val date : String,
