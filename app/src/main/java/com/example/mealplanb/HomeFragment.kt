@@ -2,6 +2,7 @@ package com.example.mealplanb
 import android.app.DatePickerDialog
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -17,6 +18,7 @@ import com.example.mealplanb.remote.AuthService
 import com.example.mealplanb.remote.SignupView
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import java.lang.reflect.Type
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -24,7 +26,7 @@ import java.util.Date
 import java.util.Locale
 import java.util.concurrent.TimeUnit
 
-class HomeFragment : Fragment(), DatePickerDialog.OnDateSetListener, SignupView {
+class HomeFragment : Fragment(), DatePickerDialog.OnDateSetListener, SignupView, WeightUpdateListener {
     lateinit var binding : FragmentHomeBinding
     lateinit var dayMealList : ArrayList<MealMainInfo>
     private var adapter : DayMealAdapter? = null
@@ -40,15 +42,17 @@ class HomeFragment : Fragment(), DatePickerDialog.OnDateSetListener, SignupView 
     private var fatToday : Int? = null
 
     //API 데이터 확인
-    private var weight_check_date : String? = null
-    private var weight_check_kg : Float? = null
+    private val KEY_WEIGHT_DATA = "weightData"
 
     // 날짜와 체중 데이터를 저장할 맵
     private val weightDataMap: MutableMap<String, Float> = mutableMapOf()
 
-
     override fun onResume() {
         super.onResume()
+
+        //weight 가져오기
+        // 저장된 데이터 불러오기
+        loadWeightData()
 
         // SharedPreferences 객체 생성
         val sharedPref = requireActivity().getSharedPreferences("myPreferences", Context.MODE_PRIVATE)
@@ -65,10 +69,6 @@ class HomeFragment : Fragment(), DatePickerDialog.OnDateSetListener, SignupView 
         binding.mainMeallistRv.layoutManager = LinearLayoutManager(requireContext(),LinearLayoutManager.HORIZONTAL,false)
         adapter = DayMealAdapter(dayMealList,requireContext())
         binding.mainMeallistRv.adapter = adapter
-
-//        binding.mainMeallistRv.isNestedScrollingEnabled = false
-//        binding.mainMeallistRv.overScrollMode = View.OVER_SCROLL_ALWAYS
-//        binding.mainMeallistSv.isFillViewport = true
 
         // 가져온 값 사용
         binding.mainTitleNicknameTv.text = nickname
@@ -143,11 +143,6 @@ class HomeFragment : Fragment(), DatePickerDialog.OnDateSetListener, SignupView 
             startActivity(intent)
         }
 
-        //오늘의 체중 정보
-        val sharedPref = activity?.getSharedPreferences("myPreferences", Context.MODE_PRIVATE)
-        val todayweight = sharedPref?.getFloat("startWeight",0.0f)
-        //binding.mainWeightTv.text="$todayweight"
-
         //오늘의 무게 클릭했을 때 돌아가는 애니메이션
         binding.mainDayweightContentCv.setOnClickListener {
             val rotateAnim = AnimationUtils.loadAnimation(requireContext(), R.anim.rotate_180)
@@ -156,10 +151,33 @@ class HomeFragment : Fragment(), DatePickerDialog.OnDateSetListener, SignupView 
             binding.todayWeightIv2.startAnimation(rotateAnimOp)
         }
 
+        //체중계 눌렀을 때 오늘의 체중 입력하고, sharedpreference에 저장 및 서버에 전송
+        binding.mainDayweightContentCv.setOnClickListener {
+            val bottomSheetFragment = HomeWeightInputFragment()
+            bottomSheetFragment.show(requireActivity().supportFragmentManager, bottomSheetFragment.tag)
+            bottomSheetFragment.weightUpdateListener = this // 리스너 설정
+
+            //오늘의 체중 정보
+            val sharedPref = activity?.getSharedPreferences("myPreferences", Context.MODE_PRIVATE)
+            val todayweight = sharedPref?.getFloat("TodayWeight",0.2f)
+
+
+            val today = binding.mainDateTv.text.toString()
+            addWeightData(today,todayweight!!)
+
+            weightDataMap[today] = todayweight
+
+            val authService = AuthService(requireContext())
+            authService.setSignupView(this)
+            authService.weightpost(todayweight, today)
+
+            saveWeightData()
+
+        }
+
         //API관련
         val authService = AuthService(requireContext())
         authService.setSignupView(this)
-        authService.weightpost(32.5F, "2024-01-09")
         authService.weightcheck()
 
 
@@ -194,8 +212,7 @@ class HomeFragment : Fragment(), DatePickerDialog.OnDateSetListener, SignupView 
         binding.mainDateTv.text = setDayText()
         setProgress()
         setNutData()
-        // 체중 UI 업데이트
-        updateWeightOnSelectedDate()
+        updateWeightOnUI()
     }
 
     fun setDayText(): String {
@@ -267,45 +284,19 @@ class HomeFragment : Fragment(), DatePickerDialog.OnDateSetListener, SignupView 
 
     override fun WeightcheckSuccess(weight: Float, date: String) {
 
-        // 오늘 날짜 날짜를 가져옴
-        val Today = setDayText()
-
         //입력받은 날짜 형식 바꿔주기
         val convertedDate = convertDateFormat(date)
 
-        //받은 날짜가 오늘이면
-        if(Today == convertedDate){
-            binding.mainWeightTv.text = date
-        }
-
         // 날짜와 체중을 맵에 저장
         weightDataMap[convertedDate] = weight
+
+        Log.d("get으로 받은 값이 Map에 잘 저장되었나?", weightDataMap[convertedDate].toString())
+
         Log.d("받은 weight", weight.toString())
-        Log.d("받은 날짜", setDayText())
+        Log.d("받은 날짜", convertedDate)
 
     }
 
-    // 선택한 날짜에 대한 체중 정보를 UI에 업데이트하는 함수
-    private fun updateWeightOnSelectedDate() {
-        // UI에 표시할 날짜를 가져옴
-        val selectDay = setDayText()
-        Log.d("선택한 날짜", selectDay)
-
-        // 선택한 날짜에 해당하는 체중을 맵에서 찾음
-        val weightForSelectedDate = weightDataMap[selectDay]
-        Log.d("찾은 weight", weightForSelectedDate.toString())
-
-        // 찾은 체중이 null이 아니라면 UI에 업데이트
-        weightForSelectedDate?.let {
-            binding.mainWeightTv.text = it.toString()
-        } ?: run {
-            // null이면 toast 메시지 표시
-            Toast.makeText(requireContext(), "데이터가 없습니다.", Toast.LENGTH_SHORT).show()
-
-            //null 값일때 default 값으로 넣기
-            binding.mainWeightTv.text = 0.0f.toString()
-        }
-    }
     fun convertDateFormat(inputDate: String): String {
         val inputDateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
         val outputDateFormat = SimpleDateFormat("MM. dd. EEE", Locale.getDefault())
@@ -321,5 +312,52 @@ class HomeFragment : Fragment(), DatePickerDialog.OnDateSetListener, SignupView 
     }
     override fun SignupFailure(code: Int, msg: String) {
         Toast.makeText(requireContext(),"weight정보를 받아오는데 실패했습니다.",Toast.LENGTH_SHORT).show()
+    }
+
+    //체중 관련
+    // 데이터 저장
+    fun saveWeightData() {
+        val sharedPreferences = context?.getSharedPreferences("myPreferences", Context.MODE_PRIVATE)
+        val editor = sharedPreferences!!.edit()
+
+        // 맵을 JSON 문자열로 변환하여 저장
+        val weightDataJson = Gson().toJson(weightDataMap)
+        editor.putString(KEY_WEIGHT_DATA, weightDataJson)
+
+        editor.apply()
+    }
+
+    // 체중 데이터 추가
+    fun addWeightData(convertedDate: String, weight: Float) {
+        weightDataMap[convertedDate] = weight
+        saveWeightData()
+    }
+
+    // 특정 날짜의 체중 데이터 가져오기
+    fun getWeightData(convertedDate: String): Float? {
+        return weightDataMap[convertedDate]
+    }
+
+    // 체중을 받아서 UI에 적용하는 함수
+    fun updateWeightOnUI() {
+        val select_day = binding.mainDateTv.text.toString()
+        val weight = getWeightData(select_day)
+        binding.mainWeightTv.text = weight?.toString() ?: "null"
+    }
+
+    // 데이터 불러오기
+    private fun loadWeightData() {
+        val sharedPreferences = requireActivity()!!.getSharedPreferences("myPreferences", Context.MODE_PRIVATE)
+        val weightDataJson = sharedPreferences.getString(KEY_WEIGHT_DATA, null)
+
+        // 저장된 데이터가 있다면 맵으로 변환
+        if (!weightDataJson.isNullOrEmpty()) {
+            val type: Type = object : TypeToken<MutableMap<String, Float>>() {}.type
+            weightDataMap.putAll(Gson().fromJson(weightDataJson, type))
+        }
+    }
+
+    override fun updateWeightOnUI(weight: Float) {
+        binding.mainWeightTv.text = weight?.toString() ?: "null"
     }
 }

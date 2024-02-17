@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="bottom"
+    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/bottom_seat_radius"
+    tools:context=".HomeWeightInputFragment">
+    
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="24dp"
+            android:layout_marginStart="26dp"
+            android:text="오늘의 체중 입력"
+            android:fontFamily="@font/pretendard_bold"
+            android:textSize="16dp"/>
+
+        <ImageView
+            android:id="@+id/home_weight_input_cancle_iv"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/cancel_ic"
+            android:layout_marginEnd="26dp"
+            android:layout_marginTop="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+        
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/home_weight_input_weight_cl"
+        android:layout_width="311dp"
+        android:layout_height="48dp"
+        android:background="@drawable/edit_engine"
+        android:layout_gravity="center"
+        app:layout_constraintTop_toBottomOf="@id/seach_meal_free_input_food_name_tv"
+        android:layout_marginTop="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <EditText
+            android:id="@+id/home_weight_input_weight_et"
+            android:layout_width="match_parent"
+            android:background="@drawable/edit_engine"
+            android:fontFamily="@font/pretendard_bold"
+            android:layout_marginStart="23dp"
+            android:hint="오늘의 체중(kg)"
+            android:layout_height="match_parent"
+            android:inputType="numberDecimal"
+            android:imeOptions="actionDone"/>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/home_weight_input_add_btn_cv"
+        android:layout_marginTop="37dp"
+        app:cardElevation="0dp"
+        android:layout_width="320dp"
+        android:layout_height="48dp"
+        app:cardCornerRadius="20dp"
+        android:layout_gravity="center"
+        app:cardBackgroundColor="@color/mono_gray2"
+        android:layout_marginBottom="22dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/seach_meal_free_input_food_name_et"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:focusable="false">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="입력 완료"
+            android:textSize="20dp"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:fontFamily="@font/pretendard_bold"/>
+
+    </com.google.android.material.card.MaterialCardView>
+</LinearLayout>

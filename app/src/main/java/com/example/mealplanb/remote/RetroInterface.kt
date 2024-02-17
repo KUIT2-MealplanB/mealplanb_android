@@ -3,6 +3,7 @@ package com.example.mealplanb.remote
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.GET
+import retrofit2.http.PATCH
 import retrofit2.http.POST
 
 interface RetroInterface {
@@ -21,6 +22,10 @@ interface RetroInterface {
     fun weightcheck(): Call<BaseResponse<Weight>>
     @POST("weight")
     fun weightpost(
+        @Body request : Weight
+    ):Call<BaseResponse<Weight>>
+    @PATCH("weight")
+    fun weightpatch(
         @Body request : Weight
     ):Call<BaseResponse<Weight>>
 }

@@ -21,10 +21,10 @@ class AuthService(private val context: Context) {
     private val authService = ApplicationClass.retrofit.create(RetroInterface::class.java)
 
     private lateinit var signupView : SignupView
-
     fun setSignupView(signupView: SignupView) {
         this.signupView = signupView
     }
+
 
     fun signup(email: String, password: String, sex: String, age: Int,
                height: Int, initial_weight: Float, target_weight: Float, diet_type: String,
@@ -127,7 +127,7 @@ class AuthService(private val context: Context) {
 
                         // HomeFragment의 SignupSuccess로 정보 전달
                         signupView.WeightcheckSuccess(weight as Float, date)
-                        Log.d("weight get Success", "User Profile Success")
+                        Log.d("weight get Success", "$weight $date")
                     }
 
                     else -> if (resp != null) {
@@ -156,8 +156,17 @@ class AuthService(private val context: Context) {
             ) {
                 val resp = response.body()
                 when(resp?.code) {
-                    1000 -> Log.d("weight post success",resp.toString()) //아직 layout이 구현안되어 있어서 Homefragment에 대신 구현
-                    else -> if (resp != null) {
+                    1000 -> {
+                        // 성공 시 원하는 처리
+                        val weightCheckResponse =
+                            resp.result // WeightCheckResponse 클래스에 따라 result에 응답 데이터가 있을 것이라 가정합니다
+                        val weight = weightCheckResponse?.weight ?: 0.0 // 체중 정보 추출
+                        val date = weightCheckResponse?.date ?: "" // 날짜 정보 추출
+
+                        // HomeFragment의 SignupSuccess로 정보 전달
+                        signupView.WeightcheckSuccess(weight as Float, date)
+                        Log.d("weight post success", resp.toString()) //아직 layout이 구현안되어 있어서 Homefragment에 대신 구현
+                    }else -> if (resp != null) {
                         signupView.SignupFailure(resp.code,resp.message)
                     }else{
                         Log.d("weight post null",resp.toString())
@@ -167,6 +176,41 @@ class AuthService(private val context: Context) {
 
             override fun onFailure(call: Call<BaseResponse<Weight>>, t: Throwable) {
                 Log.d("weight post Failed", t.toString())
+            }
+
+
+        })
+    }
+    fun weightpatch(weight: Float, date: String){
+        signupView.SignupLoading()
+        val request = Weight(weight, date)
+        authService.weightpatch(request).enqueue(object : Callback<BaseResponse<Weight>>{
+            override fun onResponse(
+                call: Call<BaseResponse<Weight>>,
+                response: Response<BaseResponse<Weight>>
+            ) {
+                val resp = response.body()
+                when(resp?.code) {
+                    1000 -> {
+                        // 성공 시 원하는 처리
+                        val weightCheckResponse =
+                            resp.result // WeightCheckResponse 클래스에 따라 result에 응답 데이터가 있을 것이라 가정합니다
+                        val weight = weightCheckResponse?.weight ?: 0.0 // 체중 정보 추출
+                        val date = weightCheckResponse?.date ?: "" // 날짜 정보 추출
+
+                        // HomeFragment의 SignupSuccess로 정보 전달
+                        signupView.WeightcheckSuccess(weight as Float, date)
+                        Log.d("weight post success", resp.toString()) //아직 layout이 구현안되어 있어서 Homefragment에 대신 구현
+                    } else -> if (resp != null) {
+                        signupView.SignupFailure(resp.code,resp.message)
+                    }else{
+                        Log.d("weight patcht null",resp.toString())
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<BaseResponse<Weight>>, t: Throwable) {
+                Log.d("weight patcht Failed", t.toString())
             }
 
 
