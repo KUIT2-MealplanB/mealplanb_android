@@ -31,7 +31,27 @@ data class LoginResponse(
     @SerializedName("jwt") val jwt : String
 )
 
+data class Plan(
+    @SerializedName("initial_weight") val initial_weight: Double,
+    @SerializedName("target_weight") val target_weight: Double,
+    @SerializedName("recommended_kcal") val recommended_kcal: Int,
+    @SerializedName("diet_type") val diet_type: String,
+    @SerializedName("carbohydrate_rate") val carbohydrate_rate: Int,
+    @SerializedName("protein_rate") val protein_rate: Int,
+    @SerializedName("fat_rate") val fat_rate: Int,
+    @SerializedName("target_kcal") val target_kcal: Int
+)
+
 data class Weight(
     @SerializedName("weight") val weight : Float,
     @SerializedName("date") val date : String,
+)
+
+data class ChatRecommendMeal(
+    @SerializedName("food_id") val food_id : Long,
+    @SerializedName("name") val name : String,
+    @SerializedName("offer") val offer : String,
+    @SerializedName("offer_carbohydrate") val offer_carbohydrate : Int,
+    @SerializedName("offer_protein") val offer_protein : Int,
+    @SerializedName("offer_fat") val offer_fat : Int
 )

@@ -320,6 +320,6 @@ class HomeFragment : Fragment(), DatePickerDialog.OnDateSetListener, SignupView 
         return ""
     }
     override fun SignupFailure(code: Int, msg: String) {
-        Toast.makeText(requireContext(),"weight정보를 받아오는데 실패했습니다.",Toast.LENGTH_SHORT).show()
+        Toast.makeText(requireContext(),"체중 정보를 받아오는데 실패했습니다.",Toast.LENGTH_SHORT).show()
     }
 }

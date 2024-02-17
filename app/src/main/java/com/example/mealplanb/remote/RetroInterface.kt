@@ -16,6 +16,9 @@ interface RetroInterface {
         @Body request: LoginRequest
     ): Call<BaseResponse<LoginResponse>>
 
+    @GET("user/plan")
+    fun plan(): Call<BaseResponse<Plan>>
+
     //Weight
     @GET("weight")
     fun weightcheck(): Call<BaseResponse<Weight>>
@@ -23,4 +26,7 @@ interface RetroInterface {
     fun weightpost(
         @Body request : Weight
     ):Call<BaseResponse<Weight>>
+
+    @GET("chat/my-favorite")
+    fun myfavoriteMealCheck(): Call<BaseResponse<ChatRecommendMeal>>
 }

@@ -107,7 +107,7 @@
                             android:fontFamily="@font/pretendard_bold"
                             android:paddingStart="20dp"
                             android:background="@drawable/et_privacy"
-                            android:imeOptions="actionDone"
+                            android:imeOptions="actionNext"
                             android:inputType="numberDecimal"/>
 
                         <TextView
@@ -276,7 +276,8 @@
                             android:fontFamily="@font/pretendard_bold"
                             android:paddingStart="20dp"
                             android:background="@drawable/et_privacy"
-                            android:focusable="false"/>
+                            android:imeOptions="actionNext"
+                            android:inputType="numberDecimal"/>
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -320,7 +321,8 @@
                             android:fontFamily="@font/pretendard_bold"
                             android:paddingStart="20dp"
                             android:background="@drawable/et_privacy"
-                            android:focusable="false"/>
+                            android:imeOptions="actionNext"
+                            android:inputType="numberDecimal"/>
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -375,7 +377,8 @@
                             android:fontFamily="@font/pretendard_bold"
                             android:paddingStart="20dp"
                             android:background="@drawable/et_privacy"
-                            android:focusable="false"/>
+                            android:imeOptions="actionNext"
+                            android:inputType="numberDecimal"/>
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -420,7 +423,8 @@
                             android:fontFamily="@font/pretendard_bold"
                             android:paddingStart="20dp"
                             android:background="@drawable/et_privacy"
-                            android:focusable="false"/>
+                            android:imeOptions="actionDone"
+                            android:inputType="numberDecimal"/>
 
                         <TextView
                             android:layout_width="wrap_content"

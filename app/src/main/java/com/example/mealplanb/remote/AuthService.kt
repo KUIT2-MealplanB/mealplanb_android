@@ -21,9 +21,19 @@ class AuthService(private val context: Context) {
     private val authService = ApplicationClass.retrofit.create(RetroInterface::class.java)
 
     private lateinit var signupView : SignupView
+    private lateinit var myFavoriteMealView: MyFavoriteMealView
+    private lateinit var planView: PlanView
 
     fun setSignupView(signupView: SignupView) {
         this.signupView = signupView
+    }
+
+    fun setMyFavoriteMealView(myFavoriteMealView: MyFavoriteMealView) {
+        this.myFavoriteMealView = myFavoriteMealView
+    }
+
+    fun setPlanView(planView: PlanView) {
+        this.planView = planView
     }
 
     fun signup(email: String, password: String, sex: String, age: Int,
@@ -106,6 +116,49 @@ class AuthService(private val context: Context) {
         })
     }
 
+    fun plan() {
+//        signupView.SignupLoading()
+
+        authService.plan().enqueue(object : Callback<BaseResponse<Plan>> {
+            override fun onResponse(
+                call: Call<BaseResponse<Plan>>,
+                response: Response<BaseResponse<Plan>>
+            ) {
+                val resp = response.body()
+                Log.d("plan get response",resp.toString())
+                when (resp?.code) {
+                    1000 -> {
+                        // 성공 시 원하는 처리
+                        val planCheckResponse = resp.result
+                        val initial_weight = planCheckResponse.initial_weight ?: 0.0
+                        val target_weight = planCheckResponse.target_weight ?: 0.0
+                        val recommended_kcal = planCheckResponse.recommended_kcal ?: 0
+                        val diet_type = planCheckResponse.diet_type ?: ""
+                        val carbohydrate_rate = planCheckResponse.carbohydrate_rate ?: 0
+                        val protein_rate = planCheckResponse.protein_rate ?: 0
+                        val fat_rate = planCheckResponse.fat_rate ?: 0
+                        val target_kcal = planCheckResponse.target_kcal ?: 0
+
+                        // 정보 전달
+                        planView.PlanCheckSuccess(initial_weight,target_weight,recommended_kcal,diet_type,carbohydrate_rate,protein_rate,fat_rate,target_kcal)
+                        Log.d("plan get Success", "User Profile Success")
+                    }
+
+                    else -> if (resp != null) {
+                        Log.d("plan get error", "User Profile error")
+                    }else{
+                        Log.d("plan get null", "User Profile null")
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<BaseResponse<Plan>>, t: Throwable) {
+                Log.d("plan get Failed", t.toString())
+            }
+
+        })
+    }
+
     //weight
     fun weightcheck(){
         signupView.SignupLoading()
@@ -171,5 +224,47 @@ class AuthService(private val context: Context) {
 
 
         })
+    }
+
+    fun myfavoriteMealCheck() {
+//        signupView.SignupLoading()
+
+        authService.myfavoriteMealCheck().enqueue(object : Callback<BaseResponse<ChatRecommendMeal>>{
+            override fun onResponse(
+                call: Call<BaseResponse<ChatRecommendMeal>>,
+                response: Response<BaseResponse<ChatRecommendMeal>>
+            ) {
+                val resp = response.body()
+                Log.d("weight get response",resp.toString())
+                when (resp?.code) {
+                    1000 -> {
+                        // 성공 시 원하는 처리
+                        val myfavoriteMealCheckResponse = resp.result
+                        val food_id = myfavoriteMealCheckResponse?.food_id ?: 0
+                        val name = myfavoriteMealCheckResponse?.name ?: ""
+                        val offer = myfavoriteMealCheckResponse?.offer ?: ""
+                        val offer_carbohydrate = myfavoriteMealCheckResponse?.offer_carbohydrate ?: 0
+                        val offer_protein = myfavoriteMealCheckResponse?.offer_protein ?: 0
+                        val offer_fat = myfavoriteMealCheckResponse?.offer_fat ?: 0
+
+                        // HomeFragment의 SignupSuccess로 정보 전달
+                        myFavoriteMealView.myFavoriteMealCheckSuccess(food_id, name, offer, offer_carbohydrate, offer_protein, offer_fat)
+                        Log.d("myfavorite meal get Success", "myfavorite meal get Success")
+                    }
+
+                    else -> if (resp != null) {
+                        Log.d("myfavorite meal get error", "myfavorite meal get error")
+                    }else{
+                        Log.d("myfavorite meal get null", "myfavorite meal get null")
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<BaseResponse<ChatRecommendMeal>>, t: Throwable) {
+                Log.d("myfavorite meal get Failed", t.toString())
+            }
+
+        })
+
     }
 }
