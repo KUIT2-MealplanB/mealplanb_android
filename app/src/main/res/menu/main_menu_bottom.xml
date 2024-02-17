@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/menu_mypage"
+        android:title="홈"
+        android:icon="@drawable/bnv_selector_mypage"/>
+    <item android:id="@+id/menu_food"
+        android:title="식단 추천"
+        android:icon="@drawable/bnv_selector_food"/>
+    <item android:id="@+id/menu_stats"
+        android:title="통계"
+        android:icon="@drawable/bnv_selector_stats"/>
+</menu>
