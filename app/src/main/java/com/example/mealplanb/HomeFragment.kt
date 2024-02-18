@@ -71,14 +71,14 @@ class HomeFragment : Fragment(), DatePickerDialog.OnDateSetListener, SignupView 
 //        binding.mainMeallistSv.isFillViewport = true
 
         // 가져온 값 사용
-        binding.mainTitleNicknameTv.text = nickname
-        when(avatarImageID) {
-            1 -> binding.mainCharacterIv.setImageResource(R.drawable.avartar_basic_pink_img)
-            2 -> binding.mainCharacterIv.setImageResource(R.drawable.avartar_basic_white_img)
-            3 -> binding.mainCharacterIv.setImageResource(R.drawable.avartar_basic_purple_img)
-            4 -> binding.mainCharacterIv.setImageResource(R.drawable.avartar_basic_black_img)
-            5 -> binding.mainCharacterIv.setImageResource(R.drawable.avartar_basic_gray_img)
-        }
+//        binding.mainTitleNicknameTv.text = nickname
+//        when(avatarImageID) {
+//            1 -> binding.mainCharacterIv.setImageResource(R.drawable.avartar_basic_pink_img)
+//            2 -> binding.mainCharacterIv.setImageResource(R.drawable.avartar_basic_white_img)
+//            3 -> binding.mainCharacterIv.setImageResource(R.drawable.avartar_basic_purple_img)
+//            4 -> binding.mainCharacterIv.setImageResource(R.drawable.avartar_basic_black_img)
+//            5 -> binding.mainCharacterIv.setImageResource(R.drawable.avartar_basic_gray_img)
+//        }
 
         //끼니 slot 추가
         binding.mainDaymealAddCv.setOnClickListener {
@@ -162,6 +162,8 @@ class HomeFragment : Fragment(), DatePickerDialog.OnDateSetListener, SignupView 
         authService.weightpost(32.5F, "2024-01-09")
         authService.weightcheck()
 
+        val dateFormat = SimpleDateFormat("yyyy-MM-dd")
+        authService.userProfileCheck(dateFormat.format(cal.time))
 
         return binding.root
     }
@@ -180,20 +182,25 @@ class HomeFragment : Fragment(), DatePickerDialog.OnDateSetListener, SignupView 
         cal2.set(Calendar.SECOND,0)
         cal2.set(Calendar.MILLISECOND,0)
 
+        val dateFormat = SimpleDateFormat("yyyy-MM-dd")
+        val authService = AuthService(requireContext())
+        authService.setSignupView(this)
+        authService.userProfileCheck(dateFormat.format(cal1.time))
+
         setHomeData()
 
-        val dayDiff = TimeUnit.MILLISECONDS.toDays(cal1.timeInMillis - cal2.timeInMillis)
-        if(dayDiff >= 0) {
-            binding.mainTitleContent1Tv.text = "님의 " + (dayDiff + 1).toString() + "일차"
-        } else {
-            binding.mainTitleContent1Tv.text = "님의 0일차"
-        }
+//        val dayDiff = TimeUnit.MILLISECONDS.toDays(cal1.timeInMillis - cal2.timeInMillis)
+//        if(dayDiff >= 0) {
+//            binding.mainTitleContent1Tv.text = "님의 " + (dayDiff + 1).toString() + "일차"
+//        } else {
+//            binding.mainTitleContent1Tv.text = "님의 0일차"
+//        }
     }
 
     fun setHomeData() {
         binding.mainDateTv.text = setDayText()
-        setProgress()
-        setNutData()
+//        setProgress()
+//        setNutData()
         // 체중 UI 업데이트
         updateWeightOnSelectedDate()
     }
@@ -214,50 +221,50 @@ class HomeFragment : Fragment(), DatePickerDialog.OnDateSetListener, SignupView 
         return "${String.format("%02d", selectedMonth)}. ${String.format("%02d", selectedDay)}. $dayOfWeek"
     }
 
-    fun setNutData() {
-        //일일 총 영양소 섭취량과 실 영양소 섭취량에 대한 더미 데이터 설정
-        saccDayTot = 500
-        proteinDayTot = 700
-        fatDayTot = 300
-        saccToday = 15 * cal.get(Calendar.DAY_OF_MONTH)
-        proteinToday = 20 * cal.get(Calendar.DAY_OF_MONTH)
-        fatToday = 9 * cal.get(Calendar.DAY_OF_MONTH)
+//    fun setNutData() {
+//        //일일 총 영양소 섭취량과 실 영양소 섭취량에 대한 더미 데이터 설정
+//        saccDayTot = 500
+//        proteinDayTot = 700
+//        fatDayTot = 300
+//        saccToday = 15 * cal.get(Calendar.DAY_OF_MONTH)
+//        proteinToday = 20 * cal.get(Calendar.DAY_OF_MONTH)
+//        fatToday = 9 * cal.get(Calendar.DAY_OF_MONTH)
+//
+//        binding.mainSaccSizeTv.text = saccToday.toString()
+//        binding.mainProteinSizeTv.text = proteinToday.toString()
+//        binding.mainFatSizeTv.text = fatToday.toString()
+//        binding.mainSaccTotalTv.text = "/" + saccDayTot.toString() + "g"
+//        binding.mainProteinTotalTv.text = "/" + proteinDayTot.toString() + "g"
+//        binding.mainFatTotalTv.text = "/" + fatDayTot.toString() + "g"
+//
+//        val sharedPref = requireActivity().getSharedPreferences("myPreferences", Context.MODE_PRIVATE)
+//        // SharedPreferences.Editor 객체를 얻어서 값을 저장
+//        val editor = sharedPref.edit()
+//        editor.putInt("saccDayTot",saccDayTot!!)
+//        editor.putInt("proteinDayTot",proteinDayTot!!)
+//        editor.putInt("fatDayTot",fatDayTot!!)
+//        editor.putInt("saccToday",saccToday!!)
+//        editor.putInt("proteinToday",proteinToday!!)
+//        editor.putInt("fatToday",fatToday!!)
+//        editor.apply()
+//    }
 
-        binding.mainSaccSizeTv.text = saccToday.toString()
-        binding.mainProteinSizeTv.text = proteinToday.toString()
-        binding.mainFatSizeTv.text = fatToday.toString()
-        binding.mainSaccTotalTv.text = "/" + saccDayTot.toString() + "g"
-        binding.mainProteinTotalTv.text = "/" + proteinDayTot.toString() + "g"
-        binding.mainFatTotalTv.text = "/" + fatDayTot.toString() + "g"
-
-        val sharedPref = requireActivity().getSharedPreferences("myPreferences", Context.MODE_PRIVATE)
-        // SharedPreferences.Editor 객체를 얻어서 값을 저장
-        val editor = sharedPref.edit()
-        editor.putInt("saccDayTot",saccDayTot!!)
-        editor.putInt("proteinDayTot",proteinDayTot!!)
-        editor.putInt("fatDayTot",fatDayTot!!)
-        editor.putInt("saccToday",saccToday!!)
-        editor.putInt("proteinToday",proteinToday!!)
-        editor.putInt("fatToday",fatToday!!)
-        editor.apply()
-    }
-
-    fun setProgress() {
-        //progress 값 및 남은 칼로리 설정
-        goalCal = binding.mainProgressbgPb.getText()?.toInt()
-        nowCal = adapter!!.totCal()
-        var progress = nowCal!! * 100 / goalCal!!
-        binding.mainProgressPb.updateProgress(progress)
-        binding.mainProgressPb.setText(nowCal.toString())
-        binding.mainTitleCalTv.text = (goalCal!! - nowCal!!).toString() + "kcal"
-
-        val sharedPref = requireActivity().getSharedPreferences("myPreferences", Context.MODE_PRIVATE)
-        // SharedPreferences.Editor 객체를 얻어서 값을 저장
-        val editor = sharedPref.edit()
-        editor.putInt("goalCal",goalCal!!)
-        editor.putInt("nowCal",nowCal!!)
-        editor.apply()
-    }
+//    fun setProgress() {
+//        //progress 값 및 남은 칼로리 설정
+//        goalCal = binding.mainProgressbgPb.getText()?.toInt()
+//        nowCal = adapter!!.totCal()
+//        var progress = nowCal!! * 100 / goalCal!!
+//        binding.mainProgressPb.updateProgress(progress)
+//        binding.mainProgressPb.setText(nowCal.toString())
+//        binding.mainTitleCalTv.text = (goalCal!! - nowCal!!).toString() + "kcal"
+//
+//        val sharedPref = requireActivity().getSharedPreferences("myPreferences", Context.MODE_PRIVATE)
+//        // SharedPreferences.Editor 객체를 얻어서 값을 저장
+//        val editor = sharedPref.edit()
+//        editor.putInt("goalCal",goalCal!!)
+//        editor.putInt("nowCal",nowCal!!)
+//        editor.apply()
+//    }
 
     override fun SignupLoading() {
     }
@@ -283,6 +290,49 @@ class HomeFragment : Fragment(), DatePickerDialog.OnDateSetListener, SignupView 
         Log.d("받은 weight", weight.toString())
         Log.d("받은 날짜", setDayText())
 
+    }
+
+    override fun UserProfileCheckSuccess(
+        date: String,
+        nickname: String,
+        elapsed_days: Int,
+        remaining_kcal: Int,
+        avatar_color: String,
+        avatar_appearance: String,
+        target_kcal: Int,
+        target_carbohydrate: Int,
+        target_protein: Int,
+        target_fat: Int,
+        kcal: Int,
+        carbohydrate: Int,
+        protein: Int,
+        fat: Int,
+        sodium: Int,
+        sugar: Int,
+        saturated_fat: Int,
+        trans_fat: Int,
+        cholesterol: Int
+    ) {
+        binding.mainProgressPb.updateProgress(kcal * 100 / remaining_kcal)
+
+        binding.mainTitleNicknameTv.text = nickname
+        binding.mainTitleContent1Tv.text = "님의 " + elapsed_days.toString() +"일차"
+        binding.mainTitleCalTv.text = remaining_kcal.toString() + "kcal"
+        when(avatar_color) {
+            "#FFD3FA" -> binding.mainCharacterIv.setImageResource(R.drawable.avartar_basic_pink_img)
+            "#FFFFFF" -> binding.mainCharacterIv.setImageResource(R.drawable.avartar_basic_white_img)
+            "#7C5CF8" -> binding.mainCharacterIv.setImageResource(R.drawable.avartar_basic_purple_img)
+            "#220435" -> binding.mainCharacterIv.setImageResource(R.drawable.avartar_basic_black_img)
+            else -> binding.mainCharacterIv.setImageResource(R.drawable.avartar_basic_gray_img)
+        }
+        binding.mainProgressbgPb.setText(target_kcal.toString())
+        binding.mainSaccTotalTv.text = "/" + target_carbohydrate.toString() + "g"
+        binding.mainProteinTotalTv.text = "/" + target_protein.toString() + "g"
+        binding.mainFatTotalTv.text = "/" + target_fat.toString() + "g"
+        binding.mainProgressPb.setText(kcal.toString())
+        binding.mainSaccSizeTv.text = carbohydrate.toString()
+        binding.mainProteinSizeTv.text = protein.toString()
+        binding.mainFatSizeTv.text = fat.toString()
     }
 
     // 선택한 날짜에 대한 체중 정보를 UI에 업데이트하는 함수

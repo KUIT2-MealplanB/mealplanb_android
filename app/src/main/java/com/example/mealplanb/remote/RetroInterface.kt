@@ -3,7 +3,9 @@ package com.example.mealplanb.remote
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.GET
+import retrofit2.http.PATCH
 import retrofit2.http.POST
+import retrofit2.http.Query
 
 interface RetroInterface {
     @POST("user/signup")
@@ -17,7 +19,21 @@ interface RetroInterface {
     ): Call<BaseResponse<LoginResponse>>
 
     @GET("user/plan")
-    fun plan(): Call<BaseResponse<Plan>>
+    fun plancheck(): Call<BaseResponse<Plan>>
+    @PATCH("user/plan")
+    fun planupdate(
+        @Body request: PlanUpdateRequest
+    ): Call<BaseResponse<Plan>>
+    @GET("user/plan/diet-type")
+    fun planDiettypeCheck(
+        //@Body request: PlanDietTypeRequest
+        @Query("diet_type") diet_type: String
+    ): Call<BaseResponse<PlanDietTypeResponse>>
+
+    @GET("user/profile")
+    fun userProfileCheck(
+        @Query("mealDate") mealDate: String
+    ): Call<BaseResponse<UserProfileResponse>>
 
     //Weight
     @GET("weight")

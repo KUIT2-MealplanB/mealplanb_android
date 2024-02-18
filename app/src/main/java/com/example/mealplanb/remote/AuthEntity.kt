@@ -42,6 +42,56 @@ data class Plan(
     @SerializedName("target_kcal") val target_kcal: Int
 )
 
+data class PlanUpdateRequest(
+    @SerializedName("initial_weight") val initial_weight: Double,
+    @SerializedName("target_weight") val target_weight: Double,
+    @SerializedName("carbohydrate_rate") val carbohydrate_rate: Int,
+    @SerializedName("protein_rate") val protein_rate: Int,
+    @SerializedName("fat_rate") val fat_rate: Int,
+    @SerializedName("target_kcal") val target_kcal: Int
+)
+
+data class PlanDietTypeRequest(
+    @SerializedName("diet_type") val diet_type: String
+)
+
+data class PlanDietTypeResponse(
+    @SerializedName("diet_type") val diet_type: String,
+    @SerializedName("carbohydrate_rate") val carbohydrate_rate: Int,
+    @SerializedName("protein_rate") val protein_rate: Int,
+    @SerializedName("fat_rate") val fat_rate: Int
+)
+
+data class UserProfileResponse(
+    @SerializedName("date") val date: String,
+    @SerializedName("nickname") val nickname: String,
+    @SerializedName("elapsed_days") val elapsed_days: Int,
+    @SerializedName("remaining_kcal") val remaining_kcal: Int,
+    @SerializedName("avatar_color") val avatar_color: String,
+    @SerializedName("avatar_appearance") val avatar_appearance: String,
+    @SerializedName("goal") val goal: UserProfileResponseGoal,
+    @SerializedName("intake") val intake: UserProfileResponseIntake
+)
+
+data class UserProfileResponseGoal(
+    @SerializedName("target_kcal") val target_kcal: Int,
+    @SerializedName("target_carbohydrate") val target_carbohydrate: Int,
+    @SerializedName("target_protein") val target_protein: Int,
+    @SerializedName("target_fat") val target_fat: Int
+)
+
+data class UserProfileResponseIntake(
+    @SerializedName("kcal") val kcal: Int,
+    @SerializedName("carbohydrate") val carbohydrate: Int,
+    @SerializedName("protein") val protein: Int,
+    @SerializedName("fat") val fat: Int,
+    @SerializedName("sodium") val sodium: Int,
+    @SerializedName("sugar") val sugar: Int,
+    @SerializedName("saturated_fat") val saturated_fat: Int,
+    @SerializedName("trans_fat") val trans_fat: Int,
+    @SerializedName("cholesterol") val cholesterol: Int
+)
+
 data class Weight(
     @SerializedName("weight") val weight : Float,
     @SerializedName("date") val date : String,

@@ -116,10 +116,10 @@ class AuthService(private val context: Context) {
         })
     }
 
-    fun plan() {
+    fun plancheck() {
 //        signupView.SignupLoading()
 
-        authService.plan().enqueue(object : Callback<BaseResponse<Plan>> {
+        authService.plancheck().enqueue(object : Callback<BaseResponse<Plan>> {
             override fun onResponse(
                 call: Call<BaseResponse<Plan>>,
                 response: Response<BaseResponse<Plan>>
@@ -154,6 +154,142 @@ class AuthService(private val context: Context) {
 
             override fun onFailure(call: Call<BaseResponse<Plan>>, t: Throwable) {
                 Log.d("plan get Failed", t.toString())
+            }
+
+        })
+    }
+
+    fun planupdate(initial_weight: Double,target_weight: Double,carbohydrate_rate: Int,
+                   protein_rate: Int,fat_rate: Int,target_kcal: Int) {
+        val request = PlanUpdateRequest(initial_weight,target_weight,carbohydrate_rate,protein_rate,fat_rate,target_kcal)
+        authService.planupdate(request).enqueue(object : Callback<BaseResponse<Plan>> {
+            override fun onResponse(
+                call: Call<BaseResponse<Plan>>,
+                response: Response<BaseResponse<Plan>>
+            ) {
+                val resp = response.body()
+                Log.d("plan update response",resp.toString())
+                when (resp?.code) {
+                    1000 -> {
+                        // 성공 시 원하는 처리
+                        val planUpdateResponse = resp.result
+                        val initial_weight = planUpdateResponse.initial_weight ?: 0.0
+                        val target_weight = planUpdateResponse.target_weight ?: 0.0
+                        val recommended_kcal = planUpdateResponse.recommended_kcal ?: 0
+                        val diet_type = planUpdateResponse.diet_type ?: ""
+                        val carbohydrate_rate = planUpdateResponse.carbohydrate_rate ?: 0
+                        val protein_rate = planUpdateResponse.protein_rate ?: 0
+                        val fat_rate = planUpdateResponse.fat_rate ?: 0
+                        val target_kcal = planUpdateResponse.target_kcal ?: 0
+
+                        // 정보 전달
+                        planView.PlanCheckSuccess(initial_weight,target_weight,recommended_kcal,diet_type,carbohydrate_rate,protein_rate,fat_rate,target_kcal)
+                        Log.d("plan update Success", "User Profile Success")
+                    }
+
+                    else -> if (resp != null) {
+                        Log.d("plan update error", "User Profile error")
+                    }else{
+                        Log.d("plan update null", "User Profile null")
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<BaseResponse<Plan>>, t: Throwable) {
+                Log.d("plan update Failed", "User Profile null")
+            }
+
+        })
+    }
+
+    fun planDietTypeCheck(diet_type: String) {
+//        val request = PlanDietTypeRequest(diet_type)
+        authService.planDiettypeCheck(diet_type = diet_type).enqueue(object : Callback<BaseResponse<PlanDietTypeResponse>> {
+            override fun onResponse(
+                call: Call<BaseResponse<PlanDietTypeResponse>>,
+                response: Response<BaseResponse<PlanDietTypeResponse>>
+            ) {
+                val resp = response.body()
+                Log.d("plan diettype get response",resp.toString())
+                when (resp?.code) {
+                    1000 -> {
+                        // 성공 시 원하는 처리
+                        val planDietTypeCheckResponse = resp.result
+                        val diet_type = planDietTypeCheckResponse.diet_type ?: ""
+                        val carbohydrate_rate = planDietTypeCheckResponse.carbohydrate_rate ?: 0
+                        val protein_rate = planDietTypeCheckResponse.protein_rate ?: 0
+                        val fat_rate = planDietTypeCheckResponse.fat_rate ?: 0
+
+                        // 정보 전달
+                        planView.PlanDietTypeCheckSuccess(diet_type,carbohydrate_rate,protein_rate,fat_rate)
+                        Log.d("plan diettype get Success", "User Profile Success")
+                    }
+
+                    else -> if (resp != null) {
+                        Log.d("plan diettype get error", "User Profile error")
+                    }else{
+                        Log.d("plan diettype get null", "User Profile null")
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<BaseResponse<PlanDietTypeResponse>>, t: Throwable) {
+                Log.d("plan diettype get Failed", t.toString())
+            }
+
+        })
+    }
+
+    fun userProfileCheck(date: String) {
+        authService.userProfileCheck(date).enqueue(object : Callback<BaseResponse<UserProfileResponse>> {
+            override fun onResponse(
+                call: Call<BaseResponse<UserProfileResponse>>,
+                response: Response<BaseResponse<UserProfileResponse>>
+            ) {
+                val resp = response.body()
+                Log.d("Home user profile get response",resp.toString())
+                when (resp?.code) {
+                    1000 -> {
+                        // 성공 시 원하는 처리
+                        val userProfileCheckResponse = resp.result
+                        val date = userProfileCheckResponse.date ?: ""
+                        val nickname = userProfileCheckResponse.nickname ?: ""
+                        val elapsed_days = userProfileCheckResponse.elapsed_days ?: 0
+                        val remaining_kcal = userProfileCheckResponse.remaining_kcal ?: 0
+                        val avatar_color = userProfileCheckResponse.avatar_color ?: ""
+                        val avatar_appearance = userProfileCheckResponse.avatar_appearance ?: ""
+                        val target_kcal = userProfileCheckResponse.goal.target_kcal ?: 0
+                        val target_carbohydrate = userProfileCheckResponse.goal.target_carbohydrate ?: 0
+                        val target_protein = userProfileCheckResponse.goal.target_protein ?: 0
+                        val target_fat = userProfileCheckResponse.goal.target_fat ?: 0
+                        val kcal = userProfileCheckResponse.intake.kcal ?: 0
+                        val carbohydrate = userProfileCheckResponse.intake.carbohydrate ?: 0
+                        val protein = userProfileCheckResponse.intake.protein ?: 0
+                        val fat = userProfileCheckResponse.intake.fat ?: 0
+                        val sodium = userProfileCheckResponse.intake.sodium ?: 0
+                        val sugar = userProfileCheckResponse.intake.sugar ?: 0
+                        val saturated_fat = userProfileCheckResponse.intake.saturated_fat ?: 0
+                        val trans_fat = userProfileCheckResponse.intake.trans_fat ?: 0
+                        val cholesterol = userProfileCheckResponse.intake.cholesterol ?: 0
+
+                        // 정보 전달
+                        signupView.UserProfileCheckSuccess(date,nickname, elapsed_days, remaining_kcal,
+                            avatar_color, avatar_appearance, target_kcal, target_carbohydrate,
+                            target_protein, target_fat, kcal, carbohydrate, protein, fat, sodium,
+                            sugar, saturated_fat, trans_fat, cholesterol)
+                        Log.d("Home user profile get Success", "User Profile Success")
+                    }
+
+                    else -> if (resp != null) {
+                        Log.d("Home user profile get error", "User Profile error")
+                    }else{
+                        Log.d("Home user profile get null", "User Profile null")
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<BaseResponse<UserProfileResponse>>, t: Throwable) {
+                Log.d("Home user profile get Failed", t.toString())
             }
 
         })

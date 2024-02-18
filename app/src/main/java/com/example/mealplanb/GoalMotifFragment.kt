@@ -82,15 +82,31 @@ class GoalMotifFragment : Fragment(), PlanView {
         spinner.adapter = adapter
 
         // 카테고리 번호 가져오기
-        val categoryNumber = sharedPref?.getInt("selectedCategory", 0)
-        if (categoryNumber != null && categoryNumber != 0) {
-            spinner.setSelection(categoryNumber-1)  // 카테고리 번호를 스피너의 초기값으로 설정
-        }
+//        val categoryNumber = sharedPref?.getInt("selectedCategory", 0)
+//        if (categoryNumber != null && categoryNumber != 0) {
+//            spinner.setSelection(categoryNumber-1)  // 카테고리 번호를 스피너의 초기값으로 설정
+//        }
+
+        //API 연동
+        val authService = AuthService(requireContext())
+        authService.setPlanView(this)
+        authService.plancheck()
 
         spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
                 val selectedDiet = parent.getItemAtPosition(position).toString()
                 // 선택된 값에 대한 처리
+                var diet_type = ""
+                when(selectedDiet) {
+                    "일반 식단" -> diet_type = "일반"
+                    "운동 식단" -> diet_type = "운동"
+                    "키토 식단" -> diet_type = "키토"
+                    "비건 식단" -> diet_type = "비건"
+                    else -> diet_type = "당뇨"
+                }
+                Log.d("selectedDiet",diet_type)
+
+                authService.planDietTypeCheck(diet_type)
 
                 // 변경된 카테고리 번호를 SharedPreferences에 저장
                 val sharedPref = activity?.getSharedPreferences("myPreferences", Context.MODE_PRIVATE)
@@ -123,6 +139,14 @@ class GoalMotifFragment : Fragment(), PlanView {
             val editor = sharedPref?.edit()
 
             //saveToSharedPreferences()
+
+            val initial_weight = binding.goalMotifStartWeightEt.text.toString().toDouble()
+            val target_weight = binding.goalMotifWantWeightEt.text.toString().toDouble()
+            val carbohydrate_rate = binding.goalMotifCarboEt.text.toString().toInt()
+            val protein_rate = binding.goalMotifProteinEt.text.toString().toInt()
+            val fat_rate = binding.goalMotifFatEt.text.toString().toInt()
+            val target_kcal = binding.goalMotifCaloriesEt.text.toString().toInt()
+            authService.planupdate(initial_weight,target_weight,carbohydrate_rate,protein_rate,fat_rate,target_kcal)
 
             if (startWeightInput != null) {
                 editor?.putFloat("startWeight", startWeightInput)
@@ -181,11 +205,6 @@ class GoalMotifFragment : Fragment(), PlanView {
             Shared.source = "" // 초기화
         }
 
-        //API 연동
-        val authService = AuthService(requireContext())
-        authService.setPlanView(this)
-        authService.plan()
-
         return binding.root
     }
 
@@ -216,6 +235,46 @@ class GoalMotifFragment : Fragment(), PlanView {
         binding.goalMotifProteinEt.hint = protein_rate.toString()
         binding.goalMotifFatEt.hint = fat_rate.toString()
         binding.goalMotifCaloriesEt.hint = target_kcal.toString()
+    }
+
+    override fun PlanUpdateSuccess(
+        initial_weight: Double,
+        target_weight: Double,
+        recommended_kcal: Int,
+        diet_type: String,
+        carbohydrate_rate: Int,
+        protein_rate: Int,
+        fat_rate: Int,
+        target_kcal: Int
+    ) {
+        var selectNum: Int = 0
+        when(diet_type) {
+            "일반" -> selectNum = 1
+            "운동" -> selectNum = 2
+            "키토" -> selectNum = 3
+            "비건" -> selectNum = 4
+            else -> selectNum = 5
+        }
+
+        binding.goalMotifStartWeightEt.hint = initial_weight.toString()
+        binding.goalMotifWantWeightEt.hint = target_weight.toString()
+        binding.goalMotifRecommendCalTv.text = recommended_kcal.toString()
+        binding.goalMotifDietSpinner.setSelection(selectNum)
+        binding.goalMotifCarboEt.hint = carbohydrate_rate.toString()
+        binding.goalMotifProteinEt.hint = protein_rate.toString()
+        binding.goalMotifFatEt.hint = fat_rate.toString()
+        binding.goalMotifCaloriesEt.hint = target_kcal.toString()
+    }
+
+    override fun PlanDietTypeCheckSuccess(
+        diet_type: String,
+        carbohydrate_rate: Int,
+        protein_rate: Int,
+        fat_rate: Int
+    ) {
+        binding.goalMotifCarboEt.hint = carbohydrate_rate.toString()
+        binding.goalMotifProteinEt.hint = protein_rate.toString()
+        binding.goalMotifFatEt.hint = fat_rate.toString()
     }
 
 //    // SharedPreferences에 값을 저장하는 함수
