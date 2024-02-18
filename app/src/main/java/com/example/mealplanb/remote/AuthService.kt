@@ -159,9 +159,9 @@ class AuthService(private val context: Context) {
         })
     }
 
-    fun planupdate(initial_weight: Double,target_weight: Double,carbohydrate_rate: Int,
-                   protein_rate: Int,fat_rate: Int,target_kcal: Int) {
-        val request = PlanUpdateRequest(initial_weight,target_weight,carbohydrate_rate,protein_rate,fat_rate,target_kcal)
+    fun planupdate(initial_weight: Double,target_weight: Double,diet_type: String,
+                   carbohydrate_rate: Int,protein_rate: Int,fat_rate: Int,target_kcal: Int) {
+        val request = PlanUpdateRequest(initial_weight,target_weight,diet_type,carbohydrate_rate,protein_rate,fat_rate,target_kcal)
         authService.planupdate(request).enqueue(object : Callback<BaseResponse<Plan>> {
             override fun onResponse(
                 call: Call<BaseResponse<Plan>>,
@@ -202,9 +202,9 @@ class AuthService(private val context: Context) {
         })
     }
 
-    fun planDietTypeCheck(diet_type: String) {
+    fun planDietTypeCheck(type: String) {
 //        val request = PlanDietTypeRequest(diet_type)
-        authService.planDiettypeCheck(diet_type = diet_type).enqueue(object : Callback<BaseResponse<PlanDietTypeResponse>> {
+        authService.planDiettypeCheck(type).enqueue(object : Callback<BaseResponse<PlanDietTypeResponse>> {
             override fun onResponse(
                 call: Call<BaseResponse<PlanDietTypeResponse>>,
                 response: Response<BaseResponse<PlanDietTypeResponse>>

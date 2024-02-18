@@ -27,7 +27,7 @@ interface RetroInterface {
     @GET("user/plan/diet-type")
     fun planDiettypeCheck(
         //@Body request: PlanDietTypeRequest
-        @Query("diet_type") diet_type: String
+        @Query("type") type: String
     ): Call<BaseResponse<PlanDietTypeResponse>>
 
     @GET("user/profile")

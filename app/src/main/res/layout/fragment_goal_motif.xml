@@ -103,7 +103,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="54dp"
                             android:hint="0.0"
-                            android:textColorHint="#101010"
+                            android:textColorHint="@color/mono_gray3"
                             android:fontFamily="@font/pretendard_bold"
                             android:paddingStart="20dp"
                             android:background="@drawable/et_privacy"
@@ -149,7 +149,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="54dp"
                             android:hint="0.0"
-                            android:textColorHint="#101010"
+                            android:textColorHint="@color/mono_gray3"
                             android:fontFamily="@font/pretendard_bold"
                             android:paddingStart="20dp"
                             android:background="@drawable/et_privacy"
@@ -272,12 +272,11 @@
                             android:layout_width="match_parent"
                             android:layout_height="54dp"
                             android:hint="0"
-                            android:textColorHint="#101010"
+                            android:textColorHint="@color/mono_gray3"
                             android:fontFamily="@font/pretendard_bold"
                             android:paddingStart="20dp"
                             android:background="@drawable/et_privacy"
-                            android:imeOptions="actionNext"
-                            android:inputType="numberDecimal"/>
+                            android:focusable="false"/>
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -317,12 +316,11 @@
                             android:layout_width="match_parent"
                             android:layout_height="54dp"
                             android:hint="0"
-                            android:textColorHint="#101010"
+                            android:textColorHint="@color/mono_gray3"
                             android:fontFamily="@font/pretendard_bold"
                             android:paddingStart="20dp"
                             android:background="@drawable/et_privacy"
-                            android:imeOptions="actionNext"
-                            android:inputType="numberDecimal"/>
+                            android:focusable="false"/>
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -373,12 +371,11 @@
                             android:layout_width="match_parent"
                             android:layout_height="54dp"
                             android:hint="0"
-                            android:textColorHint="#101010"
+                            android:textColorHint="@color/mono_gray3"
                             android:fontFamily="@font/pretendard_bold"
                             android:paddingStart="20dp"
                             android:background="@drawable/et_privacy"
-                            android:imeOptions="actionNext"
-                            android:inputType="numberDecimal"/>
+                            android:focusable="false"/>
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -419,12 +416,11 @@
                             android:layout_width="match_parent"
                             android:layout_height="54dp"
                             android:hint="0"
-                            android:textColorHint="#101010"
+                            android:textColorHint="@color/mono_gray3"
                             android:fontFamily="@font/pretendard_bold"
                             android:paddingStart="20dp"
                             android:background="@drawable/et_privacy"
-                            android:imeOptions="actionDone"
-                            android:inputType="numberDecimal"/>
+                            android:focusable="false"/>
 
                         <TextView
                             android:layout_width="wrap_content"

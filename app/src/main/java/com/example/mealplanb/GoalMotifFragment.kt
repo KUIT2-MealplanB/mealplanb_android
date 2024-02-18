@@ -146,7 +146,15 @@ class GoalMotifFragment : Fragment(), PlanView {
             val protein_rate = binding.goalMotifProteinEt.text.toString().toInt()
             val fat_rate = binding.goalMotifFatEt.text.toString().toInt()
             val target_kcal = binding.goalMotifCaloriesEt.text.toString().toInt()
-            authService.planupdate(initial_weight,target_weight,carbohydrate_rate,protein_rate,fat_rate,target_kcal)
+            var diet_type = ""
+            when(binding.goalMotifDietSpinner.selectedItem.toString()) {
+                "일반 식단" -> diet_type = "일반"
+                "운동 식단" -> diet_type = "운동"
+                "키토 식단" -> diet_type = "키토"
+                "비건 식단" -> diet_type = "비건"
+                else -> diet_type = "당뇨"
+            }
+            authService.planupdate(initial_weight,target_weight,diet_type,carbohydrate_rate,protein_rate,fat_rate,target_kcal)
 
             if (startWeightInput != null) {
                 editor?.putFloat("startWeight", startWeightInput)
@@ -230,7 +238,7 @@ class GoalMotifFragment : Fragment(), PlanView {
         binding.goalMotifStartWeightEt.hint = initial_weight.toString()
         binding.goalMotifWantWeightEt.hint = target_weight.toString()
         binding.goalMotifRecommendCalTv.text = recommended_kcal.toString()
-        binding.goalMotifDietSpinner.setSelection(selectNum)
+        binding.goalMotifDietSpinner.setSelection(selectNum-1)
         binding.goalMotifCarboEt.hint = carbohydrate_rate.toString()
         binding.goalMotifProteinEt.hint = protein_rate.toString()
         binding.goalMotifFatEt.hint = fat_rate.toString()
@@ -259,7 +267,7 @@ class GoalMotifFragment : Fragment(), PlanView {
         binding.goalMotifStartWeightEt.hint = initial_weight.toString()
         binding.goalMotifWantWeightEt.hint = target_weight.toString()
         binding.goalMotifRecommendCalTv.text = recommended_kcal.toString()
-        binding.goalMotifDietSpinner.setSelection(selectNum)
+        binding.goalMotifDietSpinner.setSelection(selectNum-1)
         binding.goalMotifCarboEt.hint = carbohydrate_rate.toString()
         binding.goalMotifProteinEt.hint = protein_rate.toString()
         binding.goalMotifFatEt.hint = fat_rate.toString()

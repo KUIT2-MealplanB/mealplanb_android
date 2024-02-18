@@ -45,6 +45,7 @@ data class Plan(
 data class PlanUpdateRequest(
     @SerializedName("initial_weight") val initial_weight: Double,
     @SerializedName("target_weight") val target_weight: Double,
+    @SerializedName("diet_type") val diet_type: String,
     @SerializedName("carbohydrate_rate") val carbohydrate_rate: Int,
     @SerializedName("protein_rate") val protein_rate: Int,
     @SerializedName("fat_rate") val fat_rate: Int,
