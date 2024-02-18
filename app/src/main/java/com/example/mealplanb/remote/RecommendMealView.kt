@@ -7,4 +7,6 @@ interface RecommendMealView {
         offer_carbohydrate: Int, offer_protein: Int, offer_fat: Int)
     fun communityFavoiriteMealCheckSuccess(food_id: Long, name: String, offer: String, offer_quantity: Int,
                                            offer_carbohydrate: Int, offer_protein: Int, offer_fat: Int)
+    fun recommendMealRegistSuccess()
+    fun recommendMealRegistFailure(code: Int,msg: String)
 }

@@ -476,4 +476,37 @@ class AuthService(private val context: Context) {
         })
 
     }
+
+    fun recommendMealRegist(food_id: Long, quantity: Int) {
+        val request = ChatMealRequest(food_id,quantity)
+        authService.recommendMealRegist(request).enqueue(object : Callback<BaseResponse<Any>> {
+            override fun onResponse(
+                call: Call<BaseResponse<Any>>,
+                response: Response<BaseResponse<Any>>
+            ) {
+                Log.d("recommendMeal regist response",response.toString())
+                if(response.isSuccessful) { // response의 성공 여부를 확인
+                    Toast.makeText(context, "식단 등록 완료! 5초 후 홈으로 이동합니다.", Toast.LENGTH_SHORT).show()
+                    Log.d("recommendMeal regist info",response.body().toString())
+
+                } else {
+                    // 서버에서는 응답을 했지만, 로그인 실패와 같은 이유로 성공적인 응답이 아닌 경우, Toast 메시지
+                    val gson = Gson()
+                    val type = object : TypeToken<BaseResponse<Any>>() {}.type
+                    val errorResponse: BaseResponse<Any>? = gson.fromJson(response.errorBody()?.charStream(), type)
+                    Log.d("recommendMeal regist info2", errorResponse.toString())
+
+                    if(errorResponse?.code.toString() == "7006"){
+                        Toast.makeText(context, errorResponse?.message, Toast.LENGTH_SHORT).show()
+                    }
+                    Log.d("recommendMeal regist Failed code",errorResponse?.code.toString())
+                }
+            }
+
+            override fun onFailure(call: Call<BaseResponse<Any>>, t: Throwable) {
+                Log.d("recommendMeal regist Failed", t.toString())
+            }
+
+        })
+    }
 }

@@ -111,3 +111,8 @@ data class ChatRecommendMeal(
 data class CheatDayRecommendMeal(
     @SerializedName("cheat_day_food") val cheat_day_food : List<ChatRecommendMeal>
 )
+
+data class ChatMealRequest(
+    @SerializedName("food_id") val food_id: Long,
+    @SerializedName("quantity") val quantity: Int
+)
