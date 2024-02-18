@@ -102,7 +102,12 @@ data class ChatRecommendMeal(
     @SerializedName("food_id") val food_id : Long,
     @SerializedName("name") val name : String,
     @SerializedName("offer") val offer : String,
+    @SerializedName("offer_quantity") val offer_quantity : Int,
     @SerializedName("offer_carbohydrate") val offer_carbohydrate : Int,
     @SerializedName("offer_protein") val offer_protein : Int,
     @SerializedName("offer_fat") val offer_fat : Int
+)
+
+data class CheatDayRecommendMeal(
+    @SerializedName("cheat_day_food") val cheat_day_food : List<ChatRecommendMeal>
 )

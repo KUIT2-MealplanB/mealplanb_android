@@ -6,10 +6,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.isInvisible
 import android.widget.Toast
 import com.example.mealplanb.databinding.FragmentMenuRecommendCheatdayBinding
 import com.example.mealplanb.remote.AuthService
+import com.example.mealplanb.remote.ChatRecommendMeal
 import com.example.mealplanb.remote.RecommendMealView
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.gson.Gson
@@ -112,13 +112,15 @@ class MenuRecommendCheatdayFragment : Fragment(), RecommendMealView {
         //치킨 버튼 선택시
         binding.menuRecommCheatCategoryChickenBtn.setOnClickListener {
             // Add data directly using the activity's public method
-            var randomMenuIdx = (0 until chickenItems.size).random()
-            menuRecommendFragment?.addCheatMenuFragmentItems(
-                MenuRecommItem.SystemMenuItem(chickenItems[randomMenuIdx].meal_name, chickenItems[randomMenuIdx].sacc_gram.toInt(), chickenItems[randomMenuIdx].protein_gram.toInt(),chickenItems[randomMenuIdx].fat_gram.toInt(),5)
-            )
+//            var randomMenuIdx = (0 until chickenItems.size).random()
+//            menuRecommendFragment?.addCheatMenuFragmentItems(
+//                MenuRecommItem.SystemMenuItem(chickenItems[randomMenuIdx].meal_name, chickenItems[randomMenuIdx].sacc_gram.toInt(), chickenItems[randomMenuIdx].protein_gram.toInt(),chickenItems[randomMenuIdx].fat_gram.toInt(),5)
+//            )
+//
+//            //SharedPreferences로 보낼 마지막 식단을 전역 변수에 저장
+//            updateVariables(chickenItems[randomMenuIdx])
 
-            //SharedPreferences로 보낼 마지막 식단을 전역 변수에 저장
-            updateVariables(chickenItems[randomMenuIdx])
+            authService.cheatMealCheck("치킨")
 
             //카테고리 레이아웃과 select 레이아웃 관련 visibility 코드
             updateVisibility()
@@ -127,71 +129,89 @@ class MenuRecommendCheatdayFragment : Fragment(), RecommendMealView {
         //피자 버튼 클릭시
         binding.menuRecommCheatCategoryPizzaBtn.setOnClickListener {
             // Add data directly using the activity's public method
-            var randomMenuIdx = (0 until pizzaItems.size).random()
-            menuRecommendFragment?.addCheatMenuFragmentItems(
-                MenuRecommItem.SystemMenuItem(pizzaItems[randomMenuIdx].meal_name, pizzaItems[randomMenuIdx].sacc_gram.toInt(), pizzaItems[randomMenuIdx].protein_gram.toInt(),pizzaItems[randomMenuIdx].fat_gram.toInt(),5)
-            )
+//            var randomMenuIdx = (0 until pizzaItems.size).random()
+//            menuRecommendFragment?.addCheatMenuFragmentItems(
+//                MenuRecommItem.SystemMenuItem(pizzaItems[randomMenuIdx].meal_name, pizzaItems[randomMenuIdx].sacc_gram.toInt(), pizzaItems[randomMenuIdx].protein_gram.toInt(),pizzaItems[randomMenuIdx].fat_gram.toInt(),5)
+//            )
+//
+//            updateVariables(pizzaItems[randomMenuIdx])
 
-            updateVariables(pizzaItems[randomMenuIdx])
+            authService.cheatMealCheck("피자")
+
             updateVisibility()
         }
 
         //버거 버튼 클릭시
         binding.menuRecommCheatCategoryBurgerBtn.setOnClickListener {
             // Add data directly using the activity's public method
-            var randomMenuIdx = (0 until burgerItems.size).random()
-            menuRecommendFragment?.addCheatMenuFragmentItems(
-                MenuRecommItem.SystemMenuItem(burgerItems[randomMenuIdx].meal_name, burgerItems[randomMenuIdx].sacc_gram.toInt(), burgerItems[randomMenuIdx].protein_gram.toInt(),burgerItems[randomMenuIdx].fat_gram.toInt(),5)
-            )
+//            var randomMenuIdx = (0 until burgerItems.size).random()
+//            menuRecommendFragment?.addCheatMenuFragmentItems(
+//                MenuRecommItem.SystemMenuItem(burgerItems[randomMenuIdx].meal_name, burgerItems[randomMenuIdx].sacc_gram.toInt(), burgerItems[randomMenuIdx].protein_gram.toInt(),burgerItems[randomMenuIdx].fat_gram.toInt(),5)
+//            )
+//
+//            updateVariables(burgerItems[randomMenuIdx])
 
-            updateVariables(burgerItems[randomMenuIdx])
+            authService.cheatMealCheck("버거")
+
             updateVisibility()
         }
 
         //면류 버튼 클릭시
         binding.menuRecommCheatCategoryNoodleBtn.setOnClickListener {
             // Add data directly using the activity's public method
-            var randomMenuIdx = (0 until noodleItems.size).random()
-            menuRecommendFragment?.addCheatMenuFragmentItems(
-                MenuRecommItem.SystemMenuItem(noodleItems[randomMenuIdx].meal_name, noodleItems[randomMenuIdx].sacc_gram.toInt(), noodleItems[randomMenuIdx].protein_gram.toInt(),noodleItems[randomMenuIdx].fat_gram.toInt(),5)
-            )
+//            var randomMenuIdx = (0 until noodleItems.size).random()
+//            menuRecommendFragment?.addCheatMenuFragmentItems(
+//                MenuRecommItem.SystemMenuItem(noodleItems[randomMenuIdx].meal_name, noodleItems[randomMenuIdx].sacc_gram.toInt(), noodleItems[randomMenuIdx].protein_gram.toInt(),noodleItems[randomMenuIdx].fat_gram.toInt(),5)
+//            )
+//
+//            updateVariables(noodleItems[randomMenuIdx])
 
-            updateVariables(noodleItems[randomMenuIdx])
+            authService.cheatMealCheck("면류")
+
             updateVisibility()
         }
 
         //분식 버튼 클릭시
         binding.menuRecommCheatCategorySnackbarBtn.setOnClickListener {
             // Add data directly using the activity's public method
-            var randomMenuIdx = (0 until snackbarItems.size).random()
-            menuRecommendFragment?.addCheatMenuFragmentItems(
-                MenuRecommItem.SystemMenuItem(snackbarItems[randomMenuIdx].meal_name, snackbarItems[randomMenuIdx].sacc_gram.toInt(), snackbarItems[randomMenuIdx].protein_gram.toInt(),snackbarItems[randomMenuIdx].fat_gram.toInt(),5)
-            )
+//            var randomMenuIdx = (0 until snackbarItems.size).random()
+//            menuRecommendFragment?.addCheatMenuFragmentItems(
+//                MenuRecommItem.SystemMenuItem(snackbarItems[randomMenuIdx].meal_name, snackbarItems[randomMenuIdx].sacc_gram.toInt(), snackbarItems[randomMenuIdx].protein_gram.toInt(),snackbarItems[randomMenuIdx].fat_gram.toInt(),5)
+//            )
+//
+//            updateVariables(snackbarItems[randomMenuIdx])
 
-            updateVariables(snackbarItems[randomMenuIdx])
+            authService.cheatMealCheck("분식")
+
             updateVisibility()
         }
 
         //족발/보쌈 버튼 클릭시
         binding.menuRecommCheatCategoryPorkBtn.setOnClickListener {
             // Add data directly using the activity's public method
-            var randomMenuIdx = (0 until polkbarItems.size).random()
-            menuRecommendFragment?.addCheatMenuFragmentItems(
-                MenuRecommItem.SystemMenuItem(polkbarItems[randomMenuIdx].meal_name, polkbarItems[randomMenuIdx].sacc_gram.toInt(), polkbarItems[randomMenuIdx].protein_gram.toInt(),polkbarItems[randomMenuIdx].fat_gram.toInt(),5)
-            )
+//            var randomMenuIdx = (0 until polkbarItems.size).random()
+//            menuRecommendFragment?.addCheatMenuFragmentItems(
+//                MenuRecommItem.SystemMenuItem(polkbarItems[randomMenuIdx].meal_name, polkbarItems[randomMenuIdx].sacc_gram.toInt(), polkbarItems[randomMenuIdx].protein_gram.toInt(),polkbarItems[randomMenuIdx].fat_gram.toInt(),5)
+//            )
+//
+//            updateVariables(polkbarItems[randomMenuIdx])
 
-            updateVariables(polkbarItems[randomMenuIdx])
+            authService.cheatMealCheck("족발/보쌈")
+
             updateVisibility()
         }
 
         //디저트 버튼 클릭시
         binding.menuRecommCheatCategoryDessertBtn.setOnClickListener {
             // Add data directly using the activity's public method
-            var randomMenuIdx = (0 until dessertbarItems.size).random()
-            menuRecommendFragment?.addCheatMenuFragmentItems(
-                MenuRecommItem.SystemMenuItem(dessertbarItems[randomMenuIdx].meal_name, dessertbarItems[randomMenuIdx].sacc_gram.toInt(), dessertbarItems[randomMenuIdx].protein_gram.toInt(),dessertbarItems[randomMenuIdx].fat_gram.toInt(),5)
-            )
-            updateVariables(dessertbarItems[randomMenuIdx])
+//            var randomMenuIdx = (0 until dessertbarItems.size).random()
+//            menuRecommendFragment?.addCheatMenuFragmentItems(
+//                MenuRecommItem.SystemMenuItem(dessertbarItems[randomMenuIdx].meal_name, dessertbarItems[randomMenuIdx].sacc_gram.toInt(), dessertbarItems[randomMenuIdx].protein_gram.toInt(),dessertbarItems[randomMenuIdx].fat_gram.toInt(),5)
+//            )
+//            updateVariables(dessertbarItems[randomMenuIdx])
+
+            authService.cheatMealCheck("디저트")
+
             updateVisibility()
         }
 
@@ -323,10 +343,24 @@ class MenuRecommendCheatdayFragment : Fragment(), RecommendMealView {
         binding.menuRecommCheatCategoryLv.visibility = View.INVISIBLE
     }
 
+    override fun cheatMealCheckSuccess(cheat_day_food: List<ChatRecommendMeal>) {
+        var randomMenuIdx = (0 until cheat_day_food.size).random()
+        meal_name = cheat_day_food[randomMenuIdx].name
+        sacc_gram = cheat_day_food[randomMenuIdx].offer_carbohydrate.toDouble()
+        protein_gram = cheat_day_food[randomMenuIdx].offer_protein.toDouble()
+        fat_gram = cheat_day_food[randomMenuIdx].offer_fat.toDouble()
+
+        val menuRecommendFragment = parentFragmentManager.findFragmentById(R.id.main_frm) as? MenuRecommendFragment
+        menuRecommendFragment?.addCheatMenuFragmentItems(
+            MenuRecommItem.SystemMenuItem(meal_name, sacc_gram.toInt(), protein_gram.toInt(),fat_gram.toInt(),5)
+        )
+    }
+
     override fun myFavoriteMealCheckSuccess(
         food_id: Long,
         name: String,
         offer: String,
+        offer_quantity: Int,
         offer_carbohydrate: Int,
         offer_protein: Int,
         offer_fat: Int
@@ -346,6 +380,7 @@ class MenuRecommendCheatdayFragment : Fragment(), RecommendMealView {
         food_id: Long,
         name: String,
         offer: String,
+        offer_quantity: Int,
         offer_carbohydrate: Int,
         offer_protein: Int,
         offer_fat: Int

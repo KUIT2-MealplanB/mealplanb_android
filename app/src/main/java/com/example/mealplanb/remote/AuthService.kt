@@ -6,7 +6,6 @@ import android.content.Intent
 import android.util.Log
 import android.widget.Toast
 import com.example.mealplanb.ApplicationClass
-import com.example.mealplanb.ApplicationClass.Companion.mSharedPreferences
 import com.example.mealplanb.MainActivity
 import com.example.mealplanb.local.getJwt
 import com.example.mealplanb.local.saveJwt
@@ -362,6 +361,42 @@ class AuthService(private val context: Context) {
         })
     }
 
+    fun cheatMealCheck(category: String) {
+        authService.cheatMealCheck(category).enqueue(object : Callback<BaseResponse<CheatDayRecommendMeal>> {
+            override fun onResponse(
+                call: Call<BaseResponse<CheatDayRecommendMeal>>,
+                response: Response<BaseResponse<CheatDayRecommendMeal>>
+            ) {
+                val resp = response.body()
+                Log.d("cheat get response",resp.toString())
+                when (resp?.code) {
+                    1000 -> {
+                        // 성공 시 원하는 처리
+                        val cheatMealCheckResponse = resp.result
+                        val cheat_day_food = cheatMealCheckResponse.cheat_day_food ?: arrayListOf()
+
+                        recommendMealView.cheatMealCheckSuccess(cheat_day_food)
+                        Log.d("cheat meal get Success", "myfavorite meal get Success")
+                    }
+
+                    else -> if (resp != null) {
+                        Log.d("cheat meal get error", "myfavorite meal get error")
+                    }else{
+                        Log.d("cheat meal get null", "myfavorite meal get null")
+                    }
+                }
+            }
+
+            override fun onFailure(
+                call: Call<BaseResponse<CheatDayRecommendMeal>>,
+                t: Throwable
+            ) {
+                Log.d("cheat meal get Failed", t.toString())
+            }
+
+        })
+    }
+
     fun myfavoriteMealCheck() {
         authService.myfavoriteMealCheck().enqueue(object : Callback<BaseResponse<ChatRecommendMeal>>{
             override fun onResponse(
@@ -377,11 +412,12 @@ class AuthService(private val context: Context) {
                         val food_id = myfavoriteMealCheckResponse?.food_id ?: 0
                         val name = myfavoriteMealCheckResponse?.name ?: ""
                         val offer = myfavoriteMealCheckResponse?.offer ?: ""
+                        val offer_quantity = myfavoriteMealCheckResponse.offer_quantity ?: 0
                         val offer_carbohydrate = myfavoriteMealCheckResponse?.offer_carbohydrate ?: 0
                         val offer_protein = myfavoriteMealCheckResponse?.offer_protein ?: 0
                         val offer_fat = myfavoriteMealCheckResponse?.offer_fat ?: 0
 
-                        recommendMealView.myFavoriteMealCheckSuccess(food_id, name, offer, offer_carbohydrate, offer_protein, offer_fat)
+                        recommendMealView.myFavoriteMealCheckSuccess(food_id, name, offer, offer_quantity, offer_carbohydrate, offer_protein, offer_fat)
                         Log.d("myfavorite meal get Success", "myfavorite meal get Success")
                     }
 
@@ -416,11 +452,12 @@ class AuthService(private val context: Context) {
                         val food_id = communityfavoriteMealCheckResponse?.food_id ?: 0
                         val name = communityfavoriteMealCheckResponse?.name ?: ""
                         val offer = communityfavoriteMealCheckResponse?.offer ?: ""
+                        val offer_quantity = communityfavoriteMealCheckResponse.offer_quantity ?: 0
                         val offer_carbohydrate = communityfavoriteMealCheckResponse?.offer_carbohydrate ?: 0
                         val offer_protein = communityfavoriteMealCheckResponse?.offer_protein ?: 0
                         val offer_fat = communityfavoriteMealCheckResponse?.offer_fat ?: 0
 
-                        recommendMealView.communityFavoiriteMealCheckSuccess(food_id, name, offer, offer_carbohydrate, offer_protein, offer_fat)
+                        recommendMealView.communityFavoiriteMealCheckSuccess(food_id, name, offer, offer_quantity, offer_carbohydrate, offer_protein, offer_fat)
                         Log.d("communityfavorite meal get Success", "myfavorite meal get Success")
                     }
 

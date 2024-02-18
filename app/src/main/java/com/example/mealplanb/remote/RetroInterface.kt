@@ -43,6 +43,10 @@ interface RetroInterface {
         @Body request : Weight
     ):Call<BaseResponse<Weight>>
 
+    @GET("chat/cheat-day")
+    fun cheatMealCheck(
+        @Query("category") category: String
+    ): Call<BaseResponse<CheatDayRecommendMeal>>
     @GET("chat/my-favorite")
     fun myfavoriteMealCheck(): Call<BaseResponse<ChatRecommendMeal>>
     @GET("chat/community-favorite")
