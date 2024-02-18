@@ -55,4 +55,6 @@ interface RetroInterface {
     fun recommendMealRegist(
         @Body request: ChatMealRequest
     ): Call<BaseResponse<Any>>
+    @GET("chat/meal")
+    fun recommendMealCheck(): Call<BaseResponse<List<ChatMealListResponse>>>
 }

@@ -22,6 +22,7 @@ class AuthService(private val context: Context) {
     private lateinit var signupView : SignupView
     private lateinit var recommendMealView: RecommendMealView
     private lateinit var planView: PlanView
+    private lateinit var recommendMealListView: RecommendMealListView
 
     fun setSignupView(signupView: SignupView) {
         this.signupView = signupView
@@ -33,6 +34,10 @@ class AuthService(private val context: Context) {
 
     fun setPlanView(planView: PlanView) {
         this.planView = planView
+    }
+
+    fun setRecommendMealListView(recommendMealListView: RecommendMealListView) {
+        this.recommendMealListView = recommendMealListView
     }
 
     fun signup(email: String, password: String, sex: String, age: Int,
@@ -505,6 +510,41 @@ class AuthService(private val context: Context) {
 
             override fun onFailure(call: Call<BaseResponse<Any>>, t: Throwable) {
                 Log.d("recommendMeal regist Failed", t.toString())
+            }
+
+        })
+    }
+
+    fun recommendMealCheck() {
+        authService.recommendMealCheck().enqueue(object : Callback<BaseResponse<List<ChatMealListResponse>>> {
+            override fun onResponse(
+                call: Call<BaseResponse<List<ChatMealListResponse>>>,
+                response: Response<BaseResponse<List<ChatMealListResponse>>>
+            ) {
+                val resp = response.body()
+                Log.d("recommend meal get response",resp.toString())
+                when (resp?.code) {
+                    1000 -> {
+                        // 성공 시 원하는 처리
+                        val recommendMealCheckResponse = resp.result
+
+                        recommendMealListView.recommendMealListCheckSuccess(recommendMealCheckResponse)
+                        Log.d("recommend meal get Success", "myfavorite meal get Success")
+                    }
+
+                    else -> if (resp != null) {
+                        Log.d("recommend meal get error", "myfavorite meal get error")
+                    }else{
+                        Log.d("recommend meal get null", "myfavorite meal get null")
+                    }
+                }
+            }
+
+            override fun onFailure(
+                call: Call<BaseResponse<List<ChatMealListResponse>>>,
+                t: Throwable
+            ) {
+                Log.d("recommend meal get Failed", t.toString())
             }
 
         })

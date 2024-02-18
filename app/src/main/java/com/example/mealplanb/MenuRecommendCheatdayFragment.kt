@@ -361,22 +361,29 @@ class MenuRecommendCheatdayFragment : Fragment(), RecommendMealView {
 
     override fun cheatMealCheckSuccess(cheat_day_food: List<ChatRecommendMeal>) {
 //        var randomMenuIdx = (0 until cheat_day_food.size).random()
-        recommList = cheat_day_food
-        meal_id = cheat_day_food[recommIndexList[selectCategoryIdx]].food_id
-        meal_name = cheat_day_food[recommIndexList[selectCategoryIdx]].name
-        meal_quantity = cheat_day_food[recommIndexList[selectCategoryIdx]].offer_quantity
-        sacc_gram = cheat_day_food[recommIndexList[selectCategoryIdx]].offer_carbohydrate.toDouble()
-        protein_gram = cheat_day_food[recommIndexList[selectCategoryIdx]].offer_protein.toDouble()
-        fat_gram = cheat_day_food[recommIndexList[selectCategoryIdx]].offer_fat.toDouble()
-        recommIndexList[selectCategoryIdx] += 1
-        if(recommIndexList[selectCategoryIdx] >= recommList.size) {
-            recommIndexList[selectCategoryIdx] = 0
-        }
+        if(cheat_day_food.size == 0) {
+            Toast.makeText(context, "남은 칼로리로 추천받을 수 있는 음식이 없습니다.", Toast.LENGTH_SHORT).show()
+            requireActivity().supportFragmentManager.beginTransaction()
+                .replace(R.id.menu_recomm_button_cv, MenuRecommendWhatMenuFragment())
+                .commit()
+        } else {
+            recommList = cheat_day_food
+            meal_id = cheat_day_food[recommIndexList[selectCategoryIdx]].food_id
+            meal_name = cheat_day_food[recommIndexList[selectCategoryIdx]].name
+            meal_quantity = cheat_day_food[recommIndexList[selectCategoryIdx]].offer_quantity
+            sacc_gram = cheat_day_food[recommIndexList[selectCategoryIdx]].offer_carbohydrate.toDouble()
+            protein_gram = cheat_day_food[recommIndexList[selectCategoryIdx]].offer_protein.toDouble()
+            fat_gram = cheat_day_food[recommIndexList[selectCategoryIdx]].offer_fat.toDouble()
+            recommIndexList[selectCategoryIdx] += 1
+            if(recommIndexList[selectCategoryIdx] >= recommList.size) {
+                recommIndexList[selectCategoryIdx] = 0
+            }
 
-        val menuRecommendFragment = parentFragmentManager.findFragmentById(R.id.main_frm) as? MenuRecommendFragment
-        menuRecommendFragment?.addCheatMenuFragmentItems(
-            MenuRecommItem.SystemMenuItem(meal_name, sacc_gram.toInt(), protein_gram.toInt(),fat_gram.toInt(),5)
-        )
+            val menuRecommendFragment = parentFragmentManager.findFragmentById(R.id.main_frm) as? MenuRecommendFragment
+            menuRecommendFragment?.addCheatMenuFragmentItems(
+                MenuRecommItem.SystemMenuItem(meal_name, sacc_gram.toInt(), protein_gram.toInt(),fat_gram.toInt(),5)
+            )
+        }
     }
 
     override fun myFavoriteMealCheckSuccess(

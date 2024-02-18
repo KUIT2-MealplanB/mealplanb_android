@@ -116,3 +116,12 @@ data class ChatMealRequest(
     @SerializedName("food_id") val food_id: Long,
     @SerializedName("quantity") val quantity: Int
 )
+
+data class ChatMealListResponse(
+    @SerializedName("date") val date : String,
+    @SerializedName("meal_type") val meal_type : String,
+    @SerializedName("name") val name : String,
+    @SerializedName("offer_carbohydrate") val offer_carbohydrate : Int,
+    @SerializedName("offer_protein") val offer_protein : Int,
+    @SerializedName("offer_fat") val offer_fat : Int
+)
