@@ -148,7 +148,7 @@ class SearchMealFragment : Fragment() {
             binding.searchMealMyLl.visibility=View.GONE
 
             //검색창 hint
-            binding.searchMealInputEt.hint = "나의 식사"
+            binding.searchMealInputEt.hint = "나의 식단"
             binding.searchMealInputEt.setHintTextColor(Color.parseColor("#7C5CF8"))
 
             // SharedPreferences에서 myMadeList 데이터 읽어오기
