@@ -255,7 +255,6 @@ class AuthService(private val context: Context) {
         })
     }
     fun favoriteFoodPost(food_id : Int){
-        signupView.SignupLoading()
         val request = FavoriteFoodRequest(food_id)
         authService.favoriteFoodPost(request).enqueue(object : Callback<BaseResponse<Unit>>{
             override fun onResponse(
