@@ -244,6 +244,40 @@ class AuthService(private val context: Context) {
         })
     }
 
+    fun planRecommKcalCheck(initial_weight: Double,target_weight: Double) {
+        authService.planRecommKcalCheck(initial_weight,target_weight).enqueue(object : Callback<BaseResponse<PlanRecommKcalResponse>> {
+            override fun onResponse(
+                call: Call<BaseResponse<PlanRecommKcalResponse>>,
+                response: Response<BaseResponse<PlanRecommKcalResponse>>
+            ) {
+                val resp = response.body()
+                Log.d("plan recommKcal get response",resp.toString())
+                when (resp?.code) {
+                    1000 -> {
+                        // 성공 시 원하는 처리
+                        val planRecommKcalCheckResponse = resp.result
+                        val recommended_kcal = planRecommKcalCheckResponse.recommended_kcal
+
+                        // 정보 전달
+                        planView.PlanRecommKcalCheckSuccess(recommended_kcal)
+                            Log.d("plan recommKcal get Success", "User Profile Success")
+                    }
+
+                    else -> if (resp != null) {
+                        Log.d("plan recommKcal get error", "User Profile error")
+                    }else{
+                        Log.d("plan recommKcal get null", "User Profile null")
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<BaseResponse<PlanRecommKcalResponse>>, t: Throwable) {
+                Log.d("plan recommKcal get Failed", t.toString())
+            }
+
+        })
+    }
+
     fun userProfileCheck(date: String) {
         authService.userProfileCheck(date).enqueue(object : Callback<BaseResponse<UserProfileResponse>> {
             override fun onResponse(

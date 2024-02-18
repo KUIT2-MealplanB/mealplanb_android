@@ -29,6 +29,11 @@ interface RetroInterface {
         //@Body request: PlanDietTypeRequest
         @Query("type") type: String
     ): Call<BaseResponse<PlanDietTypeResponse>>
+    @GET("user/plan/recommended-kcal")
+    fun planRecommKcalCheck(
+        @Query("initial_weight") initial_weight: Double,
+        @Query("target_weight") target_weight: Double
+    ): Call<BaseResponse<PlanRecommKcalResponse>>
 
     @GET("user/profile")
     fun userProfileCheck(

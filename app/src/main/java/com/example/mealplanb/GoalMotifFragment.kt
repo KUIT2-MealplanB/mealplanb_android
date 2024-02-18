@@ -47,32 +47,57 @@ class GoalMotifFragment : Fragment(), PlanView {
 //        binding.goalMotifStartWeightEt.hint = "$startWeight"
 //        binding.goalMotifWantWeightEt.hint = "$wantWeight"
 
+        //API 연동
+        val authService = AuthService(requireContext())
+        authService.setPlanView(this)
+        authService.plancheck()
+
         //et 포커스 이동
-//        binding.goalMotifStartWeightEt.setOnEditorActionListener { v, actionId, _ ->
-//            if(actionId == EditorInfo.IME_ACTION_DONE){
+        binding.goalMotifStartWeightEt.setOnEditorActionListener { v, actionId, _ ->
+
+            start_weight = binding.goalMotifStartWeightEt.toString().toDoubleOrNull() ?: 0.0
+            if(binding.goalMotifWantWeightEt.text.toString().isNotEmpty()) {
+                goal_weight = binding.goalMotifWantWeightEt.text.toString().toDouble()
+                authService.planRecommKcalCheck(start_weight,goal_weight)
+            }
+//            if(actionId == EditorInfo.IME_ACTION_NEXT){
 //                val imm = activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
 //                imm.hideSoftInputFromWindow(v.windowToken, 0)
-//
-//                //goalMotifStartWeightEt를 변수에 저장
-//                goal_weight = binding.goalMotifStartWeightEt.toString().toDoubleOrNull() ?: 0.0
-//
+
+                //goalMotifStartWeightEt를 변수에 저장
+//                start_weight = binding.goalMotifStartWeightEt.toString().toDoubleOrNull() ?: 0.0
+//                if(binding.goalMotifWantWeightEt.text.toString().isNotEmpty()) {
+//                    goal_weight = binding.goalMotifWantWeightEt.text.toString().toDouble()
+//                    authService.planRecommKcalCheck(start_weight,goal_weight)
+//                }
+
 //                return@setOnEditorActionListener true
 //            }
-//            false
-//        }
-//
-//        binding.goalMotifWantWeightEt.setOnEditorActionListener { v, actionId, _ ->
+            false
+        }
+
+        binding.goalMotifWantWeightEt.setOnEditorActionListener { v, actionId, _ ->
+
+            goal_weight = binding.goalMotifWantWeightEt.toString().toDoubleOrNull() ?: 0.0
+            if(binding.goalMotifStartWeightEt.text.toString().isNotEmpty()) {
+                start_weight = binding.goalMotifStartWeightEt.text.toString().toDouble()
+                authService.planRecommKcalCheck(start_weight,goal_weight)
+            }
 //            if(actionId == EditorInfo.IME_ACTION_DONE){
 //                val imm = activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
 //                imm.hideSoftInputFromWindow(v.windowToken, 0)
 //
 //                //goalMotifWantWeightEt를 변수에 저장
-//                start_weight = binding.goalMotifWantWeightEt.toString().toDoubleOrNull() ?: 0.0
+//                goal_weight = binding.goalMotifWantWeightEt.toString().toDoubleOrNull() ?: 0.0
+//                if(binding.goalMotifStartWeightEt.text.toString().isNotEmpty()) {
+//                    start_weight = binding.goalMotifStartWeightEt.text.toString().toDouble()
+//                    authService.planRecommKcalCheck(start_weight,goal_weight)
+//                }
 //
 //                return@setOnEditorActionListener true
 //            }
-//            false
-//        }
+            false
+        }
 
         //spinner 구현
         val diets = arrayOf("일반 식단","운동 식단","키토 식단","비건 식단","당뇨 식단")
@@ -86,11 +111,6 @@ class GoalMotifFragment : Fragment(), PlanView {
 //        if (categoryNumber != null && categoryNumber != 0) {
 //            spinner.setSelection(categoryNumber-1)  // 카테고리 번호를 스피너의 초기값으로 설정
 //        }
-
-        //API 연동
-        val authService = AuthService(requireContext())
-        authService.setPlanView(this)
-        authService.plancheck()
 
         spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
@@ -283,6 +303,10 @@ class GoalMotifFragment : Fragment(), PlanView {
         binding.goalMotifCarboEt.hint = carbohydrate_rate.toString()
         binding.goalMotifProteinEt.hint = protein_rate.toString()
         binding.goalMotifFatEt.hint = fat_rate.toString()
+    }
+
+    override fun PlanRecommKcalCheckSuccess(recommended_kcal: Int) {
+        binding.goalMotifCaloriesEt.hint = recommended_kcal.toString()
     }
 
 //    // SharedPreferences에 값을 저장하는 함수

@@ -63,6 +63,10 @@ data class PlanDietTypeResponse(
     @SerializedName("fat_rate") val fat_rate: Int
 )
 
+data class PlanRecommKcalResponse(
+    @SerializedName("recommended_kcal") val recommended_kcal: Int
+)
+
 data class UserProfileResponse(
     @SerializedName("date") val date: String,
     @SerializedName("nickname") val nickname: String,

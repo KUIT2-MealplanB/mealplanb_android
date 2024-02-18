@@ -6,4 +6,5 @@ interface PlanView {
     fun PlanUpdateSuccess(initial_weight: Double, target_weight: Double, recommended_kcal: Int, diet_type: String,
                           carbohydrate_rate: Int, protein_rate: Int, fat_rate: Int, target_kcal: Int)
     fun PlanDietTypeCheckSuccess(diet_type: String, carbohydrate_rate: Int, protein_rate: Int, fat_rate: Int)
+    fun PlanRecommKcalCheckSuccess(recommended_kcal: Int)
 }
