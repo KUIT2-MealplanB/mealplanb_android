@@ -9,6 +9,8 @@ import android.view.ViewGroup
 import androidx.core.view.isInvisible
 import android.widget.Toast
 import com.example.mealplanb.databinding.FragmentMenuRecommendCheatdayBinding
+import com.example.mealplanb.remote.AuthService
+import com.example.mealplanb.remote.RecommendMealView
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -20,7 +22,7 @@ import kotlinx.coroutines.withContext
 import java.util.Calendar
 import java.util.Date
 
-class MenuRecommendCheatdayFragment : Fragment() {
+class MenuRecommendCheatdayFragment : Fragment(), RecommendMealView {
     lateinit var binding: FragmentMenuRecommendCheatdayBinding
     var cal = Calendar.getInstance()
     private val numList : ArrayList<String> = arrayListOf("첫","두","세","네","다섯","여섯","일곱","여덟","아홉","열")
@@ -84,6 +86,20 @@ class MenuRecommendCheatdayFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val menuRecommendFragment = parentFragmentManager.findFragmentById(R.id.main_frm) as? MenuRecommendFragment
+
+        val sharedPreferences = requireActivity().getSharedPreferences("myPreferences",Context.MODE_PRIVATE)
+        val selectRecomm = sharedPreferences.getInt("recommSelect",1)
+
+        val authService = AuthService(requireContext())
+        authService.setRecommendMealView(this)
+
+        if(selectRecomm == 2) {
+            authService.myfavoriteMealCheck()
+            updateVisibility()
+        } else if(selectRecomm == 3) {
+            authService.communityfavoriteMealCheck()
+            updateVisibility()
+        }
 
         //뒤로 가는 아이콘 클릭시
         binding.menuRecommCheatCategoryBackCv.setOnClickListener {
@@ -276,12 +292,17 @@ class MenuRecommendCheatdayFragment : Fragment() {
 
         //다시 식단을 고를래요 선택 시
         binding.menuRecommCheatdayBtnCl.setOnClickListener {
-            MenuRecommItem.UserItem("다시 ", "식단을 고를래요", 2)
-
+            menuRecommendFragment?.addWhatMenuFragmentItems(MenuRecommItem.UserItem("다시 ", "식단을 고를래요", 2))
 
             //카테고리 프레그먼트가 다시 뜰 수 있도록함
-            binding.menuRecommCheatCategoryLv.visibility = view.visibility
-            binding.menuRecommCheatdayButtonLv.visibility = View.INVISIBLE
+            if(selectRecomm == 1) {
+                binding.menuRecommCheatCategoryLv.visibility = view.visibility
+                binding.menuRecommCheatdayButtonLv.visibility = View.INVISIBLE
+            } else {
+                requireActivity().supportFragmentManager.beginTransaction()
+                    .replace(R.id.menu_recomm_button_cv, MenuRecommendWhatMenuFragment())
+                    .commit()
+            }
         }
 
         // 다른 초기화 작업 등을 수행할 수 있음
@@ -300,5 +321,43 @@ class MenuRecommendCheatdayFragment : Fragment() {
     private fun updateVisibility() {
         binding.menuRecommCheatdayButtonLv.visibility = View.VISIBLE
         binding.menuRecommCheatCategoryLv.visibility = View.INVISIBLE
+    }
+
+    override fun myFavoriteMealCheckSuccess(
+        food_id: Long,
+        name: String,
+        offer: String,
+        offer_carbohydrate: Int,
+        offer_protein: Int,
+        offer_fat: Int
+    ) {
+        meal_name = name
+        sacc_gram = offer_carbohydrate.toDouble()
+        protein_gram = offer_protein.toDouble()
+        fat_gram = offer_fat.toDouble()
+
+        val menuRecommendFragment = parentFragmentManager.findFragmentById(R.id.main_frm) as? MenuRecommendFragment
+        menuRecommendFragment?.addCheatMenuFragmentItems(
+            MenuRecommItem.SystemMenuItem(meal_name, sacc_gram.toInt(), protein_gram.toInt(),fat_gram.toInt(),5)
+        )
+    }
+
+    override fun communityFavoiriteMealCheckSuccess(
+        food_id: Long,
+        name: String,
+        offer: String,
+        offer_carbohydrate: Int,
+        offer_protein: Int,
+        offer_fat: Int
+    ) {
+        meal_name = name
+        sacc_gram = offer_carbohydrate.toDouble()
+        protein_gram = offer_protein.toDouble()
+        fat_gram = offer_fat.toDouble()
+
+        val menuRecommendFragment = parentFragmentManager.findFragmentById(R.id.main_frm) as? MenuRecommendFragment
+        menuRecommendFragment?.addCheatMenuFragmentItems(
+            MenuRecommItem.SystemMenuItem(meal_name, sacc_gram.toInt(), protein_gram.toInt(),fat_gram.toInt(),5)
+        )
     }
 }

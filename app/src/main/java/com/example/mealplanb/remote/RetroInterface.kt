@@ -45,4 +45,6 @@ interface RetroInterface {
 
     @GET("chat/my-favorite")
     fun myfavoriteMealCheck(): Call<BaseResponse<ChatRecommendMeal>>
+    @GET("chat/community-favorite")
+    fun communityfavoriteMealCheck(): Call<BaseResponse<ChatRecommendMeal>>
 }

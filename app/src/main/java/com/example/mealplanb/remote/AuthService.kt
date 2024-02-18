@@ -21,15 +21,15 @@ class AuthService(private val context: Context) {
     private val authService = ApplicationClass.retrofit.create(RetroInterface::class.java)
 
     private lateinit var signupView : SignupView
-    private lateinit var myFavoriteMealView: MyFavoriteMealView
+    private lateinit var recommendMealView: RecommendMealView
     private lateinit var planView: PlanView
 
     fun setSignupView(signupView: SignupView) {
         this.signupView = signupView
     }
 
-    fun setMyFavoriteMealView(myFavoriteMealView: MyFavoriteMealView) {
-        this.myFavoriteMealView = myFavoriteMealView
+    fun setRecommendMealView(recommendMealView: RecommendMealView) {
+        this.recommendMealView = recommendMealView
     }
 
     fun setPlanView(planView: PlanView) {
@@ -363,8 +363,6 @@ class AuthService(private val context: Context) {
     }
 
     fun myfavoriteMealCheck() {
-//        signupView.SignupLoading()
-
         authService.myfavoriteMealCheck().enqueue(object : Callback<BaseResponse<ChatRecommendMeal>>{
             override fun onResponse(
                 call: Call<BaseResponse<ChatRecommendMeal>>,
@@ -383,8 +381,7 @@ class AuthService(private val context: Context) {
                         val offer_protein = myfavoriteMealCheckResponse?.offer_protein ?: 0
                         val offer_fat = myfavoriteMealCheckResponse?.offer_fat ?: 0
 
-                        // HomeFragment의 SignupSuccess로 정보 전달
-                        myFavoriteMealView.myFavoriteMealCheckSuccess(food_id, name, offer, offer_carbohydrate, offer_protein, offer_fat)
+                        recommendMealView.myFavoriteMealCheckSuccess(food_id, name, offer, offer_carbohydrate, offer_protein, offer_fat)
                         Log.d("myfavorite meal get Success", "myfavorite meal get Success")
                     }
 
@@ -398,6 +395,45 @@ class AuthService(private val context: Context) {
 
             override fun onFailure(call: Call<BaseResponse<ChatRecommendMeal>>, t: Throwable) {
                 Log.d("myfavorite meal get Failed", t.toString())
+            }
+
+        })
+
+    }
+
+    fun communityfavoriteMealCheck() {
+        authService.communityfavoriteMealCheck().enqueue(object : Callback<BaseResponse<ChatRecommendMeal>>{
+            override fun onResponse(
+                call: Call<BaseResponse<ChatRecommendMeal>>,
+                response: Response<BaseResponse<ChatRecommendMeal>>
+            ) {
+                val resp = response.body()
+                Log.d("communityfavorite meal get response",resp.toString())
+                when (resp?.code) {
+                    1000 -> {
+                        // 성공 시 원하는 처리
+                        val communityfavoriteMealCheckResponse = resp.result
+                        val food_id = communityfavoriteMealCheckResponse?.food_id ?: 0
+                        val name = communityfavoriteMealCheckResponse?.name ?: ""
+                        val offer = communityfavoriteMealCheckResponse?.offer ?: ""
+                        val offer_carbohydrate = communityfavoriteMealCheckResponse?.offer_carbohydrate ?: 0
+                        val offer_protein = communityfavoriteMealCheckResponse?.offer_protein ?: 0
+                        val offer_fat = communityfavoriteMealCheckResponse?.offer_fat ?: 0
+
+                        recommendMealView.communityFavoiriteMealCheckSuccess(food_id, name, offer, offer_carbohydrate, offer_protein, offer_fat)
+                        Log.d("communityfavorite meal get Success", "myfavorite meal get Success")
+                    }
+
+                    else -> if (resp != null) {
+                        Log.d("communityfavorite meal get error", "myfavorite meal get error")
+                    }else{
+                        Log.d("communityfavorite meal get null", "myfavorite meal get null")
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<BaseResponse<ChatRecommendMeal>>, t: Throwable) {
+                Log.d("communityfavorite meal get Failed", t.toString())
             }
 
         })
