@@ -394,6 +394,12 @@ class SearchMealFragment : Fragment(), SignupView, SearchFoodView {
             val foods: List<Food>? = response.foods
 
             if (foods != null) {
+                for (food in foods) {
+                    Log.d("favorite Food Item in fragment", "Food ID: ${food.foodId}, Food Name: ${food.foodName}, Kcal: ${food.kcal}")
+                }
+            }
+
+            if (foods != null) {
                 // Ensure foods is of type ArrayList<Food>
                 if (foods is ArrayList<*>) {
                     // Cast to ArrayList<Food>
