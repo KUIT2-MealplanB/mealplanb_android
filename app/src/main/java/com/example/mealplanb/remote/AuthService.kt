@@ -6,7 +6,6 @@ import android.content.Intent
 import android.util.Log
 import android.widget.Toast
 import com.example.mealplanb.ApplicationClass
-import com.example.mealplanb.ApplicationClass.Companion.mSharedPreferences
 import com.example.mealplanb.MainActivity
 import com.example.mealplanb.local.getJwt
 import com.example.mealplanb.local.saveJwt
@@ -21,8 +20,13 @@ class AuthService(private val context: Context) {
     private val authService = ApplicationClass.retrofit.create(RetroInterface::class.java)
 
     private lateinit var signupView : SignupView
-    fun setSignupView(signupView: SignupView) {
+    private lateinit var searchFoodView: SearchFoodView
+    fun setSignupView(signupView:SignupView) {
         this.signupView = signupView
+    }
+
+    fun setSearchFoodView(searchFoodView: SearchFoodView){
+        this.searchFoodView = searchFoodView
     }
 
 
@@ -165,7 +169,7 @@ class AuthService(private val context: Context) {
 
                         // HomeFragment의 SignupSuccess로 정보 전달
                         signupView.WeightcheckSuccess(weight as Float, date)
-                        Log.d("weight post success", resp.toString()) //아직 layout이 구현안되어 있어서 Homefragment에 대신 구현
+                        Log.d("weight post success", resp.toString())
                     }else -> if (resp != null) {
                         signupView.SignupFailure(resp.code,resp.message)
                     }else{
@@ -200,7 +204,7 @@ class AuthService(private val context: Context) {
 
                         // HomeFragment의 SignupSuccess로 정보 전달
                         signupView.WeightcheckSuccess(weight as Float, date)
-                        Log.d("weight post success", resp.toString()) //아직 layout이 구현안되어 있어서 Homefragment에 대신 구현
+                        Log.d("weight post success", resp.toString())
                     } else -> if (resp != null) {
                         signupView.SignupFailure(resp.code,resp.message)
                     }else{
@@ -216,4 +220,118 @@ class AuthService(private val context: Context) {
 
         })
     }
+
+    //favorite food
+    fun favoriteFoodGET(){
+        signupView.SignupLoading()
+        authService.favoriteFoodGET().enqueue(object : Callback<BaseResponse<FavoriteFoodResponse>>{
+            override fun onResponse(
+                call: Call<BaseResponse<FavoriteFoodResponse>>,
+                response: Response<BaseResponse<FavoriteFoodResponse>>
+            ) {
+                val resp = response.body()
+                when(resp?.code) {
+                    1000 -> {
+                        // 성공 시 원하는 처리
+                        val favoriteFoodResponse = resp?.result
+                        favoriteFoodResponse?.foods?.let { foods ->
+                            for (food in foods) {
+                                Log.d("Food Item", "Food ID: ${food.foodId}, Food Name: ${food.foodName}, Kcal: ${food.kcal}")
+                            }
+                        }
+                        signupView.handleFavoriteFoodResponse(favoriteFoodResponse)
+
+                        Log.d("favoriteFood get success", resp.toString())
+                    } else -> if (resp != null) {
+                    signupView.SignupFailure(resp.code,resp.message)
+                }else{
+                    Log.d("favoriteFood get null",resp.toString())
+                }
+                }
+            }
+            override fun onFailure(call: Call<BaseResponse<FavoriteFoodResponse>>, t: Throwable) {
+                Log.d("favoriteFood get Failed", t.toString())
+            }
+        })
+    }
+    fun favoriteFoodPost(food_id : Int){
+        signupView.SignupLoading()
+        val request = FavoriteFoodRequest(food_id)
+        authService.favoriteFoodPost(request).enqueue(object : Callback<BaseResponse<Unit>>{
+            override fun onResponse(
+                call: Call<BaseResponse<Unit>>,
+                response: Response<BaseResponse<Unit>>
+            ) {
+                val resp = response.body()
+                Log.d("favoriteFood post success", resp.toString())
+            }
+
+            override fun onFailure(call: Call<BaseResponse<Unit>>, t: Throwable) {
+                Log.d("favoriteFood post Failed", t.toString())
+            }
+        })
+    }
+
+    fun favoriteFoodPatch(food_id: Int) {
+        // 서버에 PATCH 요청 보내기
+        authService.favoriteFoodPatch(food_id).enqueue(object : Callback<BaseResponse<Unit>> {
+            override fun onResponse(
+                call: Call<BaseResponse<Unit>>,
+                response: Response<BaseResponse<Unit>>
+            ) {
+                val resp = response.body()
+                Log.d("favoriteFood patch success", resp.toString())
+            }
+
+            override fun onFailure(call: Call<BaseResponse<Unit>>, t: Throwable) {
+                Log.d("favoriteFood patch Failed", t.toString())
+            }
+        })
+    }
+    fun searchfood(query: String?, page: Int = 0) {
+        authService.searchfood(query, page).enqueue(object : Callback<BaseResponse<FoodSearchResponse>> {
+            override fun onResponse(
+                call: Call<BaseResponse<FoodSearchResponse>>,
+                response: Response<BaseResponse<FoodSearchResponse>>
+            ) {
+                val resp = response.body()
+                Log.d("searchfood success", resp.toString())
+                // 받아온 데이터 처리
+                when(resp?.code) {
+                    1000 -> {
+                        Log.d("SearchFoodResponse", "Current Page")
+                        val searchFoodResponse = resp?.result
+                        searchFoodResponse?.foods?.let { foods ->
+                            for (food in foods) {
+                                Log.d("search Food Item", "Food ID: ${food.foodId}, Food Name: ${food.foodName}, Kcal: ${food.kcal}")
+                            }
+                        }
+                        if (searchFoodResponse != null) {
+                            searchFoodView.SearchFoodSuccess(searchFoodResponse)
+
+                            // 추가: 서버 응답을 확인하고 로그로 출력
+                            Log.d("SearchFoodResponse", "Current Page: ${searchFoodResponse.current_page}, Last Page: ${searchFoodResponse.last_page}")
+
+                            // 응답에 포함된 Food 리스트 출력
+                            searchFoodResponse.foods.forEachIndexed { index, food ->
+                                Log.d("SearchFoodResponse", "Food[$index] - Food ID: ${food.foodId}, Food Name: ${food.foodName}, Kcal: ${food.kcal}")
+                            }
+                        }
+
+                        Log.d("searchFood get success", resp.toString())
+                    } else -> if (resp != null) {
+                        Log.d("searchFood get error",resp.toString())
+                }else{
+                    Log.d("searchFood get null",resp.toString())
+                }
+                }
+            }
+
+            override fun onFailure(call: Call<BaseResponse<FoodSearchResponse>>, t: Throwable) {
+                Log.d("searchFood Failed", t.toString())
+            }
+        })
+    }
+
+
 }

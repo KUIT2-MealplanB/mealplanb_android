@@ -10,7 +10,6 @@ import android.text.TextWatcher
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import com.example.mealplanb.databinding.ActivityLoginPageBinding
-import com.example.mealplanb.databinding.ActivityPrivacyCollectBinding
 import com.example.mealplanb.remote.AuthService
 
 class LoginPageActivity : AppCompatActivity() {

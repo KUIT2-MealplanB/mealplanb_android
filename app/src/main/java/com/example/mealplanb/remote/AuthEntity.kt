@@ -35,3 +35,25 @@ data class Weight(
     @SerializedName("weight") val weight : Float,
     @SerializedName("date") val date : String,
 )
+
+data class FavoriteFoodRequest(
+    @SerializedName("food_id") val food_id : Int,
+)
+
+data class FavoriteFoodResponse(
+    @SerializedName("foods") val foods: List<Food>
+)
+
+data class Food(
+    @SerializedName("food_id") val foodId: Int,
+    @SerializedName("food_name") val foodName: String,
+    @SerializedName("kcal") val kcal: Int,
+)
+
+data class FoodSearchResponse(
+    @SerializedName("current_page") val current_page : Int,
+    @SerializedName("last_page") val last_page : Int,
+    @SerializedName("foods") val foods: List<Food>,
+    @SerializedName("member_created") val member_created: Boolean
+
+)

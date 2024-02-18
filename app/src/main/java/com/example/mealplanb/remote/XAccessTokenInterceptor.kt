@@ -15,7 +15,7 @@ class XAccessTokenInterceptor: Interceptor {
 
         jwtToken?.let {
             builder.addHeader("Authorization","Bearer $jwtToken")
-            Log.d("token heder", jwtToken)
+            Log.d("token hedaer", jwtToken)
         }
 
         return chain.proceed(builder.build())
