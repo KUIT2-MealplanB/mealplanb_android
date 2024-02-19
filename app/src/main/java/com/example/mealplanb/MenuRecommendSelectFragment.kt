@@ -51,7 +51,7 @@ class MenuRecommendSelectFragment : Fragment() {
             MenuRecommItem.UserItem("이 음식", "으로 먹을래요", 2),
             MenuRecommItem.SystemUpdateMenuItem(recommendMenu!!,7)
         )
-        menuRecommendFragment?.addItemToRecyclerView(RecommendMenu(cal,"첫 끼 : " + recommendMenu,recommendMenuSacc,recommendMenuProtein,recommendMenuFat))
+//        menuRecommendFragment?.addItemToRecyclerView(RecommendMenu(cal,"첫 끼 : " + recommendMenu,recommendMenuSacc,recommendMenuProtein,recommendMenuFat))
         //addItemToActivityRecyclerView(RecommendMenu(cal,"첫 끼 : " + recommendMenu,recommendMenuSacc,recommendMenuProtein,recommendMenuFat))
 
         // 다른 초기화 작업 등을 수행할 수 있음
