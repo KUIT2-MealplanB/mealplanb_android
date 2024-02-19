@@ -83,6 +83,43 @@ class AuthService(private val context: Context) {
             })
     }
 
+    //계정 탈퇴
+    fun signOff() {
+        authService.signoff().enqueue(object : Callback<BaseResponse<Unit>> {
+            override fun onResponse(
+                call: Call<BaseResponse<Unit>>,
+                response: Response<BaseResponse<Unit>>
+            ) {
+                Log.d("SignOff response", response.toString())
+                if (response.isSuccessful) {
+                    Toast.makeText(context, "회원탈퇴 성공", Toast.LENGTH_SHORT).show()
+                    Log.d("회원탈퇴 정보", response.body().toString())
+
+                    // 회원탈퇴가 성공적으로 이루어졌을 경우, 로그인 액티비티로 이동
+                    val intent = Intent(context, LoginPageActivity::class.java)
+                    context.startActivity(intent)
+                } else {
+                    // 서버에서는 응답을 했지만, 회원탈퇴 실패와 같은 이유로 성공적인 응답이 아닌 경우, Toast 메시지
+                    val gson = Gson()
+                    val type = object : TypeToken<BaseResponse<Unit>>() {}.type
+                    val errorResponse: BaseResponse<Unit>? =
+                        gson.fromJson(response.errorBody()?.charStream(), type)
+                    Log.d("회원탈퇴 실패 정보", errorResponse.toString())
+
+                    Toast.makeText(context, "회원탈퇴 실패", Toast.LENGTH_SHORT).show()
+                    Log.d("회원탈퇴 실패 코드", errorResponse?.code.toString())
+                }
+            }
+
+            override fun onFailure(call: Call<BaseResponse<Unit>>, t: Throwable) {
+                Log.d("SignOff Failed", t.toString())
+                // 회원탈퇴 요청 자체가 실패한 경우, Toast 메시지
+                Toast.makeText(context, "회원탈퇴 오류", Toast.LENGTH_SHORT).show()
+            }
+        })
+    }
+
+
     fun login(email: String, pw: String) {
         val request = LoginRequest(email, pw)
         authService.login(request).enqueue(object : Callback<BaseResponse<LoginResponse>> {

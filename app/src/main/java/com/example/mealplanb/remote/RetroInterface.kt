@@ -17,6 +17,10 @@ interface RetroInterface {
         @Body request: SignupRequest //내부에 포함할 데이터
     ) : Call<BaseResponse<SignupResponse>> //반환할 데이터
 
+    //회원탈퇴
+    @PATCH("user")
+    fun signoff():Call<BaseResponse<Unit>>
+
     //로그인
     @POST("user/login")
     fun login(
