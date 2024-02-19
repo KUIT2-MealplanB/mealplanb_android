@@ -10,18 +10,21 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mealplanb.databinding.FragmentMenuRecommendBinding
+import com.example.mealplanb.remote.AuthService
+import com.example.mealplanb.remote.ChatMealListResponse
+import com.example.mealplanb.remote.RecommendMealListView
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import java.util.Calendar
 
-class MenuRecommendFragment : Fragment(), OnFragmentInteractionListener, AddToRecommendRv {
+class MenuRecommendFragment : Fragment(), OnFragmentInteractionListener, RecommendMealListView {
 
     lateinit var binding : FragmentMenuRecommendBinding
     private lateinit var adapter: MenuRecommendAdapter
     private lateinit var recommListAdapter : RecommendedListAdapter
     private val menuRecommItems = mutableListOf<MenuRecommItem>()
-    var recomList : ArrayList<RecommendMenu> = arrayListOf()
+    var recomList : ArrayList<ChatMealListResponse> = arrayListOf()
     val cal : Calendar = Calendar.getInstance()
 
     override fun onCreateView(
@@ -65,12 +68,15 @@ class MenuRecommendFragment : Fragment(), OnFragmentInteractionListener, AddToRe
 
         binding.menuRecommTogle.setOnCheckedChangeListener { _, isChecked ->
             if(isChecked) {
-                val sharedPreferences = requireActivity().getSharedPreferences("myPreferences",MODE_PRIVATE)
-                var gson = Gson()
-                var json = sharedPreferences.getString("recommendList",null)
-                recomList = gson.fromJson(json, object : TypeToken<ArrayList<RecommendMenu>>() {}.type) ?: arrayListOf<RecommendMenu>()
+//                val sharedPreferences = requireActivity().getSharedPreferences("myPreferences",MODE_PRIVATE)
+//                var gson = Gson()
+//                var json = sharedPreferences.getString("recommendList",null)
+//                recomList = gson.fromJson(json, object : TypeToken<ArrayList<RecommendMenu>>() {}.type) ?: arrayListOf<RecommendMenu>()
+                val authService = AuthService(requireContext())
+                authService.setRecommendMealListView(this)
+                authService.recommendMealCheck()
 
-                recommListAdapter = RecommendedListAdapter(recomList,cal)
+                recommListAdapter = RecommendedListAdapter(recomList)
 
                 binding.menuRecommRecommedListRv.layoutManager = LinearLayoutManager(requireContext(),
                     LinearLayoutManager.VERTICAL,false)
@@ -114,20 +120,47 @@ class MenuRecommendFragment : Fragment(), OnFragmentInteractionListener, AddToRe
         requireActivity().supportFragmentManager.beginTransaction().replace(R.id.main_frm, HomeFragment()).commit()
     }
 
-    override fun addItemToRecyclerView(item: RecommendMenu) {
-        val sharedPreferences = requireActivity().getSharedPreferences("myPreferences",MODE_PRIVATE)
-        var gson = Gson()
-        var json = sharedPreferences.getString("recommendList",null)
-        var recomList = gson.fromJson(json, object : TypeToken<ArrayList<RecommendMenu>>() {}.type) ?: arrayListOf<RecommendMenu>()
+//    override fun addItemToRecyclerView(item: ChatMealListResponse) {
+//        val sharedPreferences = requireActivity().getSharedPreferences("myPreferences",MODE_PRIVATE)
+//        var gson = Gson()
+//        var json = sharedPreferences.getString("recommendList",null)
+//        var recomList = gson.fromJson(json, object : TypeToken<ArrayList<RecommendMenu>>() {}.type) ?: arrayListOf<RecommendMenu>()
+//
+//        recomList.add(item)
+//
+//        val editor = sharedPreferences.edit()
+//        var newJson = gson.toJson(recomList)
+//        editor.putString("recommendList",newJson)
+//        editor.apply()
 
-        recomList.add(item)
+//        recommListAdapter = RecommendedListAdapter(recomList)
+//
+//        binding.menuRecommRecommedListRv.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+//
+//        binding.menuRecommRecommedListRv.adapter = recommListAdapter
+//
+//        binding.menuRecommRecommedListRv.scrollToPosition(menuRecommItems.size)
+//
+//        recommListAdapter.notifyDataSetChanged()
 
-        val editor = sharedPreferences.edit()
-        var newJson = gson.toJson(recomList)
-        editor.putString("recommendList",newJson)
-        editor.apply()
+//    }
 
-        recommListAdapter = RecommendedListAdapter(recomList,cal)
+    //리스트의 가장 마지막을 보여주도록 스크롤을 이동하는 함수
+    private fun scrollToLastItem(view: View) {
+
+        adapter = MenuRecommendAdapter(requireContext(), menuRecommItems)
+
+        Handler().postDelayed({ binding.menuRecommChatRv.scrollToPosition(adapter.getItemCount() - 1) }, 100)
+    }
+
+    override fun recommendMealListCheckSuccess(recommendMealList: List<ChatMealListResponse>) {
+        val newList : ArrayList<ChatMealListResponse> = arrayListOf()
+        for(item in recommendMealList) {
+            newList.add(item)
+        }
+        recomList = newList
+
+        recommListAdapter = RecommendedListAdapter(recomList)
 
         binding.menuRecommRecommedListRv.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
 
@@ -136,15 +169,6 @@ class MenuRecommendFragment : Fragment(), OnFragmentInteractionListener, AddToRe
         binding.menuRecommRecommedListRv.scrollToPosition(menuRecommItems.size)
 
         recommListAdapter.notifyDataSetChanged()
-
-    }
-
-    //리스트의 가장 마지막을 보여주도록 스크롤을 이동하는 함수
-    private fun scrollToLastItem(view: View) {
-
-        adapter = MenuRecommendAdapter(requireContext(), menuRecommItems)
-
-        Handler().postDelayed({ binding.menuRecommChatRv.scrollToPosition(adapter.getItemCount() - 1) }, 100)
     }
 
 }

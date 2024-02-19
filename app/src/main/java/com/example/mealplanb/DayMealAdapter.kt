@@ -17,7 +17,7 @@ class DayMealAdapter(var dayMealList: ArrayList<MealMainInfo>, private val conte
     private val numList : ArrayList<String> = arrayListOf("첫","두","세","네","다섯","여섯","일곱","여덟","아홉","열")
     inner class ViewHolder(val binding: ItemDaymealBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(myMealMainInfo: MealMainInfo) {
-            binding.daymealMealtitleTv.text = numList[myMealMainInfo.meal_no - 1] + " 끼"
+            binding.daymealMealtitleTv.text = myMealMainInfo.meal_type
             binding.daymealMealIv.setImageResource(myMealMainInfo.meal_img)
             binding.daymealCalTv.text = myMealMainInfo.total_cal.toString() + "kcal"
 
@@ -37,10 +37,10 @@ class DayMealAdapter(var dayMealList: ArrayList<MealMainInfo>, private val conte
             }
 
             binding.daymealMealinfoCv.setOnClickListener {
-                updateSharedPreferences(context,myMealMainInfo.meal_no)
+//                updateSharedPreferences(context,myMealMainInfo.meal_type)
                 val sharedPreferences = context.getSharedPreferences("myPreferences", Context.MODE_PRIVATE)
                 val gson = Gson()
-                val foodListID = "addFoodList" + myMealMainInfo.meal_no.toString()
+                val foodListID = "addFoodList" + myMealMainInfo.meal_type.toString()
                 var json = sharedPreferences.getString(foodListID,null)
                 var addFoodList : ArrayList<Meal> = gson.fromJson(json, object : TypeToken<ArrayList<Meal>>() {}.type) ?: arrayListOf()
                 if (addFoodList.size > 0) {
