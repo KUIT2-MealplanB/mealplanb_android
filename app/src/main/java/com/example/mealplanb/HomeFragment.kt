@@ -16,6 +16,7 @@ import com.example.mealplanb.databinding.FragmentHomeBinding
 import com.example.mealplanb.remote.AuthService
 import com.example.mealplanb.remote.FavoriteFoodResponse
 import com.example.mealplanb.remote.HomeMealView
+import com.example.mealplanb.remote.MealFoodResponseFoodList
 import com.example.mealplanb.remote.MealListDateResponseMeals
 import com.example.mealplanb.remote.SignupView
 import com.google.gson.Gson
@@ -26,7 +27,6 @@ import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
 import java.util.Locale
-import java.util.concurrent.TimeUnit
 
 class HomeFragment : Fragment(), DatePickerDialog.OnDateSetListener, SignupView, WeightUpdateListener, HomeMealView {
     lateinit var binding : FragmentHomeBinding
@@ -541,6 +541,16 @@ class HomeFragment : Fragment(), DatePickerDialog.OnDateSetListener, SignupView,
     override fun FoodListAddFailure(code: Int, msg: String) {
         TODO("Not yet implemented")
     }
+
+    override fun FoodListCheckSuccess(
+        meal_id: Int,
+        meal_date: String,
+        meal_type: Int,
+        food_list: List<MealFoodResponseFoodList>
+    ) {
+        TODO("Not yet implemented")
+    }
+
     //메모리 누수 방지
     override fun onPause() {
         super.onPause()

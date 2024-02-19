@@ -1,15 +1,13 @@
 package com.example.mealplanb
 
 import android.content.Context
-import android.content.Intent
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mealplanb.databinding.ItemDaymealBinding
+import com.example.mealplanb.remote.AuthService
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 
@@ -37,7 +35,10 @@ class DayMealAdapter(var dayMealList: ArrayList<MealMainInfo>, private val conte
             }
 
             binding.daymealMealinfoCv.setOnClickListener {
-//                updateSharedPreferences(context,myMealMainInfo.meal_type)
+//                val authService = AuthService(context)
+//                authService.
+//                authService.foodListCheck((position+1).toString())
+
                 val sharedPreferences = context.getSharedPreferences("myPreferences", Context.MODE_PRIVATE)
                 val gson = Gson()
                 val foodListID = "addFoodList" + myMealMainInfo.meal_type.toString()

@@ -6,8 +6,7 @@ import android.content.Intent
 import android.util.Log
 import android.widget.Toast
 import com.example.mealplanb.ApplicationClass
-import com.example.mealplanb.ApplicationClass.Companion.mSharedPreferences
-import com.example.mealplanb.HiddenPageActivity
+import com.example.mealplanb.DayMealAdapter
 import com.example.mealplanb.MainActivity
 import com.example.mealplanb.local.getJwt
 import com.example.mealplanb.local.saveJwt
@@ -26,6 +25,7 @@ class AuthService(private val context: Context) {
     private lateinit var recommendMealView: RecommendMealView
     private lateinit var planView: PlanView
     private lateinit var homeMealView: HomeMealView
+    private lateinit var mealMenuListView: HomeMealView
     private lateinit var recommendMealListView: RecommendMealListView
     private lateinit var recommendMealAmountView: RecommendMealAmountView
 
@@ -48,6 +48,10 @@ class AuthService(private val context: Context) {
 
     fun setHomeMealView(homeMealView: HomeMealView) {
         this.homeMealView = homeMealView
+    }
+
+    fun setMealMenuListView(mealMenuListView: HomeMealView) {
+        this.mealMenuListView = mealMenuListView
     }
 
     fun setRecommendMealListView(recommendMealListView: RecommendMealListView) {
@@ -633,6 +637,42 @@ class AuthService(private val context: Context) {
 
             override fun onFailure(call: Call<BaseResponse<Any>>, t: Throwable) {
                 Log.d("foodListAdd Failed", t.toString())
+            }
+
+        })
+    }
+
+    fun foodListCheck(mealId: String) {
+        authService.foodListCheck(mealId).enqueue(object : Callback<BaseResponse<MealFoodResponse>> {
+            override fun onResponse(
+                call: Call<BaseResponse<MealFoodResponse>>,
+                response: Response<BaseResponse<MealFoodResponse>>
+            ) {
+                val resp = response.body()
+                Log.d("recommend amount get response",resp.toString())
+                when (resp?.code) {
+                    1000 -> {
+                        // 성공 시 원하는 처리
+                        val foodListCheckResponse = resp.result
+                        val meal_id = foodListCheckResponse.meal_id ?: 0
+                        val meal_date = foodListCheckResponse.meal_date ?: ""
+                        val meal_type = foodListCheckResponse.meal_type ?: 0
+                        val food_list = foodListCheckResponse.food_list ?: arrayListOf()
+
+                        homeMealView.FoodListCheckSuccess(meal_id,meal_date,meal_type,food_list)
+                        Log.d("recommend amount get Success", "myfavorite meal get Success")
+                    }
+
+                    else -> if (resp != null) {
+                        Log.d("recommend amount get error", "myfavorite meal get error")
+                    }else{
+                        Log.d("recommend amount get null", "myfavorite meal get null")
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<BaseResponse<MealFoodResponse>>, t: Throwable) {
+                Log.d("MealfoodList get Failed", t.toString())
             }
 
         })
