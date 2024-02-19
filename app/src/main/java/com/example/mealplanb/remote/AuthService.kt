@@ -216,33 +216,32 @@ class AuthService(private val context: Context) {
     //아바타 정보 수정
     fun updateAvatarInfo(nickname: String, avatarColor: String) {
         val avatarData = AvatarData(nickname, avatarColor)
-        authService.avatarupdate(avatarData)
-            .enqueue(object : Callback<BaseResponse<AvatarUpdateResponse>> {
-                override fun onResponse(
-                    call: Call<BaseResponse<AvatarUpdateResponse>>,
-                    response: Response<BaseResponse<AvatarUpdateResponse>>
-                ) {
-                    if (response.isSuccessful) {
-                        val avatarInfo = response.body()?.result
-                        Log.d(
-                            "아바타 정보 수정",
-                            "Member ID: ${avatarInfo?.member_id}, Nickname: ${avatarInfo?.nickname}, Avatar color: ${avatarInfo?.avatar_color}"
-                        )
-                    } else {
-                        Log.e(
-                            "아바타 정보 수정 오류",
-                            "Request not successful. Message: ${response.message()}"
-                        )
-                    }
+        authService.avatarupdate(avatarData).enqueue(object : Callback<BaseResponse<AvatarUpdateResponse>> {
+            override fun onResponse(
+                call: Call<BaseResponse<AvatarUpdateResponse>>,
+                response: Response<BaseResponse<AvatarUpdateResponse>>
+            ) {
+                if (response.isSuccessful) {
+                    val avatarInfo = response.body()?.result
+                    Log.d(
+                        "아바타 정보 수정",
+                        "Member ID: ${avatarInfo?.member_id}, Nickname: ${avatarInfo?.nickname}, Avatar color: ${avatarInfo?.avatar_color}"
+                    )
+                } else {
+                    Log.e(
+                        "아바타 정보 수정 오류",
+                        "Request not successful. Message: ${response.message()}"
+                    )
                 }
+            }
 
-                override fun onFailure(
-                    call: Call<BaseResponse<AvatarUpdateResponse>>,
-                    t: Throwable
-                ) {
-                    Log.e("아바타 정보 수정 서버 오류", "API call failed. Message: ${t.message}")
-                }
-            })
+            override fun onFailure(
+                call: Call<BaseResponse<AvatarUpdateResponse>>,
+                t: Throwable
+            ) {
+                Log.e("아바타 정보 수정 서버 오류", "API call failed. Message: ${t.message}")
+            }
+        })
     }
 
     fun updateMyMeal(favorite_meal_name: String, foods: List<FoodList>) {
@@ -300,50 +299,87 @@ class AuthService(private val context: Context) {
                     call: Call<BaseResponse<GetFoodResponse>>,
                     response: Response<BaseResponse<GetFoodResponse>>
                 ) {
-                    Log.d("함수 실행 확인", "success")
-                    if (response.isSuccessful) {
-                        val foodInfo = response.body()?.result
-                        Log.d(
-                            "식사 정보",
-                            "Name: ${foodInfo?.name}, Quantity: ${foodInfo?.quantity}, Kcal: ${foodInfo?.kcal}, Carbohydrate: ${foodInfo?.carbohydrates}, Protein: ${foodInfo?.protein}, Fat: ${foodInfo?.fat}, isFavorite: ${foodInfo?.isFavorite}"
-                        )
-                        // 음식 정보를 SharedPreferences에 저장
-                        val sharedPreferences =
-                            context.getSharedPreferences("myPreferences", Context.MODE_PRIVATE)
-                        val editor = sharedPreferences.edit()
-                        val gson = Gson()
-                        val json = gson.toJson(foodInfo)
-                        editor.putString("Key", json)
-                        editor.putString("foodName", foodInfo?.name)
-                        editor.putString("foodQuantity", foodInfo?.quantity?.toString() ?: "0")
-                        editor.putString("foodKcal", foodInfo?.kcal?.toString() ?: "0")
-                        editor.putString(
-                            "foodCarbohydrates",
-                            foodInfo?.carbohydrates?.toString() ?: "0"
-                        )
-                        editor.putString("foodProtein", foodInfo?.protein?.toString() ?: "0")
-                        editor.putString("foodFat", foodInfo?.fat?.toString() ?: "0")
+                    val resp = response.body()
+                    Log.d("food detail check response",resp.toString())
+                    when (resp?.code) {
+                        1000 -> {
+                            // 성공 시 원하는 처리
+                            val checkFoodDetailResponse = resp.result
+                            val name = checkFoodDetailResponse.name ?: ""
+                            val quantity = checkFoodDetailResponse.quantity ?: 0
+                            val kcal = checkFoodDetailResponse.kcal ?: 0.0
+                            val carbohydrate = checkFoodDetailResponse.carbohydrate ?: 0.0
+                            val protein = checkFoodDetailResponse.protein ?: 0.0
+                            val fat = checkFoodDetailResponse.fat ?: 0.0
+                            val isFavorite = checkFoodDetailResponse.isFavorite ?: false
 
-                        // 음식 정보를 SharedPreferences에서 불러오기
-                        val updatefoodName = sharedPreferences.getString("foodName", "")
-                        val updateoriginMealWeight = sharedPreferences.getString("foodQuantity", "0")?.toDoubleOrNull() ?: 0.0
-                        val updateoriginkcal = sharedPreferences.getString("foodKcal", "0")?.toDoubleOrNull() ?: 0.0
-                        val updateoriginSacc = sharedPreferences.getString("foodCarbohydrates", "0")?.toDoubleOrNull() ?: 0.0
-                        val updateoriginProtein = sharedPreferences.getString("foodProtein", "0")?.toDoubleOrNull() ?: 0.0
-                        val updateoriginFat = sharedPreferences.getString("foodFat", "0")?.toDoubleOrNull() ?: 0.0
+                            // 정보 전달
+                            searchFoodView.FoodDetailSuccess(name,quantity,kcal,carbohydrate,protein,fat,isFavorite)
+                            Log.d("food detail check Success", "User Profile Success")
+                        }
 
-
-                        editor.apply()
-
-                    } else {
-                        Log.e("식사 오류 정보", "Request not successful. Message: ${response.message()}")
+                        else -> if (resp != null) {
+                            Log.d("food detail check error", "User Profile error")
+                        }else{
+                            Log.d("food detail check null", "User Profile null")
+                        }
                     }
+
+//                    Log.d("함수 실행 확인", "success")
+//                    if (response.isSuccessful) {
+//                        val foodInfo = response.body()?.result
+//                        Log.d(
+//                            "식사 정보",
+//                            "Name: ${foodInfo?.name}, Quantity: ${foodInfo?.quantity}, Kcal: ${foodInfo?.kcal}, Carbohydrate: ${foodInfo?.carbohydrates}, Protein: ${foodInfo?.protein}, Fat: ${foodInfo?.fat}, isFavorite: ${foodInfo?.isFavorite}"
+//                        )
+                        // 음식 정보를 SharedPreferences에 저장
+//                        val sharedPreferences =
+//                            context.getSharedPreferences("myPreferences", Context.MODE_PRIVATE)
+//                        val editor = sharedPreferences.edit()
+//                        val gson = Gson()
+//                        val json = gson.toJson(foodInfo)
+//                        editor.putString("Key", json)
+//                        editor.putString("foodName", foodInfo?.name)
+//                        editor.putString("foodQuantity", foodInfo?.quantity?.toString() ?: "0")
+//                        editor.putString("foodKcal", foodInfo?.kcal?.toString() ?: "0")
+//                        editor.putString(
+//                            "foodCarbohydrates",
+//                            foodInfo?.carbohydrates?.toString() ?: "0"
+//                        )
+//                        editor.putString("foodProtein", foodInfo?.protein?.toString() ?: "0")
+//                        editor.putString("foodFat", foodInfo?.fat?.toString() ?: "0")
+//
+//                        // 음식 정보를 SharedPreferences에서 불러오기
+//                        val updatefoodName = sharedPreferences.getString("foodName", "")
+//                        val updateoriginMealWeight =
+//                            sharedPreferences.getString("foodQuantity", "0")?.toDoubleOrNull()
+//                                ?: 0.0
+//                        val updateoriginkcal =
+//                            sharedPreferences.getString("foodKcal", "0")?.toDoubleOrNull() ?: 0.0
+//                        val updateoriginSacc =
+//                            sharedPreferences.getString("foodCarbohydrates", "0")?.toDoubleOrNull()
+//                                ?: 0.0
+//                        val updateoriginProtein =
+//                            sharedPreferences.getString("foodProtein", "0")?.toDoubleOrNull() ?: 0.0
+//                        val updateoriginFat =
+//                            sharedPreferences.getString("foodFat", "0")?.toDoubleOrNull() ?: 0.0
+//
+//                        editor.apply()
+//
+//                        val foodDeatilCheckResponse = response
+//
+//                        searchFoodView.FoodDetailSuccess()
+//
+//                    } else {
+//                        Log.e("식사 오류 정보", "Request not successful. Message: ${response.message()}")
+//                    }
                 }
 
                 override fun onFailure(call: Call<BaseResponse<GetFoodResponse>>, t: Throwable) {
                     Log.e("식사 정보 서버 오류", "API call failed. Message: ${t.message}")
                 }
             })
+    }
     fun plancheck() {
 //        signupView.SignupLoading()
 
@@ -925,37 +961,37 @@ class AuthService(private val context: Context) {
                 response: Response<BaseResponse<FoodSearchResponse>>
             ) {
                 callback(response.body())
-//                 val resp = response.body()
-//                 Log.d("searchfood success", resp.toString())
-//                 // 받아온 데이터 처리
-//                 when(resp?.code) {
-//                     1000 -> {
-//                         Log.d("SearchFoodResponse", "Current Page")
-//                         val searchFoodResponse = resp?.result
-//                         searchFoodResponse?.foods?.let { foods ->
-//                             for (food in foods) {
-//                                 Log.d("search Food Item", "Food ID: ${food.foodId}, Food Name: ${food.foodName}, Kcal: ${food.kcal}")
-//                             }
-//                         }
-//                         if (searchFoodResponse != null) {
-//                             searchFoodView.SearchFoodSuccess(searchFoodResponse)
+                 val resp = response.body()
+                 Log.d("searchfood success", resp.toString())
+                 // 받아온 데이터 처리
+                 when(resp?.code) {
+                     1000 -> {
+                         Log.d("SearchFoodResponse", "Current Page")
+                         val searchFoodResponse = resp?.result
+                         searchFoodResponse?.foods?.let { foods ->
+                             for (food in foods) {
+                                 Log.d("search Food Item", "Food ID: ${food.foodId}, Food Name: ${food.foodName}, Kcal: ${food.kcal}")
+                             }
+                         }
+                         if (searchFoodResponse != null) {
+                             searchFoodView.SearchFoodSuccess(searchFoodResponse)
 
-//                             // 추가: 서버 응답을 확인하고 로그로 출력
-//                             Log.d("SearchFoodResponse", "Current Page: ${searchFoodResponse.current_page}, Last Page: ${searchFoodResponse.last_page}")
+                             // 추가: 서버 응답을 확인하고 로그로 출력
+                             Log.d("SearchFoodResponse", "Current Page: ${searchFoodResponse.current_page}, Last Page: ${searchFoodResponse.last_page}")
 
-//                             // 응답에 포함된 Food 리스트 출력
-//                             searchFoodResponse.foods.forEachIndexed { index, food ->
-//                                 Log.d("SearchFoodResponse", "Food[$index] - Food ID: ${food.foodId}, Food Name: ${food.foodName}, Kcal: ${food.kcal}")
-//                             }
-//                         }
+                             // 응답에 포함된 Food 리스트 출력
+                             searchFoodResponse.foods.forEachIndexed { index, food ->
+                                 Log.d("SearchFoodResponse", "Food[$index] - Food ID: ${food.foodId}, Food Name: ${food.foodName}, Kcal: ${food.kcal}")
+                             }
+                         }
 
-//                         Log.d("searchFood get success", resp.toString())
-//                     } else -> if (resp != null) {
-//                     Log.d("searchFood get error",resp.toString())
-//                 }else{
-//                     Log.d("searchFood get null",resp.toString())
-//                 }
-//                 }
+                         Log.d("searchFood get success", resp.toString())
+                     } else -> if (resp != null) {
+                     Log.d("searchFood get error",resp.toString())
+                 }else{
+                     Log.d("searchFood get null",resp.toString())
+                 }
+                 }
             }
 
             override fun onFailure(call: Call<BaseResponse<FoodSearchResponse>>, t: Throwable) {

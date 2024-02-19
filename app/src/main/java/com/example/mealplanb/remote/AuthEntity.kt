@@ -55,7 +55,7 @@ data class GetFoodResponse(
     @SerializedName("name") val name: String,
     @SerializedName("quantity") val quantity : Int,
     @SerializedName("kcal") val kcal : Double,
-    @SerializedName("carbohydrates") val carbohydrates : Double,
+    @SerializedName("carbohydrate") val carbohydrate : Double,
     @SerializedName("protein") val protein : Double,
     @SerializedName("fat") val fat : Double,
     @SerializedName("isFavorite") val isFavorite : Boolean

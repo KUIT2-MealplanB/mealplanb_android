@@ -34,7 +34,23 @@ class MenuRecommendHowMenuFragment : Fragment(), SearchFoodView, RecommendMealAm
         val authService = AuthService(requireContext())
         authService.setSearchFoodView(this)
 
-        authService.searchfood("",0)
+        authService.searchfood("", 0) { response ->
+            if (!isAdded || response == null) {
+                return@searchfood
+            }
+
+            Log.d("보낸 쿼리", "")
+
+            when (response.code) {
+                1000 -> {
+                    val searchFoodResponse = response.result
+                    SearchFoodSuccess(searchFoodResponse)
+                }
+                else -> {
+                    Log.d("searchFood get error", response.toString())
+                }
+            }
+        }
 
         binding.menuRecommHowMenuBackbtnCv.setOnClickListener {
             val initMenuFragment = MenuRecommendInitFragment()
@@ -44,7 +60,23 @@ class MenuRecommendHowMenuFragment : Fragment(), SearchFoodView, RecommendMealAm
         }
         binding.menuRecommHowMenuSearchEt.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
-                authService.searchfood(s.toString(),0)
+                authService.searchfood(s.toString(), 0) { response ->
+                    if (!isAdded || response == null) {
+                        return@searchfood
+                    }
+
+                    Log.d("보낸 쿼리", s.toString())
+
+                    when (response.code) {
+                        1000 -> {
+                            val searchFoodResponse = response.result
+                            SearchFoodSuccess(searchFoodResponse)
+                        }
+                        else -> {
+                            Log.d("searchFood get error", response.toString())
+                        }
+                    }
+                }
             }
 
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
@@ -84,6 +116,18 @@ class MenuRecommendHowMenuFragment : Fragment(), SearchFoodView, RecommendMealAm
         // Set the adapter for the RecyclerView
         binding.menuRecommHowMenuContentRv.adapter = adapter
         binding.menuRecommHowMenuContentRv.layoutManager = LinearLayoutManager(requireContext())
+    }
+
+    override fun FoodDetailSuccess(
+        name: String,
+        quantity: Int,
+        kcal: Double,
+        carbohydrate: Double,
+        protein: Double,
+        fat: Double,
+        isFavorite: Boolean
+    ) {
+        TODO("Not yet implemented")
     }
 
     override fun mealAmountCheckSuccess(
