@@ -125,7 +125,7 @@ class SearchMealFragment : Fragment(), SignupView, SearchFoodView {
             }
         }
 
-        //내가만든 버튼을 눌렀을 때
+        //나의 식단 버튼을 눌렀을 때
         binding.searchMealBtnMadeLl.setOnClickListener{
 
             // 버튼이 눌린 것을 저장
@@ -140,7 +140,7 @@ class SearchMealFragment : Fragment(), SignupView, SearchFoodView {
             binding.searchMealMyLl.visibility=View.GONE
 
             //검색창 hint
-            binding.searchMealInputEt.hint = "내가 만든 식사"
+            binding.searchMealInputEt.hint = "나의 식단"
             binding.searchMealInputEt.setHintTextColor(Color.parseColor("#7C5CF8"))
 
             // SharedPreferences에서 oftenFoodList 데이터 읽어오기
@@ -149,7 +149,7 @@ class SearchMealFragment : Fragment(), SignupView, SearchFoodView {
             val gson = Gson()
             val json = sharedPreferences.getString("myMadeList", null)
 
-            // Gson을 사용하여 JSON 문자열을 역직렬화하여 oftenFoodList에 할당
+            // Gson을 사용하여 JSON 문자열을 역직렬화하여 myMadeList 할당
             val type = object : TypeToken<ArrayList<Meal>>() {}.type
             myMadeList = gson.fromJson(json, type) ?: arrayListOf()
 

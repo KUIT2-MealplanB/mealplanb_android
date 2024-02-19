@@ -14,7 +14,7 @@ import kotlin.coroutines.coroutineContext
 class ApplicationClass : Application() {
 
     companion object {
-        const val X_ACCESS_TOKEN : String = "x-access-token"
+        //const val X_ACCESS_TOKEN : String = "x-access-token"
         const val DEV_URL : String = "https://www.kuit2mealplanb.shop" //개발용 URL
         const val PROD_URL : String = "" //배포용 URL
 

@@ -171,7 +171,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="16dp"
-                android:text="내가만든"
+                android:text="나의 식단"
                 android:textColor="#7C5CF8"
                 android:fontFamily="@font/pretendard_black"
                 android:layout_marginTop="24dp"
