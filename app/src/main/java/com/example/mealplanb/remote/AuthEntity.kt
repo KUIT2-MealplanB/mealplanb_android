@@ -97,3 +97,9 @@ data class FoodSearchResponse(
     @SerializedName("member_created") val member_created: Boolean
 
 )
+
+data class StatisticPlanResponse(
+    @SerializedName("initial_weight") val initial_weight: Double,
+    @SerializedName("target_weight") val target_weight: Double,
+    @SerializedName("diet_type") val diet_type: String
+)

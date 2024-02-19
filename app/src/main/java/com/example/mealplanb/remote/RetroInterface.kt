@@ -84,4 +84,8 @@ interface RetroInterface {
         @Query("query") query: String?,
         @Query("page") page: Int = 0
     ):Call<BaseResponse<FoodSearchResponse>>
+
+    //통계 목표 조회
+    @GET("statistic/plan")
+    fun statisticplan(): Call<BaseResponse<StatisticPlanResponse>>
 }

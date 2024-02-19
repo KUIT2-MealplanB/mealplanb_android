@@ -69,6 +69,7 @@ class HiddenPageActivity : AppCompatActivity() {
             //대화상자의 각 View에 접근
             val confirmButton = customDialog.findViewById<Button>(R.id.hidden_logout_logout_btn)
             val cancelButton = customDialog.findViewById<Button>(R.id.hidden_logout_cancle_btn)
+            confirmButton.text = "계정 탈퇴"
 
             //탈퇴 버튼 -> login 화면으로 넘어감(api 연동)
             confirmButton.setOnClickListener {

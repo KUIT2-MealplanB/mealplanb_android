@@ -547,4 +547,26 @@ class AuthService(private val context: Context) {
             }
         })
     }
+
+    //통계 목표 조회
+    fun statisticplan(callback: (StatisticPlanResponse?) -> Unit) {
+        authService.statisticplan().enqueue(object : Callback<BaseResponse<StatisticPlanResponse>> {
+            override fun onResponse(
+                call: Call<BaseResponse<StatisticPlanResponse>>,
+                response: Response<BaseResponse<StatisticPlanResponse>>
+            ) {
+                if (response.isSuccessful) {
+                    val planInfo = response.body()?.result
+                    callback(planInfo)  // 콜백을 호출하여 결과를 전달
+                } else {
+                    Log.e("통계 목표 오류 정보", "Request not successful. Message: ${response.message()}")
+                }
+            }
+
+            override fun onFailure(call: Call<BaseResponse<StatisticPlanResponse>>, t: Throwable) {
+                Log.e("통계 목표 서버 오류", "API call failed. Message: ${t.message}")
+            }
+        })
+    }
+
 }
