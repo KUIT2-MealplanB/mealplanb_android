@@ -7,4 +7,9 @@ interface SignupView {
     fun SignupSuccess()
     fun SignupFailure(code: Int,msg: String)
     fun WeightcheckSuccess(weight:Float, date:String)
+    fun handleFavoriteFoodResponse(favoriteFoodResponse: FavoriteFoodResponse?)
+}
+
+interface SearchFoodView{
+    fun SearchFoodSuccess(foodSearchResponse: FoodSearchResponse)
 }

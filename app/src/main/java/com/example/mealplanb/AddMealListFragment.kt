@@ -1,5 +1,6 @@
 package com.example.mealplanb
 
+import android.content.Context
 import android.content.Context.MODE_PRIVATE
 import android.content.Intent
 import android.content.res.Resources
@@ -12,6 +13,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
+import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.ImageView
 import androidx.cardview.widget.CardView
@@ -20,11 +23,14 @@ import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mealplanb.databinding.FragmentAddMealListBinding
+import com.example.mealplanb.remote.AuthService
+import com.example.mealplanb.remote.Food
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import jp.wasabeef.blurry.Blurry
+import java.lang.reflect.Array
 
 class AddMealListFragment : Fragment() {
     lateinit var binding : FragmentAddMealListBinding
@@ -37,13 +43,6 @@ class AddMealListFragment : Fragment() {
     ): View? {
         binding = FragmentAddMealListBinding.inflate(layoutInflater)
         mealList = arrayListOf()
-//        mealList.addAll(
-//            arrayListOf(
-//                Meal("크림파스타", 100, 200, 30, 9, 12),
-//                Meal("크림리조또", 120, 250, 14, 4,3),
-//                Meal("식빵", 30, 70, 49, 9,3),
-//                Meal("크림스프", 150, 180, 7, 0, 1),
-//                Meal("샐러드", 50, 80,4, 1, 0)))
 
         val sharedPreferences = requireActivity().getSharedPreferences("myPreferences", MODE_PRIVATE)
         val gson = Gson()
@@ -101,13 +100,55 @@ class AddMealListFragment : Fragment() {
 
             val nameEt : EditText = sheetView.findViewById(R.id.set_save_name_et)
 
+            nameEt.setOnEditorActionListener { v, actionId, event ->
+                if (actionId == EditorInfo.IME_ACTION_DONE) {
+                    val imm = context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                    imm.hideSoftInputFromWindow(v.windowToken, 0)
+                    true
+                } else {
+                    false
+                }
+            }
+
             val textWatcher = object : TextWatcher {
                 override fun afterTextChanged(s: Editable) {
                     if (nameEt.text.isNotEmpty()) {
-                        // 두 EditText 모두 값이 있을 때 색상 변경
                         setsaveCompleteCv.setCardBackgroundColor(Color.parseColor("#7C5CF8"))
+                        setsaveCompleteCv.setOnClickListener{ // 완료 버튼 눌렀을 때
+                            //나의 식단 저장하는 코드
+                            json = sharedPreferences.getString("myMadeList", null)
+
+                            val myMadeList: ArrayList<Meal> = gson.fromJson(json, object : TypeToken<ArrayList<Meal>>() {}.type) ?: arrayListOf()
+
+                            var totalWeight = 0.0
+                            var totalCal = 0.0
+                            var totalCarb = 0.0
+                            var totalProtein = 0.0
+                            var totalFat = 0.0
+
+                            for (meal in mealList) {
+                                totalWeight += meal.meal_weight
+                                totalCal += meal.meal_cal
+                                totalCarb += meal.sacc_gram
+                                totalProtein += meal.protein_gram
+                                totalFat += meal.fat_gram
+
+                            }
+
+                            val mealName = nameEt.text.toString().trim { it <= '\n' }
+                            myMadeList.add(Meal(mealName, totalWeight, totalCal, totalCarb, totalProtein, totalFat))
+
+                            val editor = sharedPreferences.edit()
+                            val newJson = gson.toJson(myMadeList)
+                            editor.putString("myMadeList", newJson)
+                            editor.apply()
+
+                            bottomSheetDialog.dismiss()
+
+                            //API관련
+                            val authService = AuthService(requireContext())
+                        }
                     } else {
-                        // 하나라도 값이 없을 때 색상 변경
                         setsaveCompleteCv.setCardBackgroundColor(Color.parseColor("#D7D7D7"))
                     }
                 }
@@ -133,20 +174,8 @@ class AddMealListFragment : Fragment() {
 
             bottomSheetDialog.show()
 
-//            나의 식단 저장하는 코드
-//            json = sharedPreferences.getString("myMadeList",null)
-//
-//            val myMadeList: ArrayList<Meal> = gson.fromJson(json, object : TypeToken<ArrayList<Meal>>() {}.type) ?: arrayListOf()
-//
-//            for(meal in mealList) {
-//                myMadeList.add(meal)
-//            }
-//
-//            val editor = sharedPreferences.edit()
-//            val newJson = gson.toJson(myMadeList)
-//            editor.putString("myMadeList", newJson)
-//            editor.apply()
         }
+
         binding.addmeallistAddmoreCv.setOnClickListener {
             val editor = sharedPreferences.edit()
             val newJson = gson.toJson(addFoodList)
