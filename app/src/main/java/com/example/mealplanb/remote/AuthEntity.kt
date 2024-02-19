@@ -50,7 +50,50 @@ data class AvatarUpdateResponse(
     @SerializedName("avatar_color") val avatar_color: String
 )
 
+data class GetFoodResponse(
+    @SerializedName("name") val name: String,
+    @SerializedName("quantity") val quantity : Int,
+    @SerializedName("kcal") val kcal : Double,
+    @SerializedName("carbohydrates") val carbohydrates : Double,
+    @SerializedName("protein") val protein : Double,
+    @SerializedName("fat") val fat : Double,
+    @SerializedName("isFavorite") val isFavorite : Boolean
+)
+
+
+data class mymealData(
+    @SerializedName("favorite_meal_name") val favorite_meal_name:String,
+    @SerializedName("foods") val foods: List<FoodList>
+)
+
+data class FoodList(
+    @SerializedName("food_id") val food_id: Int,
+    @SerializedName("quantity") val quantity: Int
+)
+
 data class Weight(
     @SerializedName("weight") val weight : Float,
     @SerializedName("date") val date : String,
+)
+
+data class FavoriteFoodRequest(
+    @SerializedName("food_id") val food_id : Int,
+)
+
+data class FavoriteFoodResponse(
+    @SerializedName("foods") val foods: List<Food>
+)
+
+data class Food(
+    @SerializedName("food_id") val foodId: Int,
+    @SerializedName("food_name") val foodName: String,
+    @SerializedName("kcal") val kcal: Int,
+)
+
+data class FoodSearchResponse(
+    @SerializedName("current_page") val current_page : Int,
+    @SerializedName("last_page") val last_page : Int,
+    @SerializedName("foods") val foods: List<Food>,
+    @SerializedName("member_created") val member_created: Boolean
+
 )

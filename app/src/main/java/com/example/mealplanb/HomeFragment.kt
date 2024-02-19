@@ -14,6 +14,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mealplanb.databinding.FragmentHomeBinding
 import com.example.mealplanb.remote.AuthService
+import com.example.mealplanb.remote.FavoriteFoodResponse
 import com.example.mealplanb.remote.SignupView
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -327,6 +328,11 @@ class HomeFragment : Fragment(), DatePickerDialog.OnDateSetListener, SignupView 
             binding.mainWeightTv.text = 0.0f.toString()
         }
     }
+
+    override fun handleFavoriteFoodResponse(favoriteFoodResponse: FavoriteFoodResponse?) {
+        TODO("Not yet implemented")
+    }
+
     fun convertDateFormat(inputDate: String): String {
         val inputDateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
         val outputDateFormat = SimpleDateFormat("MM. dd. EEE", Locale.getDefault())
