@@ -14,6 +14,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mealplanb.databinding.FragmentHomeBinding
 import com.example.mealplanb.remote.AuthService
+import com.example.mealplanb.remote.MealListDateResponseMeals
 import com.example.mealplanb.remote.SignupView
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -46,6 +47,8 @@ class HomeFragment : Fragment(), DatePickerDialog.OnDateSetListener, SignupView 
     // 날짜와 체중 데이터를 저장할 맵
     private val weightDataMap: MutableMap<String, Float> = mutableMapOf()
 
+    val numList : ArrayList<String> = arrayListOf("첫 끼","두 끼","세 끼","네 끼","다섯 끼",
+        "여섯 끼","일곱 끼","여덟 끼","아홉 끼","열 끼")
 
     override fun onResume() {
         super.onResume()
@@ -57,14 +60,14 @@ class HomeFragment : Fragment(), DatePickerDialog.OnDateSetListener, SignupView 
         val avatarImageID = sharedPref.getInt("avatar",3)
 
         val gson = Gson()
-        var json = sharedPref.getString("dayMealList",null)
-        dayMealList = gson.fromJson(json,object : TypeToken<ArrayList<MealMainInfo>>() {}.type) ?: arrayListOf(
-            MealMainInfo(false,1,0.0,0,"", 0.0)
-        )
+//        var json = sharedPref.getString("dayMealList",null)
+//        dayMealList = gson.fromJson(json,object : TypeToken<ArrayList<MealMainInfo>>() {}.type) ?: arrayListOf(
+//            MealMainInfo(false,1,0.0,0,"", 0.0)
+//        )
 
-        binding.mainMeallistRv.layoutManager = LinearLayoutManager(requireContext(),LinearLayoutManager.HORIZONTAL,false)
-        adapter = DayMealAdapter(dayMealList,requireContext())
-        binding.mainMeallistRv.adapter = adapter
+//        binding.mainMeallistRv.layoutManager = LinearLayoutManager(requireContext(),LinearLayoutManager.HORIZONTAL,false)
+//        adapter = DayMealAdapter(dayMealList,requireContext())
+//        binding.mainMeallistRv.adapter = adapter
 
 //        binding.mainMeallistRv.isNestedScrollingEnabled = false
 //        binding.mainMeallistRv.overScrollMode = View.OVER_SCROLL_ALWAYS
@@ -83,7 +86,10 @@ class HomeFragment : Fragment(), DatePickerDialog.OnDateSetListener, SignupView 
         //끼니 slot 추가
         binding.mainDaymealAddCv.setOnClickListener {
             if(dayMealList.size < 10) {
-                dayMealList.add(MealMainInfo(false,dayMealList.size+1,0.0,R.drawable.item_hamburger_img,"", 0.0))
+                val dateFormat = SimpleDateFormat("yyyy-MM-dd")
+                val mealNum = dayMealList.size+1
+                dayMealList.add(MealMainInfo(false,mealNum,100,numList[mealNum-1],0.0,
+                    R.drawable.item_hamburger_img,dateFormat.format(cal.time),0.0))
                 var newItemIdx = dayMealList.size-1
                 adapter?.notifyItemInserted(newItemIdx)
 
@@ -128,9 +134,13 @@ class HomeFragment : Fragment(), DatePickerDialog.OnDateSetListener, SignupView 
     ): View? {
         binding = FragmentHomeBinding.inflate(layoutInflater)
         dayMealList = arrayListOf()
-        dayMealList.addAll(
-            arrayListOf(
-                MealMainInfo(false,1,0.0,R.drawable.item_hamburger_img,"", 0.0)))
+//        dayMealList.addAll(
+//            arrayListOf(
+//                MealMainInfo(false,1,0.0,R.drawable.item_hamburger_img,"", 0.0)))
+
+        adapter = DayMealAdapter(dayMealList,requireContext())
+        binding.mainMeallistRv.layoutManager = LinearLayoutManager(requireContext(),LinearLayoutManager.HORIZONTAL,false)
+        binding.mainMeallistRv.adapter = adapter
 
         //캐릭터 tab하면 상세 영양소 페이지로 연결
         binding.mainCharacterIv.setOnClickListener{
@@ -164,6 +174,7 @@ class HomeFragment : Fragment(), DatePickerDialog.OnDateSetListener, SignupView 
 
         val dateFormat = SimpleDateFormat("yyyy-MM-dd")
         authService.userProfileCheck(dateFormat.format(cal.time))
+        authService.mealListDayCheck(dateFormat.format(cal.time))
 
         return binding.root
     }
@@ -186,6 +197,7 @@ class HomeFragment : Fragment(), DatePickerDialog.OnDateSetListener, SignupView 
         val authService = AuthService(requireContext())
         authService.setSignupView(this)
         authService.userProfileCheck(dateFormat.format(cal1.time))
+        authService.mealListDayCheck(dateFormat.format(cal.time))
 
         setHomeData()
 
@@ -203,6 +215,13 @@ class HomeFragment : Fragment(), DatePickerDialog.OnDateSetListener, SignupView 
 //        setNutData()
         // 체중 UI 업데이트
         updateWeightOnSelectedDate()
+
+        val authService = AuthService(requireContext())
+        authService.setSignupView(this)
+
+        val dateFormat = SimpleDateFormat("yyyy-MM-dd")
+        authService.userProfileCheck(dateFormat.format(cal.time))
+        authService.mealListDayCheck(dateFormat.format(cal.time))
     }
 
     fun setDayText(): String {
@@ -313,7 +332,7 @@ class HomeFragment : Fragment(), DatePickerDialog.OnDateSetListener, SignupView 
         trans_fat: Int,
         cholesterol: Int
     ) {
-        binding.mainProgressPb.updateProgress(kcal * 100 / remaining_kcal)
+        binding.mainProgressPb.updateProgress(kcal * 100 / (kcal + remaining_kcal))
 
         binding.mainTitleNicknameTv.text = nickname
         binding.mainTitleContent1Tv.text = "님의 " + elapsed_days.toString() +"일차"
@@ -333,6 +352,49 @@ class HomeFragment : Fragment(), DatePickerDialog.OnDateSetListener, SignupView 
         binding.mainSaccSizeTv.text = carbohydrate.toString()
         binding.mainProteinSizeTv.text = protein.toString()
         binding.mainFatSizeTv.text = fat.toString()
+    }
+
+    override fun mealListDayCheckSuccess(
+        meal_date: String,
+        meals: List<MealListDateResponseMeals>
+    ) {
+        var newDayMealList : ArrayList<MealMainInfo> = arrayListOf()
+
+        val imageList = listOf(R.drawable.item_hamburger_img,
+            R.drawable.item_salad_img,
+            R.drawable.item_rice_img,
+            R.drawable.item_meal_img,
+            R.drawable.item_egg_img,
+            R.drawable.item_pudding_img,
+            R.drawable.item_sugar_img)
+
+        if(meals.size == 0) {
+            newDayMealList.add(MealMainInfo(false,1,1,"첫 끼",0.0,R.drawable.item_hamburger_img,meal_date,0.0))
+        } else {
+            for(item in meals) {
+                var new_meal_no = 1
+                for(i in 0 until numList.size) {
+                    if(numList[i] == item.meal_type) {
+                        new_meal_no = i+1
+                    }
+                }
+                var new_meal_img = imageList.random()
+                newDayMealList.add(MealMainInfo(true,new_meal_no,item.meal_id,item.meal_type,item.meal_kcal,new_meal_img,meal_date,1.0))
+            }
+        }
+
+        dayMealList = newDayMealList
+
+        adapter = context?.let { DayMealAdapter(dayMealList, it) }
+        binding.mainMeallistRv.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+
+        binding.mainMeallistRv.adapter = adapter
+
+        Log.d("newDayMealList",dayMealList.toString())
+//
+//        binding.mainMeallistRv.scrollToPosition(dayMealList.size)
+//
+//        adapter!!.notifyDataSetChanged()
     }
 
     // 선택한 날짜에 대한 체중 정보를 UI에 업데이트하는 함수

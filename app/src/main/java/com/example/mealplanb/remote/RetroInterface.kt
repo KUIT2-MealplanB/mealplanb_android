@@ -40,6 +40,11 @@ interface RetroInterface {
         @Query("mealDate") mealDate: String
     ): Call<BaseResponse<UserProfileResponse>>
 
+    @GET("meal")
+    fun mealListDayCheck(
+        @Query("mealDate") mealDate: String
+    ): Call<BaseResponse<MealListDateResponse>>
+
     //Weight
     @GET("weight")
     fun weightcheck(): Call<BaseResponse<Weight>>

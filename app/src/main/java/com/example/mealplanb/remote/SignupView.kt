@@ -10,4 +10,5 @@ interface SignupView {
                                 target_carbohydrate: Int,target_protein: Int,target_fat: Int,
                                 kcal: Int,carbohydrate: Int,protein: Int,fat: Int, sodium: Int,
                                 sugar: Int,saturated_fat: Int,trans_fat: Int,cholesterol: Int)
+    fun mealListDayCheckSuccess(meal_date: String,meals: List<MealListDateResponseMeals>)
 }

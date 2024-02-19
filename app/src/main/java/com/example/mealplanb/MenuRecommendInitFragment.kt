@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import com.example.mealplanb.databinding.FragmentMenuRecommendHowEatBinding
 import com.example.mealplanb.databinding.FragmentMenuRecommendInitBinding
 import com.example.mealplanb.remote.AuthService
+import com.example.mealplanb.remote.MealListDateResponseMeals
 import com.example.mealplanb.remote.SignupView
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -124,5 +125,12 @@ class MenuRecommendInitFragment : Fragment(), SignupView {
         requireActivity().supportFragmentManager.beginTransaction()
             .replace(R.id.menu_recomm_button_cv, whatMenuFragment)
             .commit()
+    }
+
+    override fun mealListDayCheckSuccess(
+        meal_date: String,
+        meals: List<MealListDateResponseMeals>
+    ) {
+        TODO("Not yet implemented")
     }
 }

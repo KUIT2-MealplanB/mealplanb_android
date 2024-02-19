@@ -17,6 +17,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import com.example.mealplanb.databinding.ActivityStartAvatarBinding
 import com.example.mealplanb.local.getJwt
 import com.example.mealplanb.remote.AuthService
+import com.example.mealplanb.remote.MealListDateResponseMeals
 import com.example.mealplanb.remote.SignupView
 
 class StartAvatarActivity : AppCompatActivity(), SignupView {
@@ -266,6 +267,13 @@ class StartAvatarActivity : AppCompatActivity(), SignupView {
         saturated_fat: Int,
         trans_fat: Int,
         cholesterol: Int
+    ) {
+        TODO("Not yet implemented")
+    }
+
+    override fun mealListDayCheckSuccess(
+        meal_date: String,
+        meals: List<MealListDateResponseMeals>
     ) {
         TODO("Not yet implemented")
     }

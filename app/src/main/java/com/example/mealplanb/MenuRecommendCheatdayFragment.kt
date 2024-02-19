@@ -370,7 +370,7 @@ class MenuRecommendCheatdayFragment : Fragment(), RecommendMealView {
             recommList = cheat_day_food
             meal_id = cheat_day_food[recommIndexList[selectCategoryIdx]].food_id
             meal_name = cheat_day_food[recommIndexList[selectCategoryIdx]].name
-            meal_quantity = cheat_day_food[recommIndexList[selectCategoryIdx]].offer_quantity
+            meal_quantity = cheat_day_food[recommIndexList[selectCategoryIdx]].quantity
             sacc_gram = cheat_day_food[recommIndexList[selectCategoryIdx]].offer_carbohydrate.toDouble()
             protein_gram = cheat_day_food[recommIndexList[selectCategoryIdx]].offer_protein.toDouble()
             fat_gram = cheat_day_food[recommIndexList[selectCategoryIdx]].offer_fat.toDouble()

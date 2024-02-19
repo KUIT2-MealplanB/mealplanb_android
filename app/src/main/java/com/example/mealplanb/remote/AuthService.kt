@@ -14,6 +14,7 @@ import com.google.gson.reflect.TypeToken
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import kotlin.math.sign
 
 //retrofit에 service를 요청하고 응답받는 역할을 하는 class
 class AuthService(private val context: Context) {
@@ -333,6 +334,41 @@ class AuthService(private val context: Context) {
         })
     }
 
+    fun mealListDayCheck(mealDate: String) {
+        authService.mealListDayCheck(mealDate).enqueue(object : Callback<BaseResponse<MealListDateResponse>> {
+            override fun onResponse(
+                call: Call<BaseResponse<MealListDateResponse>>,
+                response: Response<BaseResponse<MealListDateResponse>>
+            ) {
+                val resp = response.body()
+                Log.d("Home user meal get response",resp.toString())
+                when (resp?.code) {
+                    1000 -> {
+                        // 성공 시 원하는 처리
+                        val mealListDayCheckResponse = resp.result
+                        val meal_date = mealListDayCheckResponse.meal_date ?: ""
+                        val meals = mealListDayCheckResponse.meals
+
+                        // 정보 전달
+                        signupView.mealListDayCheckSuccess(meal_date,meals)
+                        Log.d("Home user meal get Success", "User Profile Success")
+                    }
+
+                    else -> if (resp != null) {
+                        Log.d("Home user meal get error", "User Profile error")
+                    }else{
+                        Log.d("Home user meal get null", "User Profile null")
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<BaseResponse<MealListDateResponse>>, t: Throwable) {
+                Log.d("Home user meal get Failed", t.toString())
+            }
+
+        })
+    }
+
     //weight
     fun weightcheck(){
         signupView.SignupLoading()
@@ -451,7 +487,7 @@ class AuthService(private val context: Context) {
                         val food_id = myfavoriteMealCheckResponse?.food_id ?: 0
                         val name = myfavoriteMealCheckResponse?.name ?: ""
                         val offer = myfavoriteMealCheckResponse?.offer ?: ""
-                        val offer_quantity = myfavoriteMealCheckResponse.offer_quantity ?: 0
+                        val offer_quantity = myfavoriteMealCheckResponse.quantity ?: 0
                         val offer_carbohydrate = myfavoriteMealCheckResponse?.offer_carbohydrate ?: 0
                         val offer_protein = myfavoriteMealCheckResponse?.offer_protein ?: 0
                         val offer_fat = myfavoriteMealCheckResponse?.offer_fat ?: 0
@@ -491,7 +527,7 @@ class AuthService(private val context: Context) {
                         val food_id = communityfavoriteMealCheckResponse?.food_id ?: 0
                         val name = communityfavoriteMealCheckResponse?.name ?: ""
                         val offer = communityfavoriteMealCheckResponse?.offer ?: ""
-                        val offer_quantity = communityfavoriteMealCheckResponse.offer_quantity ?: 0
+                        val offer_quantity = communityfavoriteMealCheckResponse.quantity ?: 0
                         val offer_carbohydrate = communityfavoriteMealCheckResponse?.offer_carbohydrate ?: 0
                         val offer_protein = communityfavoriteMealCheckResponse?.offer_protein ?: 0
                         val offer_fat = communityfavoriteMealCheckResponse?.offer_fat ?: 0

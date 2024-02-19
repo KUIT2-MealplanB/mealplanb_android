@@ -97,6 +97,17 @@ data class UserProfileResponseIntake(
     @SerializedName("cholesterol") val cholesterol: Int
 )
 
+data class MealListDateResponse(
+    @SerializedName("meal_date") val meal_date: String,
+    @SerializedName("meals") val meals: List<MealListDateResponseMeals>
+)
+
+data class MealListDateResponseMeals(
+    @SerializedName("meal_id") val meal_id: Int,
+    @SerializedName("meal_type") val meal_type: String,
+    @SerializedName("meal_kcal") val meal_kcal: Double
+)
+
 data class Weight(
     @SerializedName("weight") val weight : Float,
     @SerializedName("date") val date : String,
@@ -106,7 +117,7 @@ data class ChatRecommendMeal(
     @SerializedName("food_id") val food_id : Long,
     @SerializedName("name") val name : String,
     @SerializedName("offer") val offer : String,
-    @SerializedName("offer_quantity") val offer_quantity : Int,
+    @SerializedName("quantity") val quantity : Int,
     @SerializedName("offer_carbohydrate") val offer_carbohydrate : Int,
     @SerializedName("offer_protein") val offer_protein : Int,
     @SerializedName("offer_fat") val offer_fat : Int
