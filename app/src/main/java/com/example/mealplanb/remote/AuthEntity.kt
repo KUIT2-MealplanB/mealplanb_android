@@ -48,6 +48,7 @@ data class AvatarUpdateResponse(
     @SerializedName("member_id") val member_id: Int,
     @SerializedName("nickname") val nickname: String,
     @SerializedName("avatar_color") val avatar_color: String
+)
 
 data class Plan(
     @SerializedName("initial_weight") val initial_weight: Double,

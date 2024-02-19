@@ -250,6 +250,7 @@ class AddMealListFragment : Fragment(), HomeMealView {
 
     override fun FoodListAddFailure(code: Int, msg: String) {
         TODO("Not yet implemented")
+    }
     //dp를 pixel로 변환
     fun Int.dpToPx(): Int {
         val density = Resources.getSystem().displayMetrics.density
