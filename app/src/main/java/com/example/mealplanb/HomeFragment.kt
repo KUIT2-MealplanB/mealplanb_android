@@ -512,4 +512,12 @@ class HomeFragment : Fragment(), DatePickerDialog.OnDateSetListener, SignupView,
     override fun MealAddFailure(code: Int, msg: String) {
         TODO("Not yet implemented")
     }
+
+    override fun FoodListAddSuccess() {
+        TODO("Not yet implemented")
+    }
+
+    override fun FoodListAddFailure(code: Int, msg: String) {
+        TODO("Not yet implemented")
+    }
 }

@@ -526,6 +526,39 @@ class AuthService(private val context: Context) {
         })
     }
 
+    fun foodListAddPost(mealId: Long, foods: List<FoodListAddRequestFoodItem>) {
+        val request = FoodListAddRequest(mealId,foods)
+        authService.foodListAddPost(request).enqueue(object : Callback<BaseResponse<Any>> {
+            override fun onResponse(
+                call: Call<BaseResponse<Any>>,
+                response: Response<BaseResponse<Any>>
+            ) {
+                Log.d("foodListAdd response",response.toString())
+                if(response.isSuccessful) { // response의 성공 여부를 확인
+                    Toast.makeText(context, "식단 등록 완료! 홈으로 이동합니다.", Toast.LENGTH_SHORT).show()
+                    Log.d("foodListAdd info",response.body().toString())
+
+                } else {
+                    // 서버에서는 응답을 했지만, 로그인 실패와 같은 이유로 성공적인 응답이 아닌 경우, Toast 메시지
+                    val gson = Gson()
+                    val type = object : TypeToken<BaseResponse<Any>>() {}.type
+                    val errorResponse: BaseResponse<Any>? = gson.fromJson(response.errorBody()?.charStream(), type)
+                    Log.d("foodListAdd info2", errorResponse.toString())
+
+                    if(errorResponse?.code.toString() == "7001" || errorResponse?.code.toString() == "7004"){
+                        Toast.makeText(context, errorResponse?.message, Toast.LENGTH_SHORT).show()
+                    }
+                    Log.d("foodListAdd Failed code",errorResponse?.code.toString())
+                }
+            }
+
+            override fun onFailure(call: Call<BaseResponse<Any>>, t: Throwable) {
+                Log.d("foodListAdd Failed", t.toString())
+            }
+
+        })
+    }
+
     //favorite food
     fun favoriteFoodGET(){
         signupView.SignupLoading()

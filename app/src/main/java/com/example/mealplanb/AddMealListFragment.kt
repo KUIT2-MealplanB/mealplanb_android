@@ -10,10 +10,12 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mealplanb.databinding.FragmentAddMealListBinding
+import com.example.mealplanb.remote.AuthService
+import com.example.mealplanb.remote.HomeMealView
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 
-class AddMealListFragment : Fragment() {
+class AddMealListFragment : Fragment(), HomeMealView {
     lateinit var binding : FragmentAddMealListBinding
     lateinit var mealList : ArrayList<Meal>
     private var addFoodList : ArrayList<Meal> = arrayListOf()
@@ -91,17 +93,21 @@ class AddMealListFragment : Fragment() {
                 tot_cal += i.meal_cal
             }
 
-            val editor = sharedPreferences.edit()
+            val authService = AuthService(requireContext())
+            authService.setHomeMealView(this)
+//            authService.foodListAddPost()
+
+//            val editor = sharedPreferences.edit()
 
             // 이미지 리스트를 생성하고 랜덤하게 하나를 선택
-            val imageList = listOf(R.drawable.item_hamburger_img,
-                R.drawable.item_salad_img,
-                R.drawable.item_rice_img,
-                R.drawable.item_meal_img,
-                R.drawable.item_egg_img,
-                R.drawable.item_pudding_img,
-                R.drawable.item_sugar_img)
-            val randomImage = imageList.random()
+//            val imageList = listOf(R.drawable.item_hamburger_img,
+//                R.drawable.item_salad_img,
+//                R.drawable.item_rice_img,
+//                R.drawable.item_meal_img,
+//                R.drawable.item_egg_img,
+//                R.drawable.item_pudding_img,
+//                R.drawable.item_sugar_img)
+//            val randomImage = imageList.random()
 
 //            val json = MealMainInfo(true, 1, tot_cal, randomImage)
 //            val newJson = gson.toJson(json)
@@ -129,5 +135,21 @@ class AddMealListFragment : Fragment() {
         }
 
         return binding.root
+    }
+
+    override fun MealAddSuccess(meal_id: Int) {
+        TODO("Not yet implemented")
+    }
+
+    override fun MealAddFailure(code: Int, msg: String) {
+        TODO("Not yet implemented")
+    }
+
+    override fun FoodListAddSuccess() {
+        TODO("Not yet implemented")
+    }
+
+    override fun FoodListAddFailure(code: Int, msg: String) {
+        TODO("Not yet implemented")
     }
 }
