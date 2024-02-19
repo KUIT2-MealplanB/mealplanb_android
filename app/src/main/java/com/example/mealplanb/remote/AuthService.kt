@@ -229,7 +229,6 @@ class AuthService(private val context: Context) {
                     Toast.makeText(context, "식단 등록 성공", Toast.LENGTH_SHORT).show()
                     Log.d("식단 등록 정보", response.body().toString())
 
-                    // 성공적으로 식단이 등록되었을 경우, 다른 액티비티로 이동 또는 필요한 작업을 수행
                 } else {
                     // 서버에서는 응답을 했지만, 등록 실패와 같은 이유로 성공적인 응답이 아닌 경우, Toast 메시지
                     val gson = Gson()
@@ -252,6 +251,8 @@ class AuthService(private val context: Context) {
 
         })
     }
+
+    //food_id 조회
 
     // 특정 식사 정보 조회
     fun checkFoodDetail(foodId: Int) {
