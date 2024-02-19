@@ -37,8 +37,8 @@ class SearchMealFragment : Fragment(), SignupView, SearchFoodView {
     private var myMadeList: ArrayList<Meal> = arrayListOf()
 
     lateinit var adapter: SearchMealAdapter // RecyclerView에 사용할 어댑터
-    lateinit var oftenadapter: SearchCategoryAdapter
-    lateinit var favoritefoodadapter: FavoriteFoodAdapter //즐겨찾기 RecyclerView에 사용할 어댑터
+    lateinit var oftenadapter: SearchCategoryAdapter // 즐겨찾기 RecyclerView에 사용할 어댑터
+    lateinit var favoritefoodadapter: FavoriteFoodAdapter // 즐겨찾기 RecyclerView에 사용할 어댑터
 
     var lastClickedButton: String? = null // '자주 먹는', '내가 만든' 버튼 중 어떤 것이 눌렸는지 저장하는 변수 추가
 
@@ -61,7 +61,7 @@ class SearchMealFragment : Fragment(), SignupView, SearchFoodView {
         //초기 상태 설정
         binding.searchMealMyLl.visibility = View.VISIBLE
         binding.searchMealAllRv.visibility = View.GONE
-        binding.searchMealMyRv.visibility=View.GONE
+        binding.searchMealMyRv.visibility = View.GONE
 
         //'X'버튼 눌렀을 때
         binding.searchMealInitOutIv.setOnClickListener {
@@ -76,7 +76,7 @@ class SearchMealFragment : Fragment(), SignupView, SearchFoodView {
             authService.favoriteFoodGET()
 
             //없어지고 보이고
-            binding.searchMealMyLl.visibility=View.GONE
+            binding.searchMealMyLl.visibility = View.GONE
             binding.searchMealAllRv.visibility = View.GONE
             binding.searchMealMyRv.visibility = View.VISIBLE
 
@@ -87,7 +87,7 @@ class SearchMealFragment : Fragment(), SignupView, SearchFoodView {
             binding.searchMealInputEt.hint = "자주 먹는 식사"
             binding.searchMealInputEt.setHintTextColor(Color.parseColor("#7C5CF8"))
 
-            // 즐겨찾기에 추가한 데이터를 관리하는 리사이클러뷰
+            //즐겨찾기에 추가한 데이터를 관리하는 리사이클러뷰
             binding.searchMealMyRv.adapter = favoritefoodadapter
             binding.searchMealMyRv.layoutManager = LinearLayoutManager(requireContext())
 
@@ -108,7 +108,6 @@ class SearchMealFragment : Fragment(), SignupView, SearchFoodView {
 
                 binding.searchMealOutIv.visibility = View.GONE
 
-
                 // 호출 시점에 hideKeyboard 함수를 호출하여 키보드를 숨깁니다.
                 hideKeyboard()
 
@@ -116,17 +115,16 @@ class SearchMealFragment : Fragment(), SignupView, SearchFoodView {
                 binding.searchMealInputEt.clearFocus()
 
                 lastClickedButton = " "
-
             }
+
             binding.searchMealInitOutIv.setOnClickListener {
                 lastClickedButton = " "
                 requireActivity().supportFragmentManager.beginTransaction()
                     .replace(R.id.main_frm, HomeFragment()).commit()
             }
-        }
 
         //나의 식단 버튼을 눌렀을 때
-        binding.searchMealBtnMadeLl.setOnClickListener{
+        binding.searchMealBtnMadeLl.setOnClickListener {
 
             // 버튼이 눌린 것을 저장
             lastClickedButton = "btnMade"
@@ -137,7 +135,7 @@ class SearchMealFragment : Fragment(), SignupView, SearchFoodView {
             binding.searchMealMyRv.visibility = View.VISIBLE
 
             //없어지고 보이고
-            binding.searchMealMyLl.visibility=View.GONE
+            binding.searchMealMyLl.visibility = View.GONE
 
             //검색창 hint
             binding.searchMealInputEt.hint = "나의 식단"
@@ -153,12 +151,12 @@ class SearchMealFragment : Fragment(), SignupView, SearchFoodView {
             val type = object : TypeToken<ArrayList<Meal>>() {}.type
             myMadeList = gson.fromJson(json, type) ?: arrayListOf()
 
-            Log.d("logcat",myMadeList.size.toString())
+            Log.d("logcat", myMadeList.size.toString())
 
-            oftenadapter = SearchCategoryAdapter(myMadeList) { item->
+            oftenadapter = SearchCategoryAdapter(myMadeList) { item ->
                 val editor = sharedPreferences.edit()
                 var newJson = gson.toJson(item)
-                editor.putString("Key",newJson)
+                editor.putString("Key", newJson)
                 editor.apply()
                 requireActivity().supportFragmentManager.beginTransaction()
                     .replace(R.id.main_frm, FoodDetailFragment()).commit()
@@ -194,6 +192,12 @@ class SearchMealFragment : Fragment(), SignupView, SearchFoodView {
                 binding.searchMealInputEt.clearFocus()
 
                 lastClickedButton = " "
+            }
+
+            binding.searchMealInitOutIv.setOnClickListener {
+                lastClickedButton = " "
+                requireActivity().supportFragmentManager.beginTransaction()
+                    .replace(R.id.main_frm, HomeFragment()).commit()
 
             }
             binding.searchMealInitOutIv.setOnClickListener {
@@ -210,7 +214,7 @@ class SearchMealFragment : Fragment(), SignupView, SearchFoodView {
             val gson = Gson()
             val editor = sharedPreferences.edit()
             var newJson = gson.toJson(item)
-            editor.putString("Key",newJson)
+            editor.putString("Key", newJson)
             editor.apply()
             requireActivity().supportFragmentManager.beginTransaction()
                 .replace(R.id.main_frm, FoodDetailFragment()).commit()
@@ -229,10 +233,9 @@ class SearchMealFragment : Fragment(), SignupView, SearchFoodView {
         adapter = SearchMealAdapter(ArrayList()) { item ->
             val sharedPreferences =
                 requireActivity().getSharedPreferences("myPreferences", Context.MODE_PRIVATE)
-            val gson = Gson()
             val editor = sharedPreferences.edit()
-            var newJson = gson.toJson(item)
-            editor.putString("Key",newJson)
+            editor.putInt("selectedFoodId",item.foodId)
+            Log.d("foodId 저장 확인","${item.foodId}")
             editor.apply()
             requireActivity().supportFragmentManager.beginTransaction()
                 .replace(R.id.main_frm, FoodDetailFragment()).commit()
@@ -263,23 +266,50 @@ class SearchMealFragment : Fragment(), SignupView, SearchFoodView {
 
         // 검색창에 텍스트가 변경될 때마다 실행될 리스너 설정
         binding.searchMealInputEt.addTextChangedListener(object : TextWatcher {
-
             override fun afterTextChanged(s: Editable?) {
-                //API관련
-                authService.searchfood(s.toString(), 0)
-                Log.d("보낸 쿼리", s.toString())
+                authService.searchfood(s.toString(), 0) { response ->
+                    if (!isAdded || response == null) {
+                        return@searchfood
+                    }
+
+                    Log.d("보낸 쿼리", s.toString())
+
+                    when (response.code) {
+                        1000 -> {
+                            val searchFoodResponse = response.result
+                            SearchFoodSuccess(searchFoodResponse)
+                        }
+                        else -> {
+                            Log.d("searchFood get error", response.toString())
+                        }
+                    }
+                }
             }
 
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-            }
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
 
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-            }
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
         })
 
         //검색창 누르면 linearlayout 숨기기, recyclerview 보이기 + 반대
         binding.searchMealInputEt.setOnFocusChangeListener { _, hasFocus ->
-            authService.searchfood("", 0)
+            authService.searchfood("", 0) { response ->
+                if (!isAdded || response == null) {
+                    return@searchfood
+                }
+
+                binding.searchMealOutIv.visibility = View.VISIBLE
+
+                when (response.code) {
+                    1000 -> {
+                        val searchFoodResponse = response.result
+                        SearchFoodSuccess(searchFoodResponse)
+                    }
+                    else -> {
+                        Log.d("searchFood get error", response.toString())
+                    }
+                }
+            }
 
             binding.searchMealOutIv.visibility = View.VISIBLE
 
@@ -310,6 +340,7 @@ class SearchMealFragment : Fragment(), SignupView, SearchFoodView {
                     "btnMade" -> {
                         lastClickedButton = " "
                     }
+
                     else -> {
                         binding.searchMealAllRv.visibility = View.VISIBLE
                         binding.searchMealMyRv.visibility = View.GONE
@@ -345,7 +376,6 @@ class SearchMealFragment : Fragment(), SignupView, SearchFoodView {
         return binding.root
     }
 
-
     // 키보드를 숨기는 함수
     fun hideKeyboard() {
         val inputMethodManager =
@@ -374,9 +404,8 @@ class SearchMealFragment : Fragment(), SignupView, SearchFoodView {
             }
         })
     }
-
     override fun SignupLoading() {
-        TODO("Not yet implemented")
+        Toast.makeText(requireContext(), "loading 중", Toast.LENGTH_SHORT).show()
     }
 
     override fun SignupSuccess() {
@@ -431,8 +460,6 @@ class SearchMealFragment : Fragment(), SignupView, SearchFoodView {
                     Log.d("favorite Food Item in fragment", "Food ID: ${food.foodId}, Food Name: ${food.foodName}, Kcal: ${food.kcal}")
                 }
             }
-
-            if (foods != null) {
                 // Ensure foods is of type ArrayList<Food>
                 if (foods is ArrayList<*>) {
                     // Cast to ArrayList<Food>
@@ -474,10 +501,13 @@ class SearchMealFragment : Fragment(), SignupView, SearchFoodView {
         adapter = SearchMealAdapter(items) { item ->
             val sharedPreferences =
                 requireActivity().getSharedPreferences("myPreferences", Context.MODE_PRIVATE)
-            val gson = Gson()
             val editor = sharedPreferences.edit()
-            var newJson = gson.toJson(item.foodId)
-            editor.putString("Key", newJson)
+            editor.putInt("selectedFoodId",item.foodId)
+            Log.d("foodId 저장 확인","${item.foodId}")
+//             val gson = Gson()
+//             val editor = sharedPreferences.edit()
+//             var newJson = gson.toJson(item.foodId)
+//             editor.putString("Key", newJson)
             editor.apply()
             requireActivity().supportFragmentManager.beginTransaction()
                 .replace(R.id.main_frm, FoodDetailFragment()).commit()

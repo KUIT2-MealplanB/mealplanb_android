@@ -10,6 +10,7 @@ import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
@@ -21,12 +22,15 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mealplanb.databinding.FragmentAddMealListBinding
 import com.example.mealplanb.remote.AuthService
+import com.example.mealplanb.remote.Food
 import com.example.mealplanb.remote.HomeMealView
 import com.example.mealplanb.remote.MealFoodResponseFoodList
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import jp.wasabeef.blurry.Blurry
+import java.lang.reflect.Array
 
 class AddMealListFragment : Fragment(), HomeMealView {
     lateinit var binding : FragmentAddMealListBinding
@@ -39,13 +43,6 @@ class AddMealListFragment : Fragment(), HomeMealView {
     ): View? {
         binding = FragmentAddMealListBinding.inflate(layoutInflater)
         mealList = arrayListOf()
-//        mealList.addAll(
-//            arrayListOf(
-//                Meal("크림파스타", 100, 200, 30, 9, 12),
-//                Meal("크림리조또", 120, 250, 14, 4,3),
-//                Meal("식빵", 30, 70, 49, 9,3),
-//                Meal("크림스프", 150, 180, 7, 0, 1),
-//                Meal("샐러드", 50, 80,4, 1, 0)))
 
         val sharedPreferences = requireActivity().getSharedPreferences("myPreferences", MODE_PRIVATE)
         val gson = Gson()
@@ -123,6 +120,7 @@ class AddMealListFragment : Fragment(), HomeMealView {
 
                             val myMadeList: ArrayList<Meal> = gson.fromJson(json, object : TypeToken<ArrayList<Meal>>() {}.type) ?: arrayListOf()
 
+                            //음식별로 food_id 저장하는 내용이 필요 -> Meal class 수정 필요
                             var totalWeight = 0.0
                             var totalCal = 0.0
                             var totalCarb = 0.0
@@ -146,6 +144,9 @@ class AddMealListFragment : Fragment(), HomeMealView {
                             editor.apply()
 
                             bottomSheetDialog.dismiss()
+
+                            //API관련
+                            val authService = AuthService(requireContext())
                         }
                     } else {
                         setsaveCompleteCv.setCardBackgroundColor(Color.parseColor("#D7D7D7"))

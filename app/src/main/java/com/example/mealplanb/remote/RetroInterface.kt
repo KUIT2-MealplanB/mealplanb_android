@@ -26,6 +26,7 @@ interface RetroInterface {
     //아바타 정보 조회
     @GET("user/avatar")
     fun avatarcheck(): Call<BaseResponse<AvatarCheckResponse>>
+
     //아바타 정보 수정
     @PATCH("user/avatar")
     fun avatarupdate(
@@ -58,6 +59,16 @@ interface RetroInterface {
     fun mealListDayCheck(
         @Query("mealDate") mealDate: String
     ): Call<BaseResponse<MealListDateResponse>>
+
+    // 특정 식사 정보 조회
+    @GET("food/{foodId}")
+    fun checkFoodDetail(@Path("foodId") foodId: Int): Call<BaseResponse<GetFoodResponse>>
+
+    //나의 식단 등록
+    @POST("/my-meal")
+    fun mymealupdate(
+        @Body request: mymealData
+    ):Call<BaseResponse<Unit>>
 
     //Weight
     @GET("weight")

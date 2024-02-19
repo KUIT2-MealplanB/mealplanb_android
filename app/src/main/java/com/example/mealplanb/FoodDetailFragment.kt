@@ -3,17 +3,14 @@ package com.example.mealplanb
 import SearchCategoryAdapter
 import android.content.Context
 import android.content.Context.MODE_PRIVATE
-import android.content.Intent
-import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.Fragment
 import com.example.mealplanb.databinding.FragmentFooddetailBinding
 import com.example.mealplanb.remote.AuthService
@@ -40,50 +37,68 @@ class FoodDetailFragment : Fragment(), SignupView {
 
     lateinit var oftenadapter: SearchCategoryAdapter // 즐겨찾기 RecyclerView에 사용할 어댑터
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-
-        binding = FragmentFooddetailBinding.inflate(layoutInflater)
-
-        // Replace this with the actual food name
-        //val foodName = "로제파스타"
-        // Initialize food details using the data class
-        food = FoodItem(foodName, originSacc, originProtein, originFat, originkcal)
-
-        // Set initial UI values based on food details
-        binding.detailFoodNameTv.text = food.name
-        binding.detailFoodSaccSizeTv.text = food.saccSize.toInt().toString()
-        binding.detailFoodProteinSizeTv.text = food.proteinSize.toInt().toString()
-        binding.detailFoodFatSizeTv.text = food.fatSize.toInt().toString()
-        binding.detailFoodKcalNumTv.text = food.kcal.toInt().toString()
+    override fun onResume() {
+        super.onResume()
 
         val sharedPreferences = requireActivity().getSharedPreferences("myPreferences", MODE_PRIVATE)
-        var gson = Gson()
-        var json = sharedPreferences.getString("Key", null)
-        val data1 = gson.fromJson(json, object : TypeToken<Meal>() {}.type) ?: Meal("null",0.0,0.0, 0.0,0.0,0.0)
+        val foodId = sharedPreferences.getInt("selectedFoodId", -1)
 
-//        if(intent.getSerializableExtra("addFoodListOften") as? ArrayList<Meal> != null) {
-//            addFoodListOften = (intent.getSerializableExtra("addFoodListOften") as? ArrayList<Meal>)!!
-//        }
-        binding.detailFoodNameTv.text = data1.meal_name
-        binding.detailFoodSaccSizeTv.text = data1.sacc_gram.toInt().toString()
-        binding.detailFoodProteinSizeTv.text = data1.protein_gram.toInt().toString()
-        binding.detailFoodFatSizeTv.text = data1.fat_gram.toInt().toString()
-        binding.detailFoodKcalNumTv.text = data1.meal_cal.toInt().toString()
-        binding.detailFoodMealWeightEt.setText(data1.meal_weight.toInt().toString())
+        val authService = AuthService(requireContext()) // AuthService 인스턴스 생성
+        authService.checkFoodDetail(foodId)
 
-        // Initial values for food properties
-        val originSacc =  data1.sacc_gram
-        val originMealWeight = data1.meal_weight
-        val originProtein = data1.protein_gram
-        val originFat = data1.fat_gram
-        val originkcal = data1.meal_cal
-        val foodName = data1.meal_name
+        // 음식 정보를 SharedPreferences에서 불러오기
+        val foodName = sharedPreferences.getString("foodName", "")
+        val originMealWeight = sharedPreferences.getString("foodQuantity", "0")?.toDoubleOrNull() ?: 0.0
+        val originkcal = sharedPreferences.getString("foodKcal", "0")?.toDoubleOrNull() ?: 0.0
+        val originSacc = sharedPreferences.getString("foodCarbohydrates", "0")?.toDoubleOrNull() ?: 0.0
+        val originProtein = sharedPreferences.getString("foodProtein", "0")?.toDoubleOrNull() ?: 0.0
+        val originFat = sharedPreferences.getString("foodFat", "0")?.toDoubleOrNull() ?: 0.0
+
+        // SharedPreferences의 변경을 감지하는 리스너 등록
+        sharedPreferences.registerOnSharedPreferenceChangeListener { sharedPreferences, key ->
+            if (key == "selectedFoodId") {
+                // 음식 정보를 SharedPreferences에서 불러오기
+                val updatefoodName = sharedPreferences.getString("foodName", "")
+                val updateoriginMealWeight = sharedPreferences.getString("foodQuantity", "0")?.toDoubleOrNull() ?: 0.0
+                val updateoriginkcal = sharedPreferences.getString("foodKcal", "0")?.toDoubleOrNull() ?: 0.0
+                val updateoriginSacc = sharedPreferences.getString("foodCarbohydrates", "0")?.toDoubleOrNull() ?: 0.0
+                val updateoriginProtein = sharedPreferences.getString("foodProtein", "0")?.toDoubleOrNull() ?: 0.0
+                val updateoriginFat = sharedPreferences.getString("foodFat", "0")?.toDoubleOrNull() ?: 0.0
+
+                // 음식 정보를 UI에 설정
+                binding.detailFoodNameTv.text = updatefoodName
+                binding.detailFoodSaccSizeTv.text = updateoriginMealWeight.toInt().toString()
+                binding.detailFoodProteinSizeTv.text = updateoriginProtein.toInt().toString()
+                binding.detailFoodFatSizeTv.text = updateoriginFat.toInt().toString()
+                binding.detailFoodKcalNumTv.text = updateoriginkcal.toInt().toString()
+                binding.detailFoodMealWeightEt.setText(updateoriginSacc.toInt().toString())
+            }
+        }
+
+        Log.d("fooddetailfragment 내용 확인","${foodName},${originMealWeight},${originkcal},${originSacc},${originProtein},${originFat}")
 
         // Initialize food details using the data class
-        meal = Meal(foodName, originMealWeight,originkcal, originSacc, originProtein, originFat)
+        meal = Meal(foodName?:"", originMealWeight,originkcal, originSacc, originProtein, originFat)
+
+        var gson = Gson()
+        var json = sharedPreferences.getString("Key", null)
+        // val data1 = gson.fromJson(json, object : TypeToken<Meal>() {}.type) ?: Meal("null",0.0,0.0, 0.0,0.0,0.0)
+
+
+        food = FoodItem(foodName.toString(), originSacc, originProtein, originFat, originkcal)
+
+        Log.d("fooddetailfragment 내용 확인","${foodName},${originMealWeight},${originkcal},${originSacc},${originProtein},${originFat}")
+
+        // Initialize food details using the data class
+        meal = Meal(foodName?:"", originMealWeight,originkcal, originSacc, originProtein, originFat)
+
+        // 음식 정보를 UI에 설정
+        binding.detailFoodNameTv.text = meal.meal_name
+        binding.detailFoodSaccSizeTv.text = meal.sacc_gram.toInt().toString()
+        binding.detailFoodProteinSizeTv.text = meal.protein_gram.toInt().toString()
+        binding.detailFoodFatSizeTv.text = meal.fat_gram.toInt().toString()
+        binding.detailFoodKcalNumTv.text = meal.meal_cal.toInt().toString()
+        binding.detailFoodMealWeightEt.setText(meal.meal_weight.toInt().toString())
 
         // Minus button click listener
         binding.detailFoodMinusTv.setOnClickListener {
@@ -224,7 +239,6 @@ class FoodDetailFragment : Fragment(), SignupView {
 
         }
 
-
         // Editor action listener for handling completion
         binding.detailFoodMealWeightEt.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_DONE) {
@@ -251,6 +265,62 @@ class FoodDetailFragment : Fragment(), SignupView {
                 false // Return false if the action is not consumed
             }
         }
+
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+
+        binding = FragmentFooddetailBinding.inflate(layoutInflater)
+        Log.d("fooddetailfragment 확인","success")
+
+        val authService = AuthService(requireContext())
+
+        //X눌렀을 때
+        binding.detailFoodCancelIv.setOnClickListener {
+            requireActivity().supportFragmentManager.beginTransaction().replace(R.id.main_frm, SearchMealFragment()).commit()
+            requireActivity().overridePendingTransition(androidx.appcompat.R.anim.abc_slide_in_top,androidx.appcompat.R.anim.abc_slide_out_bottom)
+        }
+
+        // 즐겨찾기 상태를 나타내는 변수
+        var isFavorite = false
+
+        binding.detailFoodFavoriteIv.setOnClickListener {
+            // 클릭할 때마다 즐겨찾기 상태를 토글
+            isFavorite = !isFavorite
+
+            //API관련
+            authService.setSignupView(this)
+
+
+            // 즐겨찾기 상태에 따라 이미지 변경 또는 다른 작업 수행
+            if (isFavorite) {
+                // 즐겨찾기 등록 로직
+                binding.detailFoodFavoriteIv.setImageResource(R.drawable.star_full_ic)
+                authService.favoriteFoodPost(3)
+            } else {
+                // 즐겨찾기 해제 로직
+                binding.detailFoodFavoriteIv.setImageResource(R.drawable.star_ic)
+                authService.favoriteFoodPatch(3)
+            }
+
+        }
+
+
+        binding.detailFoodMealWeightEt.setOnLongClickListener {
+            // Enable editing by focusing and showing the keyboard
+            binding.detailFoodMealWeightEt.isFocusableInTouchMode = true
+            binding.detailFoodMealWeightEt.requestFocus()
+
+            // Show the keyboard
+            val imm = context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            imm.showSoftInput(binding.detailFoodMealWeightEt, InputMethodManager.SHOW_IMPLICIT)
+            true
+
+        }
+
         return binding.root
     }
 

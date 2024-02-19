@@ -50,6 +50,28 @@ data class AvatarUpdateResponse(
     @SerializedName("avatar_color") val avatar_color: String
 )
 
+
+data class GetFoodResponse(
+    @SerializedName("name") val name: String,
+    @SerializedName("quantity") val quantity : Int,
+    @SerializedName("kcal") val kcal : Double,
+    @SerializedName("carbohydrates") val carbohydrates : Double,
+    @SerializedName("protein") val protein : Double,
+    @SerializedName("fat") val fat : Double,
+    @SerializedName("isFavorite") val isFavorite : Boolean
+)
+
+
+data class mymealData(
+    @SerializedName("favorite_meal_name") val favorite_meal_name:String,
+    @SerializedName("foods") val foods: List<FoodList>
+)
+
+data class FoodList(
+    @SerializedName("food_id") val food_id: Int,
+    @SerializedName("quantity") val quantity: Int
+)
+
 data class Plan(
     @SerializedName("initial_weight") val initial_weight: Double,
     @SerializedName("target_weight") val target_weight: Double,
