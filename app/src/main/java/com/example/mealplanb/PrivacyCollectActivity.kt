@@ -105,6 +105,46 @@ class PrivacyCollectActivity : AppCompatActivity() {
             })
 
             //키보드 이동
+            binding.privacyAgeEt.setOnEditorActionListener { _, actionId, _ ->
+                if(actionId == EditorInfo.IME_ACTION_NEXT){
+                    binding.privacyHeightEt.requestFocus()
+                    binding.privacyStartWeightEt.isFocusable=false
+                    binding.privacyWantWeightEt.isFocusable=false
+                    binding.privacyCompleteCv.isFocusable=false
+                    return@setOnEditorActionListener true
+                }
+                false
+            }
+
+            binding.privacyHeightEt.setOnEditorActionListener { _, actionId, _ ->
+                if(actionId == EditorInfo.IME_ACTION_NEXT){
+                    binding.privacyStartWeightEt.isFocusable=true
+                    binding.privacyStartWeightEt.requestFocus()
+                    binding.privacyWantWeightEt.isFocusable=false
+                    binding.privacyCompleteCv.isFocusable=false
+                    return@setOnEditorActionListener true
+                }
+                false
+            }
+
+            binding.privacyStartWeightEt.setOnEditorActionListener { _, actionId, _ ->
+                if(actionId == EditorInfo.IME_ACTION_NEXT){
+                    binding.privacyWantWeightEt.isFocusable=true
+                    binding.privacyWantWeightEt.requestFocus()
+                    binding.privacyCompleteCv.isFocusable=false
+                    return@setOnEditorActionListener true
+                }
+                false
+            }
+
+            binding.privacyWantWeightEt.setOnEditorActionListener { _, actionId, _ ->
+                if(actionId == EditorInfo.IME_ACTION_DONE){
+                    val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                    imm.hideSoftInputFromWindow(binding.privacyWantWeightEt.windowToken, 0)
+                    return@setOnEditorActionListener true
+                }
+                false
+            }
 //            binding.privacyAgeEt.setOnEditorActionListener { _, actionId, _ ->
 //                if(actionId == EditorInfo.IME_ACTION_NEXT){
 //                    binding.privacyHeightEt.requestFocus()
@@ -145,7 +185,6 @@ class PrivacyCollectActivity : AppCompatActivity() {
 //                }
 //                false
 //            }
-
 
             //여자 버튼
             privacyWomanCv.setOnClickListener {

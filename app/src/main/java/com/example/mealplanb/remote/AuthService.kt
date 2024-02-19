@@ -6,6 +6,8 @@ import android.content.Intent
 import android.util.Log
 import android.widget.Toast
 import com.example.mealplanb.ApplicationClass
+import com.example.mealplanb.ApplicationClass.Companion.mSharedPreferences
+import com.example.mealplanb.HiddenPageActivity
 import com.example.mealplanb.MainActivity
 import com.example.mealplanb.local.getJwt
 import com.example.mealplanb.local.saveJwt
@@ -70,7 +72,9 @@ class AuthService(private val context: Context) {
                 Log.d("Signup response body",resp.toString())
                 saveJwt(resp!!.result.jwt)
                 when(resp!!.code) {
-                    1000 -> signupView.SignupSuccess()
+                    1000 -> {
+                        signupView.SignupSuccess()
+                        checkAvatarInfo()}
                     else -> signupView.SignupFailure(resp.code,resp.message)
                 }
 
@@ -111,6 +115,9 @@ class AuthService(private val context: Context) {
                     val intent = Intent(context, MainActivity::class.java)
                     context.startActivity(intent)
 
+                    //아바타 정보 조회
+                    checkAvatarInfo()
+
                 } else {
                     // 서버에서는 응답을 했지만, 로그인 실패와 같은 이유로 성공적인 응답이 아닌 경우, Toast 메시지
                     val gson = Gson()
@@ -136,6 +143,70 @@ class AuthService(private val context: Context) {
         })
     }
 
+    //avatar
+    // 아바타 정보 조회 + UI 반영 메서드
+    fun checkAvatarInfo() {
+        authService.avatarcheck().enqueue(object : Callback<BaseResponse<AvatarCheckResponse>> {
+            override fun onResponse(call: Call<BaseResponse<AvatarCheckResponse>>, response: Response<BaseResponse<AvatarCheckResponse>>) {
+                if (response.isSuccessful) {
+                    val avatarInfo = response.body()?.result
+                    var avatarImageID = 0
+                    if(avatarInfo?.avatar_color == "#FFD3FA"){
+                        avatarImageID=1
+                    }
+                    else if (avatarInfo?.avatar_color == "#FFFFFF"){
+                        avatarImageID =2
+                    }
+                    else if (avatarInfo?.avatar_color == "#7C5CF8"){
+                        avatarImageID =3
+                    }
+                    else if (avatarInfo?.avatar_color == "#220435"){
+                        avatarImageID =4
+                    }
+                    else if (avatarInfo?.avatar_color == "#D9D9D9"){
+                        avatarImageID =5
+                    }
+                    Log.d("아바타 정보", "Avatar appearance: ${avatarInfo?.avatar_appearance}, Avatar color: ${avatarInfo?.avatar_color}, Nickname: ${avatarInfo?.nickname}, ImageID:${avatarImageID}")
+
+                    // SharedPreferences 객체 생성
+                    val sharedPref = context.getSharedPreferences("myPreferences", Context.MODE_PRIVATE)
+                    // SharedPreferences에 값 저장하기
+                    with(sharedPref.edit()) {
+                        putString("nickname", avatarInfo?.nickname)
+                        putInt("avatar",avatarImageID)
+                        apply()
+                    }
+                    // SharedPreferences에서 값 가져오기
+                    val nickname = sharedPref.getString("nickname", "깔깔")
+                    val avatar = sharedPref.getInt("avatar",3)
+
+                } else {
+                    Log.e("아바타 오류 정보", "Request not successful. Message: ${response.message()}")
+                }
+            }
+
+            override fun onFailure(call: Call<BaseResponse<AvatarCheckResponse>>, t: Throwable) {
+                Log.e("아바타 정보 서버 오류", "API call failed. Message: ${t.message}")
+            }
+        })
+    }
+
+    //아바타 정보 수정
+    fun updateAvatarInfo(nickname: String, avatarColor: String) {
+        val avatarData = AvatarData(nickname, avatarColor)
+        authService.avatarupdate(avatarData).enqueue(object : Callback<BaseResponse<AvatarUpdateResponse>> {
+            override fun onResponse(call: Call<BaseResponse<AvatarUpdateResponse>>, response: Response<BaseResponse<AvatarUpdateResponse>>) {
+                if (response.isSuccessful) {
+                    val avatarInfo = response.body()?.result
+                    Log.d("아바타 정보 수정", "Member ID: ${avatarInfo?.member_id}, Nickname: ${avatarInfo?.nickname}, Avatar color: ${avatarInfo?.avatar_color}")
+                } else {
+                    Log.e("아바타 정보 수정 오류", "Request not successful. Message: ${response.message()}")
+                }
+            }
+
+            override fun onFailure(call: Call<BaseResponse<AvatarUpdateResponse>>, t: Throwable) {
+                Log.e("아바타 정보 수정 서버 오류", "API call failed. Message: ${t.message}")
+            }
     fun plancheck() {
 //        signupView.SignupLoading()
 
@@ -380,7 +451,6 @@ class AuthService(private val context: Context) {
             override fun onFailure(call: Call<BaseResponse<MealListDateResponse>>, t: Throwable) {
                 Log.d("Home user meal get Failed", t.toString())
             }
-
         })
     }
 

@@ -55,14 +55,35 @@ class HomeFragment : Fragment(), DatePickerDialog.OnDateSetListener, SignupView,
     override fun onResume() {
         super.onResume()
 
+        val authService = AuthService(requireContext()) // AuthService 인스턴스 생성
+        authService.checkAvatarInfo() // 아바타 정보 조회
+
         //weight 가져오기
         // 저장된 데이터 불러오기
         loadWeightData()
         // SharedPreferences 객체 생성
         val sharedPref = requireActivity().getSharedPreferences("myPreferences", Context.MODE_PRIVATE)
         // SharedPreferences에서 값 가져오기
-        val nickname = sharedPref.getString("nickname", "꿀꿀")
+        val nickname = sharedPref.getString("nickname", "낄낄")
         val avatarImageID = sharedPref.getInt("avatar",3)
+
+        // SharedPreferences의 변경을 감지하는 리스너 등록
+        sharedPref.registerOnSharedPreferenceChangeListener { sharedPreferences, key ->
+            if (key == "nickname") {
+                val updatedNickname = sharedPreferences.getString(key, "낄낄")
+                binding.mainTitleNicknameTv.text = updatedNickname
+            }
+            if(key == "avatar"){
+                val updatedAvatar = sharedPreferences.getInt(key, 3)
+                when(updatedAvatar) {
+                    1 -> binding.mainCharacterIv.setImageResource(R.drawable.avartar_basic_pink_img)
+                    2 -> binding.mainCharacterIv.setImageResource(R.drawable.avartar_basic_white_img)
+                    3 -> binding.mainCharacterIv.setImageResource(R.drawable.avartar_basic_purple_img)
+                    4 -> binding.mainCharacterIv.setImageResource(R.drawable.avartar_basic_black_img)
+                    5 -> binding.mainCharacterIv.setImageResource(R.drawable.avartar_basic_gray_img)
+                }
+            }
+        }
 
         val gson = Gson()
 //        var json = sharedPref.getString("dayMealList",null)
@@ -156,6 +177,7 @@ class HomeFragment : Fragment(), DatePickerDialog.OnDateSetListener, SignupView,
         }
         //햄버거 아이콘 tab하면 히든 페이지로 연결
         binding.mainMenuIv.setOnClickListener {
+            //페이지 전환
             val intent = Intent(requireContext(), HiddenPageActivity::class.java)
             startActivity(intent)
         }
@@ -309,7 +331,6 @@ class HomeFragment : Fragment(), DatePickerDialog.OnDateSetListener, SignupView,
 
     override fun SignupSuccess() {
     }
-
     override fun WeightcheckSuccess(weight: Float, date: String) {
 
         //입력받은 날짜 형식 바꿔주기
@@ -520,4 +541,17 @@ class HomeFragment : Fragment(), DatePickerDialog.OnDateSetListener, SignupView,
     override fun FoodListAddFailure(code: Int, msg: String) {
         TODO("Not yet implemented")
     }
+    //메모리 누수 방지
+    override fun onPause() {
+        super.onPause()
+
+        val sharedPref = requireActivity().getSharedPreferences("myPreferences", Context.MODE_PRIVATE)
+        sharedPref.unregisterOnSharedPreferenceChangeListener { sharedPreferences, key ->
+            if (key == "nickname") {
+                val updatedNickname = sharedPreferences.getString(key, "낄낄")
+                binding.mainTitleNicknameTv.text = updatedNickname
+            }
+        }
+    }
+
 }
