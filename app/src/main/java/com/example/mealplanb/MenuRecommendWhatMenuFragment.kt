@@ -21,12 +21,6 @@ class MenuRecommendWhatMenuFragment : Fragment() {
         binding.menuRecommWhatMenuCheatButtonLv.setOnClickListener {
             // 클릭 시 WhatMenuFragment로 교체
             val cheatdayFragment = MenuRecommendCheatdayFragment()
-
-            val menuRecommendFragment = parentFragmentManager.findFragmentById(R.id.main_frm) as? MenuRecommendFragment
-
-            menuRecommendFragment?.addInitFragmentItems(
-                MenuRecommItem.UserCheatItem("치팅데이", "먹고싶은거 아무거나 먹을래요!",4))
-
             requireActivity().supportFragmentManager.beginTransaction()
                 .replace(R.id.menu_recomm_button_cv, cheatdayFragment)
                 .commit()

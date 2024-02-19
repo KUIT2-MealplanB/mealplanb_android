@@ -7,7 +7,6 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.KeyEvent
 import android.view.View
 import android.view.inputmethod.EditorInfo
@@ -15,12 +14,8 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.example.mealplanb.databinding.ActivityStartAvatarBinding
-import com.example.mealplanb.local.getJwt
-import com.example.mealplanb.remote.AuthService
-import com.example.mealplanb.remote.FavoriteFoodResponse
-import com.example.mealplanb.remote.SignupView
 
-class StartAvatarActivity : AppCompatActivity(), SignupView {
+class StartAvatarActivity : AppCompatActivity() {
     private lateinit var binding : ActivityStartAvatarBinding
     private var avatarImageID : Int = 3
     private var isFirstClick = true
@@ -138,44 +133,9 @@ class StartAvatarActivity : AppCompatActivity(), SignupView {
             } else { // 두 번째 클릭인 경우
                 if(binding.startAvatarEt.text.isNotEmpty()) { // EditText에 값이 입력되었는지 확인
 
-                    var avatarImage : String
-                    when(avatarImageID) {
-                        1 -> avatarImage = "#FFD3FA"
-                        2 -> avatarImage = "#FFFFFF"
-                        3 -> avatarImage = "#7C5CF8"
-                        4 -> avatarImage = "#220435"
-                        else -> avatarImage = "#D9D9D9"
-                    }
-
                     val editor = sharedPref.edit()
                     editor.putInt("avatar",avatarImageID)
-                    editor.putString("userAvatar",avatarImage)
                     editor.apply()
-
-                    val userID = sharedPref.getString("userID",null)
-                    val userPW = sharedPref.getString("userPW",null)
-                    val userEmail = sharedPref.getString("userEmail",null)
-                    val userSex = sharedPref.getString("userSex",null)
-                    val userAge = sharedPref.getInt("userAge",0)
-                    val userHeight = sharedPref.getInt("userHeight",0)
-                    val userStartWeight = sharedPref.getFloat("startWeight",0.0f)
-                    val userWantWeight = sharedPref.getFloat("wantWeight",0.0f)
-                    val userSelectedCategory = sharedPref.getString("userSelectedCategory",null)
-                    val userAvatar = sharedPref.getString("userAvatar",null)
-                    val userNickname = sharedPref.getString("nickname",null)
-
-                    Log.d("logcat",userEmail+userPW+userSex+userAge.toString()+userHeight.toString()+userStartWeight.toString()+userWantWeight.toString()+userSelectedCategory+userAvatar+userNickname)
-
-                    val authService = AuthService(this@StartAvatarActivity)
-                    authService.setSignupView(this)
-                    authService.signup(userEmail!!,userPW!!,userSex!!,userAge,userHeight,userStartWeight,userWantWeight,userSelectedCategory!!,userAvatar!!,userNickname!!)
-
-                    val token = getJwt()
-                    if(token == null) {
-                        Log.d("Signup Response","getJwt 사용 실패..")
-                    } else {
-                        Log.d("Signup Response",token+" 토큰 불러와짐!")
-                    }
 
                     val intent = Intent(this, MainActivity::class.java)
                     startActivity(intent)
@@ -197,12 +157,12 @@ class StartAvatarActivity : AppCompatActivity(), SignupView {
         })
 
         //nickname ET 눌렀을 때
-        binding.startAvatarEt.setOnEditorActionListener { v, actionId, event ->
-            if(actionId == EditorInfo.IME_ACTION_DONE ||
+        binding.startAvatarEt.setOnEditorActionListener { _, actionId, event ->
+            if (actionId == EditorInfo.IME_ACTION_DONE ||
                 actionId == EditorInfo.IME_ACTION_NEXT ||
                 actionId == EditorInfo.IME_ACTION_GO ||
-                event?.keyCode == KeyEvent.KEYCODE_ENTER
-            ){
+                (event != null && event.action == KeyEvent.ACTION_DOWN && event.keyCode == KeyEvent.KEYCODE_ENTER)
+            ) {
                 // EditText에 입력된 텍스트 가져오기
                 val nickNameValue = binding.startAvatarEt.text.toString()
 
@@ -212,6 +172,10 @@ class StartAvatarActivity : AppCompatActivity(), SignupView {
                 // 포커스를 다른 뷰로 이동시켜서 커서를 감추기
                 binding.startAvatarEt.clearFocus()
 
+                // Hide the keyboard
+                val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                imm.hideSoftInputFromWindow(binding.startAvatarEt.windowToken, 0)
+
                 // SharedPreferences.Editor 객체를 얻어서 값을 저장
                 val editor = sharedPref.edit()
                 editor.putString("nickname", nickNameValue)
@@ -220,35 +184,13 @@ class StartAvatarActivity : AppCompatActivity(), SignupView {
                 Toast.makeText(this, "nickNameValue apply", Toast.LENGTH_SHORT).show()
 
                 // true를 반환하면 이벤트가 소비됨을 나타냅니다.
-                // 키보드 숨기기
-                val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-                imm.hideSoftInputFromWindow(v.windowToken, 0)
-
                 return@setOnEditorActionListener true
             }
+            // Return false if the action is not consumed
             false
         }
 
-    }
 
-    override fun SignupLoading() {
-        //회원가입 로딩 로직은 딱히 없음
-    }
-
-    override fun SignupSuccess() {
-        Toast.makeText(this,"회원가입에 성공했습니다.",Toast.LENGTH_SHORT).show()
-    }
-
-    override fun SignupFailure(code: Int, msg: String) {
-        Toast.makeText(this,msg,Toast.LENGTH_SHORT).show()
-    }
-
-    override fun WeightcheckSuccess(weight: Float, date: String) {
-        TODO("Not yet implemented")
-    }
-
-    override fun handleFavoriteFoodResponse(favoriteFoodResponse: FavoriteFoodResponse?) {
-        TODO("Not yet implemented")
     }
 
 }

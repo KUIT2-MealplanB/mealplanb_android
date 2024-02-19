@@ -1,17 +1,12 @@
 package com.example.mealplanb
 
-import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.text.Editable
 import android.text.TextWatcher
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Handler
 import android.widget.Toast
-import android.view.View
-import android.view.inputmethod.EditorInfo
-import android.view.inputmethod.InputMethodManager
 import com.example.mealplanb.databinding.ActivityPrivacyCollectBinding
 
 class PrivacyCollectActivity : AppCompatActivity() {
@@ -23,12 +18,6 @@ class PrivacyCollectActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityPrivacyCollectBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        //개발자 버튼
-        binding.developerBtn.setOnClickListener {
-            val intent = Intent(this@PrivacyCollectActivity, MainActivity::class.java)
-            startActivity(intent)
-        }
 
         with(binding) {
             //입력값 들어왔을 때 색 변환
@@ -104,88 +93,6 @@ class PrivacyCollectActivity : AppCompatActivity() {
                 override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
             })
 
-            //키보드 이동
-            binding.privacyAgeEt.setOnEditorActionListener { _, actionId, _ ->
-                if(actionId == EditorInfo.IME_ACTION_NEXT){
-                    binding.privacyHeightEt.requestFocus()
-                    binding.privacyStartWeightEt.isFocusable=false
-                    binding.privacyWantWeightEt.isFocusable=false
-                    binding.privacyCompleteCv.isFocusable=false
-                    return@setOnEditorActionListener true
-                }
-                false
-            }
-
-            binding.privacyHeightEt.setOnEditorActionListener { _, actionId, _ ->
-                if(actionId == EditorInfo.IME_ACTION_NEXT){
-                    binding.privacyStartWeightEt.isFocusable=true
-                    binding.privacyStartWeightEt.requestFocus()
-                    binding.privacyWantWeightEt.isFocusable=false
-                    binding.privacyCompleteCv.isFocusable=false
-                    return@setOnEditorActionListener true
-                }
-                false
-            }
-
-            binding.privacyStartWeightEt.setOnEditorActionListener { _, actionId, _ ->
-                if(actionId == EditorInfo.IME_ACTION_NEXT){
-                    binding.privacyWantWeightEt.isFocusable=true
-                    binding.privacyWantWeightEt.requestFocus()
-                    binding.privacyCompleteCv.isFocusable=false
-                    return@setOnEditorActionListener true
-                }
-                false
-            }
-
-            binding.privacyWantWeightEt.setOnEditorActionListener { _, actionId, _ ->
-                if(actionId == EditorInfo.IME_ACTION_DONE){
-                    val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-                    imm.hideSoftInputFromWindow(binding.privacyWantWeightEt.windowToken, 0)
-                    return@setOnEditorActionListener true
-                }
-                false
-            }
-//            binding.privacyAgeEt.setOnEditorActionListener { _, actionId, _ ->
-//                if(actionId == EditorInfo.IME_ACTION_NEXT){
-//                    binding.privacyHeightEt.requestFocus()
-//                    binding.privacyStartWeightEt.isFocusable=false
-//                    binding.privacyWantWeightEt.isFocusable=false
-//                    binding.privacyCompleteCv.isFocusable=false
-//                    return@setOnEditorActionListener true
-//                }
-//                false
-//            }
-//
-//            binding.privacyHeightEt.setOnEditorActionListener { _, actionId, _ ->
-//                if(actionId == EditorInfo.IME_ACTION_NEXT){
-//                    binding.privacyStartWeightEt.isFocusable=true
-//                    binding.privacyStartWeightEt.requestFocus()
-//                    binding.privacyWantWeightEt.isFocusable=false
-//                    binding.privacyCompleteCv.isFocusable=false
-//                    return@setOnEditorActionListener true
-//                }
-//                false
-//            }
-//
-//            binding.privacyStartWeightEt.setOnEditorActionListener { _, actionId, _ ->
-//                if(actionId == EditorInfo.IME_ACTION_NEXT){
-//                    binding.privacyWantWeightEt.isFocusable=true
-//                    binding.privacyWantWeightEt.requestFocus()
-//                    binding.privacyCompleteCv.isFocusable=false
-//                    return@setOnEditorActionListener true
-//                }
-//                false
-//            }
-//
-//            binding.privacyWantWeightEt.setOnEditorActionListener { _, actionId, _ ->
-//                if(actionId == EditorInfo.IME_ACTION_DONE){
-//                    val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-//                    imm.hideSoftInputFromWindow(binding.privacyWantWeightEt.windowToken, 0)
-//                    return@setOnEditorActionListener true
-//                }
-//                false
-//            }
-
             //여자 버튼
             privacyWomanCv.setOnClickListener {
                 womanSelected = true
@@ -216,23 +123,6 @@ class PrivacyCollectActivity : AppCompatActivity() {
             //다음 버튼
             privacyCompleteCv.setOnClickListener {
                 if(checkConditions()) {
-                    val startWeight = privacyStartWeightEt.text.toString().toFloat()
-                    val wantWeight = privacyWantWeightEt.text.toString().toFloat()
-                    val age = privacyAgeEt.text.toString().toInt()
-                    val height = privacyHeightEt.text.toString().toInt()
-                    val sharedPref = getSharedPreferences("myPreferences", Context.MODE_PRIVATE)
-                    val editor = sharedPref.edit()
-                    if (manSelected) {
-                        editor.putString("userSex","M")
-                    } else {
-                        editor.putString("userSex","F")
-                    }
-                    editor.putInt("userAge",age)
-                    editor.putInt("userHeight",height)
-                    editor.putFloat("startWeight", startWeight)
-                    editor.putFloat("wantWeight", wantWeight)
-                    editor.apply()
-
                     val intent = Intent(this@PrivacyCollectActivity, RecommendCategoryActivity::class.java)
                     startActivity(intent)
                 }else{
@@ -248,8 +138,8 @@ class PrivacyCollectActivity : AppCompatActivity() {
             if ((womanSelected || manSelected) &&
                 privacyAgeEt.text.toString().toIntOrNull() ?: 0 > 0 &&
                 privacyHeightEt.text.toString().toIntOrNull() ?: 0 > 0 &&
-                privacyStartWeightEt.text.toString().toFloatOrNull() ?: 0.0f > 0.0f &&
-                privacyWantWeightEt.text.toString().toFloatOrNull() ?: 0.0f > 0.0f) {
+                privacyStartWeightEt.text.toString().toIntOrNull() ?: 0 > 0 &&
+                privacyWantWeightEt.text.toString().toIntOrNull() ?: 0 > 0) {
 
                 privacyCompleteCv.setCardBackgroundColor(Color.parseColor("#7C5CF8"))
                 return true

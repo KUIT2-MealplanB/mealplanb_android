@@ -11,11 +11,8 @@
     <color name="mono_gray5">#606060</color>
     <color name="mono_gray6">#929292</color>
     <color name="bg">#F8F9FC</color>
-    <color name="point_0">#007C5CF8</color>
-    <color name="point_30">#4D7C5CF8</color>
     <color name="point_light">#9E83EC</color>
     <color name="point">#7C5CF8</color>
-    <color name="red_text">#FA1313</color>
     <color name="sub_pink">#FFD3FA</color>
     <color name="sub_purple">#220435</color>
 </resources>

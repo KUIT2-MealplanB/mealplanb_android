@@ -21,7 +21,6 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.content.ContextCompat
 import com.example.mealplanb.databinding.ActivityAvatarMotifBinding
-import com.example.mealplanb.remote.AuthService
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import jp.wasabeef.blurry.Blurry
@@ -162,32 +161,9 @@ class AvatarMotifActivity : AppCompatActivity() {
             //색깔 데이터와 닉네임 데이터를 MainActivity에 넘긴다.
             //Toast.makeText(this, "수정완료되었습니다", Toast.LENGTH_SHORT).show()
 
-            val nickNameValue = binding.avatarMotifNicknameEt.text.toString()
-
             val editor = sharedPref.edit()
-            editor.putString("nickname",nickNameValue)
             editor.putInt("avatar",avatarImageID)
             editor.apply()
-
-            var avatarColor = ""
-            if(avatarImageID == 1){
-                avatarColor="#FFD3FA"
-            }
-            else if (avatarImageID == 2){
-                avatarColor ="#FFFFFF"
-            }
-            else if (avatarImageID == 3){
-                avatarColor ="#7C5CF8"
-            }
-            else if (avatarImageID == 4){
-                avatarColor ="#220435"
-            }
-            else if (avatarImageID == 5){
-                avatarColor ="#D9D9D9"
-            }
-
-            val authService = AuthService(this)
-            authService.updateAvatarInfo(nickNameValue, avatarColor)
 
             finish()
         }

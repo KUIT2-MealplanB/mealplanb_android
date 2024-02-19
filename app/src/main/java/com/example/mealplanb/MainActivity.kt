@@ -25,9 +25,9 @@ class MainActivity : AppCompatActivity(), OnBackPressedListener {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
 
-        setContentView(binding.root)
-
         binding.mainNavigation.itemIconTintList = null
+
+        setContentView(binding.root)
 
         binding.mainNavigation.setOnItemSelectedListener {
             when(it.itemId){
@@ -40,7 +40,7 @@ class MainActivity : AppCompatActivity(), OnBackPressedListener {
                     return@setOnItemSelectedListener true
                 }
                 R.id.menu_stats -> {
-                    supportFragmentManager.beginTransaction().replace(R.id.main_frm, ChartWeightFragment()).commit()
+                    supportFragmentManager.beginTransaction().replace(R.id.main_frm, StatFragment()).commit()
                     return@setOnItemSelectedListener true
                 }
                 else -> {
@@ -49,18 +49,6 @@ class MainActivity : AppCompatActivity(), OnBackPressedListener {
             }
         }
         binding.mainNavigation.selectedItemId = R.id.menu_mypage
-    }
-
-    override fun onResume() {
-        super.onResume()
-
-        val source = Shared.source
-        if (source == "HiddenPageActivity") {
-            val goalMotifFragment = GoalMotifFragment()
-            supportFragmentManager.beginTransaction().replace(R.id.main_frm, goalMotifFragment).commit()
-        } else {
-            binding.mainNavigation.selectedItemId = R.id.menu_mypage
-        }
     }
 
     fun changeBottomNavigationSelectedItem(itemId: Int) {

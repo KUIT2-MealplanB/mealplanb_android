@@ -11,9 +11,5 @@
         <item name="android:background">@color/transparent_black</item>
     </style>
 
-    <style name="ChartTabTextAppearance" parent="TextAppearance.Design.Tab">
-        <item name="android:textSize">14sp</item>
-        <item name="android:fontFamily">@font/pretendard_bold</item>
-    </style>
 
 </resources>

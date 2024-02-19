@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="82dp"
-
+    android:layout_height="wrap_content"
+    android:paddingVertical="22dp"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <TextView
@@ -12,7 +12,6 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         android:layout_marginStart="25dp"
-        android:layout_marginTop="23dp"
         android:text="크림파스타"
         android:textColor="@color/black"
         android:textSize="16sp"
@@ -35,14 +34,8 @@
         app:layout_constraintBottom_toBottomOf="@id/item_meallist_subtitle_tv"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginEnd="32dp"
-        android:text="+"
+        android:text="×"
         android:textColor="@color/black"
         android:textSize="16sp"/>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/mono_gray2"
-        app:layout_constraintBottom_toBottomOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

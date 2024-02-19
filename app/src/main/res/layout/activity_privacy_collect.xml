@@ -4,16 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/bg"
     tools:context=".PrivacyCollectActivity">
-
-    <LinearLayout
-        android:id="@+id/developer_btn"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        app:layout_constraintStart_toStartOf="parent"
-        android:orientation="horizontal"
-        app:layout_constraintTop_toTopOf="parent"/>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/privacy_cv"
@@ -184,8 +175,7 @@
             android:textColorHint="#101010"
             android:fontFamily="@font/pretendard_bold"
             android:background="@drawable/et_privacy"
-            android:padding="10dp"
-            android:imeOptions="actionNext"/>
+            android:padding="10dp" />
 
         <TextView
             android:id="@+id/privacy_age_tv"
@@ -232,8 +222,7 @@
             android:textColorHint="#101010"
             android:fontFamily="@font/pretendard_bold"
             android:background="@drawable/et_privacy"
-            android:padding="10dp"
-            android:imeOptions="actionNext"/>
+            android:padding="10dp" />
 
         <TextView
             android:id="@+id/privacy_height_tv"
@@ -280,8 +269,7 @@
             android:textColorHint="#101010"
             android:fontFamily="@font/pretendard_bold"
             android:background="@drawable/et_privacy"
-            android:padding="10dp"
-            android:imeOptions="actionNext"/>
+            android:padding="10dp" />
 
         <TextView
             android:id="@+id/privacy_start_weight_tv"
@@ -327,8 +315,7 @@
             android:textColorHint="#101010"
             android:fontFamily="@font/pretendard_bold"
             android:background="@drawable/et_privacy"
-            android:padding="10dp"
-            android:imeOptions="actionDone"/>
+            android:padding="10dp" />
 
         <TextView
             android:id="@+id/privacy_want_weight_tv"
@@ -348,13 +335,11 @@
         android:id="@+id/privacy_complete_cv"
         android:layout_marginTop="35dp"
         app:cardElevation="0dp"
-        android:layout_width="0dp"
+        android:layout_width="320dp"
         android:layout_height="48dp"
         app:cardCornerRadius="20dp"
         app:cardBackgroundColor="#D7D7D7"
         android:layout_marginBottom="30dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent">

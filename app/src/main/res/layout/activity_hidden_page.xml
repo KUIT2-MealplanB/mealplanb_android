@@ -7,6 +7,8 @@
     android:background="@color/bg"
     tools:context=".HiddenPageActivity">
 
+
+
     <ImageView
         android:id="@+id/hidden_back_iv"
         android:layout_width="22dp"
@@ -69,7 +71,6 @@
                 android:background="@color/mono_gray2"/>
 
             <LinearLayout
-                android:id="@+id/hidden_goal_ll"
                 android:layout_width="match_parent"
                 android:layout_height="58dp"
                 android:gravity="center|left"
@@ -290,5 +291,10 @@
         android:orientation="horizontal"
         android:visibility="invisible"
         android:background="@color/transparent_black"/>
+
+
+
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
