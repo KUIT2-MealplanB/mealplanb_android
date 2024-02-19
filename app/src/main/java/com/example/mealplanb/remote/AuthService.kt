@@ -252,8 +252,6 @@ class AuthService(private val context: Context) {
         })
     }
 
-    //food_id 조회
-
     // 특정 식사 정보 조회
     fun checkFoodDetail(foodId: Int) {
         authService.checkFoodDetail(foodId)

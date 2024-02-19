@@ -120,6 +120,7 @@ class AddMealListFragment : Fragment() {
 
                             val myMadeList: ArrayList<Meal> = gson.fromJson(json, object : TypeToken<ArrayList<Meal>>() {}.type) ?: arrayListOf()
 
+                            //음식별로 food_id 저장하는 내용이 필요 -> Meal class 수정 필요
                             var totalWeight = 0.0
                             var totalCal = 0.0
                             var totalCarb = 0.0
