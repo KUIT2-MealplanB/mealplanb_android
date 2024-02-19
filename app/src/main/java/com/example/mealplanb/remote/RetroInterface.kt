@@ -32,6 +32,33 @@ interface RetroInterface {
     fun avatarupdate(
         @Body request: AvatarData
     ):Call<BaseResponse<AvatarUpdateResponse>>
+  
+    @GET("user/plan")
+    fun plancheck(): Call<BaseResponse<Plan>>
+    @PATCH("user/plan")
+    fun planupdate(
+        @Body request: PlanUpdateRequest
+    ): Call<BaseResponse<Plan>>
+    @GET("user/plan/diet-type")
+    fun planDiettypeCheck(
+        //@Body request: PlanDietTypeRequest
+        @Query("type") type: String
+    ): Call<BaseResponse<PlanDietTypeResponse>>
+    @GET("user/plan/recommended-kcal")
+    fun planRecommKcalCheck(
+        @Query("initial_weight") initial_weight: Double,
+        @Query("target_weight") target_weight: Double
+    ): Call<BaseResponse<PlanRecommKcalResponse>>
+
+    @GET("user/profile")
+    fun userProfileCheck(
+        @Query("mealDate") mealDate: String
+    ): Call<BaseResponse<UserProfileResponse>>
+
+    @GET("meal")
+    fun mealListDayCheck(
+        @Query("mealDate") mealDate: String
+    ): Call<BaseResponse<MealListDateResponse>>
 
     // 특정 식사 정보 조회
     @GET("food/{foodId}")
@@ -50,6 +77,23 @@ interface RetroInterface {
     fun weightpost(
         @Body request : Weight
     ):Call<BaseResponse<Weight>>
+    @PATCH("weight")
+    fun weightpatch(
+        @Body request : Weight
+    ):Call<BaseResponse<Weight>>
+
+    @POST("meal")
+    fun mealAddPost(
+        @Body request: MealAddRequest
+    ): Call<BaseResponse<MealAddResponse>>
+    @POST("meal/food")
+    fun foodListAddPost(
+        @Body request: FoodListAddRequest
+    ): Call<BaseResponse<Any>>
+    @POST("meal/{mealId}/food")
+    fun foodListCheck(
+        @Path("mealId") mealId: String
+    ): Call<BaseResponse<MealFoodResponse>>
 
     //favorite food
     @GET("favorite-food")
@@ -70,4 +114,24 @@ interface RetroInterface {
         @Query("query") query: String?,
         @Query("page") page: Int = 0
     ):Call<BaseResponse<FoodSearchResponse>>
+
+
+    @GET("chat/cheat-day")
+    fun cheatMealCheck(
+        @Query("category") category: String
+    ): Call<BaseResponse<CheatDayRecommendMeal>>
+    @GET("chat/my-favorite")
+    fun myfavoriteMealCheck(): Call<BaseResponse<ChatRecommendMeal>>
+    @GET("chat/community-favorite")
+    fun communityfavoriteMealCheck(): Call<BaseResponse<ChatRecommendMeal>>
+    @POST("chat/meal")
+    fun recommendMealRegist(
+        @Body request: ChatMealRequest
+    ): Call<BaseResponse<Any>>
+    @GET("chat/meal")
+    fun recommendMealCheck(): Call<BaseResponse<List<ChatMealListResponse>>>
+    @GET("chat/amount-suggestion/{foodId}")
+    fun recommendMealAmountCheck(
+        @Path("foodId") foodId: String
+    ): Call<BaseResponse<ChatMealAmountResponse>>
 }

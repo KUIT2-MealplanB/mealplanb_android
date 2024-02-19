@@ -15,6 +15,7 @@ import androidx.fragment.app.Fragment
 import com.example.mealplanb.databinding.FragmentFooddetailBinding
 import com.example.mealplanb.remote.AuthService
 import com.example.mealplanb.remote.FavoriteFoodResponse
+import com.example.mealplanb.remote.MealListDateResponseMeals
 import com.example.mealplanb.remote.SignupView
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -154,6 +155,89 @@ class FoodDetailFragment : Fragment(), SignupView {
             updateUI(meal.meal_weight)
         }
 
+        //X눌렀을 때
+        binding.detailFoodCancelIv.setOnClickListener {
+            requireActivity().supportFragmentManager.beginTransaction().replace(R.id.main_frm, SearchMealFragment()).commit()
+            requireActivity().overridePendingTransition(androidx.appcompat.R.anim.abc_slide_in_top,androidx.appcompat.R.anim.abc_slide_out_bottom)
+        }
+
+        // favoriteIv를 클릭했을 때 SharedPreferences를 통해 데이터 저장
+/*        binding.detailFoodFavoriteIv.setOnClickListener {
+            //말풍선 "즐겨찾기에 추가되었어요"
+            binding.detailFoodFavoriteCv.visibility = View.VISIBLE
+            var json = sharedPreferences.getString("addFoodListOften", null)
+            addFoodListOften = gson.fromJson(json, object : TypeToken<ArrayList<Meal>>() {}.type) ?: arrayListOf<Meal>()
+
+            // 이미 추가된 경우 중복 방지
+            if (!addFoodListOften.contains(meal)) {
+                addFoodListOften.add(meal)
+                binding.detailFoodFavoriteIv.setImageResource(R.drawable.star_full_ic)
+
+                // SharedPreferences에서 기존 데이터 불러오기
+                json = sharedPreferences.getString("oftenFoodList", null)
+
+                // 기존 데이터가 있다면 불러와서 ArrayList로 변환
+                var oftenFoodList: ArrayList<Meal> = gson.fromJson(json, object : TypeToken<ArrayList<Meal>>() {}.type) ?: arrayListOf()
+
+                // 중복 체크
+                if (!oftenFoodList.contains(meal)) {
+                    // 새로운 데이터를 oftenFoodList에 추가
+                    oftenFoodList.add(meal)
+
+                    // SharedPreferences에 새로운 리스트를 다시 저장
+                    val editor = sharedPreferences.edit()
+                    val newJson = gson.toJson(oftenFoodList)
+                    editor.putString("oftenFoodList", newJson)
+                    editor.apply()
+
+                } else {
+                    // 이미 즐겨찾기된 경우 Toast 메시지 표시
+                    Toast.makeText(requireContext(), "이미 즐겨찾기 되어있습니다.", Toast.LENGTH_SHORT).show()
+                    binding.detailFoodFavoriteIv.setImageResource(R.drawable.star_full_ic)
+                }
+            } else {
+                // 이미 추가된 경우 Toast 메시지 표시
+                Toast.makeText(requireContext(), "이미 즐겨찾기 되어있습니다.", Toast.LENGTH_SHORT).show()
+                binding.detailFoodFavoriteIv.setImageResource(R.drawable.star_full_ic)
+            }
+        }*/
+
+        // 즐겨찾기 상태를 나타내는 변수
+        var isFavorite = false
+
+        binding.detailFoodFavoriteIv.setOnClickListener {
+            // 클릭할 때마다 즐겨찾기 상태를 토글
+            isFavorite = !isFavorite
+
+            //API관련
+            val authService = AuthService(requireContext())
+            authService.setSignupView(this)
+
+
+            // 즐겨찾기 상태에 따라 이미지 변경 또는 다른 작업 수행
+            if (isFavorite) {
+                // 즐겨찾기 등록 로직
+                binding.detailFoodFavoriteIv.setImageResource(R.drawable.star_full_ic)
+                authService.favoriteFoodPost(3)
+            } else {
+                // 즐겨찾기 해제 로직
+                binding.detailFoodFavoriteIv.setImageResource(R.drawable.star_ic)
+                authService.favoriteFoodPatch(3)
+            }
+
+        }
+
+        binding.detailFoodMealWeightEt.setOnLongClickListener {
+            // Enable editing by focusing and showing the keyboard
+            binding.detailFoodMealWeightEt.isFocusableInTouchMode = true
+            binding.detailFoodMealWeightEt.requestFocus()
+
+            // Show the keyboard
+            val imm = context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            imm.showSoftInput(binding.detailFoodMealWeightEt, InputMethodManager.SHOW_IMPLICIT)
+            true
+
+        }
 
         // Editor action listener for handling completion
         binding.detailFoodMealWeightEt.setOnEditorActionListener { _, actionId, _ ->
@@ -262,6 +346,37 @@ class FoodDetailFragment : Fragment(), SignupView {
     }
 
     override fun WeightcheckSuccess(weight: Float, date: String) {
+        TODO("Not yet implemented")
+    }
+
+    override fun UserProfileCheckSuccess(
+        date: String,
+        nickname: String,
+        elapsed_days: Int,
+        remaining_kcal: Int,
+        avatar_color: String,
+        avatar_appearance: String,
+        target_kcal: Int,
+        target_carbohydrate: Int,
+        target_protein: Int,
+        target_fat: Int,
+        kcal: Int,
+        carbohydrate: Int,
+        protein: Int,
+        fat: Int,
+        sodium: Int,
+        sugar: Int,
+        saturated_fat: Int,
+        trans_fat: Int,
+        cholesterol: Int
+    ) {
+        TODO("Not yet implemented")
+    }
+
+    override fun mealListDayCheckSuccess(
+        meal_date: String,
+        meals: List<MealListDateResponseMeals>
+    ) {
         TODO("Not yet implemented")
     }
 

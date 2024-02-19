@@ -1,15 +1,13 @@
 package com.example.mealplanb
 
 import android.content.Context
-import android.content.Intent
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mealplanb.databinding.ItemDaymealBinding
+import com.example.mealplanb.remote.AuthService
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 
@@ -17,11 +15,11 @@ class DayMealAdapter(var dayMealList: ArrayList<MealMainInfo>, private val conte
     private val numList : ArrayList<String> = arrayListOf("첫","두","세","네","다섯","여섯","일곱","여덟","아홉","열")
     inner class ViewHolder(val binding: ItemDaymealBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(myMealMainInfo: MealMainInfo) {
-            binding.daymealMealtitleTv.text = numList[myMealMainInfo.meal_no - 1] + " 끼"
+            binding.daymealMealtitleTv.text = myMealMainInfo.meal_type
             binding.daymealMealIv.setImageResource(myMealMainInfo.meal_img)
             binding.daymealCalTv.text = myMealMainInfo.total_cal.toString() + "kcal"
 
-            if(dayMealList[position].meal_active) {
+            if(dayMealList[position].total_cal > 0) {
                 binding.daymealPlusbtnTv.visibility = View.GONE
                 binding.daymealMealIv.visibility = View.VISIBLE
                 binding.daymealCalTv.visibility = View.VISIBLE
@@ -37,10 +35,13 @@ class DayMealAdapter(var dayMealList: ArrayList<MealMainInfo>, private val conte
             }
 
             binding.daymealMealinfoCv.setOnClickListener {
-                updateSharedPreferences(context,myMealMainInfo.meal_no)
+//                val authService = AuthService(context)
+//                authService.
+//                authService.foodListCheck((position+1).toString())
+
                 val sharedPreferences = context.getSharedPreferences("myPreferences", Context.MODE_PRIVATE)
                 val gson = Gson()
-                val foodListID = "addFoodList" + myMealMainInfo.meal_no.toString()
+                val foodListID = "addFoodList" + myMealMainInfo.meal_type.toString()
                 var json = sharedPreferences.getString(foodListID,null)
                 var addFoodList : ArrayList<Meal> = gson.fromJson(json, object : TypeToken<ArrayList<Meal>>() {}.type) ?: arrayListOf()
                 if (addFoodList.size > 0) {

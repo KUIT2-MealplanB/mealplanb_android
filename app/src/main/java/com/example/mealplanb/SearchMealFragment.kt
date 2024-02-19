@@ -22,6 +22,7 @@ import com.example.mealplanb.remote.AuthService
 import com.example.mealplanb.remote.FavoriteFoodResponse
 import com.example.mealplanb.remote.Food
 import com.example.mealplanb.remote.FoodSearchResponse
+import com.example.mealplanb.remote.MealListDateResponseMeals
 import com.example.mealplanb.remote.SearchFoodView
 import com.example.mealplanb.remote.SignupView
 import com.google.gson.Gson
@@ -122,8 +123,6 @@ class SearchMealFragment : Fragment(), SignupView, SearchFoodView {
                     .replace(R.id.main_frm, HomeFragment()).commit()
             }
 
-        }
-
         //나의 식단 버튼을 눌렀을 때
         binding.searchMealBtnMadeLl.setOnClickListener {
 
@@ -195,6 +194,12 @@ class SearchMealFragment : Fragment(), SignupView, SearchFoodView {
                 lastClickedButton = " "
             }
 
+            binding.searchMealInitOutIv.setOnClickListener {
+                lastClickedButton = " "
+                requireActivity().supportFragmentManager.beginTransaction()
+                    .replace(R.id.main_frm, HomeFragment()).commit()
+
+            }
             binding.searchMealInitOutIv.setOnClickListener {
                 lastClickedButton = " "
                 requireActivity().supportFragmentManager.beginTransaction()
@@ -332,7 +337,6 @@ class SearchMealFragment : Fragment(), SignupView, SearchFoodView {
                     "btnOften" -> {
                         lastClickedButton = " "
                     }
-
                     "btnMade" -> {
                         lastClickedButton = " "
                     }
@@ -343,8 +347,7 @@ class SearchMealFragment : Fragment(), SignupView, SearchFoodView {
 
                         //즐겨찾기에 추가한 데이터를 관리하는 리사이클러뷰
                         binding.searchMealAllRv.adapter = adapter
-                        binding.searchMealAllRv.layoutManager =
-                            LinearLayoutManager(requireContext())
+                        binding.searchMealAllRv.layoutManager = LinearLayoutManager(requireContext())
                         lastClickedButton = " "
                     }
                 }
@@ -370,9 +373,6 @@ class SearchMealFragment : Fragment(), SignupView, SearchFoodView {
             )
         }
 
-//        binding.searchMealOutIv.setOnClickListener {
-//            requireActivity().supportFragmentManager.beginTransaction().replace(R.id.main_frm, HomeFragment()).commit()
-//        }
         return binding.root
     }
 
@@ -420,11 +420,46 @@ class SearchMealFragment : Fragment(), SignupView, SearchFoodView {
         TODO("Not yet implemented")
     }
 
+    override fun UserProfileCheckSuccess(
+        date: String,
+        nickname: String,
+        elapsed_days: Int,
+        remaining_kcal: Int,
+        avatar_color: String,
+        avatar_appearance: String,
+        target_kcal: Int,
+        target_carbohydrate: Int,
+        target_protein: Int,
+        target_fat: Int,
+        kcal: Int,
+        carbohydrate: Int,
+        protein: Int,
+        fat: Int,
+        sodium: Int,
+        sugar: Int,
+        saturated_fat: Int,
+        trans_fat: Int,
+        cholesterol: Int
+    ) {
+        TODO("Not yet implemented")
+    }
+
+    override fun mealListDayCheckSuccess(
+        meal_date: String,
+        meals: List<MealListDateResponseMeals>
+    ) {
+        TODO("Not yet implemented")
+    }
+
     override fun handleFavoriteFoodResponse(favoriteFoodResponse: FavoriteFoodResponse?) {
         favoriteFoodResponse?.let { response ->
             val foods: List<Food>? = response.foods
 
             if (foods != null) {
+                for (food in foods) {
+                    Log.d("favorite Food Item in fragment", "Food ID: ${food.foodId}, Food Name: ${food.foodName}, Kcal: ${food.kcal}")
+                }
+            }
                 // Ensure foods is of type ArrayList<Food>
                 if (foods is ArrayList<*>) {
                     // Cast to ArrayList<Food>
@@ -469,6 +504,10 @@ class SearchMealFragment : Fragment(), SignupView, SearchFoodView {
             val editor = sharedPreferences.edit()
             editor.putInt("selectedFoodId",item.foodId)
             Log.d("foodId 저장 확인","${item.foodId}")
+//             val gson = Gson()
+//             val editor = sharedPreferences.edit()
+//             var newJson = gson.toJson(item.foodId)
+//             editor.putString("Key", newJson)
             editor.apply()
             requireActivity().supportFragmentManager.beginTransaction()
                 .replace(R.id.main_frm, FoodDetailFragment()).commit()
@@ -484,10 +523,4 @@ class SearchMealFragment : Fragment(), SignupView, SearchFoodView {
         binding.searchMealAllRv.layoutManager = LinearLayoutManager(requireContext())
 
     }
-
 }
-
-
-
-
-
