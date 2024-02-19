@@ -1,0 +1,564 @@
+kotlin version: 2.0.0-Beta2
+error message: org.jetbrains.kotlin.backend.common.BackendException: Backend Internal error: Exception during IR lowering
+File being compiled: C:/Users/User/AndroidStudioProjects/MealPlanB/app/src/main/java/com/example/mealplanb/remote/AuthService.kt
+The root cause java.lang.RuntimeException was thrown at: org.jetbrains.kotlin.backend.jvm.codegen.FunctionCodegen.generate(FunctionCodegen.kt:52)
+	at org.jetbrains.kotlin.backend.common.CodegenUtil.reportBackendException(CodegenUtil.kt:253)
+	at org.jetbrains.kotlin.backend.common.CodegenUtil.reportBackendException$default(CodegenUtil.kt:236)
+	at org.jetbrains.kotlin.backend.common.phaser.PerformByIrFilePhase.invokeSequential(performByIrFile.kt:65)
+	at org.jetbrains.kotlin.backend.common.phaser.PerformByIrFilePhase.invoke(performByIrFile.kt:52)
+	at org.jetbrains.kotlin.backend.common.phaser.PerformByIrFilePhase.invoke(performByIrFile.kt:38)
+	at org.jetbrains.kotlin.backend.common.phaser.NamedCompilerPhase.phaseBody(CompilerPhase.kt:166)
+	at org.jetbrains.kotlin.backend.common.phaser.AbstractNamedCompilerPhase.invoke(CompilerPhase.kt:113)
+	at org.jetbrains.kotlin.backend.common.phaser.CompositePhase.invoke(PhaseBuilders.kt:30)
+	at org.jetbrains.kotlin.backend.common.phaser.CompositePhase.invoke(PhaseBuilders.kt:17)
+	at org.jetbrains.kotlin.backend.common.phaser.NamedCompilerPhase.phaseBody(CompilerPhase.kt:166)
+	at org.jetbrains.kotlin.backend.common.phaser.AbstractNamedCompilerPhase.invoke(CompilerPhase.kt:113)
+	at org.jetbrains.kotlin.backend.common.phaser.CompilerPhaseKt.invokeToplevel(CompilerPhase.kt:62)
+	at org.jetbrains.kotlin.backend.jvm.JvmIrCodegenFactory.invokeCodegen(JvmIrCodegenFactory.kt:360)
+	at org.jetbrains.kotlin.codegen.CodegenFactory.generateModule(CodegenFactory.kt:45)
+	at org.jetbrains.kotlin.backend.jvm.JvmIrCodegenFactory.generateModuleInFrontendIRMode(JvmIrCodegenFactory.kt:378)
+	at org.jetbrains.kotlin.cli.jvm.compiler.pipeline.CompilerPipelineKt.generateCodeFromIr(compilerPipeline.kt:260)
+	at org.jetbrains.kotlin.cli.jvm.compiler.pipeline.CompilerPipelineKt.compileModulesUsingFrontendIrAndLightTree(compilerPipeline.kt:151)
+	at org.jetbrains.kotlin.cli.jvm.K2JVMCompiler.doExecute(K2JVMCompiler.kt:156)
+	at org.jetbrains.kotlin.cli.jvm.K2JVMCompiler.doExecute(K2JVMCompiler.kt:50)
+	at org.jetbrains.kotlin.cli.common.CLICompiler.execImpl(CLICompiler.kt:104)
+	at org.jetbrains.kotlin.cli.common.CLICompiler.execImpl(CLICompiler.kt:48)
+	at org.jetbrains.kotlin.cli.common.CLITool.exec(CLITool.kt:101)
+	at org.jetbrains.kotlin.incremental.IncrementalJvmCompilerRunner.runCompiler(IncrementalJvmCompilerRunner.kt:456)
+	at org.jetbrains.kotlin.incremental.IncrementalJvmCompilerRunner.runCompiler(IncrementalJvmCompilerRunner.kt:62)
+	at org.jetbrains.kotlin.incremental.IncrementalCompilerRunner.doCompile(IncrementalCompilerRunner.kt:479)
+	at org.jetbrains.kotlin.incremental.IncrementalCompilerRunner.compileImpl(IncrementalCompilerRunner.kt:402)
+	at org.jetbrains.kotlin.incremental.IncrementalCompilerRunner.tryCompileIncrementally$lambda$6$compile(IncrementalCompilerRunner.kt:233)
+	at org.jetbrains.kotlin.incremental.IncrementalCompilerRunner.tryCompileIncrementally(IncrementalCompilerRunner.kt:249)
+	at org.jetbrains.kotlin.incremental.IncrementalCompilerRunner.compile(IncrementalCompilerRunner.kt:116)
+	at org.jetbrains.kotlin.daemon.CompileServiceImplBase.execIncrementalCompiler(CompileServiceImpl.kt:691)
+	at org.jetbrains.kotlin.daemon.CompileServiceImplBase.access$execIncrementalCompiler(CompileServiceImpl.kt:103)
+	at org.jetbrains.kotlin.daemon.CompileServiceImpl.compile(CompileServiceImpl.kt:1678)
+	at jdk.internal.reflect.GeneratedMethodAccessor12.invoke(Unknown Source)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568)
+	at java.rmi/sun.rmi.server.UnicastServerRef.dispatch(UnicastServerRef.java:360)
+	at java.rmi/sun.rmi.transport.Transport$1.run(Transport.java:200)
+	at java.rmi/sun.rmi.transport.Transport$1.run(Transport.java:197)
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:712)
+	at java.rmi/sun.rmi.transport.Transport.serviceCall(Transport.java:196)
+	at java.rmi/sun.rmi.transport.tcp.TCPTransport.handleMessages(TCPTransport.java:587)
+	at java.rmi/sun.rmi.transport.tcp.TCPTransport$ConnectionHandler.run0(TCPTransport.java:828)
+	at java.rmi/sun.rmi.transport.tcp.TCPTransport$ConnectionHandler.lambda$run$0(TCPTransport.java:705)
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:399)
+	at java.rmi/sun.rmi.transport.tcp.TCPTransport$ConnectionHandler.run(TCPTransport.java:704)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:833)
+Caused by: java.lang.RuntimeException: Exception while generating code for:
+FUN name:foodListCheck visibility:public modality:FINAL <> ($this:com.example.mealplanb.remote.AuthService, mealId:kotlin.String) returnType:kotlin.Unit
+  $this: VALUE_PARAMETER name:<this> type:com.example.mealplanb.remote.AuthService
+  VALUE_PARAMETER name:mealId index:0 type:kotlin.String
+  BLOCK_BODY
+    CALL 'public abstract fun enqueue (p0: @[FlexibleNullability] retrofit2.Callback<@[FlexibleNullability] T of retrofit2.Call?>?): kotlin.Unit declared in retrofit2.Call' type=kotlin.Unit origin=null
+      $this: CALL 'public abstract fun foodListCheck (mealId: kotlin.String): retrofit2.Call<com.example.mealplanb.remote.BaseResponse<com.example.mealplanb.remote.MealFoodResponse>> declared in com.example.mealplanb.remote.RetroInterface' type=retrofit2.Call<com.example.mealplanb.remote.BaseResponse<com.example.mealplanb.remote.MealFoodResponse>> origin=null
+        $this: GET_FIELD 'FIELD PROPERTY_BACKING_FIELD name:authService type:@[FlexibleNullability] com.example.mealplanb.remote.RetroInterface? visibility:private [final]' type=@[FlexibleNullability] com.example.mealplanb.remote.RetroInterface? origin=null
+          receiver: GET_VAR '<this>: com.example.mealplanb.remote.AuthService declared in com.example.mealplanb.remote.AuthService.foodListCheck' type=com.example.mealplanb.remote.AuthService origin=null
+        mealId: GET_VAR 'mealId: kotlin.String declared in com.example.mealplanb.remote.AuthService.foodListCheck' type=kotlin.String origin=null
+      p0: BLOCK type=com.example.mealplanb.remote.AuthService.foodListCheck.<no name provided> origin=OBJECT_LITERAL
+        CLASS CLASS name:<no name provided> modality:FINAL visibility:local superTypes:[retrofit2.Callback<com.example.mealplanb.remote.BaseResponse<com.example.mealplanb.remote.MealFoodResponse>>]
+          $this: VALUE_PARAMETER INSTANCE_RECEIVER name:<this> type:com.example.mealplanb.remote.AuthService.foodListCheck.<no name provided>
+          CONSTRUCTOR visibility:public/*package*/ <> (this$0:com.example.mealplanb.remote.AuthService) returnType:com.example.mealplanb.remote.AuthService.foodListCheck.<no name provided> [primary]
+            VALUE_PARAMETER BOUND_RECEIVER_PARAMETER name:this$0 index:0 type:com.example.mealplanb.remote.AuthService
+            BLOCK_BODY
+              SET_FIELD 'FIELD FIELD_FOR_CAPTURED_VALUE name:this$0 type:com.example.mealplanb.remote.AuthService visibility:public/*package*/ [final]' type=kotlin.Unit origin=INITIALIZER_OF_FIELD_FOR_CAPTURED_VALUE
+                receiver: GET_VAR '<this>: com.example.mealplanb.remote.AuthService.foodListCheck.<no name provided> declared in com.example.mealplanb.remote.AuthService.foodListCheck.<no name provided>' type=com.example.mealplanb.remote.AuthService.foodListCheck.<no name provided> origin=null
+                value: GET_VAR 'this$0: com.example.mealplanb.remote.AuthService declared in com.example.mealplanb.remote.AuthService.foodListCheck.<no name provided>.<init>' type=com.example.mealplanb.remote.AuthService origin=null
+              DELEGATING_CONSTRUCTOR_CALL 'public constructor <init> () [primary] declared in kotlin.Any'
+              BLOCK type=kotlin.Unit origin=null
+          FUN name:onResponse visibility:public modality:OPEN <> ($this:com.example.mealplanb.remote.AuthService.foodListCheck.<no name provided>, call:retrofit2.Call<com.example.mealplanb.remote.BaseResponse<com.example.mealplanb.remote.MealFoodResponse>>, response:retrofit2.Response<com.example.mealplanb.remote.BaseResponse<com.example.mealplanb.remote.MealFoodResponse>>) returnType:kotlin.Unit
+            overridden:
+              public abstract fun onResponse (p0: @[FlexibleNullability] retrofit2.Call<@[FlexibleNullability] T of retrofit2.Callback?>?, p1: @[FlexibleNullability] retrofit2.Response<@[FlexibleNullability] T of retrofit2.Callback?>?): kotlin.Unit declared in retrofit2.Callback
+            $this: VALUE_PARAMETER name:<this> type:com.example.mealplanb.remote.AuthService.foodListCheck.<no name provided>
+            VALUE_PARAMETER name:call index:0 type:retrofit2.Call<com.example.mealplanb.remote.BaseResponse<com.example.mealplanb.remote.MealFoodResponse>>
+            VALUE_PARAMETER name:response index:1 type:retrofit2.Response<com.example.mealplanb.remote.BaseResponse<com.example.mealplanb.remote.MealFoodResponse>>
+            BLOCK_BODY
+              VAR name:resp type:com.example.mealplanb.remote.BaseResponse<com.example.mealplanb.remote.MealFoodResponse>? [val]
+                CALL 'public open fun body (): T of retrofit2.Response? declared in retrofit2.Response' type=com.example.mealplanb.remote.BaseResponse<com.example.mealplanb.remote.MealFoodResponse>? origin=null
+                  $this: GET_VAR 'response: retrofit2.Response<com.example.mealplanb.remote.BaseResponse<com.example.mealplanb.remote.MealFoodResponse>> declared in com.example.mealplanb.remote.AuthService.foodListCheck.<no name provided>.onResponse' type=retrofit2.Response<com.example.mealplanb.remote.BaseResponse<com.example.mealplanb.remote.MealFoodResponse>> origin=null
+              COMPOSITE type=kotlin.Unit origin=null
+                CALL 'public open fun d (p0: kotlin.String?, p1: @[EnhancedNullability] kotlin.String): kotlin.Int declared in android.util.Log' type=kotlin.Int origin=null
+                  p0: CONST String type=kotlin.String value="recommend amount get response"
+                  p1: CALL 'public open fun toString (): @[EnhancedNullability] kotlin.String declared in retrofit2.Response' type=@[EnhancedNullability] kotlin.String origin=null
+                    $this: GET_VAR 'response: retrofit2.Response<com.example.mealplanb.remote.BaseResponse<com.example.mealplanb.remote.MealFoodResponse>> declared in com.example.mealplanb.remote.AuthService.foodListCheck.<no name provided>.onResponse' type=retrofit2.Response<com.example.mealplanb.remote.BaseResponse<com.example.mealplanb.remote.MealFoodResponse>> origin=null
+                COMPOSITE type=kotlin.Unit origin=null
+              COMPOSITE type=kotlin.Unit origin=null
+                CALL 'public open fun d (p0: kotlin.String?, p1: @[EnhancedNullability] kotlin.String): kotlin.Int declared in android.util.Log' type=kotlin.Int origin=null
+                  p0: CONST String type=kotlin.String value="recommend amount get response"
+                  p1: CALL 'public final fun valueOf (value: kotlin.Any?): kotlin.String declared in java.lang.String' type=kotlin.String origin=null
+                    value: GET_VAR 'val resp: com.example.mealplanb.remote.BaseResponse<com.example.mealplanb.remote.MealFoodResponse>? [val] declared in com.example.mealplanb.remote.AuthService.foodListCheck.<no name provided>.onResponse' type=com.example.mealplanb.remote.BaseResponse<com.example.mealplanb.remote.MealFoodResponse>? origin=null
+                COMPOSITE type=kotlin.Unit origin=null
+              COMPOSITE type=kotlin.Unit origin=null
+                BLOCK type=kotlin.Int origin=WHEN
+                  VAR IR_TEMPORARY_VARIABLE name:tmp56_subject type:kotlin.Int? [val]
+                    BLOCK type=kotlin.Int? origin=FOLDED_SAFE_CALL
+                      WHEN type=kotlin.Int? origin=FOLDED_SAFE_CALL
+                        BRANCH
+                          if: COMPOSITE type=kotlin.Boolean origin=null
+                            CALL 'public final fun not (): kotlin.Boolean [operator] declared in kotlin.Boolean' type=kotlin.Boolean origin=null
+                              $this: CALL 'public final fun EQEQ (arg0: kotlin.Any?, arg1: kotlin.Any?): kotlin.Boolean declared in kotlin.internal.ir' type=kotlin.Boolean origin=null
+                                arg0: GET_VAR 'val resp: com.example.mealplanb.remote.BaseResponse<com.example.mealplanb.remote.MealFoodResponse>? [val] declared in com.example.mealplanb.remote.AuthService.foodListCheck.<no name provided>.onResponse' type=com.example.mealplanb.remote.BaseResponse<com.example.mealplanb.remote.MealFoodResponse>? origin=null
+                                arg1: CONST Null type=kotlin.Nothing? value=null
+                          then: CALL 'public final fun <get-code> (): kotlin.Int declared in com.example.mealplanb.remote.BaseResponse' type=kotlin.Int origin=GET_PROPERTY
+                            $this: GET_VAR 'val resp: com.example.mealplanb.remote.BaseResponse<com.example.mealplanb.remote.MealFoodResponse>? [val] declared in com.example.mealplanb.remote.AuthService.foodListCheck.<no name provided>.onResponse' type=com.example.mealplanb.remote.BaseResponse<com.example.mealplanb.remote.MealFoodResponse>? origin=null
+                        BRANCH
+                          if: CONST Boolean type=kotlin.Boolean value=true
+                          then: CONST Null type=kotlin.Nothing? value=null
+                  WHEN type=kotlin.Int origin=WHEN
+                    BRANCH
+                      if: CALL 'public final fun EQEQ (arg0: kotlin.Any?, arg1: kotlin.Any?): kotlin.Boolean declared in kotlin.internal.ir' type=kotlin.Boolean origin=EQEQ
+                        arg0: GET_VAR 'val tmp56_subject: kotlin.Int? [val] declared in com.example.mealplanb.remote.AuthService.foodListCheck.<no name provided>.onResponse' type=kotlin.Int? origin=null
+                        arg1: CONST Int type=kotlin.Int value=1000
+                      then: BLOCK type=kotlin.Int origin=null
+                        VAR name:foodListCheckResponse type:com.example.mealplanb.remote.MealFoodResponse [val]
+                          CALL 'public final fun <get-result> (): T of com.example.mealplanb.remote.BaseResponse declared in com.example.mealplanb.remote.BaseResponse' type=com.example.mealplanb.remote.MealFoodResponse origin=GET_PROPERTY
+                            $this: GET_VAR 'val resp: com.example.mealplanb.remote.BaseResponse<com.example.mealplanb.remote.MealFoodResponse>? [val] declared in com.example.mealplanb.remote.AuthService.foodListCheck.<no name provided>.onResponse' type=com.example.mealplanb.remote.BaseResponse<com.example.mealplanb.remote.MealFoodResponse>? origin=null
+                        VAR name:meal_id type:kotlin.Int [val]
+                          BLOCK type=kotlin.Int origin=FOLDED_ELVIS
+                            WHEN type=kotlin.Int origin=FOLDED_ELVIS
+                              BRANCH
+                                if: COMPOSITE type=kotlin.Boolean origin=null
+                                  VAR IR_TEMPORARY_VARIABLE name:tmp0_elvis_lhs type:kotlin.Int [val]
+                                    CALL 'public final fun <get-meal_id> (): kotlin.Int declared in com.example.mealplanb.remote.MealFoodResponse' type=kotlin.Int origin=GET_PROPERTY
+                                      $this: GET_VAR 'val foodListCheckResponse: com.example.mealplanb.remote.MealFoodResponse [val] declared in com.example.mealplanb.remote.AuthService.foodListCheck.<no name provided>.onResponse' type=com.example.mealplanb.remote.MealFoodResponse origin=null
+                                  CALL 'public final fun not (): kotlin.Boolean [operator] declared in kotlin.Boolean' type=kotlin.Boolean origin=null
+                                    $this: CALL 'public final fun EQEQ (arg0: kotlin.Any?, arg1: kotlin.Any?): kotlin.Boolean declared in kotlin.internal.ir' type=kotlin.Boolean origin=null
+                                      arg0: GET_VAR 'val tmp0_elvis_lhs: kotlin.Int [val] declared in com.example.mealplanb.remote.AuthService.foodListCheck.<no name provided>.onResponse' type=kotlin.Int origin=null
+                                      arg1: CONST Null type=kotlin.Nothing? value=null
+                                then: GET_VAR 'val tmp0_elvis_lhs: kotlin.Int [val] declared in com.example.mealplanb.remote.AuthService.foodListCheck.<no name provided>.onResponse' type=kotlin.Int origin=null
+                              BRANCH
+                                if: CONST Boolean type=kotlin.Boolean value=true
+                                then: CONST Int type=kotlin.Int value=0
+                        VAR name:meal_date type:kotlin.String [val]
+                          BLOCK type=kotlin.String origin=FOLDED_ELVIS
+                            WHEN type=kotlin.String origin=FOLDED_ELVIS
+                              BRANCH
+                                if: COMPOSITE type=kotlin.Boolean origin=null
+                                  VAR IR_TEMPORARY_VARIABLE name:tmp1_elvis_lhs type:kotlin.String [val]
+                                    CALL 'public final fun <get-meal_date> (): kotlin.String declared in com.example.mealplanb.remote.MealFoodResponse' type=kotlin.String origin=GET_PROPERTY
+                                      $this: GET_VAR 'val foodListCheckResponse: com.example.mealplanb.remote.MealFoodResponse [val] declared in com.example.mealplanb.remote.AuthService.foodListCheck.<no name provided>.onResponse' type=com.example.mealplanb.remote.MealFoodResponse origin=null
+                                  CALL 'public final fun not (): kotlin.Boolean [operator] declared in kotlin.Boolean' type=kotlin.Boolean origin=null
+                                    $this: CALL 'public final fun EQEQ (arg0: kotlin.Any?, arg1: kotlin.Any?): kotlin.Boolean declared in kotlin.internal.ir' type=kotlin.Boolean origin=null
+                                      arg0: GET_VAR 'val tmp1_elvis_lhs: kotlin.String [val] declared in com.example.mealplanb.remote.AuthService.foodListCheck.<no name provided>.onResponse' type=kotlin.String origin=null
+                                      arg1: CONST Null type=kotlin.Nothing? value=null
+                                then: GET_VAR 'val tmp1_elvis_lhs: kotlin.String [val] declared in com.example.mealplanb.remote.AuthService.foodListCheck.<no name provided>.onResponse' type=kotlin.String origin=null
+                              BRANCH
+                                if: CONST Boolean type=kotlin.Boolean value=true
+                                then: CONST String type=kotlin.String value=""
+                        VAR name:meal_type type:kotlin.Int [val]
+                          BLOCK type=kotlin.Int origin=FOLDED_ELVIS
+                            WHEN type=kotlin.Int origin=FOLDED_ELVIS
+                              BRANCH
+                                if: COMPOSITE type=kotlin.Boolean origin=null
+                                  VAR IR_TEMPORARY_VARIABLE name:tmp2_elvis_lhs type:kotlin.Int [val]
+                                    CALL 'public final fun <get-meal_type> (): kotlin.Int declared in com.example.mealplanb.remote.MealFoodResponse' type=kotlin.Int origin=GET_PROPERTY
+                                      $this: GET_VAR 'val foodListCheckResponse: com.example.mealplanb.remote.MealFoodResponse [val] declared in com.example.mealplanb.remote.AuthService.foodListCheck.<no name provided>.onResponse' type=com.example.mealplanb.remote.MealFoodResponse origin=null
+                                  CALL 'public final fun not (): kotlin.Boolean [operator] declared in kotlin.Boolean' type=kotlin.Boolean origin=null
+                                    $this: CALL 'public final fun EQEQ (arg0: kotlin.Any?, arg1: kotlin.Any?): kotlin.Boolean declared in kotlin.internal.ir' type=kotlin.Boolean origin=null
+                                      arg0: GET_VAR 'val tmp2_elvis_lhs: kotlin.Int [val] declared in com.example.mealplanb.remote.AuthService.foodListCheck.<no name provided>.onResponse' type=kotlin.Int origin=null
+                                      arg1: CONST Null type=kotlin.Nothing? value=null
+                                then: GET_VAR 'val tmp2_elvis_lhs: kotlin.Int [val] declared in com.example.mealplanb.remote.AuthService.foodListCheck.<no name provided>.onResponse' type=kotlin.Int origin=null
+                              BRANCH
+                                if: CONST Boolean type=kotlin.Boolean value=true
+                                then: CONST Int type=kotlin.Int value=0
+                        VAR name:food_list type:kotlin.collections.List<com.example.mealplanb.remote.MealFoodResponseFoodList> [val]
+                          BLOCK type=kotlin.collections.List<com.example.mealplanb.remote.MealFoodResponseFoodList> origin=FOLDED_ELVIS
+                            WHEN type=kotlin.collections.List<com.example.mealplanb.remote.MealFoodResponseFoodList> origin=FOLDED_ELVIS
+                              BRANCH
+                                if: COMPOSITE type=kotlin.Boolean origin=null
+                                  VAR IR_TEMPORARY_VARIABLE name:tmp3_elvis_lhs type:kotlin.collections.List<com.example.mealplanb.remote.MealFoodResponseFoodList> [val]
+                                    CALL 'public final fun <get-food_list> (): kotlin.collections.List<com.example.mealplanb.remote.MealFoodResponseFoodList> declared in com.example.mealplanb.remote.MealFoodResponse' type=kotlin.collections.List<com.example.mealplanb.remote.MealFoodResponseFoodList> origin=GET_PROPERTY
+                                      $this: GET_VAR 'val foodListCheckResponse: com.example.mealplanb.remote.MealFoodResponse [val] declared in com.example.mealplanb.remote.AuthService.foodListCheck.<no name provided>.onResponse' type=com.example.mealplanb.remote.MealFoodResponse origin=null
+                                  CALL 'public final fun not (): kotlin.Boolean [operator] declared in kotlin.Boolean' type=kotlin.Boolean origin=null
+                                    $this: CALL 'public final fun EQEQ (arg0: kotlin.Any?, arg1: kotlin.Any?): kotlin.Boolean declared in kotlin.internal.ir' type=kotlin.Boolean origin=null
+                                      arg0: GET_VAR 'val tmp3_elvis_lhs: kotlin.collections.List<com.example.mealplanb.remote.MealFoodResponseFoodList> [val] declared in com.example.mealplanb.remote.AuthService.foodListCheck.<no name provided>.onResponse' type=kotlin.collections.List<com.example.mealplanb.remote.MealFoodResponseFoodList> origin=null
+                                      arg1: CONST Null type=kotlin.Nothing? value=null
+                                then: GET_VAR 'val tmp3_elvis_lhs: kotlin.collections.List<com.example.mealplanb.remote.MealFoodResponseFoodList> [val] declared in com.example.mealplanb.remote.AuthService.foodListCheck.<no name provided>.onResponse' type=kotlin.collections.List<com.example.mealplanb.remote.MealFoodResponseFoodList> origin=null
+                              BRANCH
+                                if: CONST Boolean type=kotlin.Boolean value=true
+                                then: CALL 'public final fun arrayListOf <T> (): java.util.ArrayList<T of kotlin.collections.CollectionsKt.arrayListOf> [inline] declared in kotlin.collections.CollectionsKt' type=java.util.ArrayList<com.example.mealplanb.remote.MealFoodResponseFoodList> origin=null
+                                  <T>: com.example.mealplanb.remote.MealFoodResponseFoodList
+                        CALL 'public abstract fun FoodListCheckSuccess (meal_id: kotlin.Int, meal_date: kotlin.String, meal_type: kotlin.Int, food_list: kotlin.collections.List<com.example.mealplanb.remote.MealFoodResponseFoodList>): kotlin.Unit declared in com.example.mealplanb.remote.HomeMealView' type=kotlin.Unit origin=null
+                          $this: BLOCK type=com.example.mealplanb.remote.HomeMealView origin=FOLDED_ELVIS
+                            WHEN type=com.example.mealplanb.remote.HomeMealView origin=FOLDED_ELVIS
+                              BRANCH
+                                if: COMPOSITE type=kotlin.Boolean origin=null
+                                  VAR IR_TEMPORARY_VARIABLE name:tmp0 type:com.example.mealplanb.remote.HomeMealView? [val]
+                                    CALL 'public final fun access$getHomeMealView$p ($this: com.example.mealplanb.remote.AuthService): com.example.mealplanb.remote.HomeMealView? declared in com.example.mealplanb.remote.AuthService' type=com.example.mealplanb.remote.HomeMealView? origin=null
+                                      $this: GET_FIELD 'FIELD FIELD_FOR_CAPTURED_VALUE name:this$0 type:com.example.mealplanb.remote.AuthService visibility:public/*package*/ [final]' type=com.example.mealplanb.remote.AuthService origin=null
+                                        receiver: GET_VAR '<this>: com.example.mealplanb.remote.AuthService.foodListCheck.<no name provided> declared in com.example.mealplanb.remote.AuthService.foodListCheck.<no name provided>.onResponse' type=com.example.mealplanb.remote.AuthService.foodListCheck.<no name provided> origin=null
+                                  CALL 'public final fun not (): kotlin.Boolean [operator] declared in kotlin.Boolean' type=kotlin.Boolean origin=null
+                                    $this: CALL 'public final fun EQEQ (arg0: kotlin.Any?, arg1: kotlin.Any?): kotlin.Boolean declared in kotlin.internal.ir' type=kotlin.Boolean origin=null
+                                      arg0: GET_VAR 'val tmp0: com.example.mealplanb.remote.HomeMealView? [val] declared in com.example.mealplanb.remote.AuthService.foodListCheck.<no name provided>.onResponse' type=com.example.mealplanb.remote.HomeMealView? origin=null
+                                      arg1: CONST Null type=kotlin.Nothing? value=null
+                                then: GET_VAR 'val tmp0: com.example.mealplanb.remote.HomeMealView? [val] declared in com.example.mealplanb.remote.AuthService.foodListCheck.<no name provided>.onResponse' type=com.example.mealplanb.remote.HomeMealView? origin=null
+                              BRANCH
+                                if: CONST Boolean type=kotlin.Boolean value=true
+                                then: BLOCK type=kotlin.Unit origin=null
+                                  CALL 'public final fun throwUninitializedPropertyAccessException (propertyName: kotlin.String): kotlin.Unit declared in kotlin.jvm.internal.Intrinsics' type=kotlin.Unit origin=null
+                                    propertyName: CONST String type=kotlin.String value="homeMealView"
+                          meal_id: GET_VAR 'val meal_id: kotlin.Int [val] declared in com.example.mealplanb.remote.AuthService.foodListCheck.<no name provided>.onResponse' type=kotlin.Int origin=null
+                          meal_date: GET_VAR 'val meal_date: kotlin.String [val] declared in com.example.mealplanb.remote.AuthService.foodListCheck.<no name provided>.onResponse' type=kotlin.String origin=null
+                          meal_type: GET_VAR 'val meal_type: kotlin.Int [val] declared in com.example.mealplanb.remote.AuthService.foodListCheck.<no name provided>.onResponse' type=kotlin.Int origin=null
+                          food_list: GET_VAR 'val food_list: kotlin.collections.List<com.example.mealplanb.remote.MealFoodResponseFoodList> [val] declared in com.example.mealplanb.remote.AuthService.foodListCheck.<no name provided>.onResponse' type=kotlin.collections.List<com.example.mealplanb.remote.MealFoodResponseFoodList> origin=null
+                        CALL 'public open fun d (p0: kotlin.String?, p1: @[EnhancedNullability] kotlin.String): kotlin.Int declared in android.util.Log' type=kotlin.Int origin=null
+                          p0: CONST String type=kotlin.String value="recommend amount get Success"
+                          p1: CONST String type=kotlin.String value="myfavorite meal get Success"
+                    BRANCH
+                      if: CONST Boolean type=kotlin.Boolean value=true
+                      then: WHEN type=kotlin.Int origin=IF
+                        BRANCH
+                          if: CALL 'public final fun not (): kotlin.Boolean [operator] declared in kotlin.Boolean' type=kotlin.Boolean origin=EXCLEQ
+                            $this: CALL 'public final fun EQEQ (arg0: kotlin.Any?, arg1: kotlin.Any?): kotlin.Boolean declared in kotlin.internal.ir' type=kotlin.Boolean origin=EXCLEQ
+                              arg0: GET_VAR 'val resp: com.example.mealplanb.remote.BaseResponse<com.example.mealplanb.remote.MealFoodResponse>? [val] declared in com.example.mealplanb.remote.AuthService.foodListCheck.<no name provided>.onResponse' type=com.example.mealplanb.remote.BaseResponse<com.example.mealplanb.remote.MealFoodResponse>? origin=null
+                              arg1: CONST Null type=kotlin.Nothing? value=null
+                          then: BLOCK type=kotlin.Int origin=null
+                            CALL 'public open fun d (p0: kotlin.String?, p1: @[EnhancedNullability] kotlin.String): kotlin.Int declared in android.util.Log' type=kotlin.Int origin=null
+                              p0: CONST String type=kotlin.String value="recommend amount get error"
+                              p1: CONST String type=kotlin.String value="myfavorite meal get error"
+                        BRANCH
+                          if: CONST Boolean type=kotlin.Boolean value=true
+                          then: BLOCK type=kotlin.Int origin=null
+                            CALL 'public abstract fun FoodListCheckFailure (code: kotlin.Int, msg: kotlin.String): kotlin.Unit declared in com.example.mealplanb.remote.HomeMealView' type=kotlin.Unit origin=null
+                              $this: BLOCK type=com.example.mealplanb.remote.HomeMealView origin=FOLDED_ELVIS
+                                WHEN type=com.example.mealplanb.remote.HomeMealView origin=FOLDED_ELVIS
+                                  BRANCH
+                                    if: COMPOSITE type=kotlin.Boolean origin=null
+                                      VAR IR_TEMPORARY_VARIABLE name:tmp0 type:com.example.mealplanb.remote.HomeMealView? [val]
+                                        CALL 'public final fun access$getHomeMealView$p ($this: com.example.mealplanb.remote.AuthService): com.example.mealplanb.remote.HomeMealView? declared in com.example.mealplanb.remote.AuthService' type=com.example.mealplanb.remote.HomeMealView? origin=null
+                                          $this: GET_FIELD 'FIELD FIELD_FOR_CAPTURED_VALUE name:this$0 type:com.example.mealplanb.remote.AuthService visibility:public/*package*/ [final]' type=com.example.mealplanb.remote.AuthService origin=null
+                                            receiver: GET_VAR '<this>: com.example.mealplanb.remote.AuthService.foodListCheck.<no name provided> declared in com.example.mealplanb.remote.AuthService.foodListCheck.<no name provided>.onResponse' type=com.example.mealplanb.remote.AuthService.foodListCheck.<no name provided> origin=null
+                                      CALL 'public final fun not (): kotlin.Boolean [operator] declared in kotlin.Boolean' type=kotlin.Boolean origin=null
+                                        $this: CALL 'public final fun EQEQ (arg0: kotlin.Any?, arg1: kotlin.Any?): kotlin.Boolean declared in kotlin.internal.ir' type=kotlin.Boolean origin=null
+                                          arg0: GET_VAR 'val tmp0: com.example.mealplanb.remote.HomeMealView? [val] declared in com.example.mealplanb.remote.AuthService.foodListCheck.<no name provided>.onResponse' type=com.example.mealplanb.remote.HomeMealView? origin=null
+                                          arg1: CONST Null type=kotlin.Nothing? value=null
+                                    then: GET_VAR 'val tmp0: com.example.mealplanb.remote.HomeMealView? [val] declared in com.example.mealplanb.remote.AuthService.foodListCheck.<no name provided>.onResponse' type=com.example.mealplanb.remote.HomeMealView? origin=null
+                                  BRANCH
+                                    if: CONST Boolean type=kotlin.Boolean value=true
+                                    then: BLOCK type=kotlin.Unit origin=null
+                                      CALL 'public final fun throwUninitializedPropertyAccessException (propertyName: kotlin.String): kotlin.Unit declared in kotlin.jvm.internal.Intrinsics' type=kotlin.Unit origin=null
+                                        propertyName: CONST String type=kotlin.String value="homeMealView"
+                              code: CALL 'public final fun <get-code> (): kotlin.Int [fake_override] declared in kotlin.Nothing' type=kotlin.Int origin=GET_PROPERTY
+                                $this: BLOCK type=kotlin.Nothing origin=null
+                                  CALL 'public final fun CHECK_NOT_NULL <T0> (arg0: T0 of kotlin.internal.ir.CHECK_NOT_NULL?): {T0 of kotlin.internal.ir.CHECK_NOT_NULL & Any} declared in kotlin.internal.ir' type=kotlin.Nothing origin=EXCLEXCL
+                                    <T0>: kotlin.Nothing
+                                    arg0: GET_VAR 'val resp: com.example.mealplanb.remote.BaseResponse<com.example.mealplanb.remote.MealFoodResponse>? [val] declared in com.example.mealplanb.remote.AuthService.foodListCheck.<no name provided>.onResponse' type=com.example.mealplanb.remote.BaseResponse<com.example.mealplanb.remote.MealFoodResponse>? origin=null
+                                  CALL 'public final fun throwKotlinNothingValueException (): kotlin.Nothing declared in kotlin.jvm.internal.Intrinsics' type=kotlin.Nothing origin=null
+                              msg: CONST String type=kotlin.String value=""
+                            CALL 'public open fun d (p0: kotlin.String?, p1: @[EnhancedNullability] kotlin.String): kotlin.Int declared in android.util.Log' type=kotlin.Int origin=null
+                              p0: CONST String type=kotlin.String value="recommend amount get null"
+                              p1: CONST String type=kotlin.String value="myfavorite meal get null"
+                COMPOSITE type=kotlin.Unit origin=null
+          FUN name:onFailure visibility:public modality:OPEN <> ($this:com.example.mealplanb.remote.AuthService.foodListCheck.<no name provided>, call:retrofit2.Call<com.example.mealplanb.remote.BaseResponse<com.example.mealplanb.remote.MealFoodResponse>>, t:kotlin.Throwable) returnType:kotlin.Unit
+            overridden:
+              public abstract fun onFailure (p0: @[FlexibleNullability] retrofit2.Call<@[FlexibleNullability] T of retrofit2.Callback?>?, p1: @[FlexibleNullability] kotlin.Throwable?): kotlin.Unit declared in retrofit2.Callback
+            $this: VALUE_PARAMETER name:<this> type:com.example.mealplanb.remote.AuthService.foodListCheck.<no name provided>
+            VALUE_PARAMETER name:call index:0 type:retrofit2.Call<com.example.mealplanb.remote.BaseResponse<com.example.mealplanb.remote.MealFoodResponse>>
+            VALUE_PARAMETER name:t index:1 type:kotlin.Throwable
+            BLOCK_BODY
+              COMPOSITE type=kotlin.Unit origin=null
+                CALL 'public open fun d (p0: kotlin.String?, p1: @[EnhancedNullability] kotlin.String): kotlin.Int declared in android.util.Log' type=kotlin.Int origin=null
+                  p0: CONST String type=kotlin.String value="MealfoodList get Failed"
+                  p1: CALL 'public open fun toString (): kotlin.String [fake_override] declared in kotlin.Throwable' type=kotlin.String origin=null
+                    $this: GET_VAR 't: kotlin.Throwable declared in com.example.mealplanb.remote.AuthService.foodListCheck.<no name provided>.onFailure' type=kotlin.Throwable origin=null
+                COMPOSITE type=kotlin.Unit origin=null
+          FUN FAKE_OVERRIDE name:equals visibility:public modality:OPEN <> ($this:kotlin.Any, other:kotlin.Any?) returnType:kotlin.Boolean [fake_override,operator]
+            overridden:
+              public open fun equals (other: kotlin.Any?): kotlin.Boolean [fake_override,operator] declared in retrofit2.Callback
+            $this: VALUE_PARAMETER name:<this> type:kotlin.Any
+            VALUE_PARAMETER name:other index:0 type:kotlin.Any?
+          FUN FAKE_OVERRIDE name:hashCode visibility:public modality:OPEN <> ($this:kotlin.Any) returnType:kotlin.Int [fake_override]
+            overridden:
+              public open fun hashCode (): kotlin.Int [fake_override] declared in retrofit2.Callback
+            $this: VALUE_PARAMETER name:<this> type:kotlin.Any
+          FUN FAKE_OVERRIDE name:toString visibility:public modality:OPEN <> ($this:kotlin.Any) returnType:kotlin.String [fake_override]
+            overridden:
+              public open fun toString (): kotlin.String [fake_override] declared in retrofit2.Callback
+            $this: VALUE_PARAMETER name:<this> type:kotlin.Any
+          FIELD FIELD_FOR_CAPTURED_VALUE name:this$0 type:com.example.mealplanb.remote.AuthService visibility:public/*package*/ [final]
+        BLOCK type=com.example.mealplanb.remote.AuthService.foodListCheck.<no name provided> origin=null
+          CONSTRUCTOR_CALL 'public/*package*/ constructor <init> (this$0: com.example.mealplanb.remote.AuthService) [primary] declared in com.example.mealplanb.remote.AuthService.foodListCheck.<no name provided>' type=com.example.mealplanb.remote.AuthService.foodListCheck.<no name provided> origin=OBJECT_LITERAL
+            this$0: GET_VAR '<this>: com.example.mealplanb.remote.AuthService declared in com.example.mealplanb.remote.AuthService.foodListCheck' type=com.example.mealplanb.remote.AuthService origin=null
+
+	at org.jetbrains.kotlin.backend.jvm.codegen.FunctionCodegen.generate(FunctionCodegen.kt:52)
+	at org.jetbrains.kotlin.backend.jvm.codegen.FunctionCodegen.generate$default(FunctionCodegen.kt:44)
+	at org.jetbrains.kotlin.backend.jvm.codegen.ClassCodegen.generateMethodNode(ClassCodegen.kt:394)
+	at org.jetbrains.kotlin.backend.jvm.codegen.ClassCodegen.generateMethod(ClassCodegen.kt:411)
+	at org.jetbrains.kotlin.backend.jvm.codegen.ClassCodegen.generate(ClassCodegen.kt:173)
+	at org.jetbrains.kotlin.backend.jvm.FileCodegen.lower(JvmPhases.kt:41)
+	at org.jetbrains.kotlin.backend.common.phaser.PhaseBuildersKt$makeIrFilePhase$2.invoke(PhaseBuilders.kt:136)
+	at org.jetbrains.kotlin.backend.common.phaser.PhaseBuildersKt$makeIrFilePhase$2.invoke(PhaseBuilders.kt:128)
+	at org.jetbrains.kotlin.backend.common.phaser.PhaseBuildersKt$createSimpleNamedCompilerPhase$1.phaseBody(PhaseBuilders.kt:72)
+	at org.jetbrains.kotlin.backend.common.phaser.SimpleNamedCompilerPhase.phaseBody(CompilerPhase.kt:226)
+	at org.jetbrains.kotlin.backend.common.phaser.AbstractNamedCompilerPhase.invoke(CompilerPhase.kt:113)
+	at org.jetbrains.kotlin.backend.common.phaser.PerformByIrFilePhase.invokeSequential(performByIrFile.kt:62)
+	... 45 more
+Caused by: java.lang.RuntimeException: Exception while generating code for:
+FUN name:onResponse visibility:public modality:OPEN <> ($this:com.example.mealplanb.remote.AuthService.foodListCheck.<no name provided>, call:retrofit2.Call<com.example.mealplanb.remote.BaseResponse<com.example.mealplanb.remote.MealFoodResponse>>, response:retrofit2.Response<com.example.mealplanb.remote.BaseResponse<com.example.mealplanb.remote.MealFoodResponse>>) returnType:kotlin.Unit
+  overridden:
+    public abstract fun onResponse (p0: @[FlexibleNullability] retrofit2.Call<@[FlexibleNullability] T of retrofit2.Callback?>?, p1: @[FlexibleNullability] retrofit2.Response<@[FlexibleNullability] T of retrofit2.Callback?>?): kotlin.Unit declared in retrofit2.Callback
+  $this: VALUE_PARAMETER name:<this> type:com.example.mealplanb.remote.AuthService.foodListCheck.<no name provided>
+  VALUE_PARAMETER name:call index:0 type:retrofit2.Call<com.example.mealplanb.remote.BaseResponse<com.example.mealplanb.remote.MealFoodResponse>>
+  VALUE_PARAMETER name:response index:1 type:retrofit2.Response<com.example.mealplanb.remote.BaseResponse<com.example.mealplanb.remote.MealFoodResponse>>
+  BLOCK_BODY
+    VAR name:resp type:com.example.mealplanb.remote.BaseResponse<com.example.mealplanb.remote.MealFoodResponse>? [val]
+      CALL 'public open fun body (): T of retrofit2.Response? declared in retrofit2.Response' type=com.example.mealplanb.remote.BaseResponse<com.example.mealplanb.remote.MealFoodResponse>? origin=null
+        $this: GET_VAR 'response: retrofit2.Response<com.example.mealplanb.remote.BaseResponse<com.example.mealplanb.remote.MealFoodResponse>> declared in com.example.mealplanb.remote.AuthService.foodListCheck.<no name provided>.onResponse' type=retrofit2.Response<com.example.mealplanb.remote.BaseResponse<com.example.mealplanb.remote.MealFoodResponse>> origin=null
+    COMPOSITE type=kotlin.Unit origin=null
+      CALL 'public open fun d (p0: kotlin.String?, p1: @[EnhancedNullability] kotlin.String): kotlin.Int declared in android.util.Log' type=kotlin.Int origin=null
+        p0: CONST String type=kotlin.String value="recommend amount get response"
+        p1: CALL 'public open fun toString (): @[EnhancedNullability] kotlin.String declared in retrofit2.Response' type=@[EnhancedNullability] kotlin.String origin=null
+          $this: GET_VAR 'response: retrofit2.Response<com.example.mealplanb.remote.BaseResponse<com.example.mealplanb.remote.MealFoodResponse>> declared in com.example.mealplanb.remote.AuthService.foodListCheck.<no name provided>.onResponse' type=retrofit2.Response<com.example.mealplanb.remote.BaseResponse<com.example.mealplanb.remote.MealFoodResponse>> origin=null
+      COMPOSITE type=kotlin.Unit origin=null
+    COMPOSITE type=kotlin.Unit origin=null
+      CALL 'public open fun d (p0: kotlin.String?, p1: @[EnhancedNullability] kotlin.String): kotlin.Int declared in android.util.Log' type=kotlin.Int origin=null
+        p0: CONST String type=kotlin.String value="recommend amount get response"
+        p1: CALL 'public final fun valueOf (value: kotlin.Any?): kotlin.String declared in java.lang.String' type=kotlin.String origin=null
+          value: GET_VAR 'val resp: com.example.mealplanb.remote.BaseResponse<com.example.mealplanb.remote.MealFoodResponse>? [val] declared in com.example.mealplanb.remote.AuthService.foodListCheck.<no name provided>.onResponse' type=com.example.mealplanb.remote.BaseResponse<com.example.mealplanb.remote.MealFoodResponse>? origin=null
+      COMPOSITE type=kotlin.Unit origin=null
+    COMPOSITE type=kotlin.Unit origin=null
+      BLOCK type=kotlin.Int origin=WHEN
+        VAR IR_TEMPORARY_VARIABLE name:tmp56_subject type:kotlin.Int? [val]
+          BLOCK type=kotlin.Int? origin=FOLDED_SAFE_CALL
+            WHEN type=kotlin.Int? origin=FOLDED_SAFE_CALL
+              BRANCH
+                if: COMPOSITE type=kotlin.Boolean origin=null
+                  CALL 'public final fun not (): kotlin.Boolean [operator] declared in kotlin.Boolean' type=kotlin.Boolean origin=null
+                    $this: CALL 'public final fun EQEQ (arg0: kotlin.Any?, arg1: kotlin.Any?): kotlin.Boolean declared in kotlin.internal.ir' type=kotlin.Boolean origin=null
+                      arg0: GET_VAR 'val resp: com.example.mealplanb.remote.BaseResponse<com.example.mealplanb.remote.MealFoodResponse>? [val] declared in com.example.mealplanb.remote.AuthService.foodListCheck.<no name provided>.onResponse' type=com.example.mealplanb.remote.BaseResponse<com.example.mealplanb.remote.MealFoodResponse>? origin=null
+                      arg1: CONST Null type=kotlin.Nothing? value=null
+                then: CALL 'public final fun <get-code> (): kotlin.Int declared in com.example.mealplanb.remote.BaseResponse' type=kotlin.Int origin=GET_PROPERTY
+                  $this: GET_VAR 'val resp: com.example.mealplanb.remote.BaseResponse<com.example.mealplanb.remote.MealFoodResponse>? [val] declared in com.example.mealplanb.remote.AuthService.foodListCheck.<no name provided>.onResponse' type=com.example.mealplanb.remote.BaseResponse<com.example.mealplanb.remote.MealFoodResponse>? origin=null
+              BRANCH
+                if: CONST Boolean type=kotlin.Boolean value=true
+                then: CONST Null type=kotlin.Nothing? value=null
+        WHEN type=kotlin.Int origin=WHEN
+          BRANCH
+            if: CALL 'public final fun EQEQ (arg0: kotlin.Any?, arg1: kotlin.Any?): kotlin.Boolean declared in kotlin.internal.ir' type=kotlin.Boolean origin=EQEQ
+              arg0: GET_VAR 'val tmp56_subject: kotlin.Int? [val] declared in com.example.mealplanb.remote.AuthService.foodListCheck.<no name provided>.onResponse' type=kotlin.Int? origin=null
+              arg1: CONST Int type=kotlin.Int value=1000
+            then: BLOCK type=kotlin.Int origin=null
+              VAR name:foodListCheckResponse type:com.example.mealplanb.remote.MealFoodResponse [val]
+                CALL 'public final fun <get-result> (): T of com.example.mealplanb.remote.BaseResponse declared in com.example.mealplanb.remote.BaseResponse' type=com.example.mealplanb.remote.MealFoodResponse origin=GET_PROPERTY
+                  $this: GET_VAR 'val resp: com.example.mealplanb.remote.BaseResponse<com.example.mealplanb.remote.MealFoodResponse>? [val] declared in com.example.mealplanb.remote.AuthService.foodListCheck.<no name provided>.onResponse' type=com.example.mealplanb.remote.BaseResponse<com.example.mealplanb.remote.MealFoodResponse>? origin=null
+              VAR name:meal_id type:kotlin.Int [val]
+                BLOCK type=kotlin.Int origin=FOLDED_ELVIS
+                  WHEN type=kotlin.Int origin=FOLDED_ELVIS
+                    BRANCH
+                      if: COMPOSITE type=kotlin.Boolean origin=null
+                        VAR IR_TEMPORARY_VARIABLE name:tmp0_elvis_lhs type:kotlin.Int [val]
+                          CALL 'public final fun <get-meal_id> (): kotlin.Int declared in com.example.mealplanb.remote.MealFoodResponse' type=kotlin.Int origin=GET_PROPERTY
+                            $this: GET_VAR 'val foodListCheckResponse: com.example.mealplanb.remote.MealFoodResponse [val] declared in com.example.mealplanb.remote.AuthService.foodListCheck.<no name provided>.onResponse' type=com.example.mealplanb.remote.MealFoodResponse origin=null
+                        CALL 'public final fun not (): kotlin.Boolean [operator] declared in kotlin.Boolean' type=kotlin.Boolean origin=null
+                          $this: CALL 'public final fun EQEQ (arg0: kotlin.Any?, arg1: kotlin.Any?): kotlin.Boolean declared in kotlin.internal.ir' type=kotlin.Boolean origin=null
+                            arg0: GET_VAR 'val tmp0_elvis_lhs: kotlin.Int [val] declared in com.example.mealplanb.remote.AuthService.foodListCheck.<no name provided>.onResponse' type=kotlin.Int origin=null
+                            arg1: CONST Null type=kotlin.Nothing? value=null
+                      then: GET_VAR 'val tmp0_elvis_lhs: kotlin.Int [val] declared in com.example.mealplanb.remote.AuthService.foodListCheck.<no name provided>.onResponse' type=kotlin.Int origin=null
+                    BRANCH
+                      if: CONST Boolean type=kotlin.Boolean value=true
+                      then: CONST Int type=kotlin.Int value=0
+              VAR name:meal_date type:kotlin.String [val]
+                BLOCK type=kotlin.String origin=FOLDED_ELVIS
+                  WHEN type=kotlin.String origin=FOLDED_ELVIS
+                    BRANCH
+                      if: COMPOSITE type=kotlin.Boolean origin=null
+                        VAR IR_TEMPORARY_VARIABLE name:tmp1_elvis_lhs type:kotlin.String [val]
+                          CALL 'public final fun <get-meal_date> (): kotlin.String declared in com.example.mealplanb.remote.MealFoodResponse' type=kotlin.String origin=GET_PROPERTY
+                            $this: GET_VAR 'val foodListCheckResponse: com.example.mealplanb.remote.MealFoodResponse [val] declared in com.example.mealplanb.remote.AuthService.foodListCheck.<no name provided>.onResponse' type=com.example.mealplanb.remote.MealFoodResponse origin=null
+                        CALL 'public final fun not (): kotlin.Boolean [operator] declared in kotlin.Boolean' type=kotlin.Boolean origin=null
+                          $this: CALL 'public final fun EQEQ (arg0: kotlin.Any?, arg1: kotlin.Any?): kotlin.Boolean declared in kotlin.internal.ir' type=kotlin.Boolean origin=null
+                            arg0: GET_VAR 'val tmp1_elvis_lhs: kotlin.String [val] declared in com.example.mealplanb.remote.AuthService.foodListCheck.<no name provided>.onResponse' type=kotlin.String origin=null
+                            arg1: CONST Null type=kotlin.Nothing? value=null
+                      then: GET_VAR 'val tmp1_elvis_lhs: kotlin.String [val] declared in com.example.mealplanb.remote.AuthService.foodListCheck.<no name provided>.onResponse' type=kotlin.String origin=null
+                    BRANCH
+                      if: CONST Boolean type=kotlin.Boolean value=true
+                      then: CONST String type=kotlin.String value=""
+              VAR name:meal_type type:kotlin.Int [val]
+                BLOCK type=kotlin.Int origin=FOLDED_ELVIS
+                  WHEN type=kotlin.Int origin=FOLDED_ELVIS
+                    BRANCH
+                      if: COMPOSITE type=kotlin.Boolean origin=null
+                        VAR IR_TEMPORARY_VARIABLE name:tmp2_elvis_lhs type:kotlin.Int [val]
+                          CALL 'public final fun <get-meal_type> (): kotlin.Int declared in com.example.mealplanb.remote.MealFoodResponse' type=kotlin.Int origin=GET_PROPERTY
+                            $this: GET_VAR 'val foodListCheckResponse: com.example.mealplanb.remote.MealFoodResponse [val] declared in com.example.mealplanb.remote.AuthService.foodListCheck.<no name provided>.onResponse' type=com.example.mealplanb.remote.MealFoodResponse origin=null
+                        CALL 'public final fun not (): kotlin.Boolean [operator] declared in kotlin.Boolean' type=kotlin.Boolean origin=null
+                          $this: CALL 'public final fun EQEQ (arg0: kotlin.Any?, arg1: kotlin.Any?): kotlin.Boolean declared in kotlin.internal.ir' type=kotlin.Boolean origin=null
+                            arg0: GET_VAR 'val tmp2_elvis_lhs: kotlin.Int [val] declared in com.example.mealplanb.remote.AuthService.foodListCheck.<no name provided>.onResponse' type=kotlin.Int origin=null
+                            arg1: CONST Null type=kotlin.Nothing? value=null
+                      then: GET_VAR 'val tmp2_elvis_lhs: kotlin.Int [val] declared in com.example.mealplanb.remote.AuthService.foodListCheck.<no name provided>.onResponse' type=kotlin.Int origin=null
+                    BRANCH
+                      if: CONST Boolean type=kotlin.Boolean value=true
+                      then: CONST Int type=kotlin.Int value=0
+              VAR name:food_list type:kotlin.collections.List<com.example.mealplanb.remote.MealFoodResponseFoodList> [val]
+                BLOCK type=kotlin.collections.List<com.example.mealplanb.remote.MealFoodResponseFoodList> origin=FOLDED_ELVIS
+                  WHEN type=kotlin.collections.List<com.example.mealplanb.remote.MealFoodResponseFoodList> origin=FOLDED_ELVIS
+                    BRANCH
+                      if: COMPOSITE type=kotlin.Boolean origin=null
+                        VAR IR_TEMPORARY_VARIABLE name:tmp3_elvis_lhs type:kotlin.collections.List<com.example.mealplanb.remote.MealFoodResponseFoodList> [val]
+                          CALL 'public final fun <get-food_list> (): kotlin.collections.List<com.example.mealplanb.remote.MealFoodResponseFoodList> declared in com.example.mealplanb.remote.MealFoodResponse' type=kotlin.collections.List<com.example.mealplanb.remote.MealFoodResponseFoodList> origin=GET_PROPERTY
+                            $this: GET_VAR 'val foodListCheckResponse: com.example.mealplanb.remote.MealFoodResponse [val] declared in com.example.mealplanb.remote.AuthService.foodListCheck.<no name provided>.onResponse' type=com.example.mealplanb.remote.MealFoodResponse origin=null
+                        CALL 'public final fun not (): kotlin.Boolean [operator] declared in kotlin.Boolean' type=kotlin.Boolean origin=null
+                          $this: CALL 'public final fun EQEQ (arg0: kotlin.Any?, arg1: kotlin.Any?): kotlin.Boolean declared in kotlin.internal.ir' type=kotlin.Boolean origin=null
+                            arg0: GET_VAR 'val tmp3_elvis_lhs: kotlin.collections.List<com.example.mealplanb.remote.MealFoodResponseFoodList> [val] declared in com.example.mealplanb.remote.AuthService.foodListCheck.<no name provided>.onResponse' type=kotlin.collections.List<com.example.mealplanb.remote.MealFoodResponseFoodList> origin=null
+                            arg1: CONST Null type=kotlin.Nothing? value=null
+                      then: GET_VAR 'val tmp3_elvis_lhs: kotlin.collections.List<com.example.mealplanb.remote.MealFoodResponseFoodList> [val] declared in com.example.mealplanb.remote.AuthService.foodListCheck.<no name provided>.onResponse' type=kotlin.collections.List<com.example.mealplanb.remote.MealFoodResponseFoodList> origin=null
+                    BRANCH
+                      if: CONST Boolean type=kotlin.Boolean value=true
+                      then: CALL 'public final fun arrayListOf <T> (): java.util.ArrayList<T of kotlin.collections.CollectionsKt.arrayListOf> [inline] declared in kotlin.collections.CollectionsKt' type=java.util.ArrayList<com.example.mealplanb.remote.MealFoodResponseFoodList> origin=null
+                        <T>: com.example.mealplanb.remote.MealFoodResponseFoodList
+              CALL 'public abstract fun FoodListCheckSuccess (meal_id: kotlin.Int, meal_date: kotlin.String, meal_type: kotlin.Int, food_list: kotlin.collections.List<com.example.mealplanb.remote.MealFoodResponseFoodList>): kotlin.Unit declared in com.example.mealplanb.remote.HomeMealView' type=kotlin.Unit origin=null
+                $this: BLOCK type=com.example.mealplanb.remote.HomeMealView origin=FOLDED_ELVIS
+                  WHEN type=com.example.mealplanb.remote.HomeMealView origin=FOLDED_ELVIS
+                    BRANCH
+                      if: COMPOSITE type=kotlin.Boolean origin=null
+                        VAR IR_TEMPORARY_VARIABLE name:tmp0 type:com.example.mealplanb.remote.HomeMealView? [val]
+                          CALL 'public final fun access$getHomeMealView$p ($this: com.example.mealplanb.remote.AuthService): com.example.mealplanb.remote.HomeMealView? declared in com.example.mealplanb.remote.AuthService' type=com.example.mealplanb.remote.HomeMealView? origin=null
+                            $this: GET_FIELD 'FIELD FIELD_FOR_CAPTURED_VALUE name:this$0 type:com.example.mealplanb.remote.AuthService visibility:public/*package*/ [final]' type=com.example.mealplanb.remote.AuthService origin=null
+                              receiver: GET_VAR '<this>: com.example.mealplanb.remote.AuthService.foodListCheck.<no name provided> declared in com.example.mealplanb.remote.AuthService.foodListCheck.<no name provided>.onResponse' type=com.example.mealplanb.remote.AuthService.foodListCheck.<no name provided> origin=null
+                        CALL 'public final fun not (): kotlin.Boolean [operator] declared in kotlin.Boolean' type=kotlin.Boolean origin=null
+                          $this: CALL 'public final fun EQEQ (arg0: kotlin.Any?, arg1: kotlin.Any?): kotlin.Boolean declared in kotlin.internal.ir' type=kotlin.Boolean origin=null
+                            arg0: GET_VAR 'val tmp0: com.example.mealplanb.remote.HomeMealView? [val] declared in com.example.mealplanb.remote.AuthService.foodListCheck.<no name provided>.onResponse' type=com.example.mealplanb.remote.HomeMealView? origin=null
+                            arg1: CONST Null type=kotlin.Nothing? value=null
+                      then: GET_VAR 'val tmp0: com.example.mealplanb.remote.HomeMealView? [val] declared in com.example.mealplanb.remote.AuthService.foodListCheck.<no name provided>.onResponse' type=com.example.mealplanb.remote.HomeMealView? origin=null
+                    BRANCH
+                      if: CONST Boolean type=kotlin.Boolean value=true
+                      then: BLOCK type=kotlin.Unit origin=null
+                        CALL 'public final fun throwUninitializedPropertyAccessException (propertyName: kotlin.String): kotlin.Unit declared in kotlin.jvm.internal.Intrinsics' type=kotlin.Unit origin=null
+                          propertyName: CONST String type=kotlin.String value="homeMealView"
+                meal_id: GET_VAR 'val meal_id: kotlin.Int [val] declared in com.example.mealplanb.remote.AuthService.foodListCheck.<no name provided>.onResponse' type=kotlin.Int origin=null
+                meal_date: GET_VAR 'val meal_date: kotlin.String [val] declared in com.example.mealplanb.remote.AuthService.foodListCheck.<no name provided>.onResponse' type=kotlin.String origin=null
+                meal_type: GET_VAR 'val meal_type: kotlin.Int [val] declared in com.example.mealplanb.remote.AuthService.foodListCheck.<no name provided>.onResponse' type=kotlin.Int origin=null
+                food_list: GET_VAR 'val food_list: kotlin.collections.List<com.example.mealplanb.remote.MealFoodResponseFoodList> [val] declared in com.example.mealplanb.remote.AuthService.foodListCheck.<no name provided>.onResponse' type=kotlin.collections.List<com.example.mealplanb.remote.MealFoodResponseFoodList> origin=null
+              CALL 'public open fun d (p0: kotlin.String?, p1: @[EnhancedNullability] kotlin.String): kotlin.Int declared in android.util.Log' type=kotlin.Int origin=null
+                p0: CONST String type=kotlin.String value="recommend amount get Success"
+                p1: CONST String type=kotlin.String value="myfavorite meal get Success"
+          BRANCH
+            if: CONST Boolean type=kotlin.Boolean value=true
+            then: WHEN type=kotlin.Int origin=IF
+              BRANCH
+                if: CALL 'public final fun not (): kotlin.Boolean [operator] declared in kotlin.Boolean' type=kotlin.Boolean origin=EXCLEQ
+                  $this: CALL 'public final fun EQEQ (arg0: kotlin.Any?, arg1: kotlin.Any?): kotlin.Boolean declared in kotlin.internal.ir' type=kotlin.Boolean origin=EXCLEQ
+                    arg0: GET_VAR 'val resp: com.example.mealplanb.remote.BaseResponse<com.example.mealplanb.remote.MealFoodResponse>? [val] declared in com.example.mealplanb.remote.AuthService.foodListCheck.<no name provided>.onResponse' type=com.example.mealplanb.remote.BaseResponse<com.example.mealplanb.remote.MealFoodResponse>? origin=null
+                    arg1: CONST Null type=kotlin.Nothing? value=null
+                then: BLOCK type=kotlin.Int origin=null
+                  CALL 'public open fun d (p0: kotlin.String?, p1: @[EnhancedNullability] kotlin.String): kotlin.Int declared in android.util.Log' type=kotlin.Int origin=null
+                    p0: CONST String type=kotlin.String value="recommend amount get error"
+                    p1: CONST String type=kotlin.String value="myfavorite meal get error"
+              BRANCH
+                if: CONST Boolean type=kotlin.Boolean value=true
+                then: BLOCK type=kotlin.Int origin=null
+                  CALL 'public abstract fun FoodListCheckFailure (code: kotlin.Int, msg: kotlin.String): kotlin.Unit declared in com.example.mealplanb.remote.HomeMealView' type=kotlin.Unit origin=null
+                    $this: BLOCK type=com.example.mealplanb.remote.HomeMealView origin=FOLDED_ELVIS
+                      WHEN type=com.example.mealplanb.remote.HomeMealView origin=FOLDED_ELVIS
+                        BRANCH
+                          if: COMPOSITE type=kotlin.Boolean origin=null
+                            VAR IR_TEMPORARY_VARIABLE name:tmp0 type:com.example.mealplanb.remote.HomeMealView? [val]
+                              CALL 'public final fun access$getHomeMealView$p ($this: com.example.mealplanb.remote.AuthService): com.example.mealplanb.remote.HomeMealView? declared in com.example.mealplanb.remote.AuthService' type=com.example.mealplanb.remote.HomeMealView? origin=null
+                                $this: GET_FIELD 'FIELD FIELD_FOR_CAPTURED_VALUE name:this$0 type:com.example.mealplanb.remote.AuthService visibility:public/*package*/ [final]' type=com.example.mealplanb.remote.AuthService origin=null
+                                  receiver: GET_VAR '<this>: com.example.mealplanb.remote.AuthService.foodListCheck.<no name provided> declared in com.example.mealplanb.remote.AuthService.foodListCheck.<no name provided>.onResponse' type=com.example.mealplanb.remote.AuthService.foodListCheck.<no name provided> origin=null
+                            CALL 'public final fun not (): kotlin.Boolean [operator] declared in kotlin.Boolean' type=kotlin.Boolean origin=null
+                              $this: CALL 'public final fun EQEQ (arg0: kotlin.Any?, arg1: kotlin.Any?): kotlin.Boolean declared in kotlin.internal.ir' type=kotlin.Boolean origin=null
+                                arg0: GET_VAR 'val tmp0: com.example.mealplanb.remote.HomeMealView? [val] declared in com.example.mealplanb.remote.AuthService.foodListCheck.<no name provided>.onResponse' type=com.example.mealplanb.remote.HomeMealView? origin=null
+                                arg1: CONST Null type=kotlin.Nothing? value=null
+                          then: GET_VAR 'val tmp0: com.example.mealplanb.remote.HomeMealView? [val] declared in com.example.mealplanb.remote.AuthService.foodListCheck.<no name provided>.onResponse' type=com.example.mealplanb.remote.HomeMealView? origin=null
+                        BRANCH
+                          if: CONST Boolean type=kotlin.Boolean value=true
+                          then: BLOCK type=kotlin.Unit origin=null
+                            CALL 'public final fun throwUninitializedPropertyAccessException (propertyName: kotlin.String): kotlin.Unit declared in kotlin.jvm.internal.Intrinsics' type=kotlin.Unit origin=null
+                              propertyName: CONST String type=kotlin.String value="homeMealView"
+                    code: CALL 'public final fun <get-code> (): kotlin.Int [fake_override] declared in kotlin.Nothing' type=kotlin.Int origin=GET_PROPERTY
+                      $this: BLOCK type=kotlin.Nothing origin=null
+                        CALL 'public final fun CHECK_NOT_NULL <T0> (arg0: T0 of kotlin.internal.ir.CHECK_NOT_NULL?): {T0 of kotlin.internal.ir.CHECK_NOT_NULL & Any} declared in kotlin.internal.ir' type=kotlin.Nothing origin=EXCLEXCL
+                          <T0>: kotlin.Nothing
+                          arg0: GET_VAR 'val resp: com.example.mealplanb.remote.BaseResponse<com.example.mealplanb.remote.MealFoodResponse>? [val] declared in com.example.mealplanb.remote.AuthService.foodListCheck.<no name provided>.onResponse' type=com.example.mealplanb.remote.BaseResponse<com.example.mealplanb.remote.MealFoodResponse>? origin=null
+                        CALL 'public final fun throwKotlinNothingValueException (): kotlin.Nothing declared in kotlin.jvm.internal.Intrinsics' type=kotlin.Nothing origin=null
+                    msg: CONST String type=kotlin.String value=""
+                  CALL 'public open fun d (p0: kotlin.String?, p1: @[EnhancedNullability] kotlin.String): kotlin.Int declared in android.util.Log' type=kotlin.Int origin=null
+                    p0: CONST String type=kotlin.String value="recommend amount get null"
+                    p1: CONST String type=kotlin.String value="myfavorite meal get null"
+      COMPOSITE type=kotlin.Unit origin=null
+
+	at org.jetbrains.kotlin.backend.jvm.codegen.FunctionCodegen.generate(FunctionCodegen.kt:52)
+	at org.jetbrains.kotlin.backend.jvm.codegen.FunctionCodegen.generate$default(FunctionCodegen.kt:44)
+	at org.jetbrains.kotlin.backend.jvm.codegen.ClassCodegen.generateMethodNode(ClassCodegen.kt:394)
+	at org.jetbrains.kotlin.backend.jvm.codegen.ClassCodegen.generateMethod(ClassCodegen.kt:411)
+	at org.jetbrains.kotlin.backend.jvm.codegen.ClassCodegen.generate(ClassCodegen.kt:173)
+	at org.jetbrains.kotlin.backend.jvm.codegen.ExpressionCodegen.visitClass(ExpressionCodegen.kt:971)
+	at org.jetbrains.kotlin.backend.jvm.codegen.ExpressionCodegen.visitClass(ExpressionCodegen.kt:137)
+	at org.jetbrains.kotlin.ir.declarations.IrClass.accept(IrClass.kt:74)
+	at org.jetbrains.kotlin.backend.jvm.codegen.ExpressionCodegen.visitStatementContainer(ExpressionCodegen.kt:566)
+	at org.jetbrains.kotlin.backend.jvm.codegen.ExpressionCodegen.visitContainerExpression(ExpressionCodegen.kt:580)
+	at org.jetbrains.kotlin.backend.jvm.codegen.ExpressionCodegen.visitContainerExpression(ExpressionCodegen.kt:137)
+	at org.jetbrains.kotlin.ir.visitors.IrElementVisitor$DefaultImpls.visitBlock(IrElementVisitor.kt:122)
+	at org.jetbrains.kotlin.backend.jvm.codegen.ExpressionCodegen.visitBlock(ExpressionCodegen.kt:400)
+	at org.jetbrains.kotlin.backend.jvm.codegen.ExpressionCodegen.visitBlock(ExpressionCodegen.kt:137)
+	at org.jetbrains.kotlin.ir.expressions.IrBlock.accept(IrBlock.kt:20)
+	at org.jetbrains.kotlin.backend.jvm.codegen.ExpressionCodegen.gen(ExpressionCodegen.kt:209)
+	at org.jetbrains.kotlin.backend.jvm.codegen.IrCallGenerator.genValueAndPut(IrCallGenerator.kt:48)
+	at org.jetbrains.kotlin.backend.jvm.codegen.ExpressionCodegen.visitCall$handleValueParameter(ExpressionCodegen.kt:610)
+	at org.jetbrains.kotlin.backend.jvm.codegen.ExpressionCodegen.visitCall(ExpressionCodegen.kt:623)
+	at org.jetbrains.kotlin.backend.jvm.codegen.ExpressionCodegen.visitCall(ExpressionCodegen.kt:137)
+	at org.jetbrains.kotlin.ir.expressions.IrCall.accept(IrCall.kt:26)
+	at org.jetbrains.kotlin.backend.jvm.codegen.ExpressionCodegen.visitStatementContainer(ExpressionCodegen.kt:566)
+	at org.jetbrains.kotlin.backend.jvm.codegen.ExpressionCodegen.visitBlockBody(ExpressionCodegen.kt:571)
+	at org.jetbrains.kotlin.backend.jvm.codegen.ExpressionCodegen.visitBlockBody(ExpressionCodegen.kt:137)
+	at org.jetbrains.kotlin.ir.expressions.IrBlockBody.accept(IrBlockBody.kt:25)
+	at org.jetbrains.kotlin.backend.jvm.codegen.ExpressionCodegen.generate(ExpressionCodegen.kt:232)
+	at org.jetbrains.kotlin.backend.jvm.codegen.FunctionCodegen.doGenerate(FunctionCodegen.kt:123)
+	at org.jetbrains.kotlin.backend.jvm.codegen.FunctionCodegen.generate(FunctionCodegen.kt:48)
+	... 56 more
+Caused by: java.lang.IllegalStateException: Fake override should have at least one overridden descriptor: FUN FAKE_OVERRIDE name:<get-code> visibility:public modality:FINAL <> ($this:kotlin.Nothing) returnType:kotlin.Int [fake_override]
+	at org.jetbrains.kotlin.backend.jvm.ir.JvmIrUtilsKt.findSuperDeclaration(JvmIrUtils.kt:413)
+	at org.jetbrains.kotlin.backend.jvm.mapping.MethodSignatureMapper.findSuperDeclaration(MethodSignatureMapper.kt:451)
+	at org.jetbrains.kotlin.backend.jvm.mapping.MethodSignatureMapper.mapToCallableMethod(MethodSignatureMapper.kt:420)
+	at org.jetbrains.kotlin.backend.jvm.codegen.ExpressionCodegen.visitCall(ExpressionCodegen.kt:589)
+	at org.jetbrains.kotlin.backend.jvm.codegen.ExpressionCodegen.visitCall(ExpressionCodegen.kt:137)
+	at org.jetbrains.kotlin.ir.expressions.IrCall.accept(IrCall.kt:26)
+	at org.jetbrains.kotlin.backend.jvm.codegen.ExpressionCodegen.gen(ExpressionCodegen.kt:209)
+	at org.jetbrains.kotlin.backend.jvm.codegen.IrCallGenerator.genValueAndPut(IrCallGenerator.kt:48)
+	at org.jetbrains.kotlin.backend.jvm.codegen.ExpressionCodegen.visitCall$handleValueParameter(ExpressionCodegen.kt:610)
+	at org.jetbrains.kotlin.backend.jvm.codegen.ExpressionCodegen.visitCall(ExpressionCodegen.kt:623)
+	at org.jetbrains.kotlin.backend.jvm.codegen.ExpressionCodegen.visitCall(ExpressionCodegen.kt:137)
+	at org.jetbrains.kotlin.ir.expressions.IrCall.accept(IrCall.kt:26)
+	at org.jetbrains.kotlin.backend.jvm.codegen.ExpressionCodegen.visitStatementContainer(ExpressionCodegen.kt:566)
+	at org.jetbrains.kotlin.backend.jvm.codegen.ExpressionCodegen.visitContainerExpression(ExpressionCodegen.kt:580)
+	at org.jetbrains.kotlin.backend.jvm.codegen.ExpressionCodegen.visitContainerExpression(ExpressionCodegen.kt:137)
+	at org.jetbrains.kotlin.ir.visitors.IrElementVisitor$DefaultImpls.visitBlock(IrElementVisitor.kt:122)
+	at org.jetbrains.kotlin.backend.jvm.codegen.ExpressionCodegen.visitBlock(ExpressionCodegen.kt:400)
+	at org.jetbrains.kotlin.backend.jvm.codegen.ExpressionCodegen.visitBlock(ExpressionCodegen.kt:137)
+	at org.jetbrains.kotlin.ir.expressions.IrBlock.accept(IrBlock.kt:20)
+	at org.jetbrains.kotlin.backend.jvm.codegen.ExpressionCodegen.visitWhen(ExpressionCodegen.kt:1072)
+	at org.jetbrains.kotlin.backend.jvm.codegen.ExpressionCodegen.visitWhen(ExpressionCodegen.kt:137)
+	at org.jetbrains.kotlin.ir.expressions.IrWhen.accept(IrWhen.kt:26)
+	at org.jetbrains.kotlin.backend.jvm.codegen.ExpressionCodegen.visitWhen(ExpressionCodegen.kt:1072)
+	at org.jetbrains.kotlin.backend.jvm.codegen.ExpressionCodegen.visitWhen(ExpressionCodegen.kt:137)
+	at org.jetbrains.kotlin.ir.expressions.IrWhen.accept(IrWhen.kt:26)
+	at org.jetbrains.kotlin.backend.jvm.codegen.ExpressionCodegen.visitStatementContainer(ExpressionCodegen.kt:566)
+	at org.jetbrains.kotlin.backend.jvm.codegen.ExpressionCodegen.visitContainerExpression(ExpressionCodegen.kt:580)
+	at org.jetbrains.kotlin.backend.jvm.codegen.ExpressionCodegen.visitContainerExpression(ExpressionCodegen.kt:137)
+	at org.jetbrains.kotlin.ir.visitors.IrElementVisitor$DefaultImpls.visitBlock(IrElementVisitor.kt:122)
+	at org.jetbrains.kotlin.backend.jvm.codegen.ExpressionCodegen.visitBlock(ExpressionCodegen.kt:400)
+	at org.jetbrains.kotlin.backend.jvm.codegen.ExpressionCodegen.visitBlock(ExpressionCodegen.kt:137)
+	at org.jetbrains.kotlin.ir.expressions.IrBlock.accept(IrBlock.kt:20)
+	at org.jetbrains.kotlin.backend.jvm.codegen.ExpressionCodegen.visitStatementContainer(ExpressionCodegen.kt:566)
+	at org.jetbrains.kotlin.backend.jvm.codegen.ExpressionCodegen.visitContainerExpression(ExpressionCodegen.kt:580)
+	at org.jetbrains.kotlin.backend.jvm.codegen.ExpressionCodegen.visitContainerExpression(ExpressionCodegen.kt:137)
+	at org.jetbrains.kotlin.ir.visitors.IrElementVisitor$DefaultImpls.visitComposite(IrElementVisitor.kt:125)
+	at org.jetbrains.kotlin.backend.jvm.codegen.ExpressionCodegen.visitComposite(ExpressionCodegen.kt:137)
+	at org.jetbrains.kotlin.backend.jvm.codegen.ExpressionCodegen.visitComposite(ExpressionCodegen.kt:137)
+	at org.jetbrains.kotlin.ir.expressions.IrComposite.accept(IrComposite.kt:20)
+	at org.jetbrains.kotlin.backend.jvm.codegen.ExpressionCodegen.visitStatementContainer(ExpressionCodegen.kt:566)
+	at org.jetbrains.kotlin.backend.jvm.codegen.ExpressionCodegen.visitBlockBody(ExpressionCodegen.kt:571)
+	at org.jetbrains.kotlin.backend.jvm.codegen.ExpressionCodegen.visitBlockBody(ExpressionCodegen.kt:137)
+	at org.jetbrains.kotlin.ir.expressions.IrBlockBody.accept(IrBlockBody.kt:25)
+	at org.jetbrains.kotlin.backend.jvm.codegen.ExpressionCodegen.generate(ExpressionCodegen.kt:232)
+	at org.jetbrains.kotlin.backend.jvm.codegen.FunctionCodegen.doGenerate(FunctionCodegen.kt:123)
+	at org.jetbrains.kotlin.backend.jvm.codegen.FunctionCodegen.generate(FunctionCodegen.kt:48)
+	... 83 more
+
+

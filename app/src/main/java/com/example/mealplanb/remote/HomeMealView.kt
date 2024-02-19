@@ -6,4 +6,5 @@ interface HomeMealView {
     fun FoodListAddSuccess()
     fun FoodListAddFailure(code: Int,msg: String)
     fun FoodListCheckSuccess(meal_id: Int, meal_date: String, meal_type: Int, food_list: List<MealFoodResponseFoodList>)
+    fun FoodListCheckFailure()
 }

@@ -406,9 +406,9 @@ class HomeFragment : Fragment(), DatePickerDialog.OnDateSetListener, SignupView,
         if(meals.size == 0) {
             val dateFormat = SimpleDateFormat("yyyy-MM-dd")
 
-            val authService = AuthService(requireContext())
-            authService.setHomeMealView(this)
-            authService.mealAddPost(1,dateFormat.format(cal.time))
+            val authService = context?.let { AuthService(it) }
+            authService?.setHomeMealView(this)
+            authService?.mealAddPost(1,dateFormat.format(cal.time))
         } else {
             for(item in meals) {
                 var new_meal_no = 1
@@ -548,6 +548,10 @@ class HomeFragment : Fragment(), DatePickerDialog.OnDateSetListener, SignupView,
         meal_type: Int,
         food_list: List<MealFoodResponseFoodList>
     ) {
+        TODO("Not yet implemented")
+    }
+
+    override fun FoodListCheckFailure() {
         TODO("Not yet implemented")
     }
 

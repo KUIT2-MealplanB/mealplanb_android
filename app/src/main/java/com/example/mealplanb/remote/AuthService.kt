@@ -825,6 +825,7 @@ class AuthService(private val context: Context) {
                 call: Call<BaseResponse<Any>>,
                 response: Response<BaseResponse<Any>>
             ) {
+                Log.d("foodListAdd request",request.toString())
                 Log.d("foodListAdd response",response.toString())
                 if(response.isSuccessful) { // response의 성공 여부를 확인
                     Toast.makeText(context, "식단 등록 완료! 홈으로 이동합니다.", Toast.LENGTH_SHORT).show()
@@ -852,12 +853,16 @@ class AuthService(private val context: Context) {
     }
 
     fun foodListCheck(mealId: String) {
+
+        Log.d("Request URL", authService.foodListCheck(mealId).request().url().toString())
+
         authService.foodListCheck(mealId).enqueue(object : Callback<BaseResponse<MealFoodResponse>> {
             override fun onResponse(
                 call: Call<BaseResponse<MealFoodResponse>>,
                 response: Response<BaseResponse<MealFoodResponse>>
             ) {
                 val resp = response.body()
+                Log.d("recommend amount get response",response.toString())
                 Log.d("recommend amount get response",resp.toString())
                 when (resp?.code) {
                     1000 -> {
@@ -875,6 +880,7 @@ class AuthService(private val context: Context) {
                     else -> if (resp != null) {
                         Log.d("recommend amount get error", "myfavorite meal get error")
                     }else{
+                        homeMealView.FoodListCheckFailure()
                         Log.d("recommend amount get null", "myfavorite meal get null")
                     }
                 }
