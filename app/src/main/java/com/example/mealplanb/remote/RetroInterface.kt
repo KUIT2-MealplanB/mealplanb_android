@@ -79,6 +79,10 @@ interface RetroInterface {
     fun foodListAddPost(
         @Body request: FoodListAddRequest
     ): Call<BaseResponse<Any>>
+    @POST("meal/{mealId}/food")
+    fun foodListCheck(
+        @Path("mealId") mealId: String
+    ): Call<BaseResponse<MealFoodResponse>>
 
     //favorite food
     @GET("favorite-food")
