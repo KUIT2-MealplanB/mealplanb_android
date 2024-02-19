@@ -115,6 +115,8 @@ interface RetroInterface {
         @Query("page") page: Int = 0
     ):Call<BaseResponse<FoodSearchResponse>>
 
+    @GET("statistic/plan")
+    fun statPlanCheck(): Call<BaseResponse<StatPlanResponse>>
 
     @GET("chat/cheat-day")
     fun cheatMealCheck(

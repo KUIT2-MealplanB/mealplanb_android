@@ -209,6 +209,12 @@ data class FoodSearchResponse(
 
 )
 
+data class StatPlanResponse(
+    @SerializedName("initial_weight") val initial_weight: Double,
+    @SerializedName("target_weight") val target_weight: Double,
+    @SerializedName("diet_type") val diet_type: String
+)
+
 data class ChatRecommendMeal(
     @SerializedName("food_id") val food_id : Long,
     @SerializedName("name") val name : String,

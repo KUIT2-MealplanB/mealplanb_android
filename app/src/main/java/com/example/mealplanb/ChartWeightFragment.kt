@@ -9,9 +9,11 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.FragmentTransaction
 import com.example.mealplanb.databinding.FragmentChartWeightBinding
+import com.example.mealplanb.remote.AuthService
+import com.example.mealplanb.remote.StatView
 import com.google.android.material.tabs.TabLayoutMediator
 
-class ChartWeightFragment : Fragment() {
+class ChartWeightFragment : Fragment(), StatView {
     lateinit var binding : FragmentChartWeightBinding
     private val items = arrayOf<String>("일간","주간","월간")
 
@@ -23,14 +25,16 @@ class ChartWeightFragment : Fragment() {
         binding = FragmentChartWeightBinding.inflate(layoutInflater)
 
         //목표 체중 설정
-        val sharedPref = activity?.getSharedPreferences("myPref", Context.MODE_PRIVATE)
-        val diffWeight = sharedPref?.getFloat("diffWeight", 0.0f) ?: 0.0f
-        binding.chartWeightGoalWeightTv.text = diffWeight.toString()
-
-        // 목표 식단 설정
-        val selectedDiet = sharedPref?.getString("selectedDiet", "키토 식단") ?: "Default Diet"
-        binding.chartWeightGoalDietTv.text = selectedDiet.toString()
-
+//        val sharedPref = activity?.getSharedPreferences("myPref", Context.MODE_PRIVATE)
+//        val diffWeight = sharedPref?.getFloat("diffWeight", 0.0f) ?: 0.0f
+//        binding.chartWeightGoalWeightTv.text = diffWeight.toString()
+//
+//        // 목표 식단 설정
+//        val selectedDiet = sharedPref?.getString("selectedDiet", "키토 식단") ?: "Default Diet"
+//        binding.chartWeightGoalDietTv.text = selectedDiet.toString()
+        val authService = AuthService(requireContext())
+        authService.setStatView(this)
+        authService.statPlanCheck()
 
         //체중 버튼을 누르면
         binding.chartWeightBtnweightLl.setOnClickListener {
@@ -85,6 +89,15 @@ class ChartWeightFragment : Fragment() {
         TabLayoutMediator(binding.chartWeightTab,binding.chartWeightAreaVp) { tab, position ->
             tab.text = items[position]
         }.attach()
+    }
+
+    override fun StatPlanCheckSuccess(
+        initial_weight: Double,
+        target_weight: Double,
+        diet_type: String
+    ) {
+        binding.chartWeightGoalDietTv.text = diet_type + "식단"
+        binding.chartWeightGoalWeightTv.text = (initial_weight - target_weight).toString()
     }
 
 }

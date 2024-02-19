@@ -259,10 +259,14 @@ class GoalMotifFragment : Fragment(), PlanView {
         binding.goalMotifWantWeightEt.hint = target_weight.toString()
         binding.goalMotifRecommendCalTv.text = recommended_kcal.toString()
         binding.goalMotifDietSpinner.setSelection(selectNum-1)
-        binding.goalMotifCarboEt.hint = carbohydrate_rate.toString()
-        binding.goalMotifProteinEt.hint = protein_rate.toString()
-        binding.goalMotifFatEt.hint = fat_rate.toString()
-        binding.goalMotifCaloriesEt.hint = target_kcal.toString()
+//        binding.goalMotifCarboEt.hint = carbohydrate_rate.toString()
+//        binding.goalMotifProteinEt.hint = protein_rate.toString()
+//        binding.goalMotifFatEt.hint = fat_rate.toString()
+//        binding.goalMotifCaloriesEt.hint = target_kcal.toString()
+        binding.goalMotifCarboEt.setText(carbohydrate_rate.toString())
+        binding.goalMotifProteinEt.setText(protein_rate.toString())
+        binding.goalMotifFatEt.setText(fat_rate.toString())
+        binding.goalMotifCaloriesEt.setText(target_kcal.toString())
     }
 
     override fun PlanUpdateSuccess(
@@ -288,10 +292,14 @@ class GoalMotifFragment : Fragment(), PlanView {
         binding.goalMotifWantWeightEt.hint = target_weight.toString()
         binding.goalMotifRecommendCalTv.text = recommended_kcal.toString()
         binding.goalMotifDietSpinner.setSelection(selectNum-1)
-        binding.goalMotifCarboEt.hint = carbohydrate_rate.toString()
-        binding.goalMotifProteinEt.hint = protein_rate.toString()
-        binding.goalMotifFatEt.hint = fat_rate.toString()
-        binding.goalMotifCaloriesEt.hint = target_kcal.toString()
+//        binding.goalMotifCarboEt.hint = carbohydrate_rate.toString()
+//        binding.goalMotifProteinEt.hint = protein_rate.toString()
+//        binding.goalMotifFatEt.hint = fat_rate.toString()
+//        binding.goalMotifCaloriesEt.hint = target_kcal.toString()
+        binding.goalMotifCarboEt.setText(carbohydrate_rate.toString())
+        binding.goalMotifProteinEt.setText(protein_rate.toString())
+        binding.goalMotifFatEt.setText(fat_rate.toString())
+        binding.goalMotifCaloriesEt.setText(target_kcal.toString())
     }
 
     override fun PlanDietTypeCheckSuccess(
@@ -300,13 +308,17 @@ class GoalMotifFragment : Fragment(), PlanView {
         protein_rate: Int,
         fat_rate: Int
     ) {
-        binding.goalMotifCarboEt.hint = carbohydrate_rate.toString()
-        binding.goalMotifProteinEt.hint = protein_rate.toString()
-        binding.goalMotifFatEt.hint = fat_rate.toString()
+//        binding.goalMotifCarboEt.hint = carbohydrate_rate.toString()
+//        binding.goalMotifProteinEt.hint = protein_rate.toString()
+//        binding.goalMotifFatEt.hint = fat_rate.toString()
+        binding.goalMotifCarboEt.setText(carbohydrate_rate.toString())
+        binding.goalMotifProteinEt.setText(protein_rate.toString())
+        binding.goalMotifFatEt.setText(fat_rate.toString())
     }
 
     override fun PlanRecommKcalCheckSuccess(recommended_kcal: Int) {
-        binding.goalMotifCaloriesEt.hint = recommended_kcal.toString()
+//        binding.goalMotifCaloriesEt.hint = recommended_kcal.toString()
+        binding.goalMotifCaloriesEt.setText(recommended_kcal.toString())
     }
 
 //    // SharedPreferences에 값을 저장하는 함수

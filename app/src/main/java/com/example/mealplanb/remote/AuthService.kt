@@ -28,6 +28,7 @@ class AuthService(private val context: Context) {
     private lateinit var mealMenuListView: HomeMealView
     private lateinit var recommendMealListView: RecommendMealListView
     private lateinit var recommendMealAmountView: RecommendMealAmountView
+    private lateinit var statView: StatView
 
     private lateinit var searchFoodView: SearchFoodView
     fun setSignupView(signupView:SignupView) {
@@ -60,6 +61,10 @@ class AuthService(private val context: Context) {
 
     fun setRecommendMealAmountView(recommendMealAmountView: RecommendMealAmountView) {
         this.recommendMealAmountView = recommendMealAmountView
+    }
+
+    fun setStatView(statView: StatView) {
+        this.statView = statView
     }
 
     fun signup(email: String, password: String, sex: String, age: Int,
@@ -1008,6 +1013,40 @@ class AuthService(private val context: Context) {
     }
 
 
+    fun statPlanCheck() {
+        authService.statPlanCheck().enqueue(object : Callback<BaseResponse<StatPlanResponse>> {
+            override fun onResponse(
+                call: Call<BaseResponse<StatPlanResponse>>,
+                response: Response<BaseResponse<StatPlanResponse>>
+            ) {
+                val resp = response.body()
+                Log.d("stat plan response",resp.toString())
+                when (resp?.code) {
+                    1000 -> {
+                        // 성공 시 원하는 처리
+                        val statPlanCheckResponse = resp.result
+                        val initial_weight = statPlanCheckResponse.initial_weight ?: 0.0
+                        val target_weight = statPlanCheckResponse.target_weight ?: 0.0
+                        val diet_type = statPlanCheckResponse.diet_type ?: ""
+
+                        statView.StatPlanCheckSuccess(initial_weight,target_weight,diet_type)
+                        Log.d("stat plan get Success", "myfavorite meal get Success")
+                    }
+
+                    else -> if (resp != null) {
+                        Log.d("stat plan get error", "myfavorite meal get error")
+                    }else{
+                        Log.d("stat plan get null", "myfavorite meal get null")
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<BaseResponse<StatPlanResponse>>, t: Throwable) {
+                Log.d("stat plan get Failed", t.toString())
+            }
+
+        })
+    }
 
     fun cheatMealCheck(category: String) {
         authService.cheatMealCheck(category).enqueue(object : Callback<BaseResponse<CheatDayRecommendMeal>> {
@@ -1232,4 +1271,5 @@ class AuthService(private val context: Context) {
 
         })
     }
+
 }
