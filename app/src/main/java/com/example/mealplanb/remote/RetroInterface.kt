@@ -71,6 +71,15 @@ interface RetroInterface {
         @Body request : Weight
     ):Call<BaseResponse<Weight>>
 
+    @POST("meal")
+    fun mealAddPost(
+        @Body request: MealAddRequest
+    ): Call<BaseResponse<MealAddResponse>>
+    @POST("meal/food")
+    fun foodListAddPost(
+        @Body request: FoodListAddRequest
+    ): Call<BaseResponse<Any>>
+
     //favorite food
     @GET("favorite-food")
     fun favoriteFoodGET():Call<BaseResponse<FavoriteFoodResponse>>
