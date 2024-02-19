@@ -46,7 +46,7 @@ class HiddenPageActivity : AppCompatActivity() {
             //Logout 버튼 -> login 화면으로 넘어감(api 연동)
             confirmButton.setOnClickListener {
                 val authService = AuthService(this)
-                //authService.logout()
+                authService.logout()
             }
 
             cancelButton.setOnClickListener {

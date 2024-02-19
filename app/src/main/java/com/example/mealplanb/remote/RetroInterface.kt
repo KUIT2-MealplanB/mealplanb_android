@@ -23,6 +23,10 @@ interface RetroInterface {
         @Body request: LoginRequest
     ): Call<BaseResponse<LoginResponse>>
 
+    //로그아웃
+    @POST("user/logout")
+    fun logout():Call<BaseResponse<Unit>>
+
     //아바타 정보 조회
     @GET("user/avatar")
     fun avatarcheck(): Call<BaseResponse<AvatarCheckResponse>>
@@ -38,10 +42,16 @@ interface RetroInterface {
     fun checkFoodDetail(@Path("foodId") foodId: Int): Call<BaseResponse<GetFoodResponse>>
 
     //나의 식단 등록
-    @POST("/my-meal")
+    @POST("my-meal")
     fun mymealupdate(
         @Body request: mymealData
     ):Call<BaseResponse<Unit>>
+
+    //사용자 식단 등록
+//    @POST("food")
+//    fun userfoodupdate(
+//        @Body request: PostNewFoodRequest
+//    ):Call<BaseResponse<PostNewFoodResponse>>
 
     //Weight
     @GET("weight")
