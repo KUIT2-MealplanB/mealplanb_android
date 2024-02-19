@@ -57,7 +57,9 @@
             android:fontFamily="@font/pretendard_bold"
             android:layout_marginStart="23dp"
             android:hint="음식 이름"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent"
+            android:inputType="text"
+            android:imeOptions="actionNext"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -125,7 +127,9 @@
                         android:layout_marginTop="8dp"
                         android:textSize="16dp"
                         android:fontFamily="@font/pretendard_bold"
-                        android:hint="0"/>
+                        android:inputType="numberDecimal"
+                        android:hint="0"
+                        android:imeOptions="actionNext"/>
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -178,7 +182,9 @@
                         android:layout_marginTop="8dp"
                         android:textSize="16dp"
                         android:fontFamily="@font/pretendard_bold"
-                        android:hint="0"/>
+                        android:hint="0"
+                        android:inputType="numberDecimal"
+                        android:imeOptions="actionNext"/>
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -247,7 +253,9 @@
                         android:layout_marginTop="8dp"
                         android:textSize="16dp"
                         android:fontFamily="@font/pretendard_bold"
-                        android:hint="0"/>
+                        android:hint="0"
+                        android:inputType="numberDecimal"
+                        android:imeOptions="actionNext"/>
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -300,7 +308,9 @@
                         android:layout_marginTop="8dp"
                         android:textSize="16dp"
                         android:fontFamily="@font/pretendard_bold"
-                        android:hint="0"/>
+                        android:hint="0"
+                        android:inputType="numberDecimal"
+                        android:imeOptions="actionNext"/>
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -369,7 +379,9 @@
                         android:layout_marginTop="8dp"
                         android:textSize="16dp"
                         android:fontFamily="@font/pretendard_bold"
-                        android:hint="0"/>
+                        android:hint="0"
+                        android:inputType="numberDecimal"
+                        android:imeOptions="actionNext"/>
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -448,7 +460,9 @@
                         android:layout_marginTop="8dp"
                         android:textSize="16dp"
                         android:fontFamily="@font/pretendard_bold"
-                        android:hint="0"/>
+                        android:hint="0"
+                        android:inputType="numberDecimal"
+                        android:imeOptions="actionNext"/>
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -501,7 +515,9 @@
                         android:layout_marginTop="8dp"
                         android:textSize="16dp"
                         android:fontFamily="@font/pretendard_bold"
-                        android:hint="0"/>
+                        android:hint="0"
+                        android:inputType="numberDecimal"
+                        android:imeOptions="actionNext"/>
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -563,7 +579,9 @@
                         android:layout_marginTop="8dp"
                         android:textSize="16dp"
                         android:fontFamily="@font/pretendard_bold"
-                        android:hint="0"/>
+                        android:hint="0"
+                        android:inputType="numberDecimal"
+                        android:imeOptions="actionNext"/>
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -616,7 +634,9 @@
                         android:layout_marginTop="8dp"
                         android:textSize="16dp"
                         android:fontFamily="@font/pretendard_bold"
-                        android:hint="0"/>
+                        android:hint="0"
+                        android:inputType="numberDecimal"
+                        android:imeOptions="actionDone"/>
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -649,7 +669,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/search_meal_free_input_ll"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintEnd_toEndOf="parent"
+        android:focusable="false">
 
         <TextView
             android:layout_width="match_parent"

@@ -1,6 +1,7 @@
 package com.example.mealplanb
 
 import android.app.Dialog
+import android.content.Context
 import android.content.Context.MODE_PRIVATE
 import android.content.Intent
 import android.graphics.Color
@@ -10,6 +11,9 @@ import android.text.TextWatcher
 import android.util.DisplayMetrics
 import android.view.LayoutInflater
 import android.view.View
+import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.InputMethodManager
+import androidx.core.content.ContextCompat.getSystemService
 import com.example.mealplanb.databinding.FragmentSeachMealFreeInputBinding
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -88,15 +92,13 @@ class SeachMealFreeInputFragment : BottomSheetDialogFragment() {
                                 fat_gram = fat.toDouble()
                             )
 
-                            // 데이터를 첨부
-                            val sharedPreferences = requireActivity().getSharedPreferences("MySharedPrefs", MODE_PRIVATE)
-                            var gson = Gson()
+                            val sharedPreferences = requireActivity().getSharedPreferences("myPreferences", Context.MODE_PRIVATE)
+                            val gson = Gson()
                             val editor = sharedPreferences.edit()
-                            val newJson = gson.toJson(meal)
+                            var newJson = gson.toJson(meal)
                             editor.putString("Key",newJson)
                             editor.apply()
-
-//                            childFragmentManager.beginTransaction().replace(R.id.main_frm, FoodDetailFragment()).addToBackStack(null).commit()
+                            requireActivity().supportFragmentManager.beginTransaction().replace(R.id.main_frm, FoodDetailFragment()).commit()
 
                             bottomSheetDialog.dismiss()
                             // 데이터를 첨부할 Intent 생성
@@ -114,7 +116,132 @@ class SeachMealFreeInputFragment : BottomSheetDialogFragment() {
             })
         }
 
+        //키보드
+        binding.seachMealFreeInputFoodNameEt.setOnEditorActionListener { _, actionId, _ ->
+            if(actionId == EditorInfo.IME_ACTION_NEXT){
+                binding.searchMealFreeInputKcalEt.isFocusable=true
+                binding.searchMealFreeInputKcalEt.requestFocus()
+                binding.searchMealFreeInputSaccEt.isFocusable=false
+                binding.searchMealFreeInputProteinEt.isFocusable=false
+                binding.searchMealFreeInputFatEt.isFocusable=false
+                binding.searchMealFreeInputSugarEt.isFocusable=false
+                binding.searchMealFreeInputCholeEt.isFocusable=false
+                binding.searchMealFreeInputSaltEt.isFocusable=false
+                binding.searchMealFreeInputFattySaturatedEt.isFocusable=false
+                binding.searchMealFreeInputTransEt.isFocusable=false
+                return@setOnEditorActionListener true
+            }
+            false
+        }
 
+        binding.searchMealFreeInputKcalEt.setOnEditorActionListener { _, actionId, _ ->
+            if(actionId == EditorInfo.IME_ACTION_NEXT){
+                binding.searchMealFreeInputSaccEt.isFocusable=true
+                binding.searchMealFreeInputSaccEt.requestFocus()
+                binding.searchMealFreeInputProteinEt.isFocusable=false
+                binding.searchMealFreeInputFatEt.isFocusable=false
+                binding.searchMealFreeInputSugarEt.isFocusable=false
+                binding.searchMealFreeInputCholeEt.isFocusable=false
+                binding.searchMealFreeInputSaltEt.isFocusable=false
+                binding.searchMealFreeInputFattySaturatedEt.isFocusable=false
+                binding.searchMealFreeInputTransEt.isFocusable=false
+                return@setOnEditorActionListener true
+            }
+            false
+        }
+
+        binding.searchMealFreeInputSaccEt.setOnEditorActionListener { _, actionId, _ ->
+            if(actionId == EditorInfo.IME_ACTION_NEXT){
+                binding.searchMealFreeInputProteinEt.isFocusable=true
+                binding.searchMealFreeInputProteinEt.requestFocus()
+                binding.searchMealFreeInputFatEt.isFocusable=false
+                binding.searchMealFreeInputSugarEt.isFocusable=false
+                binding.searchMealFreeInputCholeEt.isFocusable=false
+                binding.searchMealFreeInputSaltEt.isFocusable=false
+                binding.searchMealFreeInputFattySaturatedEt.isFocusable=false
+                binding.searchMealFreeInputTransEt.isFocusable=false
+                return@setOnEditorActionListener true
+            }
+            false
+        }
+
+        binding.searchMealFreeInputProteinEt.setOnEditorActionListener { _, actionId, _ ->
+            if(actionId == EditorInfo.IME_ACTION_NEXT){
+                binding.searchMealFreeInputFatEt.isFocusable=true
+                binding.searchMealFreeInputFatEt.requestFocus()
+                binding.searchMealFreeInputSugarEt.isFocusable=false
+                binding.searchMealFreeInputCholeEt.isFocusable=false
+                binding.searchMealFreeInputSaltEt.isFocusable=false
+                binding.searchMealFreeInputFattySaturatedEt.isFocusable=false
+                binding.searchMealFreeInputTransEt.isFocusable=false
+                return@setOnEditorActionListener true
+            }
+            false
+        }
+
+        binding.searchMealFreeInputFatEt.setOnEditorActionListener { _, actionId, _ ->
+            if(actionId == EditorInfo.IME_ACTION_NEXT){
+                binding.searchMealFreeInputSugarEt.isFocusable=true
+                binding.searchMealFreeInputSugarEt.requestFocus()
+                binding.searchMealFreeInputCholeEt.isFocusable=false
+                binding.searchMealFreeInputSaltEt.isFocusable=false
+                binding.searchMealFreeInputFattySaturatedEt.isFocusable=false
+                binding.searchMealFreeInputTransEt.isFocusable=false
+                return@setOnEditorActionListener true
+            }
+            false
+        }
+
+        binding.searchMealFreeInputSugarEt.setOnEditorActionListener { _, actionId, _ ->
+            if(actionId == EditorInfo.IME_ACTION_NEXT){
+                binding.searchMealFreeInputCholeEt.isFocusable=true
+                binding.searchMealFreeInputCholeEt.requestFocus()
+                binding.searchMealFreeInputSaltEt.isFocusable=false
+                binding.searchMealFreeInputFattySaturatedEt.isFocusable=false
+                binding.searchMealFreeInputTransEt.isFocusable=false
+                return@setOnEditorActionListener true
+            }
+            false
+        }
+
+        binding.searchMealFreeInputCholeEt.setOnEditorActionListener { _, actionId, _ ->
+            if(actionId == EditorInfo.IME_ACTION_NEXT){
+                binding.searchMealFreeInputSaltEt.isFocusable=true
+                binding.searchMealFreeInputSaltEt.requestFocus()
+                binding.searchMealFreeInputFattySaturatedEt.isFocusable=false
+                binding.searchMealFreeInputTransEt.isFocusable=false
+                return@setOnEditorActionListener true
+            }
+            false
+        }
+
+
+        binding.searchMealFreeInputSaltEt.setOnEditorActionListener { _, actionId, _ ->
+            if(actionId == EditorInfo.IME_ACTION_NEXT){
+                binding.searchMealFreeInputFattySaturatedEt.isFocusable=true
+                binding.searchMealFreeInputFattySaturatedEt.requestFocus()
+                binding.searchMealFreeInputTransEt.isFocusable=false
+                return@setOnEditorActionListener true
+            }
+            false
+        }
+
+        binding.searchMealFreeInputFattySaturatedEt.setOnEditorActionListener { _, actionId, _ ->
+            if(actionId == EditorInfo.IME_ACTION_NEXT){
+                binding.searchMealFreeInputTransEt.isFocusable=true
+                binding.searchMealFreeInputTransEt.requestFocus()
+                return@setOnEditorActionListener true
+            }
+            false
+        }
+
+        binding.searchMealFreeInputTransEt.setOnEditorActionListener { _, actionId, _ ->
+            if(actionId == EditorInfo.IME_ACTION_NEXT){
+                val imm = activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                imm.hideSoftInputFromWindow(binding.searchMealFreeInputTransEt.windowToken, 0)
+            }
+            false
+        }
 
         // 닫는 버튼 누르면 닫기
         binding.seachMealFreeInputCancleIv.setOnClickListener {
