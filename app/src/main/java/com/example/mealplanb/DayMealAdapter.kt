@@ -21,7 +21,7 @@ class DayMealAdapter(var dayMealList: ArrayList<MealMainInfo>, private val conte
             binding.daymealMealIv.setImageResource(myMealMainInfo.meal_img)
             binding.daymealCalTv.text = myMealMainInfo.total_cal.toString() + "kcal"
 
-            if(dayMealList[position].meal_active) {
+            if(dayMealList[position].total_cal > 0) {
                 binding.daymealPlusbtnTv.visibility = View.GONE
                 binding.daymealMealIv.visibility = View.VISIBLE
                 binding.daymealCalTv.visibility = View.VISIBLE

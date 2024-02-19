@@ -113,6 +113,15 @@ data class Weight(
     @SerializedName("date") val date : String,
 )
 
+data class MealAddRequest(
+    @SerializedName("meal_type") val meal_type: Int,
+    @SerializedName("meal_date") val meal_date: String
+)
+
+data class MealAddResponse(
+    @SerializedName("meal_id") val meal_id: Int
+)
+
 data class FavoriteFoodRequest(
     @SerializedName("food_id") val food_id : Int,
 )

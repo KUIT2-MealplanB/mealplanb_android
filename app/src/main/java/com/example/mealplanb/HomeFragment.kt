@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mealplanb.databinding.FragmentHomeBinding
 import com.example.mealplanb.remote.AuthService
 import com.example.mealplanb.remote.FavoriteFoodResponse
+import com.example.mealplanb.remote.HomeMealView
 import com.example.mealplanb.remote.MealListDateResponseMeals
 import com.example.mealplanb.remote.SignupView
 import com.google.gson.Gson
@@ -27,7 +28,7 @@ import java.util.Date
 import java.util.Locale
 import java.util.concurrent.TimeUnit
 
-class HomeFragment : Fragment(), DatePickerDialog.OnDateSetListener, SignupView, WeightUpdateListener {
+class HomeFragment : Fragment(), DatePickerDialog.OnDateSetListener, SignupView, WeightUpdateListener, HomeMealView {
     lateinit var binding : FragmentHomeBinding
     lateinit var dayMealList : ArrayList<MealMainInfo>
     private var adapter : DayMealAdapter? = null
@@ -86,17 +87,23 @@ class HomeFragment : Fragment(), DatePickerDialog.OnDateSetListener, SignupView,
         //끼니 slot 추가
         binding.mainDaymealAddCv.setOnClickListener {
             if(dayMealList.size < 10) {
-                val dateFormat = SimpleDateFormat("yyyy-MM-dd")
-                val mealNum = dayMealList.size+1
-                dayMealList.add(MealMainInfo(false,mealNum,100,numList[mealNum-1],0.0,
-                    R.drawable.item_hamburger_img,dateFormat.format(cal.time),0.0))
-                var newItemIdx = dayMealList.size-1
-                adapter?.notifyItemInserted(newItemIdx)
 
-                val editor = sharedPref.edit()
-                val newJson = gson.toJson(dayMealList)
-                editor.putString("dayMealList",newJson)
-                editor.apply()
+                val dateFormat = SimpleDateFormat("yyyy-MM-dd")
+
+                val authService = AuthService(requireContext())
+                authService.setHomeMealView(this)
+                authService.mealAddPost(dayMealList.size+1,dateFormat.format(cal.time))
+//
+//                val mealNum = dayMealList.size+1
+//                dayMealList.add(MealMainInfo(false,mealNum,100,numList[mealNum-1],0.0,
+//                    R.drawable.item_hamburger_img,dateFormat.format(cal.time),0.0))
+//                var newItemIdx = dayMealList.size-1
+//                adapter?.notifyItemInserted(newItemIdx)
+//
+//                val editor = sharedPref.edit()
+//                val newJson = gson.toJson(dayMealList)
+//                editor.putString("dayMealList",newJson)
+//                editor.apply()
             }
             else {
                 Toast.makeText(requireContext(),"더 이상 추가할 수 없습니다!",Toast.LENGTH_SHORT).show()
@@ -210,12 +217,6 @@ class HomeFragment : Fragment(), DatePickerDialog.OnDateSetListener, SignupView,
         cal2.set(Calendar.MINUTE,0)
         cal2.set(Calendar.SECOND,0)
         cal2.set(Calendar.MILLISECOND,0)
-
-        val dateFormat = SimpleDateFormat("yyyy-MM-dd")
-        val authService = AuthService(requireContext())
-        authService.setSignupView(this)
-        authService.userProfileCheck(dateFormat.format(cal1.time))
-        authService.mealListDayCheck(dateFormat.format(cal.time))
 
         setHomeData()
 
@@ -382,7 +383,11 @@ class HomeFragment : Fragment(), DatePickerDialog.OnDateSetListener, SignupView,
             R.drawable.item_sugar_img)
 
         if(meals.size == 0) {
-            newDayMealList.add(MealMainInfo(false,1,1,"첫 끼",0.0,R.drawable.item_hamburger_img,meal_date,0.0))
+            val dateFormat = SimpleDateFormat("yyyy-MM-dd")
+
+            val authService = AuthService(requireContext())
+            authService.setHomeMealView(this)
+            authService.mealAddPost(1,dateFormat.format(cal.time))
         } else {
             for(item in meals) {
                 var new_meal_no = 1
@@ -392,7 +397,7 @@ class HomeFragment : Fragment(), DatePickerDialog.OnDateSetListener, SignupView,
                     }
                 }
                 var new_meal_img = imageList.random()
-                newDayMealList.add(MealMainInfo(true,new_meal_no,item.meal_id,item.meal_type,item.meal_kcal,new_meal_img,meal_date,1.0))
+                newDayMealList.add(MealMainInfo(new_meal_no,item.meal_id,item.meal_type,item.meal_kcal,new_meal_img,meal_date,1.0))
             }
         }
 
@@ -404,6 +409,15 @@ class HomeFragment : Fragment(), DatePickerDialog.OnDateSetListener, SignupView,
         binding.mainMeallistRv.adapter = adapter
 
         Log.d("newDayMealList",dayMealList.toString())
+
+//        dayMealList = newDayMealList
+//
+//        adapter = context?.let { DayMealAdapter(dayMealList, it) }
+//        binding.mainMeallistRv.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+//
+//        binding.mainMeallistRv.adapter = adapter
+//
+//        Log.d("newDayMealList",dayMealList.toString())
 //
 //        binding.mainMeallistRv.scrollToPosition(dayMealList.size)
 //
@@ -477,5 +491,25 @@ class HomeFragment : Fragment(), DatePickerDialog.OnDateSetListener, SignupView,
 
     override fun updateWeightOnUI(weight: Float) {
         binding.mainWeightTv.text = weight?.toString() ?: "null"
+    }
+
+    override fun MealAddSuccess(meal_id: Int) {
+        val dateFormat = SimpleDateFormat("yyyy-MM-dd")
+
+        val imageList = listOf(R.drawable.item_hamburger_img,
+            R.drawable.item_salad_img,
+            R.drawable.item_rice_img,
+            R.drawable.item_meal_img,
+            R.drawable.item_egg_img,
+            R.drawable.item_pudding_img,
+            R.drawable.item_sugar_img)
+
+        val authService = AuthService(requireContext())
+        authService.setSignupView(this)
+        authService.mealListDayCheck(dateFormat.format(cal.time))
+    }
+
+    override fun MealAddFailure(code: Int, msg: String) {
+        TODO("Not yet implemented")
     }
 }

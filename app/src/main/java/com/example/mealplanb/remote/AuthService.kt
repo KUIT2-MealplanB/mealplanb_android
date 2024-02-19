@@ -23,6 +23,7 @@ class AuthService(private val context: Context) {
     private lateinit var signupView : SignupView
     private lateinit var recommendMealView: RecommendMealView
     private lateinit var planView: PlanView
+    private lateinit var homeMealView: HomeMealView
     private lateinit var recommendMealListView: RecommendMealListView
     private lateinit var recommendMealAmountView: RecommendMealAmountView
 
@@ -41,6 +42,10 @@ class AuthService(private val context: Context) {
 
     fun setSearchFoodView(searchFoodView: SearchFoodView){
         this.searchFoodView = searchFoodView
+    }
+
+    fun setHomeMealView(homeMealView: HomeMealView) {
+        this.homeMealView = homeMealView
     }
 
     fun setRecommendMealListView(recommendMealListView: RecommendMealListView) {
@@ -490,6 +495,36 @@ class AuthService(private val context: Context) {
         })
     }
 
+    fun mealAddPost(meal_type: Int,meal_date: String){
+        val request = MealAddRequest(meal_type,meal_date)
+        authService.mealAddPost(request).enqueue(object : Callback<BaseResponse<MealAddResponse>> {
+            override fun onResponse(
+                call: Call<BaseResponse<MealAddResponse>>,
+                response: Response<BaseResponse<MealAddResponse>>
+            ) {
+                val resp = response.body()
+                when(resp?.code) {
+                    1000 -> {
+                        // 성공 시 원하는 처리
+                        val mealAddPostResponse = resp.result
+                        val meal_id = mealAddPostResponse.meal_id ?: 0
+
+                        homeMealView.MealAddSuccess(meal_id)
+                        Log.d("meal add post success", resp.toString())
+                    }else -> if (resp != null) {
+                        homeMealView.MealAddFailure(resp.code,resp.message)
+                    }else{
+                        Log.d("meal add post null",resp.toString())
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<BaseResponse<MealAddResponse>>, t: Throwable) {
+                Log.d("meal add post Failed", t.toString())
+            }
+
+        })
+    }
 
     //favorite food
     fun favoriteFoodGET(){

@@ -3,7 +3,6 @@ package com.example.mealplanb
 import java.io.Serializable
 
 data class MealMainInfo(
-    var meal_active : Boolean,
     var meal_no : Int,
     var meal_id : Int,
     var meal_type : String,
