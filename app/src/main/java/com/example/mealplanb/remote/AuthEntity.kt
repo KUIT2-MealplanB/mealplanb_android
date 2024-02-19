@@ -113,6 +113,28 @@ data class Weight(
     @SerializedName("date") val date : String,
 )
 
+data class FavoriteFoodRequest(
+    @SerializedName("food_id") val food_id : Int,
+)
+
+data class FavoriteFoodResponse(
+    @SerializedName("foods") val foods: List<Food>
+)
+
+data class Food(
+    @SerializedName("food_id") val foodId: Int,
+    @SerializedName("food_name") val foodName: String,
+    @SerializedName("kcal") val kcal: Int,
+)
+
+data class FoodSearchResponse(
+    @SerializedName("current_page") val current_page : Int,
+    @SerializedName("last_page") val last_page : Int,
+    @SerializedName("foods") val foods: List<Food>,
+    @SerializedName("member_created") val member_created: Boolean
+
+)
+
 data class ChatRecommendMeal(
     @SerializedName("food_id") val food_id : Long,
     @SerializedName("name") val name : String,
@@ -139,4 +161,15 @@ data class ChatMealListResponse(
     @SerializedName("offer_carbohydrate") val offer_carbohydrate : Int,
     @SerializedName("offer_protein") val offer_protein : Int,
     @SerializedName("offer_fat") val offer_fat : Int
+)
+
+data class ChatMealAmountResponse(
+    @SerializedName("food_name") val food_name : String,
+    @SerializedName("offer") val offer : String,
+    @SerializedName("offer_kcal") val offer_kcal : Int,
+    @SerializedName("offer_quantity") val offer_quantity : Int,
+    @SerializedName("offer_carbohydrate") val offer_carbohydrate : Int,
+    @SerializedName("offer_protein") val offer_protein : Int,
+    @SerializedName("offer_fat") val offer_fat : Int,
+    @SerializedName("remaining_kcal") val remaining_kcal: Int
 )

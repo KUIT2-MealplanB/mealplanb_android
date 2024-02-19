@@ -5,6 +5,7 @@ import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.PATCH
 import retrofit2.http.POST
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface RetroInterface {
@@ -52,6 +53,31 @@ interface RetroInterface {
     fun weightpost(
         @Body request : Weight
     ):Call<BaseResponse<Weight>>
+    @PATCH("weight")
+    fun weightpatch(
+        @Body request : Weight
+    ):Call<BaseResponse<Weight>>
+
+    //favorite food
+    @GET("favorite-food")
+    fun favoriteFoodGET():Call<BaseResponse<FavoriteFoodResponse>>
+
+    @POST("favorite-food")
+    fun favoriteFoodPost(
+        @Body request : FavoriteFoodRequest
+    ):Call<BaseResponse<Unit>>
+
+    @PATCH("favorite-food/{foodId}")
+    fun favoriteFoodPatch(
+        @Path("foodId") foodId: Int,
+    ):Call<BaseResponse<Unit>>
+
+    @GET("food/auto-complete")
+    fun searchfood(
+        @Query("query") query: String?,
+        @Query("page") page: Int = 0
+    ):Call<BaseResponse<FoodSearchResponse>>
+
 
     @GET("chat/cheat-day")
     fun cheatMealCheck(
@@ -67,4 +93,8 @@ interface RetroInterface {
     ): Call<BaseResponse<Any>>
     @GET("chat/meal")
     fun recommendMealCheck(): Call<BaseResponse<List<ChatMealListResponse>>>
+    @GET("chat/amount-suggestion/{foodId}")
+    fun recommendMealAmountCheck(
+        @Path("foodId") foodId: String
+    ): Call<BaseResponse<ChatMealAmountResponse>>
 }

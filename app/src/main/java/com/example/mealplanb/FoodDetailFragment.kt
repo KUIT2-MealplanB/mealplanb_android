@@ -16,11 +16,15 @@ import android.widget.Toast
 import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.Fragment
 import com.example.mealplanb.databinding.FragmentFooddetailBinding
+import com.example.mealplanb.remote.AuthService
+import com.example.mealplanb.remote.FavoriteFoodResponse
+import com.example.mealplanb.remote.MealListDateResponseMeals
+import com.example.mealplanb.remote.SignupView
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 
 
-class FoodDetailFragment : Fragment() {
+class FoodDetailFragment : Fragment(), SignupView {
     private lateinit var binding: FragmentFooddetailBinding
     private lateinit var meal: Meal
     private lateinit var food: FoodItem
@@ -143,7 +147,7 @@ class FoodDetailFragment : Fragment() {
         }
 
         // favoriteIv를 클릭했을 때 SharedPreferences를 통해 데이터 저장
-        binding.detailFoodFavoriteIv.setOnClickListener {
+/*        binding.detailFoodFavoriteIv.setOnClickListener {
             //말풍선 "즐겨찾기에 추가되었어요"
             binding.detailFoodFavoriteCv.visibility = View.VISIBLE
             var json = sharedPreferences.getString("addFoodListOften", null)
@@ -181,6 +185,31 @@ class FoodDetailFragment : Fragment() {
                 Toast.makeText(requireContext(), "이미 즐겨찾기 되어있습니다.", Toast.LENGTH_SHORT).show()
                 binding.detailFoodFavoriteIv.setImageResource(R.drawable.star_full_ic)
             }
+        }*/
+
+        // 즐겨찾기 상태를 나타내는 변수
+        var isFavorite = false
+
+        binding.detailFoodFavoriteIv.setOnClickListener {
+            // 클릭할 때마다 즐겨찾기 상태를 토글
+            isFavorite = !isFavorite
+
+            //API관련
+            val authService = AuthService(requireContext())
+            authService.setSignupView(this)
+
+
+            // 즐겨찾기 상태에 따라 이미지 변경 또는 다른 작업 수행
+            if (isFavorite) {
+                // 즐겨찾기 등록 로직
+                binding.detailFoodFavoriteIv.setImageResource(R.drawable.star_full_ic)
+                authService.favoriteFoodPost(3)
+            } else {
+                // 즐겨찾기 해제 로직
+                binding.detailFoodFavoriteIv.setImageResource(R.drawable.star_ic)
+                authService.favoriteFoodPatch(3)
+            }
+
         }
 
         binding.detailFoodMealWeightEt.setOnLongClickListener {
@@ -232,5 +261,56 @@ class FoodDetailFragment : Fragment() {
         binding.detailFoodFatSizeTv.text = meal.fat_gram.toInt().toString()
         binding.detailFoodKcalNumTv.text = meal.meal_cal.toInt().toString()
         binding.detailFoodMealWeightEt.setText(meal.meal_weight.toInt().toString())
+    }
+
+    override fun SignupLoading() {
+        TODO("Not yet implemented")
+    }
+
+    override fun SignupSuccess() {
+        TODO("Not yet implemented")
+    }
+
+    override fun SignupFailure(code: Int, msg: String) {
+        TODO("Not yet implemented")
+    }
+
+    override fun WeightcheckSuccess(weight: Float, date: String) {
+        TODO("Not yet implemented")
+    }
+
+    override fun UserProfileCheckSuccess(
+        date: String,
+        nickname: String,
+        elapsed_days: Int,
+        remaining_kcal: Int,
+        avatar_color: String,
+        avatar_appearance: String,
+        target_kcal: Int,
+        target_carbohydrate: Int,
+        target_protein: Int,
+        target_fat: Int,
+        kcal: Int,
+        carbohydrate: Int,
+        protein: Int,
+        fat: Int,
+        sodium: Int,
+        sugar: Int,
+        saturated_fat: Int,
+        trans_fat: Int,
+        cholesterol: Int
+    ) {
+        TODO("Not yet implemented")
+    }
+
+    override fun mealListDayCheckSuccess(
+        meal_date: String,
+        meals: List<MealListDateResponseMeals>
+    ) {
+        TODO("Not yet implemented")
+    }
+
+    override fun handleFavoriteFoodResponse(favoriteFoodResponse: FavoriteFoodResponse?) {
+        TODO("Not yet implemented")
     }
 }
