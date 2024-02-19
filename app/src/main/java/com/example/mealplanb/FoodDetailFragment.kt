@@ -16,6 +16,7 @@ import com.example.mealplanb.databinding.FragmentFooddetailBinding
 import com.example.mealplanb.remote.AuthService
 import com.example.mealplanb.remote.FavoriteFoodResponse
 import com.example.mealplanb.remote.FoodSearchResponse
+import com.example.mealplanb.remote.MealFoodResponseFoodList
 import com.example.mealplanb.remote.MealListDateResponseMeals
 import com.example.mealplanb.remote.SearchFoodView
 import com.example.mealplanb.remote.SignupView
@@ -136,6 +137,11 @@ class FoodDetailFragment : Fragment(), SearchFoodView {
             val editor = sharedPreferences.edit()
             var newJson = gson.toJson(addFoodList)
             editor.putString(foodListID,newJson)
+
+            var newAddMeal = MealFoodResponseFoodList(foodId,meal.meal_weight.toInt(),meal.meal_name,meal.meal_cal.toDouble())
+            newJson = gson.toJson(newAddMeal)
+            editor.putString("nowAddMeal",newJson)
+            Log.d("nowAddMeal",newAddMeal.toString())
             editor.apply()
             requireActivity().supportFragmentManager.beginTransaction().replace(R.id.main_frm, AddMealListFragment()).commit()
         }

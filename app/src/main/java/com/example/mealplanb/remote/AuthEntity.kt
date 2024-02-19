@@ -174,11 +174,11 @@ data class MealFoodResponseFoodList(
     @SerializedName("food_id") val foodId: Int,
     @SerializedName("quantity") val quantity : Int,
     @SerializedName("name") val name: String,
-    @SerializedName("kcal") val kcal: Int,
+    @SerializedName("kcal") val kcal: Double,
 )
 
 data class FoodListAddRequest(
-    @SerializedName("mealId") val mealId: Long,
+    @SerializedName("meal_id") val meal_id: Long,
     @SerializedName("foods") val foods: List<FoodListAddRequestFoodItem>
 )
 

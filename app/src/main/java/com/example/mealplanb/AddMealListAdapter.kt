@@ -8,14 +8,15 @@ import android.widget.Toast
 import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mealplanb.databinding.ItemMeallistBinding
+import com.example.mealplanb.remote.MealFoodResponseFoodList
 import com.google.gson.Gson
 
 
-class AddMealListAdapter(var mealList: ArrayList<Meal>) : RecyclerView.Adapter<AddMealListAdapter.ViewHolder>() {
+class AddMealListAdapter(var mealList: ArrayList<MealFoodResponseFoodList>) : RecyclerView.Adapter<AddMealListAdapter.ViewHolder>() {
     inner class ViewHolder(val binding: ItemMeallistBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(myMeal : Meal) {
-            binding.itemMeallistTitleTv.text = myMeal.meal_name
-            binding.itemMeallistSubtitleTv.text = myMeal.meal_weight.toString() + "g · " + myMeal.meal_cal.toString() + "kcal"
+        fun bind(myMeal : MealFoodResponseFoodList) {
+            binding.itemMeallistTitleTv.text = myMeal.name
+            binding.itemMeallistSubtitleTv.text = myMeal.quantity.toString() + "g · " + myMeal.kcal.toString() + "kcal"
 
             binding.itemMeallistDelbtnTv.setOnClickListener {
                 val position = adapterPosition
