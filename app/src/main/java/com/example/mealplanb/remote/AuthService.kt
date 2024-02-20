@@ -6,8 +6,6 @@ import android.content.Intent
 import android.util.Log
 import android.widget.Toast
 import com.example.mealplanb.ApplicationClass
-import com.example.mealplanb.ApplicationClass.Companion.mSharedPreferences
-import com.example.mealplanb.HiddenPageActivity
 import com.example.mealplanb.LoginPageActivity
 import com.example.mealplanb.MainActivity
 import com.example.mealplanb.local.getJwt
@@ -292,6 +290,31 @@ class AuthService(private val context: Context) {
                 }
             })
     }
+
+    //아바타 외형 수정
+    suspend fun updateAvatarAppearance(skeletalMuscleMass: Int, fatMass: Int): Int {
+        val avatarAppearanceRequest = AvatarAppearanceRequest(skeletalMuscleMass, fatMass)
+        val response = authService.avatarappearance(avatarAppearanceRequest).execute()
+        Log.d("아바타 외형 타입","${response.body()}")
+
+        return if (response.isSuccessful) {
+            val avatarAppearance = response.body()?.result?.avatar_appearance
+            Log.d("아바타 외형 타입","${avatarAppearance}")
+            when (avatarAppearance) {
+                "fat" -> 1
+                "normal" -> 2
+                "muscle" -> 3
+                else -> 0 // 예상치 못한 외형이 나올 경우를 대비한 default 값
+            }
+        } else {
+            Log.e(
+                "아바타 외형 수정 오류",
+                "Request not successful. Message: ${response.message()}"
+            )
+            0
+        }
+    }
+
 
     fun updateMyMeal(favorite_meal_name: String, foods: List<FoodList>) {
         val request = mymealData(favorite_meal_name, foods)
