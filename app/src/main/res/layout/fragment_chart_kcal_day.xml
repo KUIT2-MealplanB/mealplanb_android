@@ -1,0 +1,309 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ChartKcalDayFragment">
+
+    <TextView
+        android:id="@+id/chart_kcal_day_date_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/mono_gray4"
+        android:textSize="12sp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:fontFamily="@font/pretendard_regular"
+        android:text="10.17(목)" />
+
+    <LinearLayout
+        android:id="@+id/chart_kcal_day_kcal_ll"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/chart_kcal_day_date_tv"
+        app:layout_constraintStart_toStartOf="parent"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="24sp"
+            android:fontFamily="@font/pretendard_regular"
+            android:text="섭취한 칼로리 "/>
+
+        <TextView
+            android:id="@+id/chart_kcal_day_kcal_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="24sp"
+            android:textColor="@color/point"
+            android:fontFamily="@font/pretendard_bold"
+            android:text="1,500"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="24sp"
+            android:textColor="@color/point"
+            android:fontFamily="@font/pretendard_bold"
+            android:text="kcal"/>
+    </LinearLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/chart_kcal_day_kcal_dummy_ll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="28dp"
+        app:layout_constraintTop_toBottomOf="@id/chart_kcal_day_kcal_ll"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <LinearLayout
+            android:id="@+id/chart_kcal_day_sacc_ll"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:layout_width="28sp"
+                android:layout_height="28sp"
+                android:text="탄"
+                android:stateListAnimator="@null"
+                android:background="@drawable/pink_radi_100dp_btn"
+                android:fontFamily="@font/pretendard_regular"
+                android:layout_marginEnd="12dp"
+                android:textSize="12sp"/>
+
+            <TextView
+                android:id="@+id/chart_kcal_day_sacc_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="100"
+                android:fontFamily="@font/pretendard_bold"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="g"
+                android:fontFamily="@font/pretendard_bold"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/chart_kcal_week_protein_ll"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toEndOf="@id/chart_kcal_day_sacc_ll"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/chart_kcal_day_fat_ll"
+            android:orientation="horizontal">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:layout_width="28sp"
+                android:layout_height="28sp"
+                android:text="단"
+                android:stateListAnimator="@null"
+                android:background="@drawable/white_radi_100dp_btn"
+                android:fontFamily="@font/pretendard_regular"
+                android:layout_marginEnd="12dp"
+                android:textSize="12sp"/>
+
+            <TextView
+                android:id="@+id/chart_kcal_day_protein_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="100"
+                android:fontFamily="@font/pretendard_bold"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="g"
+                android:fontFamily="@font/pretendard_bold"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/chart_kcal_day_fat_ll"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:orientation="horizontal">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:layout_width="28sp"
+                android:layout_height="28sp"
+                android:text="지"
+                android:stateListAnimator="@null"
+                android:background="@drawable/black_radi_100dp_btn"
+                android:fontFamily="@font/pretendard_regular"
+                android:layout_marginEnd="12dp"
+                android:textColor="@color/white"
+                android:textSize="12sp"/>
+
+            <TextView
+                android:id="@+id/chart_kcal_day_fat_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="100"
+                android:fontFamily="@font/pretendard_bold"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="g"
+                android:fontFamily="@font/pretendard_bold"/>
+
+        </LinearLayout>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/chart_kcal_day_stack_bar_cl"
+        android:layout_width="match_parent"
+        android:layout_height="277dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="20dp"
+        app:layout_constraintTop_toBottomOf="@id/chart_kcal_day_kcal_dummy_ll">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="24dp"
+                android:text="3,000\n"
+                android:fontFamily="@font/pretendard_regular"
+                android:textColor="@color/mono_gray3"
+                android:textSize="12dp"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginBottom="25dp"
+                android:background="@color/mono_gray3" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="24dp"
+                android:text="2,500"
+                android:fontFamily="@font/pretendard_regular"
+                android:textColor="@color/mono_gray3"
+                android:textSize="12sp"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginBottom="25dp"
+                android:background="@color/mono_gray3" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="24dp"
+                android:text="2,000"
+                android:fontFamily="@font/pretendard_regular"
+                android:textColor="@color/mono_gray3"
+                android:textSize="12sp"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginBottom="25dp"
+                android:background="@color/mono_gray3" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="24dp"
+                android:text="1,500"
+                android:fontFamily="@font/pretendard_regular"
+                android:textColor="@color/mono_gray3"
+                android:textSize="12sp"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginBottom="25dp"
+                android:background="@color/mono_gray3" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="24dp"
+                android:text="1,000"
+                android:fontFamily="@font/pretendard_regular"
+                android:textColor="@color/mono_gray3"
+                android:textSize="12sp"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginBottom="25dp"
+                android:background="@color/mono_gray3" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="24dp"
+                android:text="500"
+                android:fontFamily="@font/pretendard_regular"
+                android:textColor="@color/mono_gray3"
+                android:textSize="12sp"/>
+        </LinearLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/chart_kcal_day_rv_cl"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toTopOf="@id/chart_kcal_day_start_view"
+            android:layout_marginStart="1dp"
+            android:layout_marginEnd="1dp">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/chart_kcal_day_rv"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginTop="32dp"
+            android:layout_marginBottom="3dp"
+            android:layout_marginEnd="7.5dp"
+            android:src="@drawable/chart_gradient_bar_ic"/>
+
+        <View
+            android:id="@+id/chart_kcal_day_start_view"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:background="@color/mono_gray3" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="5dp"
+        app:layout_constraintTop_toBottomOf="@id/chart_kcal_day_stack_bar_cl">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/chart_kcal_day_date_rv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
