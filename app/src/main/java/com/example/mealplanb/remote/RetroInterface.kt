@@ -115,6 +115,12 @@ interface RetroInterface {
         @Query("page") page: Int = 0
     ):Call<BaseResponse<FoodSearchResponse>>
 
+//    @GET("weight/{statisticType}")
+//    fun statWeightCheck(
+//        @Path("statisticType") statistictype: String
+//    ): Call<BaseResponse<StatWeightResponse>>
+    @GET("weight/daily")
+    fun statWeightDayCheck(): Call<BaseResponse<StatWeightDayResponse>>
     @GET("statistic/plan")
     fun statPlanCheck(): Call<BaseResponse<StatPlanResponse>>
 

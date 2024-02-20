@@ -29,6 +29,7 @@ class AuthService(private val context: Context) {
     private lateinit var recommendMealListView: RecommendMealListView
     private lateinit var recommendMealAmountView: RecommendMealAmountView
     private lateinit var statView: StatView
+    private lateinit var statWeightView: StatWeightView
 
     private lateinit var searchFoodView: SearchFoodView
     fun setSignupView(signupView:SignupView) {
@@ -61,6 +62,10 @@ class AuthService(private val context: Context) {
 
     fun setRecommendMealAmountView(recommendMealAmountView: RecommendMealAmountView) {
         this.recommendMealAmountView = recommendMealAmountView
+    }
+
+    fun setStatWeightView(statWeightView: StatWeightView) {
+        this.statWeightView = statWeightView
     }
 
     fun setStatView(statView: StatView) {
@@ -1012,6 +1017,82 @@ class AuthService(private val context: Context) {
         })
     }
 
+    fun statWeightDayCheck() {
+        authService.statWeightDayCheck().enqueue(object : Callback<BaseResponse<StatWeightDayResponse>> {
+            override fun onResponse(
+                call: Call<BaseResponse<StatWeightDayResponse>>,
+                response: Response<BaseResponse<StatWeightDayResponse>>
+            ) {
+                val resp = response.body()
+                Log.d("stat weight response",response.toString())
+                when (resp?.code) {
+                    1000 -> {
+                        // 성공 시 원하는 처리
+                        val statWeightCheckResponse = resp.result
+                        val statistic_type = statWeightCheckResponse.statisticType
+                        val weights = statWeightCheckResponse.weights
+                        statWeightView.StatWeightDayCheckSuccess(statWeightCheckResponse.statisticType,weights)
+                        Log.d("stat weight get Success", "myfavorite meal get Success")
+                    }
+
+                    else -> if (resp != null) {
+                        Log.d("stat weight get error", "myfavorite meal get error")
+                    }else{
+                        Log.d("stat weight get null", "myfavorite meal get null")
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<BaseResponse<StatWeightDayResponse>>, t: Throwable) {
+                Log.d("stat weight get Failed", t.toString())
+            }
+
+        })
+    }
+
+//    fun statWeightCheck(statisticType: String) {
+//        authService.statWeightCheck(statisticType).enqueue(object : Callback<BaseResponse<StatWeightResponse>> {
+//            override fun onResponse(
+//                call: Call<BaseResponse<StatWeightResponse>>,
+//                response: Response<BaseResponse<StatWeightResponse>>
+//            ) {
+//                val resp = response.body()
+//                Log.d("stat weight response",response.toString())
+//                when (resp?.code) {
+//                    1000 -> {
+//                        // 성공 시 원하는 처리
+//                        val statWeightCheckResponse = resp.result
+//                        when(statWeightCheckResponse.statisticType) {
+//                            "daily" -> {
+//                                val dailyWeights = statWeightCheckResponse.weights.filterIsInstance<WeightResponse>()
+//                                statWeightView.StatWeightDayCheckSuccess(statWeightCheckResponse.statisticType,dailyWeights)
+//                            }
+//                            "weekly" -> {
+//                                val weeklyWeights = statWeightCheckResponse.weights.filterIsInstance<WeeklyWeight>()
+//                                statWeightView.StatWeightWeekCheckSuccess(statWeightCheckResponse.statisticType,weeklyWeights)
+//                            }
+//                            "monthly" -> {
+//                                val monthlyWeights = statWeightCheckResponse.weights.filterIsInstance<MonthlyWeight>()
+//                                statWeightView.StatWeightMonthCheckSuccess(statWeightCheckResponse.statisticType,monthlyWeights)
+//                            }
+//                        }
+//                        Log.d("stat weight get Success", "myfavorite meal get Success")
+//                    }
+//
+//                    else -> if (resp != null) {
+//                        Log.d("stat weight get error", "myfavorite meal get error")
+//                    }else{
+//                        Log.d("stat weight get null", "myfavorite meal get null")
+//                    }
+//                }
+//            }
+//
+//            override fun onFailure(call: Call<BaseResponse<StatWeightResponse>>, t: Throwable) {
+//                Log.d("stat weight get Failed", t.toString())
+//            }
+//
+//        })
+//    }
 
     fun statPlanCheck() {
         authService.statPlanCheck().enqueue(object : Callback<BaseResponse<StatPlanResponse>> {
