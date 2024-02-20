@@ -1055,6 +1055,39 @@ class AuthService(private val context: Context) {
         })
     }
 
+    fun statKcalWeekCheck() {
+        authService.statKcalWeekCheck().enqueue(object : Callback<BaseResponse<StatKcalWeekResponse>> {
+            override fun onResponse(
+                call: Call<BaseResponse<StatKcalWeekResponse>>,
+                response: Response<BaseResponse<StatKcalWeekResponse>>
+            ) {
+                val resp = response.body()
+                Log.d("stat weight response",response.toString())
+                when (resp?.code) {
+                    1000 -> {
+                        // 성공 시 원하는 처리
+                        val statKcalCheckResponse = resp.result
+                        val statistic_type = statKcalCheckResponse.statisticType
+                        val kcals = statKcalCheckResponse.kcals
+                        statKcalView.StatKcalWeekCheckSuccess(statistic_type,kcals)
+                        Log.d("stat weight get Success", "myfavorite meal get Success")
+                    }
+
+                    else -> if (resp != null) {
+                        Log.d("stat weight get error", "myfavorite meal get error")
+                    }else{
+                        Log.d("stat weight get null", "myfavorite meal get null")
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<BaseResponse<StatKcalWeekResponse>>, t: Throwable) {
+                Log.d("stat weight get Failed", t.toString())
+            }
+
+        })
+    }
+
     fun statWeightDayCheck() {
         authService.statWeightDayCheck().enqueue(object : Callback<BaseResponse<StatWeightDayResponse>> {
             override fun onResponse(

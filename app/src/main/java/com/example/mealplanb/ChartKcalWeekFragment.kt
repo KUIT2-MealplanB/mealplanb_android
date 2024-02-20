@@ -7,11 +7,16 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mealplanb.databinding.FragmentChartKcalWeekBinding
+import com.example.mealplanb.remote.AuthService
+import com.example.mealplanb.remote.DailyKcal
+import com.example.mealplanb.remote.MonthKcal
+import com.example.mealplanb.remote.StatKcalView
+import com.example.mealplanb.remote.WeeklyKcal
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
 
-class ChartKcalWeekFragment : Fragment() {
+class ChartKcalWeekFragment : Fragment(), StatKcalView {
 
     lateinit var binding : FragmentChartKcalWeekBinding
     override fun onCreateView(
@@ -28,46 +33,50 @@ class ChartKcalWeekFragment : Fragment() {
 
         //날짜 리사이클러뷰 관련 코드
         //LinearLayoutManager for horizontal scrolling
-        val weekdateLayoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-        binding.chartKcalWeekDateRv.layoutManager = weekdateLayoutManager
-
-        //date list
-        val weekdateList = getWeekDateList()
+//        val weekdateLayoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+//        binding.chartKcalWeekDateRv.layoutManager = weekdateLayoutManager
+//
+//        //date list
+//        val weekdateList = getWeekDateList()
 
         //이번 주 날짜 설정
         val weekthisdate = getWeekthisDateList()
         binding.chartKcalWeekDateTv.text = weekthisdate[6]
 
-        // Create and set the adapter
-        val weekdateAdapter = DateAdapter(weekdateList)
-        binding.chartKcalWeekDateRv.adapter = weekdateAdapter
+        val authService = AuthService(requireContext())
+        authService.setStatKcalView(this)
+        authService.statKcalWeekCheck()
 
-        //스택 바 리사이클러뷰 관련 코드
-        val stackLayoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-        binding.chartKcalWeekRv.layoutManager = stackLayoutManager
-
-        // Example data for the chart items (you can replace this with your actual data)
-        val chartItems =  listOf<StackChartItem>(
-            StackChartItem(500, 500, 500),
-            StackChartItem(500, 100, 500),
-            StackChartItem(500, 1000, 500),
-            StackChartItem(1000, 500, 500),
-            StackChartItem(1000, 1000, 200),
-            StackChartItem(100, 500, 300),
-            StackChartItem(1000, 500, 800)
-        )
-
-        // Get the StackChartItem at the desired index
-        val selectedItem = chartItems[6]
-
-        // Set the values to the corresponding TextViews
-        binding.chartKcalWeekSaccTv.text = selectedItem.carboValue.toString()
-        binding.chartKcalWeekProteinTv.text = selectedItem.proteinValue.toString()
-        binding.chartKcalWeekFatTv.text = selectedItem.fatValue.toString()
-
-        // Create and set the adapter
-        val stackBarAdapter = StackBarChartAdapter(chartItems)
-        binding.chartKcalWeekRv.adapter = stackBarAdapter
+//        // Create and set the adapter
+//        val weekdateAdapter = DateAdapter(weekdateList)
+//        binding.chartKcalWeekDateRv.adapter = weekdateAdapter
+//
+//        //스택 바 리사이클러뷰 관련 코드
+//        val stackLayoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+//        binding.chartKcalWeekRv.layoutManager = stackLayoutManager
+//
+//        // Example data for the chart items (you can replace this with your actual data)
+//        val chartItems =  listOf<StackChartItem>(
+//            StackChartItem(500, 500, 500),
+//            StackChartItem(500, 100, 500),
+//            StackChartItem(500, 1000, 500),
+//            StackChartItem(1000, 500, 500),
+//            StackChartItem(1000, 1000, 200),
+//            StackChartItem(100, 500, 300),
+//            StackChartItem(1000, 500, 800)
+//        )
+//
+//        // Get the StackChartItem at the desired index
+//        val selectedItem = chartItems[6]
+//
+//        // Set the values to the corresponding TextViews
+//        binding.chartKcalWeekSaccTv.text = selectedItem.carboValue.toString()
+//        binding.chartKcalWeekProteinTv.text = selectedItem.proteinValue.toString()
+//        binding.chartKcalWeekFatTv.text = selectedItem.fatValue.toString()
+//
+//        // Create and set the adapter
+//        val stackBarAdapter = StackBarChartAdapter(chartItems)
+//        binding.chartKcalWeekRv.adapter = stackBarAdapter
 
     }
 
@@ -99,6 +108,13 @@ class ChartKcalWeekFragment : Fragment() {
         return dateList
     }
 
+    fun getDate(startDate: String, endDate: String): String {
+        val inputFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+        val dateFormat = SimpleDateFormat("dd", Locale.getDefault())
+
+        return dateFormat.format(inputFormat.parse(startDate)) + "-" + dateFormat.format(inputFormat.parse(endDate))
+    }
+
     private fun getWeekthisDateList(): List<String> {
         val this_week_date_list = mutableListOf<String>()
         val calendar = Calendar.getInstance()
@@ -126,6 +142,49 @@ class ChartKcalWeekFragment : Fragment() {
         return this_week_date_list
     }
 
+    override fun StatKcalDayCheckSuccess(statistic_type: String, kcals: List<DailyKcal>) {
+        TODO("Not yet implemented")
+    }
+
+    override fun StatKcalWeekCheckSuccess(statistic_type: String, kcals: List<WeeklyKcal>) {
+        val weekdateLayoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+        binding.chartKcalWeekDateRv.layoutManager = weekdateLayoutManager
+
+        var dateList = mutableListOf<String>()
+        var chartItems = mutableListOf<StackChartItem>()
+
+        for(item in kcals) {
+            dateList.add(getDate(item.week_start_date,item.week_end_date))
+            chartItems.add(StackChartItem(item.fat,item.protein,item.carbohydrate))
+        }
+
+        // Create and set the adapter
+        val weekdateAdapter = DateAdapter(dateList)
+        binding.chartKcalWeekDateRv.adapter = weekdateAdapter
+
+        //스택 바 리사이클러뷰 관련 코드
+        val stackLayoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+        binding.chartKcalWeekRv.layoutManager = stackLayoutManager
+
+        // Example data for the chart items (you can replace this with your actual data)
+
+        // Get the StackChartItem at the desired index
+        val selectedItem = chartItems[chartItems.size - 1]
+
+        // Set the values to the corresponding TextViews
+        binding.chartKcalWeekSaccTv.text = selectedItem.carboValue.toString()
+        binding.chartKcalWeekProteinTv.text = selectedItem.proteinValue.toString()
+        binding.chartKcalWeekFatTv.text = selectedItem.fatValue.toString()
+        binding.chartKcalWeekKcalTv.text = kcals[kcals.size-1].kcal.toString()
+
+        // Create and set the adapter
+        val stackBarAdapter = StackBarChartAdapter(chartItems)
+        binding.chartKcalWeekRv.adapter = stackBarAdapter
+    }
+
+    override fun StatKcalMonthCheckSuccess(statistic_type: String, kcals: List<MonthKcal>) {
+        TODO("Not yet implemented")
+    }
 
 
 }

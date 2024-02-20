@@ -121,6 +121,8 @@ interface RetroInterface {
 //    ): Call<BaseResponse<StatWeightResponse>>
     @GET("food-history/daily")
     fun statKcalDayCheck(): Call<BaseResponse<StatKcalDayResponse>>
+    @GET("food-history/weekly")
+    fun statKcalWeekCheck(): Call<BaseResponse<StatKcalWeekResponse>>
     @GET("weight/daily")
     fun statWeightDayCheck(): Call<BaseResponse<StatWeightDayResponse>>
     @GET("weight/weekly")
