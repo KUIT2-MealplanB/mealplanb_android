@@ -238,8 +238,13 @@ data class WeeklyKcal(
     @SerializedName("fat") val fat : Int,
 )
 
-data class MonthKcal(
-    @SerializedName("date") val date: String,
+data class StatKcalMonthResponse(
+    @SerializedName("statistic_type") val statisticType: String,
+    @SerializedName("kcals") val kcals: List<MonthlyKcal>
+)
+
+data class MonthlyKcal(
+    @SerializedName("month") val month: String,
     @SerializedName("kcal") val kcal: Int,
     @SerializedName("carbohydrate") val carbohydrate : Int,
     @SerializedName("protein") val protein : Int,

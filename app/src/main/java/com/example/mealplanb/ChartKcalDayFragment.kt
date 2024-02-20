@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mealplanb.databinding.FragmentChartKcalDayBinding
 import com.example.mealplanb.remote.AuthService
 import com.example.mealplanb.remote.DailyKcal
-import com.example.mealplanb.remote.MonthKcal
+import com.example.mealplanb.remote.MonthlyKcal
 import com.example.mealplanb.remote.StatKcalView
 import com.example.mealplanb.remote.WeeklyKcal
 import java.text.SimpleDateFormat
@@ -169,7 +169,7 @@ class ChartKcalDayFragment : Fragment(),StatKcalView {
         TODO("Not yet implemented")
     }
 
-    override fun StatKcalMonthCheckSuccess(statistic_type: String, kcals: List<MonthKcal>) {
+    override fun StatKcalMonthCheckSuccess(statistic_type: String, kcals: List<MonthlyKcal>) {
         TODO("Not yet implemented")
     }
 }
