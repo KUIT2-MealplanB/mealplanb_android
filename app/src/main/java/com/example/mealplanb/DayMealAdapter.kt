@@ -46,7 +46,7 @@ class DayMealAdapter(var dayMealList: ArrayList<MealMainInfo>, private val conte
                 var json = sharedPreferences.getString(foodListID,null)
                 var addFoodList : ArrayList<Meal> = gson.fromJson(json, object : TypeToken<ArrayList<Meal>>() {}.type) ?: arrayListOf()
 
-                editor.putInt("nMeal",position+1)
+                editor.putInt("nMeal",myMealMainInfo.meal_id)
                 editor.apply()
 
                 if (dayMealList[position].total_cal > 0) {

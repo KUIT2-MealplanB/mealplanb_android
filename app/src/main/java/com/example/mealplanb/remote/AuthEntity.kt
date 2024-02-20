@@ -193,9 +193,9 @@ data class FavoriteFoodRequest(
     @SerializedName("food_id") val food_id : Int,
 )
 
-data class FavoriteFoodResponse(
-    @SerializedName("foods") val foods: List<Food>
-)
+//data class FavoriteFoodResponse(
+//    @SerializedName("foods") val foods: List<Food>
+//)
 
 data class Food(
     @SerializedName("food_id") val foodId: Int,
@@ -211,11 +211,6 @@ data class FoodSearchResponse(
 
 )
 
-data class StatisticPlanResponse(
-    @SerializedName("initial_weight") val initial_weight: Double,
-    @SerializedName("target_weight") val target_weight: Double,
-    @SerializedName("diet_type") val diet_type: String
-)
 data class StatKcalDayResponse(
     @SerializedName("statistic_type") val statisticType: String,
     @SerializedName("kcals") val kcals: List<DailyKcal>

@@ -26,45 +26,45 @@ class GoalMotifFragment : Fragment(), PlanView {
     private var start_weight: Double = 50.5
     private var goal_weight: Double = 45.0
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        val authService = AuthService(requireContext())
-
-        authService.statisticplan { planInfo ->
-            val startWeight = planInfo?.initial_weight?.toFloat() ?: 0f
-            val wantWeight = planInfo?.target_weight?.toFloat() ?: 0f
-            var selectedCategory = 0
-
-            if(planInfo?.diet_type == "일반"){
-                selectedCategory = 1
-            }
-            else if(planInfo?.diet_type == "운동"){
-                selectedCategory = 2
-            }
-            else if(planInfo?.diet_type == "키토"){
-                selectedCategory = 3
-            }
-            else if(planInfo?.diet_type == "비건"){
-                selectedCategory = 4
-            }
-            else if(planInfo?.diet_type == "당뇨"){
-                selectedCategory = 5
-            }
-
-            binding.goalMotifStartWeightEt.hint = "$startWeight"
-            binding.goalMotifWantWeightEt.hint = "$wantWeight"
-            binding.goalMotifDietSpinner.setSelection(selectedCategory-1)
-
-            val sharedPref = activity?.getSharedPreferences("myPreferences", Context.MODE_PRIVATE)
-            with(sharedPref?.edit()) {
-                this?.putFloat("startWeight", startWeight)
-                this?.putFloat("wantWeight", wantWeight)
-                this?.putInt("selectedCategory", selectedCategory)
-                this?.apply()
-            }
-        }
-    }
+//    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+//        super.onViewCreated(view, savedInstanceState)
+//
+//        val authService = AuthService(requireContext())
+//
+//        authService.statisticplan { planInfo ->
+//            val startWeight = planInfo?.initial_weight?.toFloat() ?: 0f
+//            val wantWeight = planInfo?.target_weight?.toFloat() ?: 0f
+//            var selectedCategory = 0
+//
+//            if(planInfo?.diet_type == "일반"){
+//                selectedCategory = 1
+//            }
+//            else if(planInfo?.diet_type == "운동"){
+//                selectedCategory = 2
+//            }
+//            else if(planInfo?.diet_type == "키토"){
+//                selectedCategory = 3
+//            }
+//            else if(planInfo?.diet_type == "비건"){
+//                selectedCategory = 4
+//            }
+//            else if(planInfo?.diet_type == "당뇨"){
+//                selectedCategory = 5
+//            }
+//
+//            binding.goalMotifStartWeightEt.hint = "$startWeight"
+//            binding.goalMotifWantWeightEt.hint = "$wantWeight"
+//            binding.goalMotifDietSpinner.setSelection(selectedCategory-1)
+//
+//            val sharedPref = activity?.getSharedPreferences("myPreferences", Context.MODE_PRIVATE)
+//            with(sharedPref?.edit()) {
+//                this?.putFloat("startWeight", startWeight)
+//                this?.putFloat("wantWeight", wantWeight)
+//                this?.putInt("selectedCategory", selectedCategory)
+//                this?.apply()
+//            }
+//        }
+//    }
 
 
     override fun onCreate(savedInstanceState: Bundle?) {

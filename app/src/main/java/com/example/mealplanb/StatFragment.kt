@@ -15,32 +15,32 @@ import com.example.mealplanb.remote.AuthService
 class StatFragment : Fragment() {
     private lateinit var binding: FragmentStatBinding
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        Log.d("statfragment 실행 확인","success")
-
-        val authService = AuthService(requireContext())
-
-        authService.statisticplan { planInfo ->
-            val startWeight = planInfo?.initial_weight?.toFloat() ?: 0f
-            val wantWeight = planInfo?.target_weight?.toFloat() ?: 0f
-            val diettype = planInfo?.diet_type
-            val diffWeight = startWeight - wantWeight
-
-            binding.statExplainMealCategoryTv.text = "$diettype"
-            binding.statExplainKgTv.text = "$diffWeight"
-
-            Log.d("statfragment 실행 확인","diettype: $diettype, diffweight: $diffWeight")
-
-            val sharedPref = activity?.getSharedPreferences("myPreferences", Context.MODE_PRIVATE)
-            with(sharedPref?.edit()) {
-                this?.putFloat("startWeight", startWeight)
-                this?.putFloat("wantWeight", wantWeight)
-                this?.putString("selectedDiet", diettype)
-                this?.apply()
-            }
-        }
-    }
+//    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+//        super.onViewCreated(view, savedInstanceState)
+//        Log.d("statfragment 실행 확인","success")
+//
+//        val authService = AuthService(requireContext())
+//
+//        authService.statisticplan { planInfo ->
+//            val startWeight = planInfo?.initial_weight?.toFloat() ?: 0f
+//            val wantWeight = planInfo?.target_weight?.toFloat() ?: 0f
+//            val diettype = planInfo?.diet_type
+//            val diffWeight = startWeight - wantWeight
+//
+//            binding.statExplainMealCategoryTv.text = "$diettype"
+//            binding.statExplainKgTv.text = "$diffWeight"
+//
+//            Log.d("statfragment 실행 확인","diettype: $diettype, diffweight: $diffWeight")
+//
+//            val sharedPref = activity?.getSharedPreferences("myPreferences", Context.MODE_PRIVATE)
+//            with(sharedPref?.edit()) {
+//                this?.putFloat("startWeight", startWeight)
+//                this?.putFloat("wantWeight", wantWeight)
+//                this?.putString("selectedDiet", diettype)
+//                this?.apply()
+//            }
+//        }
+//    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

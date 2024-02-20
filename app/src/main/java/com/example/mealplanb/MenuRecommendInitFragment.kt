@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import com.example.mealplanb.databinding.FragmentMenuRecommendHowEatBinding
 import com.example.mealplanb.databinding.FragmentMenuRecommendInitBinding
 import com.example.mealplanb.remote.AuthService
-import com.example.mealplanb.remote.FavoriteFoodResponse
+import com.example.mealplanb.remote.Food
 import com.example.mealplanb.remote.MealListDateResponseMeals
 import com.example.mealplanb.remote.SignupView
 import java.text.SimpleDateFormat
@@ -135,7 +135,7 @@ class MenuRecommendInitFragment : Fragment(), SignupView {
         TODO("Not yet implemented")
     }
 
-    override fun handleFavoriteFoodResponse(favoriteFoodResponse: FavoriteFoodResponse?) {
+    override fun handleFavoriteFoodResponse(favoriteFoodResponse: List<Food>) {
         TODO("Not yet implemented")
     }
 }

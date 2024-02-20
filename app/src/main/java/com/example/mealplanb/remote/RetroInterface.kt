@@ -111,7 +111,7 @@ interface RetroInterface {
 
     //favorite food
     @GET("favorite-food")
-    fun favoriteFoodGET():Call<BaseResponse<FavoriteFoodResponse>>
+    fun favoriteFoodGET():Call<BaseResponse<List<Food>>>
 
     @POST("favorite-food")
     fun favoriteFoodPost(
@@ -130,8 +130,6 @@ interface RetroInterface {
     ):Call<BaseResponse<FoodSearchResponse>>
 
     //통계 목표 조회
-    @GET("statistic/plan")
-    fun statisticplan(): Call<BaseResponse<StatisticPlanResponse>>
     @GET("food-history/daily")
     fun statKcalDayCheck(): Call<BaseResponse<StatKcalDayResponse>>
     @GET("food-history/weekly")

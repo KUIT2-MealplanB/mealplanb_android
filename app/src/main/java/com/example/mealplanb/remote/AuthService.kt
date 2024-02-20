@@ -945,27 +945,6 @@ class AuthService(private val context: Context) {
 
         })
     }
-
-    //통계 목표 조회
-    fun statisticplan(callback: (StatisticPlanResponse?) -> Unit) {
-        authService.statisticplan().enqueue(object : Callback<BaseResponse<StatisticPlanResponse>> {
-            override fun onResponse(
-                call: Call<BaseResponse<StatisticPlanResponse>>,
-                response: Response<BaseResponse<StatisticPlanResponse>>
-            ) {
-                if (response.isSuccessful) {
-                    val planInfo = response.body()?.result
-                    callback(planInfo)  // 콜백을 호출하여 결과를 전달
-                } else {
-                    Log.e("통계 목표 오류 정보", "Request not successful. Message: ${response.message()}")
-                }
-            }
-
-            override fun onFailure(call: Call<BaseResponse<StatisticPlanResponse>>, t: Throwable) {
-                Log.e("통계 목표 서버 오류", "API call failed. Message: ${t.message}")
-            }
-        })
-    }
     
     fun foodListCheck(mealId: String) {
 
@@ -1011,21 +990,16 @@ class AuthService(private val context: Context) {
     //favorite food
     fun favoriteFoodGET(){
         signupView.SignupLoading()
-        authService.favoriteFoodGET().enqueue(object : Callback<BaseResponse<FavoriteFoodResponse>>{
+        authService.favoriteFoodGET().enqueue(object : Callback<BaseResponse<List<Food>>>{
             override fun onResponse(
-                call: Call<BaseResponse<FavoriteFoodResponse>>,
-                response: Response<BaseResponse<FavoriteFoodResponse>>
+                call: Call<BaseResponse<List<Food>>>,
+                response: Response<BaseResponse<List<Food>>>
             ) {
                 val resp = response.body()
                 when(resp?.code) {
                     1000 -> {
                         // 성공 시 원하는 처리
-                        val favoriteFoodResponse = resp?.result
-                        favoriteFoodResponse?.foods?.let { foods ->
-                            for (food in foods) {
-                                Log.d("Food Item", "Food ID: ${food.foodId}, Food Name: ${food.foodName}, Kcal: ${food.kcal}")
-                            }
-                        }
+                        val favoriteFoodResponse = resp.result
                         signupView.handleFavoriteFoodResponse(favoriteFoodResponse)
 
                         Log.d("favoriteFood get success", resp.toString())
@@ -1036,7 +1010,7 @@ class AuthService(private val context: Context) {
                 }
                 }
             }
-            override fun onFailure(call: Call<BaseResponse<FavoriteFoodResponse>>, t: Throwable) {
+            override fun onFailure(call: Call<BaseResponse<List<Food>>>, t: Throwable) {
                 Log.d("favoriteFood get Failed", t.toString())
             }
         })

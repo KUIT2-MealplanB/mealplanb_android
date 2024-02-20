@@ -19,7 +19,6 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.example.mealplanb.databinding.FragmentSearchMealBinding
 import com.example.mealplanb.remote.AuthService
-import com.example.mealplanb.remote.FavoriteFoodResponse
 import com.example.mealplanb.remote.Food
 import com.example.mealplanb.remote.FoodSearchResponse
 import com.example.mealplanb.remote.MealListDateResponseMeals
@@ -452,42 +451,60 @@ class SearchMealFragment : Fragment(), SignupView, SearchFoodView {
         TODO("Not yet implemented")
     }
 
-    override fun handleFavoriteFoodResponse(favoriteFoodResponse: FavoriteFoodResponse?) {
-        favoriteFoodResponse?.let { response ->
-            val foods: List<Food>? = response.foods
+    override fun handleFavoriteFoodResponse(favoriteFoodResponse: List<Food>) {
+        var newFoodList: ArrayList<Food> = arrayListOf()
 
-            if (foods != null) {
-                for (food in foods) {
-                    Log.d("favorite Food Item in fragment", "Food ID: ${food.foodId}, Food Name: ${food.foodName}, Kcal: ${food.kcal}")
-                }
-            }
-                // Ensure foods is of type ArrayList<Food>
-            if (foods is ArrayList<*>) {
-                // Cast to ArrayList<Food>
-                val foodList = foods as ArrayList<Food>
-
-                favoritefoodadapter = FavoriteFoodAdapter(foodList) { item ->
-                    requireActivity().supportFragmentManager.beginTransaction()
-                        .replace(R.id.main_frm, FoodDetailFragment()).commit()
-                    requireActivity().overridePendingTransition(
-                        androidx.appcompat.R.anim.abc_slide_in_bottom,
-                        androidx.appcompat.R.anim.abc_slide_out_top
-                    )
-                }
-
-                // Set the adapter for the RecyclerView
-                binding.searchMealMyRv.adapter = favoritefoodadapter
-                binding.searchMealMyRv.layoutManager = LinearLayoutManager(requireContext())
-            } else {
-                Toast.makeText(requireContext(), "Invalid data type for foods", Toast.LENGTH_SHORT).show()
-            }
-//            } else {
-
-//                Toast.makeText(requireContext(), "Favorite food list is null", Toast.LENGTH_SHORT).show()
-//            }
-//        } ?: run {
-//            Toast.makeText(requireContext(), "Favorite food response is null", Toast.LENGTH_SHORT).show()
+        for(item in favoriteFoodResponse) {
+            newFoodList.add(item)
         }
+
+        favoritefoodadapter = FavoriteFoodAdapter(newFoodList) { item ->
+            requireActivity().supportFragmentManager.beginTransaction()
+                .replace(R.id.main_frm, FoodDetailFragment()).commit()
+            requireActivity().overridePendingTransition(
+                androidx.appcompat.R.anim.abc_slide_in_bottom,
+                androidx.appcompat.R.anim.abc_slide_out_top
+            )
+        }
+
+        // Set the adapter for the RecyclerView
+        binding.searchMealMyRv.adapter = favoritefoodadapter
+        binding.searchMealMyRv.layoutManager = LinearLayoutManager(requireContext())
+//        favoriteFoodResponse?.let { response ->
+//            val foods: List<Food>? = response.foods
+//
+//            if (foods != null) {
+//                for (food in foods) {
+//                    Log.d("favorite Food Item in fragment", "Food ID: ${food.foodId}, Food Name: ${food.foodName}, Kcal: ${food.kcal}")
+//                }
+//            }
+//                // Ensure foods is of type ArrayList<Food>
+//            if (foods is ArrayList<*>) {
+//                // Cast to ArrayList<Food>
+//                val foodList = foods as ArrayList<Food>
+//
+//                favoritefoodadapter = FavoriteFoodAdapter(foodList) { item ->
+//                    requireActivity().supportFragmentManager.beginTransaction()
+//                        .replace(R.id.main_frm, FoodDetailFragment()).commit()
+//                    requireActivity().overridePendingTransition(
+//                        androidx.appcompat.R.anim.abc_slide_in_bottom,
+//                        androidx.appcompat.R.anim.abc_slide_out_top
+//                    )
+//                }
+//
+//                // Set the adapter for the RecyclerView
+//                binding.searchMealMyRv.adapter = favoritefoodadapter
+//                binding.searchMealMyRv.layoutManager = LinearLayoutManager(requireContext())
+//            } else {
+//                Toast.makeText(requireContext(), "Invalid data type for foods", Toast.LENGTH_SHORT).show()
+//            }
+////            } else {
+//
+////                Toast.makeText(requireContext(), "Favorite food list is null", Toast.LENGTH_SHORT).show()
+////            }
+////        } ?: run {
+////            Toast.makeText(requireContext(), "Favorite food response is null", Toast.LENGTH_SHORT).show()
+//        }
     }
 
     override fun SearchFoodSuccess(foodSearchResponse: FoodSearchResponse) {

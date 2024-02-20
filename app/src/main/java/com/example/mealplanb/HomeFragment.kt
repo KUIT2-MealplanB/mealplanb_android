@@ -14,7 +14,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mealplanb.databinding.FragmentHomeBinding
 import com.example.mealplanb.remote.AuthService
-import com.example.mealplanb.remote.FavoriteFoodResponse
+import com.example.mealplanb.remote.Food
 import com.example.mealplanb.remote.HomeMealView
 import com.example.mealplanb.remote.MealFoodResponseFoodList
 import com.example.mealplanb.remote.MealListDateResponseMeals
@@ -445,7 +445,7 @@ class HomeFragment : Fragment(), DatePickerDialog.OnDateSetListener, SignupView,
 //        adapter!!.notifyDataSetChanged()
     }
 
-    override fun handleFavoriteFoodResponse(favoriteFoodResponse: FavoriteFoodResponse?) {
+    override fun handleFavoriteFoodResponse(favoriteFoodResponse: List<Food>) {
         TODO("Not yet implemented")
     }
 

@@ -14,7 +14,6 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.example.mealplanb.databinding.FragmentFooddetailBinding
 import com.example.mealplanb.remote.AuthService
-import com.example.mealplanb.remote.FavoriteFoodResponse
 import com.example.mealplanb.remote.FoodSearchResponse
 import com.example.mealplanb.remote.MealFoodResponseFoodList
 import com.example.mealplanb.remote.MealListDateResponseMeals
@@ -32,10 +31,10 @@ class FoodDetailFragment : Fragment(), SearchFoodView {
     private var addFoodListOften : ArrayList<Meal> = arrayListOf()
 
     // Initial values for food properties
-    private val originSacc: Double = 50.0
-    private val originProtein: Double = 15.0
-    private val originFat: Double = 35.0
-    private val originkcal: Double = 362.0
+    private var originSacc: Double = 50.0
+    private var originProtein: Double = 15.0
+    private var originFat: Double = 35.0
+    private var originkcal: Double = 362.0
     private val foodName: String = "로제파스타"
 
     lateinit var oftenadapter: SearchCategoryAdapter // 즐겨찾기 RecyclerView에 사용할 어댑터
@@ -355,6 +354,11 @@ class FoodDetailFragment : Fragment(), SearchFoodView {
         meal.sacc_gram = carbohydrate
         meal.protein_gram = protein
         meal.fat_gram = fat
+
+        originkcal = kcal
+        originSacc = carbohydrate
+        originProtein = protein
+        originFat = fat
 
         binding.detailFoodNameTv.text = name
         binding.detailFoodMealWeightEt.setText(quantity.toString())
