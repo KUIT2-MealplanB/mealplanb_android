@@ -1083,6 +1083,39 @@ class AuthService(private val context: Context) {
         })
     }
 
+    fun statWeightMonthCheck() {
+        authService.statWeightMonthCheck().enqueue(object : Callback<BaseResponse<StatWeightMonthResponse>> {
+            override fun onResponse(
+                call: Call<BaseResponse<StatWeightMonthResponse>>,
+                response: Response<BaseResponse<StatWeightMonthResponse>>
+            ) {
+                val resp = response.body()
+                Log.d("stat weight response",response.toString())
+                when (resp?.code) {
+                    1000 -> {
+                        // 성공 시 원하는 처리
+                        val statWeightCheckResponse = resp.result
+                        val statistic_type = statWeightCheckResponse.statisticType
+                        val weights = statWeightCheckResponse.weights
+                        statWeightView.StatWeightMonthCheckSuccess(statWeightCheckResponse.statisticType,weights)
+                        Log.d("stat weight get Success", "myfavorite meal get Success")
+                    }
+
+                    else -> if (resp != null) {
+                        Log.d("stat weight get error", "myfavorite meal get error")
+                    }else{
+                        Log.d("stat weight get null", "myfavorite meal get null")
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<BaseResponse<StatWeightMonthResponse>>, t: Throwable) {
+                Log.d("stat weight get Failed", t.toString())
+            }
+
+        })
+    }
+
     fun statPlanCheck() {
         authService.statPlanCheck().enqueue(object : Callback<BaseResponse<StatPlanResponse>> {
             override fun onResponse(

@@ -123,6 +123,8 @@ interface RetroInterface {
     fun statWeightDayCheck(): Call<BaseResponse<StatWeightDayResponse>>
     @GET("weight/weekly")
     fun statWeightWeekCheck(): Call<BaseResponse<StatWeightWeekResponse>>
+    @GET("weight/monthly")
+    fun statWeightMonthCheck(): Call<BaseResponse<StatWeightMonthResponse>>
     @GET("statistic/plan")
     fun statPlanCheck(): Call<BaseResponse<StatPlanResponse>>
 
