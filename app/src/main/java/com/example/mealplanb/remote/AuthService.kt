@@ -30,6 +30,7 @@ class AuthService(private val context: Context) {
     private lateinit var recommendMealAmountView: RecommendMealAmountView
     private lateinit var statView: StatView
     private lateinit var statWeightView: StatWeightView
+    private lateinit var statKcalView: StatKcalView
 
     private lateinit var searchFoodView: SearchFoodView
     fun setSignupView(signupView:SignupView) {
@@ -70,6 +71,10 @@ class AuthService(private val context: Context) {
 
     fun setStatView(statView: StatView) {
         this.statView = statView
+    }
+
+    fun setStatKcalView(statKcalView: StatKcalView) {
+        this.statKcalView = statKcalView
     }
 
     fun signup(email: String, password: String, sex: String, age: Int,
@@ -1014,6 +1019,39 @@ class AuthService(private val context: Context) {
                 Log.d("searchFood Failed", t.toString())
                 callback(null)
             }
+        })
+    }
+
+    fun statKcalDayCheck() {
+        authService.statKcalDayCheck().enqueue(object : Callback<BaseResponse<StatKcalDayResponse>> {
+            override fun onResponse(
+                call: Call<BaseResponse<StatKcalDayResponse>>,
+                response: Response<BaseResponse<StatKcalDayResponse>>
+            ) {
+                val resp = response.body()
+                Log.d("stat weight response",response.toString())
+                when (resp?.code) {
+                    1000 -> {
+                        // 성공 시 원하는 처리
+                        val statKcalCheckResponse = resp.result
+                        val statistic_type = statKcalCheckResponse.statisticType
+                        val kcals = statKcalCheckResponse.kcals
+                        statKcalView.StatKcalDayCheckSuccess(statistic_type,kcals)
+                        Log.d("stat weight get Success", "myfavorite meal get Success")
+                    }
+
+                    else -> if (resp != null) {
+                        Log.d("stat weight get error", "myfavorite meal get error")
+                    }else{
+                        Log.d("stat weight get null", "myfavorite meal get null")
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<BaseResponse<StatKcalDayResponse>>, t: Throwable) {
+                Log.d("stat weight get Failed", t.toString())
+            }
+
         })
     }
 

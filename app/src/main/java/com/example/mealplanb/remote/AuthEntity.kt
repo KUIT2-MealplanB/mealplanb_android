@@ -211,6 +211,35 @@ data class FoodSearchResponse(
 
 )
 
+data class StatKcalDayResponse(
+    @SerializedName("statistic_type") val statisticType: String,
+    @SerializedName("kcals") val kcals: List<DailyKcal>
+)
+
+data class DailyKcal(
+    @SerializedName("date") val date: String,
+    @SerializedName("kcal") val kcal: Int,
+    @SerializedName("carbohydrate") val carbohydrate : Int,
+    @SerializedName("protein") val protein : Int,
+    @SerializedName("fat") val fat : Int,
+)
+
+data class WeeklyKcal(
+    @SerializedName("date") val date: String,
+    @SerializedName("kcal") val kcal: Int,
+    @SerializedName("carbohydrate") val carbohydrate : Int,
+    @SerializedName("protein") val protein : Int,
+    @SerializedName("fat") val fat : Int,
+)
+
+data class MonthKcal(
+    @SerializedName("date") val date: String,
+    @SerializedName("kcal") val kcal: Int,
+    @SerializedName("carbohydrate") val carbohydrate : Int,
+    @SerializedName("protein") val protein : Int,
+    @SerializedName("fat") val fat : Int,
+)
+
 data class StatWeightDayResponse(
     @SerializedName("statistic_type") val statisticType: String,
     @SerializedName("weights") val weights: List<WeightResponse>

@@ -119,6 +119,8 @@ interface RetroInterface {
 //    fun statWeightCheck(
 //        @Path("statisticType") statistictype: String
 //    ): Call<BaseResponse<StatWeightResponse>>
+    @GET("food-history/daily")
+    fun statKcalDayCheck(): Call<BaseResponse<StatKcalDayResponse>>
     @GET("weight/daily")
     fun statWeightDayCheck(): Call<BaseResponse<StatWeightDayResponse>>
     @GET("weight/weekly")
