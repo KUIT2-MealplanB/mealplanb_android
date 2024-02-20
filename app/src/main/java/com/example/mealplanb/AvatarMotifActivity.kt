@@ -244,7 +244,7 @@ class AvatarMotifActivity : AppCompatActivity() {
                     )
                     withContext(Dispatchers.Main) {
 
-                        Log.d("아바타 외형 확인","avatarImageID : ${avatarImageID}, avatarAppearance: ${avatarAppearance}")
+                        Log.d("아바타 외형 연동 확인","avatarImageID : ${avatarImageID}, avatarAppearance: ${avatarAppearance}")
                         when (avatarAppearance) {
                             1 -> {
                                 if (avatarImageID == 1) { //핑
