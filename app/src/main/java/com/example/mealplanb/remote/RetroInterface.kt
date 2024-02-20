@@ -17,11 +17,19 @@ interface RetroInterface {
         @Body request: SignupRequest //내부에 포함할 데이터
     ) : Call<BaseResponse<SignupResponse>> //반환할 데이터
 
+    //회원탈퇴
+    @PATCH("user")
+    fun signoff():Call<BaseResponse<Unit>>
+
     //로그인
     @POST("user/login")
     fun login(
         @Body request: LoginRequest
     ): Call<BaseResponse<LoginResponse>>
+
+    //로그아웃
+    @POST("user/logout")
+    fun logout():Call<BaseResponse<Unit>>
 
     //아바타 정보 조회
     @GET("user/avatar")
@@ -65,10 +73,16 @@ interface RetroInterface {
     fun checkFoodDetail(@Path("foodId") foodId: Int): Call<BaseResponse<GetFoodResponse>>
 
     //나의 식단 등록
-    @POST("/my-meal")
+    @POST("my-meal")
     fun mymealupdate(
         @Body request: mymealData
     ):Call<BaseResponse<Unit>>
+
+    //사용자 식단 등록
+//    @POST("food")
+//    fun userfoodupdate(
+//        @Body request: PostNewFoodRequest
+//    ):Call<BaseResponse<PostNewFoodResponse>>
 
     //Weight
     @GET("weight")
@@ -115,6 +129,9 @@ interface RetroInterface {
         @Query("page") page: Int = 0
     ):Call<BaseResponse<FoodSearchResponse>>
 
+    //통계 목표 조회
+    @GET("statistic/plan")
+    fun statisticplan(): Call<BaseResponse<StatisticPlanResponse>>
     @GET("food-history/daily")
     fun statKcalDayCheck(): Call<BaseResponse<StatKcalDayResponse>>
     @GET("food-history/weekly")

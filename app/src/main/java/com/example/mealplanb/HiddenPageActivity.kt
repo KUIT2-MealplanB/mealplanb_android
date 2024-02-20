@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Button
+import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import com.example.mealplanb.databinding.ActivityHiddenPageBinding
 import com.example.mealplanb.remote.AuthService
@@ -46,7 +47,34 @@ class HiddenPageActivity : AppCompatActivity() {
             //Logout 버튼 -> login 화면으로 넘어감(api 연동)
             confirmButton.setOnClickListener {
                 val authService = AuthService(this)
-                //authService.logout()
+                authService.logout()
+            }
+
+            cancelButton.setOnClickListener {
+                binding.hiddenDarkLl.visibility = View.INVISIBLE
+                customDialog.dismiss() // 다이얼로그를 닫음
+            }
+        }
+
+        //계정 탈퇴 레이아웃을 누르면 대화상자 뜸
+        binding.hiddenSignoffLl.setOnClickListener {
+
+            val customDialog = HiddenLogoutDialogFragment(this)
+            //배경 어둡게 설정
+            binding.hiddenDarkLl.visibility = View.VISIBLE
+            customDialog.setCanceledOnTouchOutside(false) // 외부 터치를 취소하지 않음
+            customDialog.show()
+            customDialog.findViewById<TextView>(R.id.hidden_logout_tv).text = "계정 탈퇴 하시겠습니까?"
+
+            //대화상자의 각 View에 접근
+            val confirmButton = customDialog.findViewById<Button>(R.id.hidden_logout_logout_btn)
+            val cancelButton = customDialog.findViewById<Button>(R.id.hidden_logout_cancle_btn)
+            confirmButton.text = "계정 탈퇴"
+
+            //탈퇴 버튼 -> login 화면으로 넘어감(api 연동)
+            confirmButton.setOnClickListener {
+                val authService = AuthService(this)
+                authService.signOff()
             }
 
             cancelButton.setOnClickListener {

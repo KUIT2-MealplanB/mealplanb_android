@@ -256,6 +256,7 @@
                 android:background="@color/mono_gray2"/>
 
             <LinearLayout
+                android:id="@+id/hidden_signoff_ll"
                 android:layout_width="match_parent"
                 android:layout_height="58dp"
                 android:gravity="center|left"

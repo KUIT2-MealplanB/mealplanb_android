@@ -211,6 +211,11 @@ data class FoodSearchResponse(
 
 )
 
+data class StatisticPlanResponse(
+    @SerializedName("initial_weight") val initial_weight: Double,
+    @SerializedName("target_weight") val target_weight: Double,
+    @SerializedName("diet_type") val diet_type: String
+)
 data class StatKcalDayResponse(
     @SerializedName("statistic_type") val statisticType: String,
     @SerializedName("kcals") val kcals: List<DailyKcal>

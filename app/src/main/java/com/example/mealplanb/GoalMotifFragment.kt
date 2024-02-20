@@ -21,11 +21,50 @@ import com.example.mealplanb.databinding.FragmentMenuRecommendHowMenuBinding
 import com.example.mealplanb.remote.AuthService
 import com.example.mealplanb.remote.PlanView
 
-
 class GoalMotifFragment : Fragment(), PlanView {
     lateinit var binding: FragmentGoalMotifBinding
     private var start_weight: Double = 50.5
     private var goal_weight: Double = 45.0
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        val authService = AuthService(requireContext())
+
+        authService.statisticplan { planInfo ->
+            val startWeight = planInfo?.initial_weight?.toFloat() ?: 0f
+            val wantWeight = planInfo?.target_weight?.toFloat() ?: 0f
+            var selectedCategory = 0
+
+            if(planInfo?.diet_type == "일반"){
+                selectedCategory = 1
+            }
+            else if(planInfo?.diet_type == "운동"){
+                selectedCategory = 2
+            }
+            else if(planInfo?.diet_type == "키토"){
+                selectedCategory = 3
+            }
+            else if(planInfo?.diet_type == "비건"){
+                selectedCategory = 4
+            }
+            else if(planInfo?.diet_type == "당뇨"){
+                selectedCategory = 5
+            }
+
+            binding.goalMotifStartWeightEt.hint = "$startWeight"
+            binding.goalMotifWantWeightEt.hint = "$wantWeight"
+            binding.goalMotifDietSpinner.setSelection(selectedCategory-1)
+
+            val sharedPref = activity?.getSharedPreferences("myPreferences", Context.MODE_PRIVATE)
+            with(sharedPref?.edit()) {
+                this?.putFloat("startWeight", startWeight)
+                this?.putFloat("wantWeight", wantWeight)
+                this?.putInt("selectedCategory", selectedCategory)
+                this?.apply()
+            }
+        }
+    }
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -151,8 +190,7 @@ class GoalMotifFragment : Fragment(), PlanView {
             val diffWeight = if (startWeightInput != null && wantWeightInput != null) {
                 startWeightInput.toFloat() - wantWeightInput.toFloat()
             } else {
-                // Handle the case where either startWeightInput or wantWeightInput is null
-                0.0f // or any default value you prefer
+                0.0f
             }
 
             val sharedPref = activity?.getSharedPreferences("myPreferences", Context.MODE_PRIVATE)
@@ -188,11 +226,19 @@ class GoalMotifFragment : Fragment(), PlanView {
                 editor?.putFloat("diffWeight", diffWeight)
             }
 
+            // 스피너의 현재 위치를 저장
+            val selectedCategory = spinner.selectedItemPosition
+            editor?.putInt("selectedCategory", selectedCategory + 1)
 
             editor?.apply()
 
-            val source = activity?.intent?.getStringExtra("source") ?: arguments?.getString("source")
+            // 스피너의 선택을 업데이트
+            val categoryNumber = sharedPref?.getInt("selectedCategory", 0)
+            if (categoryNumber != null && categoryNumber != 0) {
+                spinner.setSelection(categoryNumber-1)
+            }
 
+        val source = activity?.intent?.getStringExtra("source") ?: arguments?.getString("source")
             when (source) {
                 "StatFragment" -> {
                     // StatFragment로 이동하는 코드

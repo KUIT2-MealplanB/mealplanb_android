@@ -6,6 +6,9 @@ import android.content.Intent
 import android.util.Log
 import android.widget.Toast
 import com.example.mealplanb.ApplicationClass
+import com.example.mealplanb.ApplicationClass.Companion.mSharedPreferences
+import com.example.mealplanb.HiddenPageActivity
+import com.example.mealplanb.LoginPageActivity
 import com.example.mealplanb.DayMealAdapter
 import com.example.mealplanb.MainActivity
 import com.example.mealplanb.local.getJwt
@@ -126,6 +129,43 @@ class AuthService(private val context: Context) {
             })
     }
 
+    //계정 탈퇴
+    fun signOff() {
+        authService.signoff().enqueue(object : Callback<BaseResponse<Unit>> {
+            override fun onResponse(
+                call: Call<BaseResponse<Unit>>,
+                response: Response<BaseResponse<Unit>>
+            ) {
+                Log.d("SignOff response", response.toString())
+                if (response.isSuccessful) {
+                    Toast.makeText(context, "회원탈퇴 성공", Toast.LENGTH_SHORT).show()
+                    Log.d("회원탈퇴 정보", response.body().toString())
+
+                    // 회원탈퇴가 성공적으로 이루어졌을 경우, 로그인 액티비티로 이동
+                    val intent = Intent(context, LoginPageActivity::class.java)
+                    context.startActivity(intent)
+                } else {
+                    // 서버에서는 응답을 했지만, 회원탈퇴 실패와 같은 이유로 성공적인 응답이 아닌 경우, Toast 메시지
+                    val gson = Gson()
+                    val type = object : TypeToken<BaseResponse<Unit>>() {}.type
+                    val errorResponse: BaseResponse<Unit>? =
+                        gson.fromJson(response.errorBody()?.charStream(), type)
+                    Log.d("회원탈퇴 실패 정보", errorResponse.toString())
+
+                    Toast.makeText(context, "회원탈퇴 실패", Toast.LENGTH_SHORT).show()
+                    Log.d("회원탈퇴 실패 코드", errorResponse?.code.toString())
+                }
+            }
+
+            override fun onFailure(call: Call<BaseResponse<Unit>>, t: Throwable) {
+                Log.d("SignOff Failed", t.toString())
+                // 회원탈퇴 요청 자체가 실패한 경우, Toast 메시지
+                Toast.makeText(context, "회원탈퇴 오류", Toast.LENGTH_SHORT).show()
+            }
+        })
+    }
+
+
     fun login(email: String, pw: String) {
         val request = LoginRequest(email, pw)
         authService.login(request).enqueue(object : Callback<BaseResponse<LoginResponse>> {
@@ -176,6 +216,45 @@ class AuthService(private val context: Context) {
 
         })
     }
+
+    fun logout() {
+        authService.logout().enqueue(object : Callback<BaseResponse<Unit>> {
+            override fun onResponse(
+                call: Call<BaseResponse<Unit>>,
+                response: Response<BaseResponse<Unit>>
+            ) {
+                Log.d("Logout response", response.toString())
+                if (response.isSuccessful) { // response의 성공 여부를 확인
+                    // JWT 토큰 삭제
+                    saveJwt("")
+
+                    Toast.makeText(context, "로그아웃 성공", Toast.LENGTH_SHORT).show()
+                    Log.d("로그아웃 정보", response.body().toString())
+
+                    // 성공적으로 로그아웃이 되었을 경우, 로그인 액티비티로 이동
+                    val intent = Intent(context, LoginPageActivity::class.java)
+                    context.startActivity(intent)
+                } else {
+                    // 서버에서는 응답을 했지만, 로그아웃 실패와 같은 이유로 성공적인 응답이 아닌 경우, Toast 메시지
+                    val gson = Gson()
+                    val type = object : TypeToken<BaseResponse<Unit>>() {}.type
+                    val errorResponse: BaseResponse<Unit>? =
+                        gson.fromJson(response.errorBody()?.charStream(), type)
+                    Log.d("로그아웃 실패 정보", errorResponse.toString())
+
+                    Toast.makeText(context, "로그아웃 실패", Toast.LENGTH_SHORT).show()
+                    Log.d("로그아웃 실패 코드", errorResponse?.code.toString())
+                }
+            }
+
+            override fun onFailure(call: Call<BaseResponse<Unit>>, t: Throwable) {
+                Log.d("Logout Failed", t.toString())
+                // 로그아웃 요청 자체가 실패한 경우, Toast 메시지
+                Toast.makeText(context, "로그아웃 오류", Toast.LENGTH_SHORT).show()
+            }
+        })
+    }
+
 
     //avatar
     // 아바타 정보 조회 + UI 반영 메서드
@@ -867,6 +946,27 @@ class AuthService(private val context: Context) {
         })
     }
 
+    //통계 목표 조회
+    fun statisticplan(callback: (StatisticPlanResponse?) -> Unit) {
+        authService.statisticplan().enqueue(object : Callback<BaseResponse<StatisticPlanResponse>> {
+            override fun onResponse(
+                call: Call<BaseResponse<StatisticPlanResponse>>,
+                response: Response<BaseResponse<StatisticPlanResponse>>
+            ) {
+                if (response.isSuccessful) {
+                    val planInfo = response.body()?.result
+                    callback(planInfo)  // 콜백을 호출하여 결과를 전달
+                } else {
+                    Log.e("통계 목표 오류 정보", "Request not successful. Message: ${response.message()}")
+                }
+            }
+
+            override fun onFailure(call: Call<BaseResponse<StatisticPlanResponse>>, t: Throwable) {
+                Log.e("통계 목표 서버 오류", "API call failed. Message: ${t.message}")
+            }
+        })
+    }
+    
     fun foodListCheck(mealId: String) {
 
         Log.d("Request URL", authService.foodListCheck(mealId).request().url().toString())

@@ -77,5 +77,10 @@ class LoginPageActivity : AppCompatActivity() {
             val intent = Intent(this, JoinMemberActivity::class.java)
             startActivity(intent)
         }
+
+        binding.loginHidden.setOnClickListener {
+            val intent = Intent(this,MainActivity::class.java)
+            startActivity(intent)
+        }
     }
 }
