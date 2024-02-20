@@ -5,16 +5,17 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mealplanb.databinding.ItemMeallistBinding
 import com.example.mealplanb.databinding.ItemRecommendedListBinding
+import com.example.mealplanb.remote.ChatMealListResponse
 import java.util.Calendar
 
-class RecommendedListAdapter(var recomList: ArrayList<RecommendMenu>, val cal: Calendar) : RecyclerView.Adapter<RecommendedListAdapter.ViewHolder>() {
+class RecommendedListAdapter(var recomList: ArrayList<ChatMealListResponse>) : RecyclerView.Adapter<RecommendedListAdapter.ViewHolder>() {
     inner class ViewHolder(val binding: ItemRecommendedListBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(myRecom : RecommendMenu) {
-            binding.itemRecommListTitle.text = setDayText(cal)
-            binding.itemRecommListMenu.text = myRecom.recommend_menu
-            binding.itemRecommListSacc.text = myRecom.recommend_sacc.toString() + "g"
-            binding.itemRecommListProtein.text = myRecom.recommend_protein.toString() + "g"
-            binding.itemRecommListFat.text = myRecom.eecommend_fat.toString() + "g"
+        fun bind(myRecom : ChatMealListResponse) {
+            binding.itemRecommListTitle.text = myRecom.date
+            binding.itemRecommListMenu.text = myRecom.meal_type + " : " + myRecom.name
+            binding.itemRecommListSacc.text = myRecom.offer_carbohydrate.toString() + "g"
+            binding.itemRecommListProtein.text = myRecom.offer_protein.toString() + "g"
+            binding.itemRecommListFat.text = myRecom.offer_fat.toString() + "g"
 //            binding.itemMeallistTitleTv.text = myRecom.meal_name
 //            binding.itemMeallistSubtitleTv.text = myMeal.meal_weight.toString() + "g · " + myMeal.meal_cal.toString() + "kcal"
 //

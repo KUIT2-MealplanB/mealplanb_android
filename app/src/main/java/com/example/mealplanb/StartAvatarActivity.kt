@@ -17,7 +17,8 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import com.example.mealplanb.databinding.ActivityStartAvatarBinding
 import com.example.mealplanb.local.getJwt
 import com.example.mealplanb.remote.AuthService
-import com.example.mealplanb.remote.FavoriteFoodResponse
+import com.example.mealplanb.remote.Food
+import com.example.mealplanb.remote.MealListDateResponseMeals
 import com.example.mealplanb.remote.SignupView
 
 class StartAvatarActivity : AppCompatActivity(), SignupView {
@@ -247,7 +248,38 @@ class StartAvatarActivity : AppCompatActivity(), SignupView {
         TODO("Not yet implemented")
     }
 
-    override fun handleFavoriteFoodResponse(favoriteFoodResponse: FavoriteFoodResponse?) {
+    override fun UserProfileCheckSuccess(
+        date: String,
+        nickname: String,
+        elapsed_days: Int,
+        remaining_kcal: Int,
+        avatar_color: String,
+        avatar_appearance: String,
+        target_kcal: Int,
+        target_carbohydrate: Int,
+        target_protein: Int,
+        target_fat: Int,
+        kcal: Int,
+        carbohydrate: Int,
+        protein: Int,
+        fat: Int,
+        sodium: Int,
+        sugar: Int,
+        saturated_fat: Int,
+        trans_fat: Int,
+        cholesterol: Int
+    ) {
+        TODO("Not yet implemented")
+    }
+
+    override fun mealListDayCheckSuccess(
+        meal_date: String,
+        meals: List<MealListDateResponseMeals>
+    ) {
+        TODO("Not yet implemented")
+    }
+
+    override fun handleFavoriteFoodResponse(favoriteFoodResponse: List<Food>) {
         TODO("Not yet implemented")
     }
 

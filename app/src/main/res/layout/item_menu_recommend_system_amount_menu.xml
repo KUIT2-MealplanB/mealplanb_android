@@ -94,29 +94,6 @@
                 android:textColor="@color/mono_gray2"
                 android:fontFamily="@font/pretendard_medium"/>
 
-            <TextView
-                android:id="@+id/item_menu_recomm_system_amount_total_title_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@id/item_menu_recomm_system_amount_menu_title_tv"
-                app:layout_constraintStart_toStartOf="parent"
-                android:layout_marginTop="13dp"
-                android:text="고추바사삭 조각"
-                android:textSize="12sp"
-                android:textColor="@color/mono_gray2"
-                android:fontFamily="@font/pretendard_medium"/>
-
-            <TextView
-                android:id="@+id/item_menu_recomm_system_amount_total_content_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintTop_toTopOf="@id/item_menu_recomm_system_amount_total_title_tv"
-                app:layout_constraintBottom_toBottomOf="@id/item_menu_recomm_system_amount_total_title_tv"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:text="14개"
-                android:textSize="12sp"
-                android:textColor="@color/mono_gray2"
-                android:fontFamily="@font/pretendard_medium"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

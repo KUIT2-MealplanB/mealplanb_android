@@ -54,6 +54,7 @@ dependencies {
     implementation ("com.google.android.material:material:1.4.0") //bottomsheetdialog
     implementation ("jp.wasabeef:blurry:4.0.0") // 블러 처리
     implementation("com.github.PhilJay:MPAndroidChart:3.1.0") //chart 라이브러리
+    implementation("com.squareup.okhttp3:logging-interceptor:3.12.1") //http 요청 정보
 
     implementation("com.squareup.retrofit2:retrofit:2.9.0") //retrofit
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
