@@ -1,6 +1,8 @@
 package com.example.mealplanb.remote
 
 import com.google.gson.annotations.SerializedName
+import java.time.LocalDate
+import java.time.YearMonth
 
 //로그인 request
 data class SignupRequest(
@@ -207,6 +209,43 @@ data class FoodSearchResponse(
     @SerializedName("foods") val foods: List<Food>,
     @SerializedName("member_created") val member_created: Boolean
 
+)
+
+data class StatWeightDayResponse(
+    @SerializedName("statistic_type") val statisticType: String,
+    @SerializedName("weights") val weights: List<WeightResponse>
+)
+
+data class WeightResponse(
+    @SerializedName("weight") val weight: Double,
+    @SerializedName("date") val date: String
+)
+
+data class StatWeightWeekResponse(
+    @SerializedName("statistic_type") val statisticType: String,
+    @SerializedName("weights") val weights: List<WeeklyWeight>
+)
+
+data class WeeklyWeight(
+    @SerializedName("week_average_weight") val weekAverageWeight: Double,
+    @SerializedName("week_start_date") val weekStartDate: String,
+    @SerializedName("week_end_date") val weekEndDate: String
+)
+
+data class StatWeightMonthResponse(
+    @SerializedName("statistic_type") val statisticType: String,
+    @SerializedName("weights") val weights: List<MonthlyWeight>
+)
+
+data class MonthlyWeight(
+    @SerializedName("month_average_weight") val monthAverageWeight: Double,
+    @SerializedName("month") val month: String
+)
+
+data class StatPlanResponse(
+    @SerializedName("initial_weight") val initial_weight: Double,
+    @SerializedName("target_weight") val target_weight: Double,
+    @SerializedName("diet_type") val diet_type: String
 )
 
 data class ChatRecommendMeal(
