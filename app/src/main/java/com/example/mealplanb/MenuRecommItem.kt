@@ -27,7 +27,7 @@ sealed class MenuRecommItem {
         val menu_recomm_system_howmany_name: String,
         val menu_recomm_system_howmany_remain_cal : Int,
         val menu_recomm_system_howmany_menu_cal: Int,
-        val menu_recomm_system_howmany_menu_piece: Int,
+        val menu_recomm_system_howmany_menu_piece: String,
         val type: Int
     ) : MenuRecommItem()
 

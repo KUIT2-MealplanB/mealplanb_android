@@ -6,6 +6,7 @@ import android.content.SharedPreferences
 import android.util.Log
 import com.example.mealplanb.remote.XAccessTokenInterceptor
 import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
@@ -25,6 +26,7 @@ class ApplicationClass : Application() {
             .readTimeout(30000, TimeUnit.MILLISECONDS)
             .connectTimeout(30000,TimeUnit.MILLISECONDS)
             .addNetworkInterceptor(XAccessTokenInterceptor()) //JWT 헤더 자동전송
+            .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
             .build()
 
         //retrofit build, GsonConverterFactory는 Gson을 json으로 사용할 수 있게 함
