@@ -15,6 +15,7 @@
         android:textSize="12sp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:text="10.11"/>
+        android:text="10.11"
+        android:gravity="center"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -35,7 +35,7 @@
         app:layout_constraintBottom_toBottomOf="@id/item_meallist_subtitle_tv"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginEnd="32dp"
-        android:text="+"
+        android:text="x"
         android:textColor="@color/black"
         android:textSize="16sp"/>
 

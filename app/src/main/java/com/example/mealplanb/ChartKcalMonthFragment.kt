@@ -7,11 +7,16 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mealplanb.databinding.FragmentChartKcalMonthBinding
+import com.example.mealplanb.remote.AuthService
+import com.example.mealplanb.remote.DailyKcal
+import com.example.mealplanb.remote.MonthlyKcal
+import com.example.mealplanb.remote.StatKcalView
+import com.example.mealplanb.remote.WeeklyKcal
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
 
-class ChartKcalMonthFragment : Fragment() {
+class ChartKcalMonthFragment : Fragment(), StatKcalView {
 
     lateinit var binding : FragmentChartKcalMonthBinding
 
@@ -29,47 +34,51 @@ class ChartKcalMonthFragment : Fragment() {
 
         //날짜 리사이클러뷰 관련 코드
         //LinearLayoutManager for horizontal scrolling
-        val monthdateLayoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-        binding.chartKcalMonthDateRv.layoutManager = monthdateLayoutManager
-
-        //date list
-        val monthdateList = getMonthDateList()
+//        val monthdateLayoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+//        binding.chartKcalMonthDateRv.layoutManager = monthdateLayoutManager
+//
+//        //date list
+//        val monthdateList = getMonthDateList()
 
         //this month date list
         val thismonthdateList = getMonththisDateList()
         binding.chartKcalMonthDateTv.text = thismonthdateList[6]
 
-        // Create and set the adapter
-        val monthdateAdapter = DateAdapter(monthdateList)
-        binding.chartKcalMonthDateRv.adapter = monthdateAdapter
-
-        //스택 바 리사이클러뷰 관련 코드
-        val stackLayoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-        binding.chartKcalMonthRv.layoutManager = stackLayoutManager
-
-        // Example data for the chart items (you can replace this with your actual data)
-        val chartItems =  listOf<StackChartItem>(
-            StackChartItem(100, 230, 300),
-            StackChartItem(450, 100, 250),
-            StackChartItem(750, 100, 300),
-            StackChartItem(200, 1000, 500),
-            StackChartItem(1000, 600, 700),
-            StackChartItem(100, 200, 300),
-            StackChartItem(1500, 200, 100)
-        )
-
-        // Get the StackChartItem at the desired index
-        val selectedItem = chartItems[6]
-
-        // Set the values to the corresponding TextViews
-        binding.chartKcalMonthSaccTv.text = selectedItem.carboValue.toString()
-        binding.chartKcalMonthProteinTv.text = selectedItem.proteinValue.toString()
-        binding.chartKcalMonthFatTv.text = selectedItem.fatValue.toString()
-
-
-        // Create and set the adapter
-        val stackBarAdapter = StackBarChartAdapter(chartItems)
-        binding.chartKcalMonthRv.adapter = stackBarAdapter
+        val authService = AuthService(requireContext())
+        authService.setStatKcalView(this)
+        authService.statKcalMonthCheck()
+//
+//        // Create and set the adapter
+//        val monthdateAdapter = DateAdapter(monthdateList)
+//        binding.chartKcalMonthDateRv.adapter = monthdateAdapter
+//
+//        //스택 바 리사이클러뷰 관련 코드
+//        val stackLayoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+//        binding.chartKcalMonthRv.layoutManager = stackLayoutManager
+//
+//        // Example data for the chart items (you can replace this with your actual data)
+//        val chartItems =  listOf<StackChartItem>(
+//            StackChartItem(100, 230, 300),
+//            StackChartItem(450, 100, 250),
+//            StackChartItem(750, 100, 300),
+//            StackChartItem(200, 1000, 500),
+//            StackChartItem(1000, 600, 700),
+//            StackChartItem(100, 200, 300),
+//            StackChartItem(1500, 200, 100)
+//        )
+//
+//        // Get the StackChartItem at the desired index
+//        val selectedItem = chartItems[6]
+//
+//        // Set the values to the corresponding TextViews
+//        binding.chartKcalMonthSaccTv.text = selectedItem.carboValue.toString()
+//        binding.chartKcalMonthProteinTv.text = selectedItem.proteinValue.toString()
+//        binding.chartKcalMonthFatTv.text = selectedItem.fatValue.toString()
+//
+//
+//        // Create and set the adapter
+//        val stackBarAdapter = StackBarChartAdapter(chartItems)
+//        binding.chartKcalMonthRv.adapter = stackBarAdapter
 
     }
 
@@ -94,6 +103,13 @@ class ChartKcalMonthFragment : Fragment() {
         return dateList
     }
 
+    fun getDate(date: String): String {
+        val inputFormat = SimpleDateFormat("yyyy-MM", Locale.getDefault())
+        val dateFormat = SimpleDateFormat("MM", Locale.getDefault())
+
+        return dateFormat.format(inputFormat.parse(date))
+    }
+
     private fun getMonththisDateList(): List<String> {
         val thismonthdateList = mutableListOf<String>()
         val calendar = Calendar.getInstance()
@@ -115,6 +131,50 @@ class ChartKcalMonthFragment : Fragment() {
         return thismonthdateList
     }
 
+    override fun StatKcalDayCheckSuccess(statistic_type: String, kcals: List<DailyKcal>) {
+        TODO("Not yet implemented")
+    }
+
+    override fun StatKcalWeekCheckSuccess(statistic_type: String, kcals: List<WeeklyKcal>) {
+        TODO("Not yet implemented")
+    }
+
+    override fun StatKcalMonthCheckSuccess(statistic_type: String, kcals: List<MonthlyKcal>) {
+        val monthdateLayoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+        binding.chartKcalMonthDateRv.layoutManager = monthdateLayoutManager
+
+        var dateList = mutableListOf<String>()
+        var chartItems = mutableListOf<StackChartItem>()
+
+        for(item in kcals) {
+            dateList.add(getDate(item.month))
+            chartItems.add(StackChartItem(item.fat,item.protein,item.carbohydrate))
+        }
+
+        // Create and set the adapter
+        val monthdateAdapter = DateAdapter(dateList)
+        binding.chartKcalMonthDateRv.adapter = monthdateAdapter
+
+        //스택 바 리사이클러뷰 관련 코드
+        val stackLayoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+        binding.chartKcalMonthRv.layoutManager = stackLayoutManager
+
+        // Example data for the chart items (you can replace this with your actual data)
+
+        // Get the StackChartItem at the desired index
+        val selectedItem = chartItems[chartItems.size - 1]
+
+        // Set the values to the corresponding TextViews
+        binding.chartKcalMonthSaccTv.text = selectedItem.carboValue.toString()
+        binding.chartKcalMonthProteinTv.text = selectedItem.proteinValue.toString()
+        binding.chartKcalMonthFatTv.text = selectedItem.fatValue.toString()
+        binding.chartKcalMonthKcalTv.text = kcals[kcals.size-1].kcal.toString()
+
+
+        // Create and set the adapter
+        val stackBarAdapter = StackBarChartAdapter(chartItems)
+        binding.chartKcalMonthRv.adapter = stackBarAdapter
+    }
 
 
 }

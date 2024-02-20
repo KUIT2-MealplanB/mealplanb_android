@@ -186,19 +186,14 @@ class MenuRecommendAdapter(
         private val SystemHowManyTitleTextView: TextView = itemView.findViewById(R.id.item_menu_recomm_system_amount_title_bold_tv)
         private val SystemHowManyRemainCalTextView: TextView = itemView.findViewById(R.id.item_menu_recomm_system_amount_remain_content_tv)
         private val SystemHowManyMenuNameTextView: TextView = itemView.findViewById(R.id.item_menu_recomm_system_amount_menu_title_tv)
-        private val SystemHowManyMenuPieceTitleTextView: TextView = itemView.findViewById(R.id.item_menu_recomm_system_amount_total_title_tv)
         private val SystemHowManyMenuCalTextView: TextView = itemView.findViewById(R.id.item_menu_recomm_system_amount_menu_content_tv)
-        private val SystemHowManyMenuPieceTextView: TextView = itemView.findViewById(R.id.item_menu_recomm_system_amount_total_content_tv)
 
         fun bind(data: MenuRecommItem.SystemHowManyItem) {
             // Bind data to views
             SystemHowManyRemainCalTextView.text = data.menu_recomm_system_howmany_remain_cal.toString() + "kcal"
-            SystemHowManyMenuNameTextView.text = data.menu_recomm_system_howmany_name + " 1인분"
-            SystemHowManyMenuPieceTitleTextView.text = data.menu_recomm_system_howmany_name + " 조각"
+            SystemHowManyMenuNameTextView.text = data.menu_recomm_system_howmany_name + " " + data.menu_recomm_system_howmany_menu_piece
             SystemHowManyMenuCalTextView.text = data.menu_recomm_system_howmany_menu_cal.toString() + "kcal"
-            SystemHowManyMenuPieceTextView.text = data.menu_recomm_system_howmany_menu_piece.toString() + "개"
-            var calAns = data.menu_recomm_system_howmany_remain_cal / (data.menu_recomm_system_howmany_menu_cal / data.menu_recomm_system_howmany_menu_piece)
-            SystemHowManyTitleTextView.text = "약 " + calAns.toString() + "조각"
+            SystemHowManyTitleTextView.text = data.menu_recomm_system_howmany_menu_piece
         }
     }
 
