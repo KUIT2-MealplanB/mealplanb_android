@@ -68,6 +68,12 @@ interface RetroInterface {
         @Query("mealDate") mealDate: String
     ): Call<BaseResponse<MealListDateResponse>>
 
+    //아바타 외형 수정
+    @PATCH("user/avatar/appearance")
+    fun avatarappearance(
+        @Body request: AvatarAppearanceRequest
+    ): Call<BaseResponse<AvatarAppearanceResponse>>
+
     // 특정 식사 정보 조회
     @GET("food/{foodId}")
     fun checkFoodDetail(@Path("foodId") foodId: Int): Call<BaseResponse<GetFoodResponse>>

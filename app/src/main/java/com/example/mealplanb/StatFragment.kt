@@ -7,8 +7,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import androidx.appcompat.widget.AppCompatButton
 import com.example.mealplanb.databinding.FragmentStatBinding
 import com.example.mealplanb.remote.AuthService
 

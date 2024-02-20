@@ -52,6 +52,14 @@ data class AvatarUpdateResponse(
     @SerializedName("avatar_color") val avatar_color: String
 )
 
+data class AvatarAppearanceRequest(
+    @SerializedName("skeletal_muscle_mass") val skeletal_muscle_mass: Int,
+    @SerializedName("fat_mass") val fat_mass: Int
+)
+
+data class AvatarAppearanceResponse(
+    @SerializedName("avatar_appearance") val avatar_appearance: String
+)
 
 data class GetFoodResponse(
     @SerializedName("name") val name: String,

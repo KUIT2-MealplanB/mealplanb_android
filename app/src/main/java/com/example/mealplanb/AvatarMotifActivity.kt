@@ -1,7 +1,6 @@
 package com.example.mealplanb
 
 import android.content.Context
-import android.content.res.ColorStateList
 import android.content.res.Resources
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
@@ -19,12 +18,15 @@ import android.widget.Toast
 import androidx.cardview.widget.CardView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.coordinatorlayout.widget.CoordinatorLayout
-import androidx.core.content.ContextCompat
 import com.example.mealplanb.databinding.ActivityAvatarMotifBinding
 import com.example.mealplanb.remote.AuthService
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import jp.wasabeef.blurry.Blurry
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class AvatarMotifActivity : AppCompatActivity() {
 
@@ -195,7 +197,7 @@ class AvatarMotifActivity : AppCompatActivity() {
         //아바타 외형 변경하기 버튼을 눌렀을 때
         binding.avatarChangeBtn.setOnClickListener {
             val bottomSheetDialog = BottomSheetDialog(this)
-            val sheetView = layoutInflater.inflate(R.layout.ui_change_avatar,null)
+            val sheetView = layoutInflater.inflate(R.layout.ui_change_avatar, null)
             val layoutParams = CoordinatorLayout.LayoutParams(
                 CoordinatorLayout.LayoutParams.MATCH_PARENT,
                 283.dpToPx() // dp를 pixel로 변환
@@ -207,16 +209,17 @@ class AvatarMotifActivity : AppCompatActivity() {
             sheetView.layoutParams = layoutParams
 
             //닫는 버튼 누르면 닫기
-            val changeAvatarCancel : ImageView = sheetView.findViewById(R.id.change_avatar_cancel)
-            changeAvatarCancel.setOnClickListener{
+            val changeAvatarCancel: ImageView = sheetView.findViewById(R.id.change_avatar_cancel)
+            changeAvatarCancel.setOnClickListener {
                 bottomSheetDialog.dismiss()
             }
 
             //완료 버튼 색깔변경
-            val changeAvatarCompleteCv : CardView = sheetView.findViewById(R.id.change_avatar_complete_cv)
+            val changeAvatarCompleteCv: CardView =
+                sheetView.findViewById(R.id.change_avatar_complete_cv)
 
-            val muscleEt : EditText = sheetView.findViewById(R.id.change_avatar_muscle_et)
-            val fatEt : EditText = sheetView.findViewById(R.id.change_avatar_fat_et)
+            val muscleEt: EditText = sheetView.findViewById(R.id.change_avatar_muscle_et)
+            val fatEt: EditText = sheetView.findViewById(R.id.change_avatar_fat_et)
 
             val textWatcher = object : TextWatcher {
                 override fun afterTextChanged(s: Editable) {
@@ -228,9 +231,67 @@ class AvatarMotifActivity : AppCompatActivity() {
                         changeAvatarCompleteCv.setCardBackgroundColor(Color.parseColor("#D7D7D7"))
                     }
                 }
-
                 override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
                 override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
+            }
+
+            changeAvatarCompleteCv.setOnClickListener { // 완료버튼 눌렀을 때
+                val authService = AuthService(this@AvatarMotifActivity)
+                CoroutineScope(Dispatchers.IO).launch {
+                    val avatarAppearance = authService.updateAvatarAppearance(
+                        muscleEt.text.toString().toInt(),
+                        fatEt.text.toString().toInt()
+                    )
+                    withContext(Dispatchers.Main) {
+
+                        Log.d("아바타 외형 연동 확인","avatarImageID : ${avatarImageID}, avatarAppearance: ${avatarAppearance}")
+                        when (avatarAppearance) {
+                            1 -> {
+                                if (avatarImageID == 1) { //핑
+                                    binding.avatarMotifAvatarIv.setImageResource(R.drawable.avatar_fat_pink_img)
+                                } else if (avatarImageID == 2) { //흰
+                                    binding.avatarMotifAvatarIv.setImageResource(R.drawable.avatar_fat_white_img)
+                                } else if (avatarImageID == 3) { //보
+                                    binding.avatarMotifAvatarIv.setImageResource(R.drawable.avatar_fat_purple_img)
+                                } else if (avatarImageID == 4) { //검
+                                    binding.avatarMotifAvatarIv.setImageResource(R.drawable.avatar_fat_black_img)
+                                } else if (avatarImageID == 5) { //회
+                                    binding.avatarMotifAvatarIv.setImageResource(R.drawable.avatar_fat_gray_img)
+                                }
+                            }
+
+                            2 -> {
+                                if (avatarImageID == 1) { //핑
+                                    binding.avatarMotifAvatarIv.setImageResource(R.drawable.avartar_basic_pink_img)
+                                } else if (avatarImageID == 2) { //흰
+                                    binding.avatarMotifAvatarIv.setImageResource(R.drawable.avartar_basic_white_img)
+                                } else if (avatarImageID == 3) { //보
+                                    binding.avatarMotifAvatarIv.setImageResource(R.drawable.avartar_basic_purple_img)
+                                } else if (avatarImageID == 4) { //검
+                                    binding.avatarMotifAvatarIv.setImageResource(R.drawable.avartar_basic_black_img)
+                                } else if (avatarImageID == 5) { //회
+                                    binding.avatarMotifAvatarIv.setImageResource(R.drawable.avartar_basic_gray_img)
+                                }
+                            }
+
+                            3 -> {
+
+                                if (avatarImageID == 1) { //핑
+                                    binding.avatarMotifAvatarIv.setImageResource(R.drawable.avatar_muscle_pink_img)
+                                } else if (avatarImageID == 2) { //흰
+                                    binding.avatarMotifAvatarIv.setImageResource(R.drawable.avatar_muscle_white_img)
+                                } else if (avatarImageID == 3) { //보
+                                    binding.avatarMotifAvatarIv.setImageResource(R.drawable.avatar_muscle_purple_img)
+                                } else if (avatarImageID == 4) { //검
+                                    binding.avatarMotifAvatarIv.setImageResource(R.drawable.avatar_muscle_black_img)
+                                } else if (avatarImageID == 5) { //회
+                                    binding.avatarMotifAvatarIv.setImageResource(R.drawable.avatar_muscle_gray_img)
+                                }
+                            }
+                        }
+                        bottomSheetDialog.dismiss()
+                    }
+                }
             }
 
             muscleEt.addTextChangedListener(textWatcher)
