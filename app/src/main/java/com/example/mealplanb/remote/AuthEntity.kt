@@ -221,10 +221,15 @@ data class WeightResponse(
     @SerializedName("date") val date: String
 )
 
+data class StatWeightWeekResponse(
+    @SerializedName("statistic_type") val statisticType: String,
+    @SerializedName("weights") val weights: List<WeeklyWeight>
+)
+
 data class WeeklyWeight(
     @SerializedName("week_average_weight") val weekAverageWeight: Double,
-    @SerializedName("week_start_date") val weekStartDate: LocalDate,
-    @SerializedName("week_end_date") val weekEndDate: LocalDate
+    @SerializedName("week_start_date") val weekStartDate: String,
+    @SerializedName("week_end_date") val weekEndDate: String
 )
 
 data class MonthlyWeight(

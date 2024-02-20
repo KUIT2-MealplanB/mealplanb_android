@@ -59,58 +59,6 @@ class ChartWeightDayFragment : Fragment(), StatView, StatWeightView {
         authService.setStatWeightView(this)
         authService.statWeightDayCheck()
 
-//        for(i in dataList.indices) { //indices : dataList의 최소 index ~ 최대 index
-//            chartEntry.add(Entry(i.toFloat(),dataList[i].commitNum.toFloat()))
-//        }
-//
-//        val lineDataSet = LineDataSet(chartEntry,"chartEntry")
-//        lineDataSet.apply {
-//            color = resources.getColor(R.color.point,null)
-//            circleRadius = 0f
-//            lineWidth = 1f
-//            setDrawCircles(false)
-//            setCircleColor(resources.getColor(R.color.point,null))
-//            setDrawHighlightIndicators(false)
-//            setDrawValues(false)
-//            setDrawFilled(true)
-//            fillDrawable = ContextCompat.getDrawable(requireContext(),R.drawable.fade_point_color)
-//        }
-//        binding.chartWeightDayLinechart.apply {
-//            axisLeft.isEnabled = true
-//            axisRight.isEnabled = false
-//            description.isEnabled = true
-//            legend.isEnabled = false
-//            description.isEnabled = false
-//            isDragXEnabled = false
-//            isDragYEnabled = false
-//            isScaleXEnabled = false
-//            isScaleYEnabled = false
-//        }
-//        binding.chartWeightDayLinechart.xAxis.apply {
-//            setDrawGridLines(false)
-//            setDrawAxisLine(true)
-//            setDrawLabels(true)
-//            position = XAxis.XAxisPosition.BOTTOM
-//            valueFormatter = XAxisCustomFormatter(changeDateText(dataList))
-//            textColor = resources.getColor(R.color.mono_gray3,null)
-//            textSize = 12f
-//            labelRotationAngle = 0f
-//            setLabelCount(7,true)
-//        }
-//        binding.chartWeightDayLinechart.axisLeft.apply {
-//            setDrawAxisLine(false)
-//            axisMaximum = maxWeight
-//            axisMinimum = minWeight
-//            setPosition(YAxis.YAxisLabelPosition.OUTSIDE_CHART)
-//            labelCount = 5
-//            textColor = resources.getColor(R.color.mono_gray3,null)
-//            textSize = 12f
-//        }
-//        binding.chartWeightDayLinechart.apply {
-//            data = LineData(lineDataSet)
-//            notifyDataSetChanged()
-//            invalidate()
-//        }
     }
 
     fun changeDateText(dataList : List<ChartCommitData>): List<String> {
@@ -176,6 +124,20 @@ class ChartWeightDayFragment : Fragment(), StatView, StatWeightView {
             chartEntry.add(Entry(i.toFloat(),weights[i].weight.toFloat()))
             dataList.add(ChartCommitData(getDate(weights[i].date.toString()),weights[i].weight.toInt()))
         }
+
+//        dataList = mutableListOf()
+//        dataList.add(ChartCommitData(getDate(weights[0].date.toString()),weights[0].weight.toInt()))
+//        if(dataList.size == 1) {
+//            chartEntry.add(Entry(1.toFloat(),weights[0].weight.toFloat()))
+//            dataList.add(ChartCommitData(getDate(weights[0].date.toString()),weights[0].weight.toInt()))
+//            chartEntry.add(Entry(2.toFloat(),weights[0].weight.toFloat()))
+//            dataList.add(ChartCommitData(getDate(weights[0].date.toString()),weights[0].weight.toInt()))
+//            chartEntry.add(Entry(3.toFloat(),weights[0].weight.toFloat()))
+//            dataList.add(ChartCommitData(getDate(weights[0].date.toString()),weights[0].weight.toInt()))
+//            chartEntry.add(Entry(3.toFloat(),weights[0].weight.toFloat()))
+//            dataList.add(ChartCommitData(getDate(weights[0].date.toString()),weights[0].weight.toInt()))
+//        }
+
 
         Log.d("dataList",dataList.toString())
         val lineDataSet = LineDataSet(chartEntry,"chartEntry")
