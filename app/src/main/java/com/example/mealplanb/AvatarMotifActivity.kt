@@ -39,6 +39,7 @@ class AvatarMotifActivity : AppCompatActivity() {
         binding = ActivityAvatarMotifBinding.inflate(layoutInflater)
         val sharedPref = getSharedPreferences("myPreferences", Context.MODE_PRIVATE)
         var avatarImageID = sharedPref.getInt("avatar",3)
+        val avatarappearance = sharedPref.getInt("avatarAppearance",1)
 
         //초기 컬러 Circle 셋팅
         binding.avatarMotifWhiteCircleIv.setImageResource(R.drawable.white_color_circle_img)
@@ -114,6 +115,52 @@ class AvatarMotifActivity : AppCompatActivity() {
 
             avatarImageID = 2
         }
+
+        when (avatarappearance) {
+            1 -> {
+                if (avatarImageID == 1) { //핑
+                    binding.avatarMotifAvatarIv.setImageResource(R.drawable.avatar_fat_pink_img)
+                } else if (avatarImageID == 2) { //흰
+                    binding.avatarMotifAvatarIv.setImageResource(R.drawable.avatar_fat_white_img)
+                } else if (avatarImageID == 3) { //보
+                    binding.avatarMotifAvatarIv.setImageResource(R.drawable.avatar_fat_purple_img)
+                } else if (avatarImageID == 4) { //검
+                    binding.avatarMotifAvatarIv.setImageResource(R.drawable.avatar_fat_black_img)
+                } else if (avatarImageID == 5) { //회
+                    binding.avatarMotifAvatarIv.setImageResource(R.drawable.avatar_fat_gray_img)
+                }
+            }
+
+            2 -> {
+                if (avatarImageID == 1) { //핑
+                    binding.avatarMotifAvatarIv.setImageResource(R.drawable.avartar_basic_pink_img)
+                } else if (avatarImageID == 2) { //흰
+                    binding.avatarMotifAvatarIv.setImageResource(R.drawable.avartar_basic_white_img)
+                } else if (avatarImageID == 3) { //보
+                    binding.avatarMotifAvatarIv.setImageResource(R.drawable.avartar_basic_purple_img)
+                } else if (avatarImageID == 4) { //검
+                    binding.avatarMotifAvatarIv.setImageResource(R.drawable.avartar_basic_black_img)
+                } else if (avatarImageID == 5) { //회
+                    binding.avatarMotifAvatarIv.setImageResource(R.drawable.avartar_basic_gray_img)
+                }
+            }
+
+            3 -> {
+
+                if (avatarImageID == 1) { //핑
+                    binding.avatarMotifAvatarIv.setImageResource(R.drawable.avatar_muscle_pink_img)
+                } else if (avatarImageID == 2) { //흰
+                    binding.avatarMotifAvatarIv.setImageResource(R.drawable.avatar_muscle_white_img)
+                } else if (avatarImageID == 3) { //보
+                    binding.avatarMotifAvatarIv.setImageResource(R.drawable.avatar_muscle_purple_img)
+                } else if (avatarImageID == 4) { //검
+                    binding.avatarMotifAvatarIv.setImageResource(R.drawable.avatar_muscle_black_img)
+                } else if (avatarImageID == 5) { //회
+                    binding.avatarMotifAvatarIv.setImageResource(R.drawable.avatar_muscle_gray_img)
+                }
+            }
+        }
+
 
         //뒤로 가기 '<' 눌렀을 때
         binding.avatarMotifBackIv.setOnClickListener {
@@ -242,6 +289,12 @@ class AvatarMotifActivity : AppCompatActivity() {
                         muscleEt.text.toString().toInt(),
                         fatEt.text.toString().toInt()
                     )
+
+                    with(sharedPref.edit()){
+                        putInt("avatarAppearance",avatarAppearance)
+                        apply()
+                    }
+
                     withContext(Dispatchers.Main) {
 
                         Log.d("아바타 외형 연동 확인","avatarImageID : ${avatarImageID}, avatarAppearance: ${avatarAppearance}")

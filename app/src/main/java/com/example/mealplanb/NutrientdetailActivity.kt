@@ -18,6 +18,7 @@ class NutrientdetailActivity : AppCompatActivity() {
         val sharedPref = getSharedPreferences("myPreferences", Context.MODE_PRIVATE)
         // SharedPreferences에서 값 가져오기
         val avatarImageID = sharedPref.getInt("avatar",3)
+        val avatarappearance = sharedPref.getInt("avatarAppearance",1)
         val goalCal = sharedPref.getInt("goalCal",1000)
         val nowCal = sharedPref.getInt("nowCal",0)
         // 가져온 값 사용
@@ -28,6 +29,51 @@ class NutrientdetailActivity : AppCompatActivity() {
             4 -> binding.nutrientDetailCharacterIv.setImageResource(R.drawable.avartar_basic_black_img)
             5 -> binding.nutrientDetailCharacterIv.setImageResource(R.drawable.avartar_basic_gray_img)
         }
+        when (avatarappearance) {
+            1 -> {
+                if (avatarImageID == 1) { //핑
+                    binding.nutrientDetailCharacterIv.setImageResource(R.drawable.avatar_fat_pink_img)
+                } else if (avatarImageID == 2) { //흰
+                    binding.nutrientDetailCharacterIv.setImageResource(R.drawable.avatar_fat_white_img)
+                } else if (avatarImageID == 3) { //보
+                    binding.nutrientDetailCharacterIv.setImageResource(R.drawable.avatar_fat_purple_img)
+                } else if (avatarImageID == 4) { //검
+                    binding.nutrientDetailCharacterIv.setImageResource(R.drawable.avatar_fat_black_img)
+                } else if (avatarImageID == 5) { //회
+                    binding.nutrientDetailCharacterIv.setImageResource(R.drawable.avatar_fat_gray_img)
+                }
+            }
+
+            2 -> {
+                if (avatarImageID == 1) { //핑
+                    binding.nutrientDetailCharacterIv.setImageResource(R.drawable.avartar_basic_pink_img)
+                } else if (avatarImageID == 2) { //흰
+                    binding.nutrientDetailCharacterIv.setImageResource(R.drawable.avartar_basic_white_img)
+                } else if (avatarImageID == 3) { //보
+                    binding.nutrientDetailCharacterIv.setImageResource(R.drawable.avartar_basic_purple_img)
+                } else if (avatarImageID == 4) { //검
+                    binding.nutrientDetailCharacterIv.setImageResource(R.drawable.avartar_basic_black_img)
+                } else if (avatarImageID == 5) { //회
+                    binding.nutrientDetailCharacterIv.setImageResource(R.drawable.avartar_basic_gray_img)
+                }
+            }
+
+            3 -> {
+
+                if (avatarImageID == 1) { //핑
+                    binding.nutrientDetailCharacterIv.setImageResource(R.drawable.avatar_muscle_pink_img)
+                } else if (avatarImageID == 2) { //흰
+                    binding.nutrientDetailCharacterIv.setImageResource(R.drawable.avatar_muscle_white_img)
+                } else if (avatarImageID == 3) { //보
+                    binding.nutrientDetailCharacterIv.setImageResource(R.drawable.avatar_muscle_purple_img)
+                } else if (avatarImageID == 4) { //검
+                    binding.nutrientDetailCharacterIv.setImageResource(R.drawable.avatar_muscle_black_img)
+                } else if (avatarImageID == 5) { //회
+                    binding.nutrientDetailCharacterIv.setImageResource(R.drawable.avatar_muscle_gray_img)
+                }
+            }
+        }
+
         var progress = nowCal!! * 100 / goalCal!!
         binding.nutrientDetailProgressPb.updateProgress(progress)
         binding.nutrientDetailProgressPb.setText(nowCal.toString())
@@ -84,6 +130,7 @@ class NutrientdetailActivity : AppCompatActivity() {
         val sharedPref = getSharedPreferences("myPreferences", Context.MODE_PRIVATE)
         // SharedPreferences에서 값 가져오기
         val avatarImageID = sharedPref.getInt("avatar",3)
+        val avatarappearance = sharedPref.getInt("avatarAppearance",1)
         val goalCal = sharedPref.getInt("goalCal",1000)
         val nowCal = sharedPref.getInt("nowCal",0)
         val saccDayTot = sharedPref.getInt("saccDayTot",1)
@@ -100,6 +147,51 @@ class NutrientdetailActivity : AppCompatActivity() {
             4 -> binding.nutrientDetailCharacterIv.setImageResource(R.drawable.avartar_basic_black_img)
             5 -> binding.nutrientDetailCharacterIv.setImageResource(R.drawable.avartar_basic_gray_img)
         }
+        when (avatarappearance) {
+            1 -> {
+                if (avatarImageID == 1) { //핑
+                    binding.nutrientDetailCharacterIv.setImageResource(R.drawable.avatar_fat_pink_img)
+                } else if (avatarImageID == 2) { //흰
+                    binding.nutrientDetailCharacterIv.setImageResource(R.drawable.avatar_fat_white_img)
+                } else if (avatarImageID == 3) { //보
+                    binding.nutrientDetailCharacterIv.setImageResource(R.drawable.avatar_fat_purple_img)
+                } else if (avatarImageID == 4) { //검
+                    binding.nutrientDetailCharacterIv.setImageResource(R.drawable.avatar_fat_black_img)
+                } else if (avatarImageID == 5) { //회
+                    binding.nutrientDetailCharacterIv.setImageResource(R.drawable.avatar_fat_gray_img)
+                }
+            }
+
+            2 -> {
+                if (avatarImageID == 1) { //핑
+                    binding.nutrientDetailCharacterIv.setImageResource(R.drawable.avartar_basic_pink_img)
+                } else if (avatarImageID == 2) { //흰
+                    binding.nutrientDetailCharacterIv.setImageResource(R.drawable.avartar_basic_white_img)
+                } else if (avatarImageID == 3) { //보
+                    binding.nutrientDetailCharacterIv.setImageResource(R.drawable.avartar_basic_purple_img)
+                } else if (avatarImageID == 4) { //검
+                    binding.nutrientDetailCharacterIv.setImageResource(R.drawable.avartar_basic_black_img)
+                } else if (avatarImageID == 5) { //회
+                    binding.nutrientDetailCharacterIv.setImageResource(R.drawable.avartar_basic_gray_img)
+                }
+            }
+
+            3 -> {
+
+                if (avatarImageID == 1) { //핑
+                    binding.nutrientDetailCharacterIv.setImageResource(R.drawable.avatar_muscle_pink_img)
+                } else if (avatarImageID == 2) { //흰
+                    binding.nutrientDetailCharacterIv.setImageResource(R.drawable.avatar_muscle_white_img)
+                } else if (avatarImageID == 3) { //보
+                    binding.nutrientDetailCharacterIv.setImageResource(R.drawable.avatar_muscle_purple_img)
+                } else if (avatarImageID == 4) { //검
+                    binding.nutrientDetailCharacterIv.setImageResource(R.drawable.avatar_muscle_black_img)
+                } else if (avatarImageID == 5) { //회
+                    binding.nutrientDetailCharacterIv.setImageResource(R.drawable.avatar_muscle_gray_img)
+                }
+            }
+        }
+
         var progress = nowCal!! * 100 / goalCal!!
         binding.nutrientDetailProgressPb.updateProgress(progress)
         binding.nutrientDetailTitleCalTv.text = (goalCal - nowCal).toString() + "kcal"

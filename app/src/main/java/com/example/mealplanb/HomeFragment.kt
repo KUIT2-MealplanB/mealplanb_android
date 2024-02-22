@@ -66,6 +66,7 @@ class HomeFragment : Fragment(), DatePickerDialog.OnDateSetListener, SignupView,
         // SharedPreferences에서 값 가져오기
         val nickname = sharedPref.getString("nickname", "낄낄")
         val avatarImageID = sharedPref.getInt("avatar",3)
+        val avatarappearance = sharedPref.getInt("avatarAppearance",1)
 
         // SharedPreferences의 변경을 감지하는 리스너 등록
         sharedPref.registerOnSharedPreferenceChangeListener { sharedPreferences, key ->
@@ -83,9 +84,122 @@ class HomeFragment : Fragment(), DatePickerDialog.OnDateSetListener, SignupView,
                     5 -> binding.mainCharacterIv.setImageResource(R.drawable.avartar_basic_gray_img)
                 }
             }
+            if(key == "avatarAppearance"){
+                val updatedAvatarAppearance = sharedPreferences.getInt(key, 3)
+                when (updatedAvatarAppearance) {
+                    1 -> {
+                        if (avatarImageID == 1) { //핑
+                            binding.mainCharacterIv.setImageResource(R.drawable.avatar_fat_pink_img)
+                        } else if (avatarImageID == 2) { //흰
+                            binding.mainCharacterIv.setImageResource(R.drawable.avatar_fat_white_img)
+                        } else if (avatarImageID == 3) { //보
+                            binding.mainCharacterIv.setImageResource(R.drawable.avatar_fat_purple_img)
+                        } else if (avatarImageID == 4) { //검
+                            binding.mainCharacterIv.setImageResource(R.drawable.avatar_fat_black_img)
+                        } else if (avatarImageID == 5) { //회
+                            binding.mainCharacterIv.setImageResource(R.drawable.avatar_fat_gray_img)
+                        }
+                    }
+
+                    2 -> {
+                        if (avatarImageID == 1) { //핑
+                            binding.mainCharacterIv.setImageResource(R.drawable.avartar_basic_pink_img)
+                        } else if (avatarImageID == 2) { //흰
+                            binding.mainCharacterIv.setImageResource(R.drawable.avartar_basic_white_img)
+                        } else if (avatarImageID == 3) { //보
+                            binding.mainCharacterIv.setImageResource(R.drawable.avartar_basic_purple_img)
+                        } else if (avatarImageID == 4) { //검
+                            binding.mainCharacterIv.setImageResource(R.drawable.avartar_basic_black_img)
+                        } else if (avatarImageID == 5) { //회
+                            binding.mainCharacterIv.setImageResource(R.drawable.avartar_basic_gray_img)
+                        }
+                    }
+
+                    3 -> {
+
+                        if (avatarImageID == 1) { //핑
+                            binding.mainCharacterIv.setImageResource(R.drawable.avatar_muscle_pink_img)
+                        } else if (avatarImageID == 2) { //흰
+                            binding.mainCharacterIv.setImageResource(R.drawable.avatar_muscle_white_img)
+                        } else if (avatarImageID == 3) { //보
+                            binding.mainCharacterIv.setImageResource(R.drawable.avatar_muscle_purple_img)
+                        } else if (avatarImageID == 4) { //검
+                            binding.mainCharacterIv.setImageResource(R.drawable.avatar_muscle_black_img)
+                        } else if (avatarImageID == 5) { //회
+                            binding.mainCharacterIv.setImageResource(R.drawable.avatar_muscle_gray_img)
+                        }
+                    }
+                }
+            }
         }
 
         val gson = Gson()
+        var json = sharedPref.getString("dayMealList",null)
+        dayMealList = gson.fromJson(json,object : TypeToken<ArrayList<MealMainInfo>>() {}.type) ?: arrayListOf(
+            MealMainInfo(false,1,0.0,0,"", 0.0)
+        )
+
+        binding.mainMeallistRv.layoutManager = LinearLayoutManager(requireContext(),LinearLayoutManager.HORIZONTAL,false)
+        adapter = DayMealAdapter(dayMealList,requireContext())
+        binding.mainMeallistRv.adapter = adapter
+
+//        binding.mainMeallistRv.isNestedScrollingEnabled = false
+//        binding.mainMeallistRv.overScrollMode = View.OVER_SCROLL_ALWAYS
+//        binding.mainMeallistSv.isFillViewport = true
+
+//        // 가져온 값 사용
+        binding.mainTitleNicknameTv.text = nickname
+        when(avatarImageID) {
+            1 -> binding.mainCharacterIv.setImageResource(R.drawable.avartar_basic_pink_img)
+            2 -> binding.mainCharacterIv.setImageResource(R.drawable.avartar_basic_white_img)
+            3 -> binding.mainCharacterIv.setImageResource(R.drawable.avartar_basic_purple_img)
+            4 -> binding.mainCharacterIv.setImageResource(R.drawable.avartar_basic_black_img)
+            5 -> binding.mainCharacterIv.setImageResource(R.drawable.avartar_basic_gray_img)
+        }
+        when (avatarappearance) {
+            1 -> {
+                if (avatarImageID == 1) { //핑
+                    binding.mainCharacterIv.setImageResource(R.drawable.avatar_fat_pink_img)
+                } else if (avatarImageID == 2) { //흰
+                    binding.mainCharacterIv.setImageResource(R.drawable.avatar_fat_white_img)
+                } else if (avatarImageID == 3) { //보
+                    binding.mainCharacterIv.setImageResource(R.drawable.avatar_fat_purple_img)
+                } else if (avatarImageID == 4) { //검
+                    binding.mainCharacterIv.setImageResource(R.drawable.avatar_fat_black_img)
+                } else if (avatarImageID == 5) { //회
+                    binding.mainCharacterIv.setImageResource(R.drawable.avatar_fat_gray_img)
+                }
+            }
+
+            2 -> {
+                if (avatarImageID == 1) { //핑
+                    binding.mainCharacterIv.setImageResource(R.drawable.avartar_basic_pink_img)
+                } else if (avatarImageID == 2) { //흰
+                    binding.mainCharacterIv.setImageResource(R.drawable.avartar_basic_white_img)
+                } else if (avatarImageID == 3) { //보
+                    binding.mainCharacterIv.setImageResource(R.drawable.avartar_basic_purple_img)
+                } else if (avatarImageID == 4) { //검
+                    binding.mainCharacterIv.setImageResource(R.drawable.avartar_basic_black_img)
+                } else if (avatarImageID == 5) { //회
+                    binding.mainCharacterIv.setImageResource(R.drawable.avartar_basic_gray_img)
+                }
+            }
+
+            3 -> {
+
+                if (avatarImageID == 1) { //핑
+                    binding.mainCharacterIv.setImageResource(R.drawable.avatar_muscle_pink_img)
+                } else if (avatarImageID == 2) { //흰
+                    binding.mainCharacterIv.setImageResource(R.drawable.avatar_muscle_white_img)
+                } else if (avatarImageID == 3) { //보
+                    binding.mainCharacterIv.setImageResource(R.drawable.avatar_muscle_purple_img)
+                } else if (avatarImageID == 4) { //검
+                    binding.mainCharacterIv.setImageResource(R.drawable.avatar_muscle_black_img)
+                } else if (avatarImageID == 5) { //회
+                    binding.mainCharacterIv.setImageResource(R.drawable.avatar_muscle_gray_img)
+                }
+            }
+        }
 //        var json = sharedPref.getString("dayMealList",null)
 //        dayMealList = gson.fromJson(json,object : TypeToken<ArrayList<MealMainInfo>>() {}.type) ?: arrayListOf(
 //            MealMainInfo(false,1,0.0,0,"", 0.0)
@@ -103,7 +217,7 @@ class HomeFragment : Fragment(), DatePickerDialog.OnDateSetListener, SignupView,
 //            3 -> binding.mainCharacterIv.setImageResource(R.drawable.avartar_basic_purple_img)
 //            4 -> binding.mainCharacterIv.setImageResource(R.drawable.avartar_basic_black_img)
 //            5 -> binding.mainCharacterIv.setImageResource(R.drawable.avartar_basic_gray_img)
-//        }
+//     
 
         //끼니 slot 추가
         binding.mainDaymealAddCv.setOnClickListener {
