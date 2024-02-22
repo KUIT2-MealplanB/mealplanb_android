@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/item_menu_recomm_search_menu_cl"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingVertical="13dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    
+    <TextView
+        android:id="@+id/item_menu_recomm_search_menu_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginStart="44dp"
+        android:text="굽네치킨 고추바사삭"
+        android:textSize="16sp"
+        android:textColor="@color/mono_black"
+        android:fontFamily="@font/pretendard_medium"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

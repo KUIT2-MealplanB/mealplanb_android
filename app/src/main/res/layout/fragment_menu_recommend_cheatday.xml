@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".MenuRecommendCheatdayFragment">
+
+    <LinearLayout
+        android:visibility="invisible"
+        android:id="@+id/menu_recomm_cheatday_button_lv"
+        android:layout_width="match_parent"
+        android:layout_height="156dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:gravity="center|top">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/menu_recomm_cheatday_btn_cl"
+            android:layout_width="154dp"
+            android:layout_height="154dp"
+            android:orientation="vertical"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="@drawable/btn"
+            android:layout_marginEnd="12dp"
+            android:elevation="5dp"
+            android:outlineProvider="background"
+            >
+
+            <TextView
+                android:id="@+id/menu_recomm_cheatday_re_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:textSize="16dp"
+                android:text="다시 식단"
+                android:textColor="#7C5CF8"
+                android:fontFamily="@font/pretendard_black"
+                android:layout_marginTop="24dp"
+                android:layout_marginStart="20dp"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginTop="24dp"
+                app:layout_constraintStart_toEndOf="@+id/menu_recomm_cheatday_re_tv"
+                android:textSize="16dp"
+                android:text="을"
+                android:fontFamily="@font/pretendard_regular"
+                />
+
+            <TextView
+                android:id="@+id/menu_recomm_cheatday_select_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/menu_recomm_cheatday_re_tv"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginStart="20dp"
+                android:textSize="16dp"
+                android:text="고를래요"
+                android:fontFamily="@font/pretendard_regular"
+                />
+
+            <TextView
+                android:id="@+id/menu_recomm_cheatday_what_explain_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="12dp"
+                android:text="같은 칼로리의\n다른 메뉴를 추천드려요"
+                android:layout_marginTop="12dp"
+                android:textColor="@color/mono_gray4"
+                android:layout_marginStart="20dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/menu_recomm_cheatday_select_tv"
+                />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/menu_recomm_cheatday_btn_select_cl"
+            android:layout_width="154dp"
+            android:layout_height="154dp"
+            android:orientation="vertical"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="@drawable/btn"
+            android:elevation="5dp"
+            android:outlineProvider="background"
+            >
+
+            <TextView
+                android:id="@+id/menu_recomm_cheatday_this_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:textSize="16dp"
+                android:text="이 음식"
+                android:textColor="#7C5CF8"
+                android:fontFamily="@font/pretendard_black"
+                android:layout_marginTop="24dp"
+                android:layout_marginStart="20dp"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toEndOf="@id/menu_recomm_cheatday_this_tv"
+                android:fontFamily="@font/pretendard_regular"
+                android:layout_marginTop="24dp"
+                android:textSize="16dp"
+                android:text="으로"
+                />
+
+
+            <TextView
+                android:id="@+id/menu_recomm_cheatday_how_eat_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/menu_recomm_cheatday_this_tv"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginStart="20dp"
+                android:textSize="16dp"
+                android:text="먹을래요"
+                android:fontFamily="@font/pretendard_regular"
+                />
+
+            <TextView
+                android:id="@+id/menu_recomm_cheatday_menu_explain_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="12dp"
+                android:text="식단 입력까지\n자동으로 완료돼요"
+                android:layout_marginTop="12dp"
+                android:layout_marginStart="20dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/menu_recomm_cheatday_how_eat_tv"
+                android:textColor="@color/mono_gray4"
+                />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/menu_recomm_cheat_category_lv"
+        android:layout_width="match_parent"
+        android:layout_height="170dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:orientation="vertical"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:gravity="center|top">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:gravity="center"
+            android:layout_marginBottom="8dp"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="74dp"
+                android:layout_height="74dp">
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/menu_recomm_cheat_category_back_cv"
+                    android:layout_gravity="center"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+
+                    android:layout_marginStart="9dp"
+                    app:cardCornerRadius="100dp">
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/back_arrow_ic"
+                        android:layout_gravity="center"/>
+
+                </androidx.cardview.widget.CardView>
+            </LinearLayout>
+
+
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/menu_recomm_cheat_category_chicken_btn"
+                android:layout_width="74dp"
+                android:layout_height="74dp"
+                android:background="@drawable/btn"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:text="치킨"
+                android:fontFamily="@font/pretendard_regular"
+                android:textSize="12sp"/>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/menu_recomm_cheat_category_pizza_btn"
+                android:layout_width="74dp"
+                android:layout_height="74dp"
+                android:background="@drawable/btn"
+                android:text="피자"
+                android:fontFamily="@font/pretendard_regular"
+                android:textSize="12sp"/>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/menu_recomm_cheat_category_burger_btn"
+                android:layout_width="74dp"
+                android:layout_height="74dp"
+                android:background="@drawable/btn"
+                android:layout_marginStart="8dp"
+                android:text="버거"
+                android:fontFamily="@font/pretendard_regular"
+                android:textSize="12sp"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/menu_recomm_cheat_category_noodle_btn"
+                android:layout_width="74dp"
+                android:layout_height="74dp"
+                android:background="@drawable/btn"
+                android:text="면류"
+                android:fontFamily="@font/pretendard_regular"
+                android:textSize="12sp"/>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/menu_recomm_cheat_category_snackbar_btn"
+                android:layout_width="74dp"
+                android:layout_height="74dp"
+                android:background="@drawable/btn"
+                android:layout_marginEnd="8dp"
+                android:layout_margin="8dp"
+                android:text="분식"
+                android:fontFamily="@font/pretendard_regular"
+                android:textSize="12sp"/>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/menu_recomm_cheat_category_pork_btn"
+                android:layout_width="74dp"
+                android:layout_height="74dp"
+                android:background="@drawable/btn"
+                android:text="족발/보쌈"
+                android:fontFamily="@font/pretendard_regular"
+                android:textSize="12sp"/>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/menu_recomm_cheat_category_dessert_btn"
+                android:layout_width="74dp"
+                android:layout_height="74dp"
+                android:background="@drawable/btn"
+                android:layout_marginStart="8dp"
+                android:text="디저트"
+                android:fontFamily="@font/pretendard_regular"
+                android:textSize="12sp"/>
+
+
+
+        </LinearLayout>
+
+
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="10dp">
+
+    <TextView
+        android:id="@+id/mymeal_name_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="16dp"
+        android:fontFamily="@font/pretendard_black"
+        android:layout_alignParentStart="true"/>
+
+    <TextView
+        android:id="@+id/mymeal_details_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="14dp"
+        android:layout_below="@+id/mymeal_name_tv"
+        android:layout_alignParentStart="true"/>
+
+    <TextView
+        android:id="@+id/mymeal_plus_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="+"
+        android:textSize="16dp"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:fontFamily="@font/pretendard_black"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#CCCCCC"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="30dp" />
+</RelativeLayout>
