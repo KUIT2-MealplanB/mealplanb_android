@@ -361,7 +361,7 @@ class AuthService(private val context: Context) {
     }
 
 
-    fun updateMyMeal(favorite_meal_name: String, foods: List<FoodList>) {
+    fun mymealupdate(favorite_meal_name: String, foods: List<FoodList>) {
         val request = mymealData(favorite_meal_name, foods)
         authService.mymealupdate(request).enqueue(object : Callback<BaseResponse<Unit>> {
             override fun onResponse(
@@ -373,18 +373,6 @@ class AuthService(private val context: Context) {
                     // response의 성공 여부를 확인
                     Toast.makeText(context, "식단 등록 성공", Toast.LENGTH_SHORT).show()
                     Log.d("식단 등록 정보", response.body().toString())
-
-//         authService.avatarupdate(avatarData).enqueue(object : Callback<BaseResponse<AvatarUpdateResponse>> {
-//             override fun onResponse(
-//                 call: Call<BaseResponse<AvatarUpdateResponse>>,
-//                 response: Response<BaseResponse<AvatarUpdateResponse>>
-//             ) {
-//                 if (response.isSuccessful) {
-//                     val avatarInfo = response.body()?.result
-//                     Log.d(
-//                         "아바타 정보 수정",
-//                         "Member ID: ${avatarInfo?.member_id}, Nickname: ${avatarInfo?.nickname}, Avatar color: ${avatarInfo?.avatar_color}"
-//                     )
                 } else {
                     // 서버에서는 응답을 했지만, 등록 실패와 같은 이유로 성공적인 응답이 아닌 경우, Toast 메시지
                     val gson = Gson()

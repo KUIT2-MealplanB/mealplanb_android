@@ -23,6 +23,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mealplanb.databinding.FragmentAddMealListBinding
 import com.example.mealplanb.remote.AuthService
 import com.example.mealplanb.remote.Food
+import com.example.mealplanb.remote.FoodList
 import com.example.mealplanb.remote.FoodListAddRequestFoodItem
 import com.example.mealplanb.remote.HomeMealView
 import com.example.mealplanb.remote.MealFoodResponseFoodList
@@ -45,48 +46,12 @@ class AddMealListFragment : Fragment(), HomeMealView {
 
         val sharedPreferences = requireActivity().getSharedPreferences("myPreferences", MODE_PRIVATE)
         val gson = Gson()
-//        val selectedMealNum = sharedPreferences.getInt("selectedMealNum",1)
-//        val foodListID = "addFoodList" + selectedMealNum.toString()
         val mealID = sharedPreferences.getInt("nMeal",0)
         Log.d("mealId",mealID.toString())
-//        var json = sharedPreferences.getString(foodListID,null)
-//        var foodListEmptyFlag : Boolean
-//        addFoodList = gson.fromJson(json, object : TypeToken<ArrayList<MealFoodResponseFoodList>>() {}.type) ?: arrayListOf()
-//        if(addFoodList.size > 0) {
-//            foodListEmptyFlag = false
-//        } else {
-//            foodListEmptyFlag = true
-//        }
 
         val authService = AuthService(requireContext())
         authService.setHomeMealView(this)
         authService.foodListCheck(mealID.toString())
-
-//        var json = sharedPreferences.getString("nowAddFoodList",null)
-//        mealList = gson.fromJson(json,object : TypeToken<MealFoodResponseFoodList>() {}.type) ?: arrayListOf()
-//        if(mealList.size == 0) {
-//            json = sharedPreferences.getString("nowAddMeal",null)
-//
-//            mealList.add(MealFoodResponseFoodList())
-//            val authService = AuthService(requireContext())
-//            authService.setHomeMealView(this)
-//            authService.foodListCheck(mealID.toString())
-//        } else {
-//            binding.meallistRv.layoutManager = LinearLayoutManager(requireContext(),LinearLayoutManager.VERTICAL,false)
-//            binding.meallistRv.adapter = AddMealListAdapter(mealList)
-//        }
-
-//        for(item in addFoodList) {
-//                Meal(
-//                    item.meal_name,
-//                    item.meal_weight.toDouble(),
-//                    item.meal_cal.toDouble(),
-//                    item.sacc_gram.toDouble(),
-//                    item.protein_gram.toDouble(),
-//                    item.fat_gram.toDouble()
-//                )
-//            )
-//        }
 
         //세트 저장 버튼을 눌렀을 때
         binding.addmeallistSetSaveLl.setOnClickListener {
@@ -134,6 +99,7 @@ class AddMealListFragment : Fragment(), HomeMealView {
                             var json = sharedPreferences.getString("myMadeList", null)
 
                             val myMadeList: ArrayList<Meal> = gson.fromJson(json, object : TypeToken<ArrayList<Meal>>() {}.type) ?: arrayListOf()
+                            val foods: ArrayList<FoodList> = ArrayList()
 
                             //음식별로 food_id 저장하는 내용이 필요 -> Meal class 수정 필요
                             var totalWeight = 0.0
@@ -145,23 +111,22 @@ class AddMealListFragment : Fragment(), HomeMealView {
                             for (meal in mealList) {
                                 totalWeight += meal.quantity
                                 totalCal += meal.kcal
-//                                totalCarb += meal.sacc_gram
-//                                totalProtein += meal.protein_gram
-//                                totalFat += meal.fat_gram
+                            }
+
+                            for(meal in mealList){
+                                foods.add(FoodList(meal.foodId,meal.quantity))
                             }
 
                             val mealName = nameEt.text.toString().trim { it <= '\n' }
                             myMadeList.add(Meal(mealName, totalWeight, totalCal, totalCarb, totalProtein, totalFat))
 
+                            authService.mymealupdate(mealName,foods)
                             val editor = sharedPreferences.edit()
                             val newJson = gson.toJson(myMadeList)
                             editor.putString("myMadeList", newJson)
                             editor.apply()
 
                             bottomSheetDialog.dismiss()
-
-                            //API관련
-//                            val authService = AuthService(requireContext())
                         }
                     } else {
                         setsaveCompleteCv.setCardBackgroundColor(Color.parseColor("#D7D7D7"))
@@ -224,33 +189,6 @@ class AddMealListFragment : Fragment(), HomeMealView {
             newJson = gson.toJson(emptyMeal)
             editor.putString("nowAddMeal",newJson)
             editor.apply()
-
-//            val editor = sharedPreferences.edit()
-
-            // 이미지 리스트를 생성하고 랜덤하게 하나를 선택
-//            val imageList = listOf(R.drawable.item_hamburger_img,
-//                R.drawable.item_salad_img,
-//                R.drawable.item_rice_img,
-//                R.drawable.item_meal_img,
-//                R.drawable.item_egg_img,
-//                R.drawable.item_pudding_img,
-//                R.drawable.item_sugar_img)
-//            val randomImage = imageList.random()
-
-//            val json = MealMainInfo(true, 1, tot_cal, randomImage)
-//            val newJson = gson.toJson(json)
-//            editor.putString("MealMainInfo", newJson)
-//            editor.apply()
-
-            //home 화면에 표시될 끼니 정보 갱신
-//            var json = sharedPreferences.getString("dayMealList",null)
-//            var dayMealList = gson.fromJson(json,object : TypeToken<ArrayList<MealMainInfo>>() {}.type) ?: arrayListOf(
-//                MealMainInfo(false,1,0.0,0, "", 0.0)
-//            )
-//            dayMealList.set(selectedMealNum-1, MealMainInfo(true,selectedMealNum,tot_cal,randomImage,"", 0.0))
-//            val newJson = gson.toJson(dayMealList)
-//            editor.putString("dayMealList",newJson)
-//            editor.apply()
 
             requireActivity().supportFragmentManager.beginTransaction().replace(R.id.main_frm, HomeFragment()).commit()
         }

@@ -141,7 +141,7 @@ class SearchMealFragment : Fragment(), SignupView, SearchFoodView {
             binding.searchMealInputEt.hint = "나의 식단"
             binding.searchMealInputEt.setHintTextColor(Color.parseColor("#7C5CF8"))
 
-            // SharedPreferences에서 oftenFoodList 데이터 읽어오기
+            // SharedPreferences에서 myMadeList 데이터 읽어오기
             val sharedPreferences =
                 requireActivity().getSharedPreferences("myPreferences", Context.MODE_PRIVATE)
             val gson = Gson()
@@ -167,7 +167,7 @@ class SearchMealFragment : Fragment(), SignupView, SearchFoodView {
                 binding.searchMealInputEt.clearFocus()
             }
 
-            //즐겨찾기에 추가한 데이터를 관리하는 리사이클러뷰
+            //데이터를 관리하는 리사이클러뷰
             binding.searchMealMyRv.adapter = oftenadapter
             binding.searchMealMyRv.layoutManager = LinearLayoutManager(requireContext())
 
@@ -194,12 +194,6 @@ class SearchMealFragment : Fragment(), SignupView, SearchFoodView {
                 lastClickedButton = " "
             }
 
-            binding.searchMealInitOutIv.setOnClickListener {
-                lastClickedButton = " "
-                requireActivity().supportFragmentManager.beginTransaction()
-                    .replace(R.id.main_frm, HomeFragment()).commit()
-
-            }
             binding.searchMealInitOutIv.setOnClickListener {
                 lastClickedButton = " "
                 requireActivity().supportFragmentManager.beginTransaction()
