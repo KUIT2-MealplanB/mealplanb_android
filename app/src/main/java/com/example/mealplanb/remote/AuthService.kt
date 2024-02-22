@@ -382,8 +382,12 @@ class AuthService(private val context: Context) {
                     Log.d("식단 등록 실패 정보", errorResponse.toString())
 
                     // 실패 코드에 따른 메시지를 표시
-                    Toast.makeText(context, "식단 등록 실패", Toast.LENGTH_SHORT).show()
-                    Log.d("식단 등록 실패 코드", errorResponse?.code.toString())
+                    if(errorResponse?.code.toString() == "7005"){
+                        Toast.makeText(context, "해당 이름을 가진 식단이 이미 존재합니다.", Toast.LENGTH_SHORT).show()
+                    }else{
+                        Toast.makeText(context, "식단 등록 실패", Toast.LENGTH_SHORT).show()
+                        Log.d("식단 등록 실패 코드", errorResponse?.code.toString())
+                    }
                 }
             }
 
