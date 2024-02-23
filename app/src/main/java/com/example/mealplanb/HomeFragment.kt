@@ -18,7 +18,9 @@ import com.example.mealplanb.remote.Food
 import com.example.mealplanb.remote.HomeMealView
 import com.example.mealplanb.remote.MealFoodResponseFoodList
 import com.example.mealplanb.remote.MealListDateResponseMeals
+import com.example.mealplanb.remote.MyMealFoodListResponse
 import com.example.mealplanb.remote.SignupView
+import com.example.mealplanb.remote.mymealResponse
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import java.lang.reflect.Type
@@ -133,10 +135,10 @@ class HomeFragment : Fragment(), DatePickerDialog.OnDateSetListener, SignupView,
             }
         }
 
-        val gson = Gson()
+//        val gson = Gson()
 //        var json = sharedPref.getString("dayMealList",null)
 //        dayMealList = gson.fromJson(json,object : TypeToken<ArrayList<MealMainInfo>>() {}.type) ?: arrayListOf(
-//            MealMainInfo(1,0.0,0,"", 0.0)
+//            MealMainInfo(false,1,0.0,0,"", 0.0)
 //        )
 
         binding.mainMeallistRv.layoutManager = LinearLayoutManager(requireContext(),LinearLayoutManager.HORIZONTAL,false)
@@ -490,13 +492,6 @@ class HomeFragment : Fragment(), DatePickerDialog.OnDateSetListener, SignupView,
         binding.mainTitleNicknameTv.text = nickname
         binding.mainTitleContent1Tv.text = "님의 " + elapsed_days.toString() +"일차"
         binding.mainTitleCalTv.text = remaining_kcal.toString() + "kcal"
-        when(avatar_color) {
-            "#FFD3FA" -> binding.mainCharacterIv.setImageResource(R.drawable.avartar_basic_pink_img)
-            "#FFFFFF" -> binding.mainCharacterIv.setImageResource(R.drawable.avartar_basic_white_img)
-            "#7C5CF8" -> binding.mainCharacterIv.setImageResource(R.drawable.avartar_basic_purple_img)
-            "#220435" -> binding.mainCharacterIv.setImageResource(R.drawable.avartar_basic_black_img)
-            else -> binding.mainCharacterIv.setImageResource(R.drawable.avartar_basic_gray_img)
-        }
         binding.mainProgressbgPb.setText(target_kcal.toString())
         binding.mainSaccTotalTv.text = "/" + target_carbohydrate.toString() + "g"
         binding.mainProteinTotalTv.text = "/" + target_protein.toString() + "g"
@@ -564,6 +559,14 @@ class HomeFragment : Fragment(), DatePickerDialog.OnDateSetListener, SignupView,
     }
 
     override fun handleFavoriteFoodResponse(favoriteFoodResponse: List<Food>) {
+        TODO("Not yet implemented")
+    }
+
+    override fun handleMyMealResponse(myMealResponse: List<mymealResponse>) {
+        TODO("Not yet implemented")
+    }
+
+    override fun handleMyMealFoodListResponse(myMealFoodListResponse: List<MyMealFoodListResponse>) {
         TODO("Not yet implemented")
     }
 

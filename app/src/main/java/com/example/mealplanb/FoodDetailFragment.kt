@@ -1,6 +1,6 @@
 package com.example.mealplanb
 
-import SearchCategoryAdapter
+import MyMealAdapter
 import android.content.Context
 import android.content.Context.MODE_PRIVATE
 import android.os.Bundle
@@ -16,9 +16,7 @@ import com.example.mealplanb.databinding.FragmentFooddetailBinding
 import com.example.mealplanb.remote.AuthService
 import com.example.mealplanb.remote.FoodSearchResponse
 import com.example.mealplanb.remote.MealFoodResponseFoodList
-import com.example.mealplanb.remote.MealListDateResponseMeals
 import com.example.mealplanb.remote.SearchFoodView
-import com.example.mealplanb.remote.SignupView
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 
@@ -37,7 +35,7 @@ class FoodDetailFragment : Fragment(), SearchFoodView {
     private var originkcal: Double = 362.0
     private val foodName: String = "로제파스타"
 
-    lateinit var oftenadapter: SearchCategoryAdapter // 즐겨찾기 RecyclerView에 사용할 어댑터
+    lateinit var oftenadapter: MyMealAdapter // 즐겨찾기 RecyclerView에 사용할 어댑터
 
     override fun onResume() {
         super.onResume()
@@ -80,24 +78,6 @@ class FoodDetailFragment : Fragment(), SearchFoodView {
 //        }
 
         var gson = Gson()
-//        var json = sharedPreferences.getString("Key", null)
-//        // val data1 = gson.fromJson(json, object : TypeToken<Meal>() {}.type) ?: Meal("null",0.0,0.0, 0.0,0.0,0.0)
-//
-//
-//        food = FoodItem(foodName.toString(), originSacc, originProtein, originFat, originkcal)
-//
-//        Log.d("fooddetailfragment 내용 확인","${foodName},${originMealWeight},${originkcal},${originSacc},${originProtein},${originFat}")
-//
-//        // Initialize food details using the data class
-//        meal = Meal(foodName?:"", originMealWeight,originkcal, originSacc, originProtein, originFat)
-
-        // 음식 정보를 UI에 설정
-//        binding.detailFoodNameTv.text = meal.meal_name
-//        binding.detailFoodSaccSizeTv.text = meal.sacc_gram.toInt().toString()
-//        binding.detailFoodProteinSizeTv.text = meal.protein_gram.toInt().toString()
-//        binding.detailFoodFatSizeTv.text = meal.fat_gram.toInt().toString()
-//        binding.detailFoodKcalNumTv.text = meal.meal_cal.toInt().toString()
-//        binding.detailFoodMealWeightEt.setText(meal.meal_weight.toInt().toString())
 
         // Minus button click listener
         binding.detailFoodMinusTv.setOnClickListener {
@@ -164,47 +144,6 @@ class FoodDetailFragment : Fragment(), SearchFoodView {
             requireActivity().supportFragmentManager.beginTransaction().replace(R.id.main_frm, SearchMealFragment()).commit()
             requireActivity().overridePendingTransition(androidx.appcompat.R.anim.abc_slide_in_top,androidx.appcompat.R.anim.abc_slide_out_bottom)
         }
-
-        // favoriteIv를 클릭했을 때 SharedPreferences를 통해 데이터 저장
-/*        binding.detailFoodFavoriteIv.setOnClickListener {
-            //말풍선 "즐겨찾기에 추가되었어요"
-            binding.detailFoodFavoriteCv.visibility = View.VISIBLE
-            var json = sharedPreferences.getString("addFoodListOften", null)
-            addFoodListOften = gson.fromJson(json, object : TypeToken<ArrayList<Meal>>() {}.type) ?: arrayListOf<Meal>()
-
-            // 이미 추가된 경우 중복 방지
-            if (!addFoodListOften.contains(meal)) {
-                addFoodListOften.add(meal)
-                binding.detailFoodFavoriteIv.setImageResource(R.drawable.star_full_ic)
-
-                // SharedPreferences에서 기존 데이터 불러오기
-                json = sharedPreferences.getString("oftenFoodList", null)
-
-                // 기존 데이터가 있다면 불러와서 ArrayList로 변환
-                var oftenFoodList: ArrayList<Meal> = gson.fromJson(json, object : TypeToken<ArrayList<Meal>>() {}.type) ?: arrayListOf()
-
-                // 중복 체크
-                if (!oftenFoodList.contains(meal)) {
-                    // 새로운 데이터를 oftenFoodList에 추가
-                    oftenFoodList.add(meal)
-
-                    // SharedPreferences에 새로운 리스트를 다시 저장
-                    val editor = sharedPreferences.edit()
-                    val newJson = gson.toJson(oftenFoodList)
-                    editor.putString("oftenFoodList", newJson)
-                    editor.apply()
-
-                } else {
-                    // 이미 즐겨찾기된 경우 Toast 메시지 표시
-                    Toast.makeText(requireContext(), "이미 즐겨찾기 되어있습니다.", Toast.LENGTH_SHORT).show()
-                    binding.detailFoodFavoriteIv.setImageResource(R.drawable.star_full_ic)
-                }
-            } else {
-                // 이미 추가된 경우 Toast 메시지 표시
-                Toast.makeText(requireContext(), "이미 즐겨찾기 되어있습니다.", Toast.LENGTH_SHORT).show()
-                binding.detailFoodFavoriteIv.setImageResource(R.drawable.star_full_ic)
-            }
-        }*/
 
         // 즐겨찾기 상태를 나타내는 변수
         var isFavorite = false
