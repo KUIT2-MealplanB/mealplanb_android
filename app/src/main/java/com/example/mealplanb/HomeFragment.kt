@@ -134,10 +134,10 @@ class HomeFragment : Fragment(), DatePickerDialog.OnDateSetListener, SignupView,
         }
 
         val gson = Gson()
-        var json = sharedPref.getString("dayMealList",null)
-        dayMealList = gson.fromJson(json,object : TypeToken<ArrayList<MealMainInfo>>() {}.type) ?: arrayListOf(
-            MealMainInfo(false,1,0.0,0,"", 0.0)
-        )
+//        var json = sharedPref.getString("dayMealList",null)
+//        dayMealList = gson.fromJson(json,object : TypeToken<ArrayList<MealMainInfo>>() {}.type) ?: arrayListOf(
+//            MealMainInfo(1,0.0,0,"", 0.0)
+//        )
 
         binding.mainMeallistRv.layoutManager = LinearLayoutManager(requireContext(),LinearLayoutManager.HORIZONTAL,false)
         adapter = DayMealAdapter(dayMealList,requireContext())
@@ -481,7 +481,11 @@ class HomeFragment : Fragment(), DatePickerDialog.OnDateSetListener, SignupView,
         trans_fat: Int,
         cholesterol: Int
     ) {
-        binding.mainProgressPb.updateProgress(kcal * 100 / (kcal + remaining_kcal))
+        if(kcal * 100 / (kcal + remaining_kcal) > 100) {
+            binding.mainProgressPb.updateProgress(100)
+        } else {
+            binding.mainProgressPb.updateProgress(kcal * 100 / (kcal + remaining_kcal))
+        }
 
         binding.mainTitleNicknameTv.text = nickname
         binding.mainTitleContent1Tv.text = "님의 " + elapsed_days.toString() +"일차"
