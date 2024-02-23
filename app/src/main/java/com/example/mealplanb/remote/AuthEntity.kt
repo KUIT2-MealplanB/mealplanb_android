@@ -71,15 +71,37 @@ data class GetFoodResponse(
     @SerializedName("isFavorite") val isFavorite : Boolean
 )
 
-
+//나의 식단 데이터
 data class mymealData(
     @SerializedName("favorite_meal_name") val favorite_meal_name:String,
     @SerializedName("foods") val foods: List<FoodList>
 )
 
+//나의 식단 안의 음식 데이터
 data class FoodList(
     @SerializedName("food_id") val food_id: Int,
     @SerializedName("quantity") val quantity: Int
+)
+
+//나의 식단 조회
+data class mymealResponse(
+    @SerializedName("favorite_meal_id") val favorite_meal_id : Int,
+    @SerializedName("favorite_meal_name") val favorite_meal_name : String,
+    @SerializedName("meal_kcal") val meal_kcal : Int,
+    @SerializedName("food_count") val food_count : Int
+)
+data class MyMealListBaseResponse (
+    @SerializedName("code") val code : Int,
+    @SerializedName("message") val message : String,
+    @SerializedName("result") val result : ArrayList<mymealResponse>
+)
+
+//나의 식단 식사 리스트 response
+data class MyMealFoodListResponse(
+    @SerializedName("food_id") val food_id: Int,
+    @SerializedName("food_name") val food_name: String,
+    @SerializedName("quantity") val quantity: Int,
+    @SerializedName("kcal") val kcal: Int
 )
 
 data class Plan(
