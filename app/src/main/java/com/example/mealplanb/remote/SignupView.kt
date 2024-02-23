@@ -16,7 +16,11 @@ interface SignupView {
     fun mealListDayCheckSuccess(meal_date: String,meals: List<MealListDateResponseMeals>)
     fun handleFavoriteFoodResponse(favoriteFoodResponse: List<Food>)
 
+    //나의 식단 조회
     fun handleMyMealResponse(myMealResponse: List<mymealResponse>)
+
+    //나의 식단 식사 리스트 조회
+    fun handleMyMealFoodListResponse(myMealFoodListResponse: List<MyMealFoodListResponse>)
 }
 
 interface SearchFoodView{

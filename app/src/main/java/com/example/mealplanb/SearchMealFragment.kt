@@ -22,6 +22,7 @@ import com.example.mealplanb.remote.AuthService
 import com.example.mealplanb.remote.Food
 import com.example.mealplanb.remote.FoodSearchResponse
 import com.example.mealplanb.remote.MealListDateResponseMeals
+import com.example.mealplanb.remote.MyMealFoodListResponse
 import com.example.mealplanb.remote.SearchFoodView
 import com.example.mealplanb.remote.SignupView
 import com.example.mealplanb.remote.mymealResponse
@@ -180,15 +181,18 @@ class SearchMealFragment : Fragment(), SignupView, SearchFoodView {
         }
 
         mymealadapter = MyMealAdapter(myMadeList, { item ->
+            // favorite_meal_id가 설정된 상태인지 확인
+            Log.d("MyMealAdapter", "클릭한 item: $item")
             val sharedPreferences =
                 requireActivity().getSharedPreferences("myPreferences", Context.MODE_PRIVATE)
             val gson = Gson()
             val editor = sharedPreferences.edit()
             var newJson = gson.toJson(item)
+            Log.d("SearchMealFragment에서 잘 저장되는지 확인", "저장될 내용: $newJson") // 로그 추가
             editor.putString("Key", newJson)
             editor.apply()
             requireActivity().supportFragmentManager.beginTransaction()
-                .replace(R.id.main_frm, FoodDetailFragment()).commit()
+                .replace(R.id.main_frm, MealDetailFragment()).commit()
             requireActivity().overridePendingTransition(
                 androidx.appcompat.R.anim.abc_slide_in_bottom,
                 androidx.appcompat.R.anim.abc_slide_out_top
@@ -448,8 +452,19 @@ class SearchMealFragment : Fragment(), SignupView, SearchFoodView {
         }
 
         mymealadapter = MyMealAdapter(newMealList, { item ->
+            // favorite_meal_id가 설정된 상태인지 확인
+            Log.d("MyMealAdapter", "클릭한 item: $item")
+            val sharedPreferences =
+                requireActivity().getSharedPreferences("myPreferences", Context.MODE_PRIVATE)
+            val gson = Gson()
+            val editor = sharedPreferences.edit()
+            var newJson = gson.toJson(item)
+            Log.d("SearchMealFragment에서 잘 저장되는지 확인", "저장될 내용: $newJson") // 로그 추가
+            editor.putString("Key", newJson)
+            editor.apply()
+
             requireActivity().supportFragmentManager.beginTransaction()
-                .replace(R.id.main_frm, FoodDetailFragment()).commit()
+                .replace(R.id.main_frm, MealDetailFragment()).commit()
             requireActivity().overridePendingTransition(
                 androidx.appcompat.R.anim.abc_slide_in_bottom,
                 androidx.appcompat.R.anim.abc_slide_out_top
@@ -459,6 +474,10 @@ class SearchMealFragment : Fragment(), SignupView, SearchFoodView {
         // Set the adapter for the RecyclerView
         binding.searchMealMyRv.adapter = mymealadapter
         binding.searchMealMyRv.layoutManager = LinearLayoutManager(requireContext())
+    }
+
+    override fun handleMyMealFoodListResponse(myMealFoodListResponse: List<MyMealFoodListResponse>) {
+        TODO("Not yet implemented")
     }
 
     override fun SearchFoodSuccess(foodSearchResponse: FoodSearchResponse) {

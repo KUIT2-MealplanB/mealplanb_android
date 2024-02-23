@@ -96,6 +96,14 @@ data class MyMealListBaseResponse (
     @SerializedName("result") val result : ArrayList<mymealResponse>
 )
 
+//나의 식단 식사 리스트 response
+data class MyMealFoodListResponse(
+    @SerializedName("food_id") val food_id: Int,
+    @SerializedName("food_name") val food_name: String,
+    @SerializedName("quantity") val quantity: Int,
+    @SerializedName("kcal") val kcal: Int
+)
+
 data class Plan(
     @SerializedName("initial_weight") val initial_weight: Double,
     @SerializedName("target_weight") val target_weight: Double,

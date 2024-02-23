@@ -458,6 +458,40 @@ class AuthService(private val context: Context) {
         })
     }
 
+    //나의 식단 식사 리스트 조회
+    fun getmymealfoodlist(favoriteMealId: Int) {
+        signupView.SignupLoading()
+        authService.getmymealfoodlist(favoriteMealId).enqueue(object : Callback<BaseResponse<List<MyMealFoodListResponse>>> {
+            override fun onResponse(
+                call: Call<BaseResponse<List<MyMealFoodListResponse>>>,
+                response: Response<BaseResponse<List<MyMealFoodListResponse>>>
+            ) {
+                val resp = response.body()
+                when (resp?.code) {
+                    1000 -> {
+                        // 성공 시 원하는 처리
+                        val myMealFoodListResponse = resp.result
+                        signupView.handleMyMealFoodListResponse(myMealFoodListResponse)
+
+                        Log.d("myMealFoodList get success", resp.toString())
+                    }
+                    else -> {
+                        if (resp != null) {
+                            signupView.SignupFailure(resp.code, resp.message)
+                        } else {
+                            Log.d("myMealFoodList get null", resp.toString())
+                        }
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<BaseResponse<List<MyMealFoodListResponse>>>, t: Throwable) {
+                Log.d("myMealFoodList get Failed", t.toString())
+            }
+        })
+    }
+
+
     // 특정 식사 정보 조회
     fun checkFoodDetail(foodId: Int) {
         authService.checkFoodDetail(foodId)

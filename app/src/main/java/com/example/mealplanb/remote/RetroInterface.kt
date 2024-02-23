@@ -92,6 +92,10 @@ interface RetroInterface {
     @PATCH("my-meal/{favorite_meal_id}")
     fun deletemymeal(@Path("favorite_meal_id") favorite_meal_id: Int):Call<BaseResponse<Unit>>
 
+    //나의 식단 식사 리스트 조회
+    @GET("my-meal/{favorite_meal_id}")
+    fun getmymealfoodlist(@Path("favorite_meal_id") favorite_meal_id: Int): Call<BaseResponse<List<MyMealFoodListResponse>>>
+
     //사용자 식단 등록
 //    @POST("food")
 //    fun userfoodupdate(
