@@ -1063,6 +1063,37 @@ class AuthService(private val context: Context) {
         })
     }
 
+    fun recommendedMealCheck() {
+        authService.recommendedMealCheck().enqueue(object : Callback<BaseResponse<List<RecommendedMeal>>> {
+            override fun onResponse(
+                call: Call<BaseResponse<List<RecommendedMeal>>>,
+                response: Response<BaseResponse<List<RecommendedMeal>>>
+            ) {
+                val resp = response.body()
+                Log.d("recommended meal get response",resp.toString())
+                when (resp?.code) {
+                    1000 -> {
+                        // 성공 시 원하는 처리
+                        val recommendMealCheckResponse = resp.result
+
+                        searchFoodView.RecommendedMealSuccess(recommendMealCheckResponse)
+                        Log.d("recommended meal get Success", "myfavorite meal get Success")
+                    }
+
+                    else -> if (resp != null) {
+                        Log.d("recommended meal get error", "myfavorite meal get error")
+                    }else{
+                        Log.d("recommended meal get null", "myfavorite meal get null")
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<BaseResponse<List<RecommendedMeal>>>, t: Throwable) {
+                Log.d("recommended meal get null", "myfavorite meal get null")
+            }
+        })
+    }
+
     fun foodAddPost(name: String, quantity: Int, kcal: Double, carbohydrate: Double, protein: Double, fat: Double,
                     sugar: Double, sodium: Double, cholesterol: Double, saturated_fatty_acid: Double, trans_fat_acid: Double) {
         val request = FoodAddRequest(name,quantity, kcal, carbohydrate, protein, fat, sugar, sodium, cholesterol, saturated_fatty_acid, trans_fat_acid)

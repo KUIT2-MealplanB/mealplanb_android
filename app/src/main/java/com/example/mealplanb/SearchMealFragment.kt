@@ -23,6 +23,7 @@ import com.example.mealplanb.remote.Food
 import com.example.mealplanb.remote.FoodSearchResponse
 import com.example.mealplanb.remote.MealListDateResponseMeals
 import com.example.mealplanb.remote.MyMealFoodListResponse
+import com.example.mealplanb.remote.RecommendedMeal
 import com.example.mealplanb.remote.SearchFoodView
 import com.example.mealplanb.remote.SignupView
 import com.example.mealplanb.remote.mymealResponse
@@ -37,6 +38,7 @@ class SearchMealFragment : Fragment(), SignupView, SearchFoodView {
     private var myMadeList: ArrayList<mymealResponse> = arrayListOf()
 
     lateinit var adapter: SearchMealAdapter // RecyclerView에 사용할 어댑터
+    lateinit var recentFoodAdapter: RecentFoodAdapter //최근 추천 RecyclerView에 사용할 어댑터
     lateinit var mymealadapter: MyMealAdapter // mymeal RecyclerView에 사용할 어댑터
     lateinit var favoritefoodadapter: FavoriteFoodAdapter // 즐겨찾기 RecyclerView에 사용할 어댑터
 
@@ -67,6 +69,61 @@ class SearchMealFragment : Fragment(), SignupView, SearchFoodView {
         binding.searchMealInitOutIv.setOnClickListener {
             requireActivity().supportFragmentManager.beginTransaction()
                 .replace(R.id.main_frm, HomeFragment()).commit()
+        }
+
+        //최근추천 버튼을 눌렀을 때
+        binding.searchMealBtnRecentLl.setOnClickListener {
+
+            //API관련
+            authService.recommendedMealCheck()
+
+            //없어지고 보이고
+            binding.searchMealMyLl.visibility = View.GONE
+            binding.searchMealAllRv.visibility = View.GONE
+            binding.searchMealMyRv.visibility = View.VISIBLE
+
+            //뒤로 가기 버튼 등장
+            binding.searchMealOutIv.visibility = View.VISIBLE
+
+            //검색창 hint
+            binding.searchMealInputEt.hint = "최근 추천"
+            binding.searchMealInputEt.setHintTextColor(Color.parseColor("#7C5CF8"))
+
+            //즐겨찾기에 추가한 데이터를 관리하는 리사이클러뷰
+            binding.searchMealMyRv.adapter = recentFoodAdapter
+            binding.searchMealMyRv.layoutManager = LinearLayoutManager(requireContext())
+
+            // 버튼이 눌린 것을 저장
+            lastClickedButton = "btnRecent"
+
+            //'X'버튼 눌리면
+            binding.searchMealOutIv.setOnClickListener {
+                binding.searchMealAllRv.visibility = View.GONE
+                binding.searchMealMyRv.visibility = View.GONE
+                binding.searchMealMyLl.visibility = View.VISIBLE
+
+                //검색창 hint
+                binding.searchMealInputEt.hint = "식사 이름을 입력해주세요."
+                binding.searchMealInputEt.setHintTextColor(Color.GRAY)
+
+                binding.searchMealInitOutIv.visibility = View.VISIBLE
+
+                binding.searchMealOutIv.visibility = View.GONE
+
+                // 호출 시점에 hideKeyboard 함수를 호출하여 키보드를 숨깁니다.
+                hideKeyboard()
+
+                //검색 커서 깜빡임 제어
+                binding.searchMealInputEt.clearFocus()
+
+                lastClickedButton = " "
+            }
+
+            binding.searchMealInitOutIv.setOnClickListener {
+                lastClickedButton = " "
+                requireActivity().supportFragmentManager.beginTransaction()
+                    .replace(R.id.main_frm, HomeFragment()).commit()
+            }
         }
 
         //자주먹는 버튼을 눌렀을 때
@@ -217,6 +274,24 @@ class SearchMealFragment : Fragment(), SignupView, SearchFoodView {
             binding.searchMealInputEt.clearFocus()
         }
 
+        // Initialize recentfoodadapter
+        recentFoodAdapter = RecentFoodAdapter(ArrayList()) { item ->
+            val sharedPreferences =
+                requireActivity().getSharedPreferences("myPreferences", Context.MODE_PRIVATE)
+            val gson = Gson()
+            val editor = sharedPreferences.edit()
+            var newJson = gson.toJson(item)
+            editor.putString("Key", newJson)
+            editor.apply()
+            requireActivity().supportFragmentManager.beginTransaction()
+                .replace(R.id.main_frm, FoodDetailFragment()).commit()
+            requireActivity().overridePendingTransition(
+                androidx.appcompat.R.anim.abc_slide_in_bottom,
+                androidx.appcompat.R.anim.abc_slide_out_top
+            )
+            binding.searchMealInputEt.clearFocus()
+        }
+
         // Initialize favoritefoodadapter
         favoritefoodadapter = FavoriteFoodAdapter(ArrayList()) { item ->
             val sharedPreferences =
@@ -305,6 +380,9 @@ class SearchMealFragment : Fragment(), SignupView, SearchFoodView {
 
                 // 마지막으로 눌린 버튼에 따라 보여줄 뷰를 결정
                 when (lastClickedButton) {
+                    "btnRecent" -> {
+                        lastClickedButton = " "
+                    }
                     "btnOften" -> {
                         lastClickedButton = " "
                     }
@@ -525,6 +603,27 @@ class SearchMealFragment : Fragment(), SignupView, SearchFoodView {
         isFavorite: Boolean
     ) {
         TODO("Not yet implemented")
+    }
+
+    override fun RecommendedMealSuccess(recommendMealCheckResponse: List<RecommendedMeal>) {
+        var newFoodList: ArrayList<RecommendedMeal> = arrayListOf()
+
+        for(item in recommendMealCheckResponse) {
+            newFoodList.add(item)
+        }
+
+        recentFoodAdapter = RecentFoodAdapter(newFoodList) { item ->
+            requireActivity().supportFragmentManager.beginTransaction()
+                .replace(R.id.main_frm, FoodDetailFragment()).commit()
+            requireActivity().overridePendingTransition(
+                androidx.appcompat.R.anim.abc_slide_in_bottom,
+                androidx.appcompat.R.anim.abc_slide_out_top
+            )
+        }
+
+        // Set the adapter for the RecyclerView
+        binding.searchMealMyRv.adapter = recentFoodAdapter
+        binding.searchMealMyRv.layoutManager = LinearLayoutManager(requireContext())
     }
 
 }

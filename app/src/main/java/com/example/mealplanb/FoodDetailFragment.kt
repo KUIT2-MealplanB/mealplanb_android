@@ -16,6 +16,7 @@ import com.example.mealplanb.databinding.FragmentFooddetailBinding
 import com.example.mealplanb.remote.AuthService
 import com.example.mealplanb.remote.FoodSearchResponse
 import com.example.mealplanb.remote.MealFoodResponseFoodList
+import com.example.mealplanb.remote.RecommendedMeal
 import com.example.mealplanb.remote.SearchFoodView
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -311,6 +312,10 @@ class FoodDetailFragment : Fragment(), SearchFoodView {
         }else {
             binding.detailFoodFavoriteIv.setImageResource(R.drawable.star_ic)
         }
+    }
+
+    override fun RecommendedMealSuccess(recommendMealCheckResponse: List<RecommendedMeal>) {
+        TODO("Not yet implemented")
     }
 
 }

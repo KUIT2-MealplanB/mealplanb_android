@@ -227,6 +227,12 @@ data class FavoriteFoodRequest(
 //    @SerializedName("foods") val foods: List<Food>
 //)
 
+data class RecommendedMeal(
+    @SerializedName("food_id") val food_id : Int,
+    @SerializedName("food_name") val food_name : String,
+    @SerializedName("kcal") val kcal: Double
+)
+
 data class FoodAddRequest(
     @SerializedName("name") val name : String,
     @SerializedName("quantity") val quantity : Int,

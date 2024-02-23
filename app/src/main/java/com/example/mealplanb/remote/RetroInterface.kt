@@ -141,6 +141,9 @@ interface RetroInterface {
         @Path("foodId") foodId: Int,
     ):Call<BaseResponse<Unit>>
 
+    @GET("chat/recommended-meal")
+    fun recommendedMealCheck(): Call<BaseResponse<List<RecommendedMeal>>>
+
     @POST("food")
     fun foodAddPost(
         @Body request: FoodAddRequest
