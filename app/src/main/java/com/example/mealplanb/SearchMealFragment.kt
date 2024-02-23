@@ -179,7 +179,7 @@ class SearchMealFragment : Fragment(), SignupView, SearchFoodView {
             }
         }
 
-        mymealadapter = MyMealAdapter(myMadeList) { item ->
+        mymealadapter = MyMealAdapter(myMadeList, { item ->
             val sharedPreferences =
                 requireActivity().getSharedPreferences("myPreferences", Context.MODE_PRIVATE)
             val gson = Gson()
@@ -194,7 +194,7 @@ class SearchMealFragment : Fragment(), SignupView, SearchFoodView {
                 androidx.appcompat.R.anim.abc_slide_out_top
             )
             binding.searchMealInputEt.clearFocus()
-        }
+        },authService)
 
         // RecyclerView 설정
         adapter = SearchMealAdapter(ArrayList()) { item ->
@@ -447,14 +447,14 @@ class SearchMealFragment : Fragment(), SignupView, SearchFoodView {
             newMealList.add(item)
         }
 
-        mymealadapter = MyMealAdapter(newMealList) { item ->
+        mymealadapter = MyMealAdapter(newMealList, { item ->
             requireActivity().supportFragmentManager.beginTransaction()
                 .replace(R.id.main_frm, FoodDetailFragment()).commit()
             requireActivity().overridePendingTransition(
                 androidx.appcompat.R.anim.abc_slide_in_bottom,
                 androidx.appcompat.R.anim.abc_slide_out_top
             )
-        }
+        }, authService = AuthService(requireContext()))
 
         // Set the adapter for the RecyclerView
         binding.searchMealMyRv.adapter = mymealadapter

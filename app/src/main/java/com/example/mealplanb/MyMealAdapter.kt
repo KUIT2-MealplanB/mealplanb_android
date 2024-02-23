@@ -3,10 +3,11 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mealplanb.databinding.ItemMeallistBinding
+import com.example.mealplanb.remote.AuthService
 import com.example.mealplanb.remote.mymealResponse
 import com.google.gson.Gson
 
-class MyMealAdapter(var mealList: ArrayList<mymealResponse>, val onClick: (mymealResponse)->(Unit)) : RecyclerView.Adapter<MyMealAdapter.ViewHolder>() {
+class MyMealAdapter(var mealList: ArrayList<mymealResponse>, val onClick: (mymealResponse)->(Unit), val authService: AuthService) : RecyclerView.Adapter<MyMealAdapter.ViewHolder>() {
 
     //내부의 ViewHolder 클래스
     inner class ViewHolder(val binding: ItemMeallistBinding) : RecyclerView.ViewHolder(binding.root) {
@@ -19,8 +20,11 @@ class MyMealAdapter(var mealList: ArrayList<mymealResponse>, val onClick: (mymea
             }
 
 
-            binding.itemMeallistDelbtnTv.setOnClickListener {
+            binding.itemMeallistDelbtnTv.setOnClickListener { //삭제 버튼을 눌렀을 때
                 val position = adapterPosition
+                val favoriteMealId = myMeal.favorite_meal_id
+                authService.deletemymeal(favoriteMealId)
+
                 if (position != RecyclerView.NO_POSITION) {
                     mealList.removeAt(position)
                     notifyItemRemoved(position)

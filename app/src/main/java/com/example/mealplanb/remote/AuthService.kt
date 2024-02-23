@@ -430,6 +430,34 @@ class AuthService(private val context: Context) {
         })
     }
 
+    //나의 식단 삭제
+    fun deletemymeal(favoriteMealId: Int) {
+        val call: Call<BaseResponse<Unit>> = authService.deletemymeal(favoriteMealId)
+
+        call.enqueue(object : Callback<BaseResponse<Unit>> {
+            override fun onResponse(
+                call: Call<BaseResponse<Unit>>,
+                response: Response<BaseResponse<Unit>>
+            ) {
+                if (response.isSuccessful) {
+                    val result = response.body()
+                    if (result != null && result.code == 1000) {
+                        Toast.makeText(context, "식단이 성공적으로 삭제되었습니다.", Toast.LENGTH_SHORT).show()
+                        // 여기에서 식단 목록을 다시 로드하거나 UI를 업데이트할 수 있습니다.
+                    } else {
+                        Toast.makeText(context, "삭제 실패: ${result?.message}", Toast.LENGTH_SHORT).show()
+                    }
+                } else {
+                    Toast.makeText(context, "서버 응답 실패: ${response.message()}", Toast.LENGTH_SHORT).show()
+                }
+            }
+
+            override fun onFailure(call: Call<BaseResponse<Unit>>, t: Throwable) {
+                Toast.makeText(context, "요청 실패: ${t.message}", Toast.LENGTH_SHORT).show()
+            }
+        })
+    }
+
     // 특정 식사 정보 조회
     fun checkFoodDetail(foodId: Int) {
         authService.checkFoodDetail(foodId)

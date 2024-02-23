@@ -88,6 +88,10 @@ interface RetroInterface {
     @GET("my-meal")
     fun getmymeal():Call<MyMealListBaseResponse>
 
+    //나의 식단 삭제
+    @PATCH("my-meal/{favorite_meal_id}")
+    fun deletemymeal(@Path("favorite_meal_id") favorite_meal_id: Int):Call<BaseResponse<Unit>>
+
     //사용자 식단 등록
 //    @POST("food")
 //    fun userfoodupdate(
