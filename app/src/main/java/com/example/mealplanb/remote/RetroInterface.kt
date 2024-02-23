@@ -129,6 +129,11 @@ interface RetroInterface {
         @Path("foodId") foodId: Int,
     ):Call<BaseResponse<Unit>>
 
+    @POST("food")
+    fun foodAddPost(
+        @Body request: FoodAddRequest
+    ):Call<BaseResponse<FoodAddResponse>>
+
     @GET("food/auto-complete")
     fun searchfood(
         @Query("query") query: String?,

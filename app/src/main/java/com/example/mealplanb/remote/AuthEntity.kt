@@ -205,6 +205,37 @@ data class FavoriteFoodRequest(
 //    @SerializedName("foods") val foods: List<Food>
 //)
 
+data class FoodAddRequest(
+    @SerializedName("name") val name : String,
+    @SerializedName("quantity") val quantity : Int,
+    @SerializedName("kcal") val kcal: Double,
+    @SerializedName("carbohydrate") val carbohydrate : Double,
+    @SerializedName("protein") val protein : Double,
+    @SerializedName("fat") val fat : Double,
+    @SerializedName("sugar") val sugar : Double,
+    @SerializedName("sodium") val sodium : Double,
+    @SerializedName("cholesterol") val cholesterol : Double,
+    @SerializedName("saturated_fatty_acid") val saturated_fatty_acid : Double,
+    @SerializedName("trans_fat_acid") val trans_fat_acid : Double,
+)
+
+data class FoodAddResponse(
+    @SerializedName("food_id") val food_id : Int,
+    @SerializedName("name") val name : String,
+    @SerializedName("category") val category: String,
+    @SerializedName("key_nutrient") val key_nutrient: String,
+    @SerializedName("quantity") val quantity : Int,
+    @SerializedName("kcal") val kcal: Double,
+    @SerializedName("carbohydrate") val carbohydrate : Double,
+    @SerializedName("protein") val protein : Double,
+    @SerializedName("fat") val fat : Double,
+    @SerializedName("sugar") val sugar : Double,
+    @SerializedName("sodium") val sodium : Double,
+    @SerializedName("cholesterol") val cholesterol : Double,
+    @SerializedName("saturated_fatty_acid") val saturated_fatty_acid : Double,
+    @SerializedName("trans_fat_acid") val trans_fat_acid : Double,
+)
+
 data class Food(
     @SerializedName("food_id") val foodId: Int,
     @SerializedName("food_name") val foodName: String,

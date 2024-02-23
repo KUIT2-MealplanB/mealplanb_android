@@ -29,6 +29,7 @@ class AuthService(private val context: Context) {
     private lateinit var mealMenuListView: HomeMealView
     private lateinit var recommendMealListView: RecommendMealListView
     private lateinit var recommendMealAmountView: RecommendMealAmountView
+    private lateinit var addMealView: AddMealView
     private lateinit var statView: StatView
     private lateinit var statWeightView: StatWeightView
     private lateinit var statKcalView: StatKcalView
@@ -64,6 +65,10 @@ class AuthService(private val context: Context) {
 
     fun setRecommendMealAmountView(recommendMealAmountView: RecommendMealAmountView) {
         this.recommendMealAmountView = recommendMealAmountView
+    }
+
+    fun setAddMealView(addMealView: AddMealView) {
+        this.addMealView = addMealView
     }
 
     fun setStatWeightView(statWeightView: StatWeightView) {
@@ -1068,6 +1073,51 @@ class AuthService(private val context: Context) {
 
             override fun onFailure(call: Call<BaseResponse<Unit>>, t: Throwable) {
                 Log.d("favoriteFood patch Failed", t.toString())
+            }
+        })
+    }
+
+    fun foodAddPost(name: String, quantity: Int, kcal: Double, carbohydrate: Double, protein: Double, fat: Double,
+                    sugar: Double, sodium: Double, cholesterol: Double, saturated_fatty_acid: Double, trans_fat_acid: Double) {
+        val request = FoodAddRequest(name,quantity, kcal, carbohydrate, protein, fat, sugar, sodium, cholesterol, saturated_fatty_acid, trans_fat_acid)
+        authService.foodAddPost(request).enqueue(object : Callback<BaseResponse<FoodAddResponse>> {
+            override fun onResponse(
+                call: Call<BaseResponse<FoodAddResponse>>,
+                response: Response<BaseResponse<FoodAddResponse>>
+            ) {
+                val resp = response.body()
+                when(resp?.code) {
+                    1000 -> {
+                        // 성공 시 원하는 처리
+                        val foodAddResponse = resp.result
+                        val food_id = foodAddResponse.food_id ?: 0
+                        val name = foodAddResponse.name ?: ""
+                        val category = foodAddResponse.category ?: ""
+                        val key_nutrient = foodAddResponse.key_nutrient ?: ""
+                        val quantity = foodAddResponse.quantity ?: 0
+                        val kcal = foodAddResponse.kcal ?: 0.0
+                        val carbohydrate = foodAddResponse.carbohydrate ?: 0.0
+                        val protein = foodAddResponse.protein ?: 0.0
+                        val fat = foodAddResponse.fat ?: 0.0
+                        val sugar = foodAddResponse.sugar ?: 0.0
+                        val sodium = foodAddResponse.sodium ?: 0.0
+                        val cholesterol = foodAddResponse.cholesterol ?: 0.0
+                        val saturated_fatty_acid = foodAddResponse.saturated_fatty_acid ?: 0.0
+                        val trans_fat_acid = foodAddResponse.trans_fat_acid ?: 0.0
+
+                        addMealView.foodAddSuccess(food_id,name,category,key_nutrient,quantity,kcal,carbohydrate,
+                            protein,fat,sugar,sodium,cholesterol,saturated_fatty_acid,trans_fat_acid)
+                        Log.d("addMeal post success", resp.toString())
+                    }else -> if (resp != null) {
+                        addMealView.foodAddFailure(resp.code,resp.message)
+                    }else{
+                        Log.d("addMeal post null",resp.toString())
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<BaseResponse<FoodAddResponse>>, t: Throwable) {
+                Log.d("addMeal post Failed",t.toString())
             }
         })
     }

@@ -15,14 +15,17 @@ import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import androidx.core.content.ContextCompat.getSystemService
 import com.example.mealplanb.databinding.FragmentSeachMealFreeInputBinding
+import com.example.mealplanb.remote.AddMealView
+import com.example.mealplanb.remote.AuthService
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.gson.Gson
 
 
-class SeachMealFreeInputFragment : BottomSheetDialogFragment() {
+class SeachMealFreeInputFragment : BottomSheetDialogFragment(), AddMealView {
 
     lateinit var binding: FragmentSeachMealFreeInputBinding
+    lateinit var bottomSheetDialog: BottomSheetDialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,7 +33,7 @@ class SeachMealFreeInputFragment : BottomSheetDialogFragment() {
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        val bottomSheetDialog = BottomSheetDialog(requireContext())
+        bottomSheetDialog = BottomSheetDialog(requireContext())
         val view = LayoutInflater.from(context).inflate(R.layout.fragment_seach_meal_free_input, null)
         bottomSheetDialog.setContentView(view)
 
@@ -72,41 +75,51 @@ class SeachMealFreeInputFragment : BottomSheetDialogFragment() {
 
                         binding.searchMealFreeInputAddBtnCv.setOnClickListener {
                             //추가하기 버튼이 눌리면 실행
+                            val name = binding.seachMealFreeInputFoodNameEt.text.toString()
+                            val kcal = binding.searchMealFreeInputKcalEt.text.toString().toDouble()
+                            val sacc = binding.searchMealFreeInputSaccEt.text.toString().toDouble()
+                            val protein = binding.searchMealFreeInputProteinEt.text.toString().toDouble()
+                            val fat = binding.searchMealFreeInputFatEt.text.toString().toDouble()
+                            val sugar = binding.searchMealFreeInputSugarEt.text.toString().toDouble()
+                            val chole = binding.searchMealFreeInputCholeEt.text.toString().toDouble()
+                            val sodium = binding.searchMealFreeInputSaltEt.text.toString().toDouble()
+                            val saturated_fatty_acid = binding.searchMealFreeInputFattySaturatedEt.text.toString().toDouble()
+                            val trans_fatty_acid = binding.searchMealFreeInputTransEt.text.toString().toDouble()
+                            val quantity = 100
 
-                            //자유 입력 식단에서 EditText로 받은 데이터들을 FoodDetailActivity로 넘기도록 변수 선언
-                            val foodName = binding.seachMealFreeInputFoodNameEt.text.toString()
-                            val sacc = binding.searchMealFreeInputSaccEt.text.toString()
-                            val protein = binding.searchMealFreeInputProteinEt.text.toString()
-                            val fat = binding.searchMealFreeInputFatEt.text.toString()
-                            val kcal = binding.searchMealFreeInputKcalEt.text.toString()
-                            //gram은 100을 기준으로 정함.
-                            val gram = 100.0
+                            val authService = AuthService(requireContext())
+                            authService.setAddMealView(this@SeachMealFreeInputFragment)
+                            authService.foodAddPost(name,quantity,kcal,sacc,protein,fat,
+                                sugar,sodium,chole,saturated_fatty_acid,trans_fatty_acid)
 
-                            // Meal 객체 생성
-                            val meal = Meal(
-                                meal_name = foodName,
-                                meal_weight = gram,
-                                meal_cal = kcal.toDouble(),
-                                sacc_gram = sacc.toDouble(),
-                                protein_gram = protein.toDouble(),
-                                fat_gram = fat.toDouble()
-                            )
-
-                            val sharedPreferences = requireActivity().getSharedPreferences("myPreferences", Context.MODE_PRIVATE)
-                            val gson = Gson()
-                            val editor = sharedPreferences.edit()
-                            var newJson = gson.toJson(meal)
-                            editor.putString("Key",newJson)
-                            editor.apply()
-                            requireActivity().supportFragmentManager.beginTransaction().replace(R.id.main_frm, FoodDetailFragment()).commit()
-
-                            bottomSheetDialog.dismiss()
-                            // 데이터를 첨부할 Intent 생성
-//                            val intent = Intent(requireContext(), FoodDetailFragment::class.java)
-                            // 데이터를 첨부
-//                            intent.putExtra("Key", meal)  // yourMealObject는 전달하고자 하는 Meal 객체입니다.
-                            // Intent를 통해 FoodDetailActivity를 시작
-//                            startActivity(intent)
+//                            //자유 입력 식단에서 EditText로 받은 데이터들을 FoodDetailActivity로 넘기도록 변수 선언
+//                            val foodName = binding.seachMealFreeInputFoodNameEt.text.toString()
+//                            val sacc = binding.searchMealFreeInputSaccEt.text.toString()
+//                            val protein = binding.searchMealFreeInputProteinEt.text.toString()
+//                            val fat = binding.searchMealFreeInputFatEt.text.toString()
+//                            val kcal = binding.searchMealFreeInputKcalEt.text.toString()
+//                            //gram은 100을 기준으로 정함.
+//                            val gram = 100.0
+//
+//                            // Meal 객체 생성
+//                            val meal = Meal(
+//                                meal_name = foodName,
+//                                meal_weight = gram,
+//                                meal_cal = kcal.toDouble(),
+//                                sacc_gram = sacc.toDouble(),
+//                                protein_gram = protein.toDouble(),
+//                                fat_gram = fat.toDouble()
+//                            )
+//
+//                            val sharedPreferences = requireActivity().getSharedPreferences("myPreferences", Context.MODE_PRIVATE)
+//                            val gson = Gson()
+//                            val editor = sharedPreferences.edit()
+//                            var newJson = gson.toJson(meal)
+//                            editor.putString("Key",newJson)
+//                            editor.apply()
+//                            requireActivity().supportFragmentManager.beginTransaction().replace(R.id.main_frm, FoodDetailFragment()).commit()
+//
+//                            bottomSheetDialog.dismiss()
 
                         }
                     } else {
@@ -249,6 +262,35 @@ class SeachMealFreeInputFragment : BottomSheetDialogFragment() {
         }
 
         return bottomSheetDialog
+    }
+
+    override fun foodAddSuccess(
+        food_id: Int,
+        name: String,
+        category: String,
+        key_nutrient: String,
+        quantity: Int,
+        kcal: Double,
+        carbohydrate: Double,
+        protein: Double,
+        fat: Double,
+        sugar: Double,
+        sodium: Double,
+        cholesterol: Double,
+        saturated_fatty_acid: Double,
+        trans_fatty_acid: Double
+    ) {
+        val sharedPreferences = requireActivity().getSharedPreferences("myPreferences", Context.MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
+        editor.putInt("selectedFoodId",food_id)
+        editor.apply()
+        requireActivity().supportFragmentManager.beginTransaction().replace(R.id.main_frm, FoodDetailFragment()).commit()
+
+        bottomSheetDialog.dismiss()
+    }
+
+    override fun foodAddFailure(code: Int, message: String) {
+        TODO("Not yet implemented")
     }
 
 }

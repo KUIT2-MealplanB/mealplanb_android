@@ -51,7 +51,8 @@ class FoodDetailFragment : Fragment(), SearchFoodView {
 
         // 음식 정보를 SharedPreferences에서 불러오기
 //        val foodName = sharedPreferences.getString("foodName", "")
-        val originMealWeight = sharedPreferences.getString("foodQuantity", "0")?.toDoubleOrNull() ?: 0.0
+        var originMealWeight = sharedPreferences.getString("foodQuantity", "0")?.toDoubleOrNull() ?: 0.0
+        originMealWeight = 100.0
 //        val originkcal = sharedPreferences.getString("foodKcal", "0")?.toDoubleOrNull() ?: 0.0
 //        val originSacc = sharedPreferences.getString("foodCarbohydrates", "0")?.toDoubleOrNull() ?: 0.0
 //        val originProtein = sharedPreferences.getString("foodProtein", "0")?.toDoubleOrNull() ?: 0.0
