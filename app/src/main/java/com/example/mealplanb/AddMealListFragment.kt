@@ -120,7 +120,9 @@ class AddMealListFragment : Fragment(), HomeMealView {
                             val mealName = nameEt.text.toString().trim { it <= '\n' }
                             myMadeList.add(Meal(mealName, totalWeight, totalCal, totalCarb, totalProtein, totalFat))
 
+                            //API 연동
                             authService.mymealupdate(mealName,foods)
+
                             val editor = sharedPreferences.edit()
                             val newJson = gson.toJson(myMadeList)
                             editor.putString("myMadeList", newJson)

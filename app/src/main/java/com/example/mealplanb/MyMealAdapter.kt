@@ -2,17 +2,17 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.mealplanb.Meal
 import com.example.mealplanb.databinding.ItemMeallistBinding
+import com.example.mealplanb.remote.mymealResponse
 import com.google.gson.Gson
 
-class SearchCategoryAdapter(var mealList: ArrayList<Meal>, val onClick: (Meal)->(Unit)) : RecyclerView.Adapter<SearchCategoryAdapter.ViewHolder>() {
+class MyMealAdapter(var mealList: ArrayList<mymealResponse>, val onClick: (mymealResponse)->(Unit)) : RecyclerView.Adapter<MyMealAdapter.ViewHolder>() {
 
-    // OftenActivityAdapter 내부의 ViewHolder 클래스
+    //내부의 ViewHolder 클래스
     inner class ViewHolder(val binding: ItemMeallistBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(myMeal: Meal) {
-            binding.itemMeallistTitleTv.text = myMeal.meal_name
-            binding.itemMeallistSubtitleTv.text = myMeal.meal_weight.toInt().toString() + "g · " + myMeal.meal_cal.toInt().toString() + "kcal"
+        fun bind(myMeal: mymealResponse) {
+            binding.itemMeallistTitleTv.text = myMeal.favorite_meal_name
+            binding.itemMeallistSubtitleTv.text = myMeal.food_count.toInt().toString() + "개 · " + myMeal.meal_kcal.toInt().toString() + "kcal"
 
             binding.root.setOnClickListener {
                 onClick(myMeal)
@@ -55,8 +55,8 @@ class SearchCategoryAdapter(var mealList: ArrayList<Meal>, val onClick: (Meal)->
     }
 
     // 리스트를 업데이트하는 함수 추가
-    fun updateList(newItems: List<Meal>) {
-        mealList = newItems as ArrayList<Meal>
+    fun updateList(newItems: List<mymealResponse>) {
+        mealList = newItems as ArrayList<mymealResponse>
         notifyDataSetChanged() // RecyclerView에 데이터가 변경되었음을 알림
     }
 }

@@ -84,6 +84,10 @@ interface RetroInterface {
         @Body request: mymealData
     ):Call<BaseResponse<Unit>>
 
+    //나의 식단 등록 조회
+    @GET("my-meal")
+    fun getmymeal():Call<MyMealListBaseResponse>
+
     //사용자 식단 등록
 //    @POST("food")
 //    fun userfoodupdate(

@@ -83,6 +83,19 @@ data class FoodList(
     @SerializedName("quantity") val quantity: Int
 )
 
+//나의 식단 조회
+data class mymealResponse(
+    @SerializedName("favorite_meal_id") val favorite_meal_id : Int,
+    @SerializedName("favorite_meal_name") val favorite_meal_name : String,
+    @SerializedName("meal_kcal") val meal_kcal : Int,
+    @SerializedName("food_count") val food_count : Int
+)
+data class MyMealListBaseResponse (
+    @SerializedName("code") val code : Int,
+    @SerializedName("message") val message : String,
+    @SerializedName("result") val result : ArrayList<mymealResponse>
+)
+
 data class Plan(
     @SerializedName("initial_weight") val initial_weight: Double,
     @SerializedName("target_weight") val target_weight: Double,

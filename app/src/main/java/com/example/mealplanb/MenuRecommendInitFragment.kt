@@ -11,6 +11,7 @@ import com.example.mealplanb.remote.AuthService
 import com.example.mealplanb.remote.Food
 import com.example.mealplanb.remote.MealListDateResponseMeals
 import com.example.mealplanb.remote.SignupView
+import com.example.mealplanb.remote.mymealResponse
 import java.text.SimpleDateFormat
 import java.util.Calendar
 
@@ -136,6 +137,10 @@ class MenuRecommendInitFragment : Fragment(), SignupView {
     }
 
     override fun handleFavoriteFoodResponse(favoriteFoodResponse: List<Food>) {
+        TODO("Not yet implemented")
+    }
+
+    override fun handleMyMealResponse(myMealResponse: List<mymealResponse>) {
         TODO("Not yet implemented")
     }
 }

@@ -3,6 +3,7 @@ package com.example.mealplanb.remote
 
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.util.Log
 import android.widget.Toast
 import com.example.mealplanb.ApplicationClass
@@ -360,7 +361,7 @@ class AuthService(private val context: Context) {
         }
     }
 
-
+    //나의 식단 등록
     fun mymealupdate(favorite_meal_name: String, foods: List<FoodList>) {
         val request = mymealData(favorite_meal_name, foods)
         authService.mymealupdate(request).enqueue(object : Callback<BaseResponse<Unit>> {
@@ -400,6 +401,35 @@ class AuthService(private val context: Context) {
         })
     }
 
+    //나의 식단 조회
+    fun getmymeal(){
+        signupView.SignupLoading()
+        authService.getmymeal().enqueue(object : Callback<MyMealListBaseResponse>{
+            override fun onResponse(
+                call: Call<MyMealListBaseResponse>,
+                response: Response<MyMealListBaseResponse>
+            ) {
+                val resp = response.body()
+                when(resp?.code) {
+                    1000 -> {
+                        // 성공 시 원하는 처리
+                        val myMealResponse = resp.result
+                        signupView.handleMyMealResponse(myMealResponse)
+
+                        Log.d("myMeal get success", resp.toString())
+                    } else -> if (resp != null) {
+                    signupView.SignupFailure(resp.code,resp.message)
+                }else{
+                    Log.d("myMeal get null",resp.toString())
+                }
+                }
+            }
+            override fun onFailure(call: Call<MyMealListBaseResponse>, t: Throwable) {
+                Log.d("myMeal get Failed", t.toString())
+            }
+        })
+    }
+
     // 특정 식사 정보 조회
     fun checkFoodDetail(foodId: Int) {
         authService.checkFoodDetail(foodId)
@@ -433,55 +463,6 @@ class AuthService(private val context: Context) {
                             Log.d("food detail check null", "User Profile null")
                         }
                     }
-
-//                    Log.d("함수 실행 확인", "success")
-//                    if (response.isSuccessful) {
-//                        val foodInfo = response.body()?.result
-//                        Log.d(
-//                            "식사 정보",
-//                            "Name: ${foodInfo?.name}, Quantity: ${foodInfo?.quantity}, Kcal: ${foodInfo?.kcal}, Carbohydrate: ${foodInfo?.carbohydrates}, Protein: ${foodInfo?.protein}, Fat: ${foodInfo?.fat}, isFavorite: ${foodInfo?.isFavorite}"
-//                        )
-                        // 음식 정보를 SharedPreferences에 저장
-//                        val sharedPreferences =
-//                            context.getSharedPreferences("myPreferences", Context.MODE_PRIVATE)
-//                        val editor = sharedPreferences.edit()
-//                        val gson = Gson()
-//                        val json = gson.toJson(foodInfo)
-//                        editor.putString("Key", json)
-//                        editor.putString("foodName", foodInfo?.name)
-//                        editor.putString("foodQuantity", foodInfo?.quantity?.toString() ?: "0")
-//                        editor.putString("foodKcal", foodInfo?.kcal?.toString() ?: "0")
-//                        editor.putString(
-//                            "foodCarbohydrates",
-//                            foodInfo?.carbohydrates?.toString() ?: "0"
-//                        )
-//                        editor.putString("foodProtein", foodInfo?.protein?.toString() ?: "0")
-//                        editor.putString("foodFat", foodInfo?.fat?.toString() ?: "0")
-//
-//                        // 음식 정보를 SharedPreferences에서 불러오기
-//                        val updatefoodName = sharedPreferences.getString("foodName", "")
-//                        val updateoriginMealWeight =
-//                            sharedPreferences.getString("foodQuantity", "0")?.toDoubleOrNull()
-//                                ?: 0.0
-//                        val updateoriginkcal =
-//                            sharedPreferences.getString("foodKcal", "0")?.toDoubleOrNull() ?: 0.0
-//                        val updateoriginSacc =
-//                            sharedPreferences.getString("foodCarbohydrates", "0")?.toDoubleOrNull()
-//                                ?: 0.0
-//                        val updateoriginProtein =
-//                            sharedPreferences.getString("foodProtein", "0")?.toDoubleOrNull() ?: 0.0
-//                        val updateoriginFat =
-//                            sharedPreferences.getString("foodFat", "0")?.toDoubleOrNull() ?: 0.0
-//
-//                        editor.apply()
-//
-//                        val foodDeatilCheckResponse = response
-//
-//                        searchFoodView.FoodDetailSuccess()
-//
-//                    } else {
-//                        Log.e("식사 오류 정보", "Request not successful. Message: ${response.message()}")
-//                    }
                 }
 
                 override fun onFailure(call: Call<BaseResponse<GetFoodResponse>>, t: Throwable) {
@@ -811,55 +792,6 @@ class AuthService(private val context: Context) {
 
         })
     }
-
-    //favorite food
-//     fun favoriteFoodGET() {
-//         signupView.SignupLoading()
-//         authService.favoriteFoodGET()
-//             .enqueue(object : Callback<BaseResponse<FavoriteFoodResponse>> {
-//                 override fun onResponse(
-//                     call: Call<BaseResponse<FavoriteFoodResponse>>,
-//                     response: Response<BaseResponse<FavoriteFoodResponse>>
-//                 ) {
-//                     val resp = response.body()
-//                     when (resp?.code) {
-//                         1000 -> {
-//                             // 성공 시 원하는 처리
-//                             val favoriteFoodResponse = resp?.result
-//                             favoriteFoodResponse?.foods?.let { foods ->
-//                                 for (food in foods) {
-//                                     Log.d(
-//                                         "Food Item",
-//                                         "Food ID: ${food.foodId}, Food Name: ${food.foodName}, Kcal: ${food.kcal}"
-//                                     )
-//                                 }
-//                             }
-//                             signupView.handleFavoriteFoodResponse(favoriteFoodResponse)
-
-//                             Log.d("favoriteFood get success", resp.toString())
-//                         }
-
-//                         else -> if (resp != null) {
-//                             signupView.SignupFailure(resp.code, resp.message)
-//                         } else {
-//                             Log.d("favoriteFood get null", resp.toString())
-//                         }
-//                     }
-//                 }
-
-//                 override fun onFailure(
-//                     call: Call<BaseResponse<FavoriteFoodResponse>>,
-//                     t: Throwable
-//                 ) {
-//                     Log.d("favoriteFood get Failed", t.toString())
-//                 }
-//             })
-//     }
-
-//     fun favoriteFoodPost(food_id: Int) {
-//         signupView.SignupLoading()
-//         val request = FavoriteFoodRequest(food_id)
-//         authService.favoriteFoodPost(request).enqueue(object : Callback<BaseResponse<Unit>> {
     fun weightpatch(weight: Float, date: String){
         signupView.SignupLoading()
         val request = Weight(weight, date)

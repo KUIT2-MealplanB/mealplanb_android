@@ -1,7 +1,7 @@
 package com.example.mealplanb
 
 import FavoriteFoodAdapter
-import SearchCategoryAdapter
+import MyMealAdapter
 import SearchMealAdapter
 import android.annotation.SuppressLint
 import android.content.Context
@@ -24,6 +24,7 @@ import com.example.mealplanb.remote.FoodSearchResponse
 import com.example.mealplanb.remote.MealListDateResponseMeals
 import com.example.mealplanb.remote.SearchFoodView
 import com.example.mealplanb.remote.SignupView
+import com.example.mealplanb.remote.mymealResponse
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 
@@ -32,11 +33,10 @@ class SearchMealFragment : Fragment(), SignupView, SearchFoodView {
 
     //즐겨찾기에 추가한 Meal 리사이클러뷰에 나타날 데이터 리스트 변수
     lateinit var mealList: ArrayList<Meal>
-    private var oftenFoodList: ArrayList<Food> = arrayListOf()
-    private var myMadeList: ArrayList<Meal> = arrayListOf()
+    private var myMadeList: ArrayList<mymealResponse> = arrayListOf()
 
     lateinit var adapter: SearchMealAdapter // RecyclerView에 사용할 어댑터
-    lateinit var oftenadapter: SearchCategoryAdapter // 즐겨찾기 RecyclerView에 사용할 어댑터
+    lateinit var mymealadapter: MyMealAdapter // mymeal RecyclerView에 사용할 어댑터
     lateinit var favoritefoodadapter: FavoriteFoodAdapter // 즐겨찾기 RecyclerView에 사용할 어댑터
 
     var lastClickedButton: String? = null // '자주 먹는', '내가 만든' 버튼 중 어떤 것이 눌렸는지 저장하는 변수 추가
@@ -126,6 +126,9 @@ class SearchMealFragment : Fragment(), SignupView, SearchFoodView {
         //나의 식단 버튼을 눌렀을 때
         binding.searchMealBtnMadeLl.setOnClickListener {
 
+            //API 연동
+            authService.getmymeal()
+
             // 버튼이 눌린 것을 저장
             lastClickedButton = "btnMade"
 
@@ -141,34 +144,8 @@ class SearchMealFragment : Fragment(), SignupView, SearchFoodView {
             binding.searchMealInputEt.hint = "나의 식단"
             binding.searchMealInputEt.setHintTextColor(Color.parseColor("#7C5CF8"))
 
-            // SharedPreferences에서 myMadeList 데이터 읽어오기
-            val sharedPreferences =
-                requireActivity().getSharedPreferences("myPreferences", Context.MODE_PRIVATE)
-            val gson = Gson()
-            val json = sharedPreferences.getString("myMadeList", null)
-
-            // Gson을 사용하여 JSON 문자열을 역직렬화하여 myMadeList 할당
-            val type = object : TypeToken<ArrayList<Meal>>() {}.type
-            myMadeList = gson.fromJson(json, type) ?: arrayListOf()
-
-            Log.d("logcat", myMadeList.size.toString())
-
-            oftenadapter = SearchCategoryAdapter(myMadeList) { item ->
-                val editor = sharedPreferences.edit()
-                var newJson = gson.toJson(item)
-                editor.putString("Key", newJson)
-                editor.apply()
-                requireActivity().supportFragmentManager.beginTransaction()
-                    .replace(R.id.main_frm, FoodDetailFragment()).commit()
-                requireActivity().overridePendingTransition(
-                    androidx.appcompat.R.anim.abc_slide_in_bottom,
-                    androidx.appcompat.R.anim.abc_slide_out_top
-                )
-                binding.searchMealInputEt.clearFocus()
-            }
-
             //데이터를 관리하는 리사이클러뷰
-            binding.searchMealMyRv.adapter = oftenadapter
+            binding.searchMealMyRv.adapter = mymealadapter
             binding.searchMealMyRv.layoutManager = LinearLayoutManager(requireContext())
 
             //'X'버튼 눌리면
@@ -202,7 +179,7 @@ class SearchMealFragment : Fragment(), SignupView, SearchFoodView {
             }
         }
 
-        oftenadapter = SearchCategoryAdapter(mealList) { item ->
+        mymealadapter = MyMealAdapter(myMadeList) { item ->
             val sharedPreferences =
                 requireActivity().getSharedPreferences("myPreferences", Context.MODE_PRIVATE)
             val gson = Gson()
@@ -218,10 +195,6 @@ class SearchMealFragment : Fragment(), SignupView, SearchFoodView {
             )
             binding.searchMealInputEt.clearFocus()
         }
-
-        //즐겨찾기에 추가한 데이터를 관리하는 리사이클러뷰
-        binding.searchMealMyRv.adapter = oftenadapter
-        binding.searchMealMyRv.layoutManager = LinearLayoutManager(requireContext())
 
         // RecyclerView 설정
         adapter = SearchMealAdapter(ArrayList()) { item ->
@@ -464,41 +437,28 @@ class SearchMealFragment : Fragment(), SignupView, SearchFoodView {
         // Set the adapter for the RecyclerView
         binding.searchMealMyRv.adapter = favoritefoodadapter
         binding.searchMealMyRv.layoutManager = LinearLayoutManager(requireContext())
-//        favoriteFoodResponse?.let { response ->
-//            val foods: List<Food>? = response.foods
-//
-//            if (foods != null) {
-//                for (food in foods) {
-//                    Log.d("favorite Food Item in fragment", "Food ID: ${food.foodId}, Food Name: ${food.foodName}, Kcal: ${food.kcal}")
-//                }
-//            }
-//                // Ensure foods is of type ArrayList<Food>
-//            if (foods is ArrayList<*>) {
-//                // Cast to ArrayList<Food>
-//                val foodList = foods as ArrayList<Food>
-//
-//                favoritefoodadapter = FavoriteFoodAdapter(foodList) { item ->
-//                    requireActivity().supportFragmentManager.beginTransaction()
-//                        .replace(R.id.main_frm, FoodDetailFragment()).commit()
-//                    requireActivity().overridePendingTransition(
-//                        androidx.appcompat.R.anim.abc_slide_in_bottom,
-//                        androidx.appcompat.R.anim.abc_slide_out_top
-//                    )
-//                }
-//
-//                // Set the adapter for the RecyclerView
-//                binding.searchMealMyRv.adapter = favoritefoodadapter
-//                binding.searchMealMyRv.layoutManager = LinearLayoutManager(requireContext())
-//            } else {
-//                Toast.makeText(requireContext(), "Invalid data type for foods", Toast.LENGTH_SHORT).show()
-//            }
-////            } else {
-//
-////                Toast.makeText(requireContext(), "Favorite food list is null", Toast.LENGTH_SHORT).show()
-////            }
-////        } ?: run {
-////            Toast.makeText(requireContext(), "Favorite food response is null", Toast.LENGTH_SHORT).show()
-//        }
+
+    }
+
+    override fun handleMyMealResponse(myMealResponse: List<mymealResponse>) {
+        var newMealList: ArrayList<mymealResponse> = arrayListOf()
+
+        for(item in myMealResponse) {
+            newMealList.add(item)
+        }
+
+        mymealadapter = MyMealAdapter(newMealList) { item ->
+            requireActivity().supportFragmentManager.beginTransaction()
+                .replace(R.id.main_frm, FoodDetailFragment()).commit()
+            requireActivity().overridePendingTransition(
+                androidx.appcompat.R.anim.abc_slide_in_bottom,
+                androidx.appcompat.R.anim.abc_slide_out_top
+            )
+        }
+
+        // Set the adapter for the RecyclerView
+        binding.searchMealMyRv.adapter = mymealadapter
+        binding.searchMealMyRv.layoutManager = LinearLayoutManager(requireContext())
     }
 
     override fun SearchFoodSuccess(foodSearchResponse: FoodSearchResponse) {

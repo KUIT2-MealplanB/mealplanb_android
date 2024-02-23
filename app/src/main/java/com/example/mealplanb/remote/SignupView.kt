@@ -15,6 +15,8 @@ interface SignupView {
                                 sugar: Int,saturated_fat: Int,trans_fat: Int,cholesterol: Int)
     fun mealListDayCheckSuccess(meal_date: String,meals: List<MealListDateResponseMeals>)
     fun handleFavoriteFoodResponse(favoriteFoodResponse: List<Food>)
+
+    fun handleMyMealResponse(myMealResponse: List<mymealResponse>)
 }
 
 interface SearchFoodView{

@@ -1,6 +1,6 @@
 package com.example.mealplanb
 
-import SearchCategoryAdapter
+import MyMealAdapter
 import android.content.Context
 import android.content.Context.MODE_PRIVATE
 import android.os.Bundle
@@ -16,9 +16,7 @@ import com.example.mealplanb.databinding.FragmentFooddetailBinding
 import com.example.mealplanb.remote.AuthService
 import com.example.mealplanb.remote.FoodSearchResponse
 import com.example.mealplanb.remote.MealFoodResponseFoodList
-import com.example.mealplanb.remote.MealListDateResponseMeals
 import com.example.mealplanb.remote.SearchFoodView
-import com.example.mealplanb.remote.SignupView
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 
@@ -37,7 +35,7 @@ class FoodDetailFragment : Fragment(), SearchFoodView {
     private var originkcal: Double = 362.0
     private val foodName: String = "로제파스타"
 
-    lateinit var oftenadapter: SearchCategoryAdapter // 즐겨찾기 RecyclerView에 사용할 어댑터
+    lateinit var oftenadapter: MyMealAdapter // 즐겨찾기 RecyclerView에 사용할 어댑터
 
     override fun onResume() {
         super.onResume()

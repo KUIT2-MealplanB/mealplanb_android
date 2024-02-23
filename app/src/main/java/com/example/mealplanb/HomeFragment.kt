@@ -19,6 +19,7 @@ import com.example.mealplanb.remote.HomeMealView
 import com.example.mealplanb.remote.MealFoodResponseFoodList
 import com.example.mealplanb.remote.MealListDateResponseMeals
 import com.example.mealplanb.remote.SignupView
+import com.example.mealplanb.remote.mymealResponse
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import java.lang.reflect.Type
@@ -553,6 +554,10 @@ class HomeFragment : Fragment(), DatePickerDialog.OnDateSetListener, SignupView,
     }
 
     override fun handleFavoriteFoodResponse(favoriteFoodResponse: List<Food>) {
+        TODO("Not yet implemented")
+    }
+
+    override fun handleMyMealResponse(myMealResponse: List<mymealResponse>) {
         TODO("Not yet implemented")
     }
 
