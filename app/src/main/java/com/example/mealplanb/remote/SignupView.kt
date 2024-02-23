@@ -27,4 +27,5 @@ interface SearchFoodView{
     fun SearchFoodSuccess(foodSearchResponse: FoodSearchResponse)
     fun FoodDetailSuccess(name: String, quantity: Int, kcal: Double, carbohydrate: Double,
                           protein: Double, fat: Double, isFavorite: Boolean)
+    fun RecommendedMealSuccess(recommendMealCheckResponse : List<RecommendedMeal>)
 }

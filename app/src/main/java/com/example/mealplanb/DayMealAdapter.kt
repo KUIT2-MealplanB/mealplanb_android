@@ -1,6 +1,7 @@
 package com.example.mealplanb
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,8 +12,9 @@ import com.example.mealplanb.remote.AuthService
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 
-class DayMealAdapter(var dayMealList: ArrayList<MealMainInfo>, private val context: Context) : RecyclerView.Adapter<DayMealAdapter.ViewHolder>() {
-    private val numList : ArrayList<String> = arrayListOf("첫","두","세","네","다섯","여섯","일곱","여덟","아홉","열")
+class DayMealAdapter(var dayMealList: ArrayList<MealMainInfo>, private val context: Context, val authService: AuthService) : RecyclerView.Adapter<DayMealAdapter.ViewHolder>() {
+    private val numList : ArrayList<String> = arrayListOf("첫 끼","두 끼","세 끼","네 끼","다섯 끼",
+        "여섯 끼","일곱 끼","여덟 끼","아홉 끼","열 끼")
     inner class ViewHolder(val binding: ItemDaymealBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(myMealMainInfo: MealMainInfo) {
             binding.daymealMealtitleTv.text = myMealMainInfo.meal_type
@@ -35,9 +37,6 @@ class DayMealAdapter(var dayMealList: ArrayList<MealMainInfo>, private val conte
             }
 
             binding.daymealMealinfoCv.setOnClickListener {
-//                val authService = AuthService(context)
-//                authService.
-//                authService.foodListCheck((position+1).toString())
 
                 val sharedPreferences = context.getSharedPreferences("myPreferences", Context.MODE_PRIVATE)
                 val editor = sharedPreferences.edit()
@@ -60,9 +59,18 @@ class DayMealAdapter(var dayMealList: ArrayList<MealMainInfo>, private val conte
                 val position = adapterPosition
                 if (position != RecyclerView.NO_POSITION) {
                     // Remove item from the list
+                    binding.daymealMealdelIv.visibility = View.GONE
                     dayMealList.removeAt(position)
+                    authService.dayMealDelete(myMealMainInfo.meal_id)
+
+                    for(i in 0 until dayMealList.size) {
+                        dayMealList[i].meal_no = i+1
+                        dayMealList[i].meal_type = numList[i]
+                    }
+                    Log.d("dayMealList log",dayMealList.toString())
                     // Notify RecyclerView
                     notifyItemRemoved(position)
+                    notifyDataSetChanged()
 
                     // Update SharedPreferences
                     val sharedPref = context.getSharedPreferences("myPreferences", Context.MODE_PRIVATE)

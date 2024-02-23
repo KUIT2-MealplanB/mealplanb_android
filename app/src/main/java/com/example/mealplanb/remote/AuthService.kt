@@ -926,6 +926,31 @@ class AuthService(private val context: Context) {
         })
     }
 
+    fun dayMealDelete(mealId: Int) {
+        authService.dayMealDelete(mealId).enqueue(object : Callback<BaseResponse<MealDelResponse>> {
+            override fun onResponse(
+                call: Call<BaseResponse<MealDelResponse>>,
+                response: Response<BaseResponse<MealDelResponse>>
+            ) {
+                if (response.isSuccessful) {
+                    val result = response.body()
+                    if (result != null && result.code == 1000) {
+                        Toast.makeText(context, "끼니가 성공적으로 삭제되었습니다.", Toast.LENGTH_SHORT).show()
+                        // 여기에서 식단 목록을 다시 로드하거나 UI를 업데이트할 수 있습니다.
+                    } else {
+                        Toast.makeText(context, "삭제 실패: ${result?.message}", Toast.LENGTH_SHORT).show()
+                    }
+                } else {
+                    Toast.makeText(context, "서버 응답 실패: ${response.message()}", Toast.LENGTH_SHORT).show()
+                }
+            }
+
+            override fun onFailure(call: Call<BaseResponse<MealDelResponse>>, t: Throwable) {
+                Log.d("dayMeal delete Failed", t.toString())
+            }
+        })
+    }
+
     fun foodListAddPost(mealId: Long, foods: List<FoodListAddRequestFoodItem>) {
         val request = FoodListAddRequest(mealId,foods)
         authService.foodListAddPost(request).enqueue(object : Callback<BaseResponse<Any>> {
@@ -1059,6 +1084,37 @@ class AuthService(private val context: Context) {
 
             override fun onFailure(call: Call<BaseResponse<Unit>>, t: Throwable) {
                 Log.d("favoriteFood patch Failed", t.toString())
+            }
+        })
+    }
+
+    fun recommendedMealCheck() {
+        authService.recommendedMealCheck().enqueue(object : Callback<BaseResponse<List<RecommendedMeal>>> {
+            override fun onResponse(
+                call: Call<BaseResponse<List<RecommendedMeal>>>,
+                response: Response<BaseResponse<List<RecommendedMeal>>>
+            ) {
+                val resp = response.body()
+                Log.d("recommended meal get response",resp.toString())
+                when (resp?.code) {
+                    1000 -> {
+                        // 성공 시 원하는 처리
+                        val recommendMealCheckResponse = resp.result
+
+                        searchFoodView.RecommendedMealSuccess(recommendMealCheckResponse)
+                        Log.d("recommended meal get Success", "myfavorite meal get Success")
+                    }
+
+                    else -> if (resp != null) {
+                        Log.d("recommended meal get error", "myfavorite meal get error")
+                    }else{
+                        Log.d("recommended meal get null", "myfavorite meal get null")
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<BaseResponse<List<RecommendedMeal>>>, t: Throwable) {
+                Log.d("recommended meal get null", "myfavorite meal get null")
             }
         })
     }

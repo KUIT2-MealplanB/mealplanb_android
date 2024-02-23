@@ -195,6 +195,11 @@ data class MealAddResponse(
     @SerializedName("meal_id") val meal_id: Int
 )
 
+data class MealDelResponse(
+    @SerializedName("meal_id") val meal_id: Int,
+    @SerializedName("status") val status: String
+)
+
 data class MealFoodResponse(
     @SerializedName("meal_id") val meal_id: Int,
     @SerializedName("meal_date") val meal_date: String,
@@ -226,6 +231,12 @@ data class FavoriteFoodRequest(
 //data class FavoriteFoodResponse(
 //    @SerializedName("foods") val foods: List<Food>
 //)
+
+data class RecommendedMeal(
+    @SerializedName("food_id") val food_id : Int,
+    @SerializedName("food_name") val food_name : String,
+    @SerializedName("kcal") val kcal: Double
+)
 
 data class FoodAddRequest(
     @SerializedName("name") val name : String,

@@ -14,6 +14,7 @@ import com.example.mealplanb.databinding.FragmentMenuRecommendHowMenuBinding
 import com.example.mealplanb.remote.AuthService
 import com.example.mealplanb.remote.FoodSearchResponse
 import com.example.mealplanb.remote.RecommendMealAmountView
+import com.example.mealplanb.remote.RecommendedMeal
 import com.example.mealplanb.remote.SearchFoodView
 import com.google.gson.Gson
 
@@ -127,6 +128,10 @@ class MenuRecommendHowMenuFragment : Fragment(), SearchFoodView, RecommendMealAm
         fat: Double,
         isFavorite: Boolean
     ) {
+        TODO("Not yet implemented")
+    }
+
+    override fun RecommendedMealSuccess(recommendMealCheckResponse: List<RecommendedMeal>) {
         TODO("Not yet implemented")
     }
 
