@@ -483,7 +483,11 @@ class HomeFragment : Fragment(), DatePickerDialog.OnDateSetListener, SignupView,
         trans_fat: Int,
         cholesterol: Int
     ) {
-        binding.mainProgressPb.updateProgress(kcal * 100 / (kcal + remaining_kcal))
+        if(kcal * 100 / (kcal + remaining_kcal) > 100) {
+            binding.mainProgressPb.updateProgress(100)
+        } else {
+            binding.mainProgressPb.updateProgress(kcal * 100 / (kcal + remaining_kcal))
+        }
 
         binding.mainTitleNicknameTv.text = nickname
         binding.mainTitleContent1Tv.text = "님의 " + elapsed_days.toString() +"일차"

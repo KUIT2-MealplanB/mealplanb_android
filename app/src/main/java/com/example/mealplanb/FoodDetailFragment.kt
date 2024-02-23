@@ -48,7 +48,34 @@ class FoodDetailFragment : Fragment(), SearchFoodView {
         authService.checkFoodDetail(foodId)
 
         // 음식 정보를 SharedPreferences에서 불러오기
-        val originMealWeight = sharedPreferences.getString("foodQuantity", "0")?.toDoubleOrNull() ?: 0.0
+//        val foodName = sharedPreferences.getString("foodName", "")
+        var originMealWeight = sharedPreferences.getString("foodQuantity", "0")?.toDoubleOrNull() ?: 0.0
+        originMealWeight = 100.0
+//        val originkcal = sharedPreferences.getString("foodKcal", "0")?.toDoubleOrNull() ?: 0.0
+//        val originSacc = sharedPreferences.getString("foodCarbohydrates", "0")?.toDoubleOrNull() ?: 0.0
+//        val originProtein = sharedPreferences.getString("foodProtein", "0")?.toDoubleOrNull() ?: 0.0
+//        val originFat = sharedPreferences.getString("foodFat", "0")?.toDoubleOrNull() ?: 0.0
+
+        // SharedPreferences의 변경을 감지하는 리스너 등록
+//        sharedPreferences.registerOnSharedPreferenceChangeListener { sharedPreferences, key ->
+//            if (key == "selectedFoodId") {
+//                // 음식 정보를 SharedPreferences에서 불러오기
+//                val updatefoodName = sharedPreferences.getString("foodName", "")
+//                val updateoriginMealWeight = sharedPreferences.getString("foodQuantity", "0")?.toDoubleOrNull() ?: 0.0
+//                val updateoriginkcal = sharedPreferences.getString("foodKcal", "0")?.toDoubleOrNull() ?: 0.0
+//                val updateoriginSacc = sharedPreferences.getString("foodCarbohydrates", "0")?.toDoubleOrNull() ?: 0.0
+//                val updateoriginProtein = sharedPreferences.getString("foodProtein", "0")?.toDoubleOrNull() ?: 0.0
+//                val updateoriginFat = sharedPreferences.getString("foodFat", "0")?.toDoubleOrNull() ?: 0.0
+//
+//                // 음식 정보를 UI에 설정
+//                binding.detailFoodNameTv.text = updatefoodName
+//                binding.detailFoodSaccSizeTv.text = updateoriginMealWeight.toInt().toString()
+//                binding.detailFoodProteinSizeTv.text = updateoriginProtein.toInt().toString()
+//                binding.detailFoodFatSizeTv.text = updateoriginFat.toInt().toString()
+//                binding.detailFoodKcalNumTv.text = updateoriginkcal.toInt().toString()
+//                binding.detailFoodMealWeightEt.setText(updateoriginSacc.toInt().toString())
+//            }
+//        }
 
         var gson = Gson()
 
