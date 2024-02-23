@@ -195,6 +195,11 @@ data class MealAddResponse(
     @SerializedName("meal_id") val meal_id: Int
 )
 
+data class MealDelResponse(
+    @SerializedName("meal_id") val meal_id: Int,
+    @SerializedName("status") val status: String
+)
+
 data class MealFoodResponse(
     @SerializedName("meal_id") val meal_id: Int,
     @SerializedName("meal_date") val meal_date: String,

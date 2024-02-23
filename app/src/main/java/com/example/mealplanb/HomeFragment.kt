@@ -33,6 +33,7 @@ import java.util.Locale
 class HomeFragment : Fragment(), DatePickerDialog.OnDateSetListener, SignupView, WeightUpdateListener, HomeMealView {
     lateinit var binding : FragmentHomeBinding
     lateinit var dayMealList : ArrayList<MealMainInfo>
+    lateinit var authService: AuthService
     private var adapter : DayMealAdapter? = null
     private val cal : Calendar = Calendar.getInstance()
     private val calToday : Calendar = Calendar.getInstance()
@@ -57,7 +58,7 @@ class HomeFragment : Fragment(), DatePickerDialog.OnDateSetListener, SignupView,
     override fun onResume() {
         super.onResume()
 
-        val authService = AuthService(requireContext()) // AuthService 인스턴스 생성
+        authService = AuthService(requireContext()) // AuthService 인스턴스 생성
         authService.checkAvatarInfo() // 아바타 정보 조회
 
         //weight 가져오기
@@ -142,7 +143,7 @@ class HomeFragment : Fragment(), DatePickerDialog.OnDateSetListener, SignupView,
 //        )
 
         binding.mainMeallistRv.layoutManager = LinearLayoutManager(requireContext(),LinearLayoutManager.HORIZONTAL,false)
-        adapter = DayMealAdapter(dayMealList,requireContext())
+        adapter = DayMealAdapter(dayMealList,requireContext(),authService)
         binding.mainMeallistRv.adapter = adapter
 
 //        binding.mainMeallistRv.isNestedScrollingEnabled = false
@@ -227,7 +228,7 @@ class HomeFragment : Fragment(), DatePickerDialog.OnDateSetListener, SignupView,
 
                 val dateFormat = SimpleDateFormat("yyyy-MM-dd")
 
-                val authService = AuthService(requireContext())
+                authService = AuthService(requireContext())
                 authService.setHomeMealView(this)
                 authService.mealAddPost(dayMealList.size+1,dateFormat.format(cal.time))
 //
@@ -282,7 +283,9 @@ class HomeFragment : Fragment(), DatePickerDialog.OnDateSetListener, SignupView,
 //            arrayListOf(
 //                MealMainInfo(false,1,0.0,R.drawable.item_hamburger_img,"", 0.0)))
 
-        adapter = DayMealAdapter(dayMealList,requireContext())
+        authService = AuthService(requireContext())
+        authService.setHomeMealView(this)
+        adapter = DayMealAdapter(dayMealList,requireContext(),authService)
         binding.mainMeallistRv.layoutManager = LinearLayoutManager(requireContext(),LinearLayoutManager.HORIZONTAL,false)
         binding.mainMeallistRv.adapter = adapter
 
@@ -322,7 +325,6 @@ class HomeFragment : Fragment(), DatePickerDialog.OnDateSetListener, SignupView,
 
             weightDataMap[today] = todayweight
 
-            val authService = AuthService(requireContext())
             authService.setSignupView(this)
             authService.weightpost(todayweight, today)
 
@@ -331,7 +333,7 @@ class HomeFragment : Fragment(), DatePickerDialog.OnDateSetListener, SignupView,
         }
 
         //API관련
-        val authService = AuthService(requireContext())
+//        authService = AuthService(requireContext())
         authService.setSignupView(this)
         authService.weightcheck()
 
@@ -373,7 +375,7 @@ class HomeFragment : Fragment(), DatePickerDialog.OnDateSetListener, SignupView,
         // 체중 UI 업데이트
         updateWeightOnUI()
 
-        val authService = AuthService(requireContext())
+        authService = AuthService(requireContext())
         authService.setSignupView(this)
 
         val dateFormat = SimpleDateFormat("yyyy-MM-dd")
@@ -519,7 +521,8 @@ class HomeFragment : Fragment(), DatePickerDialog.OnDateSetListener, SignupView,
         if(meals.size == 0) {
             val dateFormat = SimpleDateFormat("yyyy-MM-dd")
 
-            val authService = context?.let { AuthService(it) }
+            authService = context?.let { AuthService(it) } ?: throw IllegalStateException("Context is null.")
+//            val authService = context?.let { AuthService(it) }
             authService?.setHomeMealView(this)
             authService?.mealAddPost(1,dateFormat.format(cal.time))
         } else {
@@ -537,7 +540,7 @@ class HomeFragment : Fragment(), DatePickerDialog.OnDateSetListener, SignupView,
 
         dayMealList = newDayMealList
 
-        adapter = context?.let { DayMealAdapter(dayMealList, it) }
+        adapter = context?.let { DayMealAdapter(dayMealList, it, authService) }
         binding.mainMeallistRv.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
 
         binding.mainMeallistRv.adapter = adapter

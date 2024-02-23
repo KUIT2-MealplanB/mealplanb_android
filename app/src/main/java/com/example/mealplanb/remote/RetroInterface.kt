@@ -118,6 +118,10 @@ interface RetroInterface {
     fun mealAddPost(
         @Body request: MealAddRequest
     ): Call<BaseResponse<MealAddResponse>>
+    @PATCH("meal/{mealId}")
+    fun dayMealDelete(
+        @Path("mealId") mealId: Int
+    ): Call<BaseResponse<MealDelResponse>>
     @POST("meal/food")
     fun foodListAddPost(
         @Body request: FoodListAddRequest
