@@ -7,3 +7,4 @@
 ![image](https://github.com/KUIT2-MealplanB/mealplanb_android/assets/128110758/3f09b964-8d6c-4ea8-8a85-ac3303fb1c01)
 
 ## Service
+[MealPlanB.pdf](https://github.com/KUIT2-MealplanB/mealplanb_android/files/14547113/MealPlanB.pdf)
